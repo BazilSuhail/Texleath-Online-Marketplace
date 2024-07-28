@@ -83,8 +83,16 @@ const Profile = () => {
     const handleLogout = () => {
         localStorage.removeItem('token');
         dispatch(clearCart()); // Clear cart on logout
+        
+        window.location.reload(); // Refresh the whole website
         navigate('/login');
     };
+    const handle_See_orders = () => { 
+        navigate('/orders-tracking');
+    };
+
+    
+
 
     useEffect(() => {
         fetchProfile();
@@ -208,6 +216,12 @@ const Profile = () => {
                     className="px-4 py-2 bg-red-500 text-white rounded-md"
                 >
                     Logout
+                </button>
+                <button
+                    onClick={handle_See_orders}
+                    className="px-4 py-2 bg-red-500 text-white rounded-md"
+                >
+                 Order Tracking
                 </button>
             </div>
         </div>

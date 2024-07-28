@@ -23,7 +23,7 @@ const Register = () => {
             await axios.post('http://localhost:3001/api/auth/register', { email, password });
             setSuccess('Registration successful! Please log in.');
             setError('');
-            setTimeout(() => navigate('/login'), 2000);
+            setTimeout(() => navigate('/login'), 1000);
         } catch (error) {
             setError(error.response?.data?.message || 'Registration failed');
             setSuccess('');

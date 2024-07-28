@@ -1,3 +1,30 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@import "./Styles.css";
+
+/* Customize the scrollbar for Webkit browsers (Chrome, Safari) */
+::-webkit-scrollbar { 
+  width: 7px; 
+  height: 12px; 
+}
+
+::-webkit-scrollbar-track {
+  background: #ffe6e6; 
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(45deg, #a41717, #ff4f4f, #a41717); /* Gradient colors */
+  border-radius: 10px; 
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #d59292; 
+}
+
+/* Customize the scrollbar for Firefox */
+body {
+  scrollbar-width: thin; 
+  scrollbar-color: #5a0000 #f1f1f1; 
+}
