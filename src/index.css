@@ -9,7 +9,9 @@
   width: 7px; 
   height: 12px; 
 }
-
+#root{
+  overflow-x: hidden;
+}
 ::-webkit-scrollbar-track {
   background: #ffe6e6; 
 }

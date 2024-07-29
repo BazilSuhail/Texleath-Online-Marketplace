@@ -103,14 +103,10 @@ const ProductList = () => {
   const [selectedCategory, setSelectedCategory] = useState(urlCategory);
   const [selectedSubcategory, setSelectedSubcategory] = useState('All');
 
-  function onMountFunction() {
+  useEffect(() => {
     console.log("Hey I RAN !!!");
     setSelectedCategory(urlCategory);
     console.log(urlCategory);
-  }
-
-  useEffect(() => {
-    onMountFunction();
   }, [urlCategory]);
 
   // Fetch products

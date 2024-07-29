@@ -313,7 +313,7 @@
   font-size: 13px;
 }
 .asd{
-  background-color: #1a0303;
+  background-color: #fffdfd;
 }
 
 .price sub {
@@ -341,4 +341,31 @@
   font-size: 13px;
   font-weight: 600;
   transition: all 0.3s cubic-bezier(0.15, 0.83, 0.66, 1);
+}
+
+.custom-scrollbar::-webkit-scrollbar {
+  width: 8px; /* Width of the scrollbar */
+  border-radius: 12px; /* Rounded corners for the thumb */
+}
+.custom-scrollbar::-webkit-scrollbar-button {
+  display: none; /* Hide the scrollbar buttons */
+}
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: #f1f1f1; /* Background color of the track */
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: #ff9d9d; /* Background color of the thumb */
+  border-radius: 12px; /* Rounded corners for the thumb */
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: #ff9d9d; /* Color of the thumb when hovered */
+}
+
+/* Style for Firefox */
+.custom-scrollbar {
+  scrollbar-width: thin; /* Thin scrollbar */
+  scrollbar-color: #ff9d9d #f1f1f1; /* Thumb color and track color */
+  border-radius: 12px; /* Rounded corners for the thumb */
 }

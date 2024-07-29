@@ -265,7 +265,7 @@ const Profile = () => {
                 </div>
             </div>
 
-            <div className='xsx:w-[60%] xsx:h-[calc(100vh-150px)]'>
+            <div className='xsx:w-[60%] xsx:h-[120vh] custom-scrollbar overflow-y-auto'>
                 <button onClick={handleLogout} className="px-4 mt-[13px] ml-auto py-2 flex bg-red-500 text-white rounded-md" >
                     <RiLogoutBoxRLine className='text-[22px] mt-[1.2px] font-bold mr-[5px]' />
                     Logout

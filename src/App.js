@@ -9,7 +9,7 @@ import Login from "./Components/LoginUser";
 import Register from "./Components/RegisterUser";
 import Profile from "./Components/Profile";
 import Cart from "./Components/Cart";
-import OrderList from "./Components/PLaceOrder";
+import OrderList from "./Components/PlaceOrder";
 import ShowOrders from "./Components/ShowOrder";
 import ReviewProduct from "./Components/ProductReview";
 

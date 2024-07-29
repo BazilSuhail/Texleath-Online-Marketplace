@@ -106,10 +106,43 @@ const Navbar = () => {
                 </div>
 
                 <div className="flex items-center space-x-8 ml-[-25px] font-medium text-white">
-                    <NavLink to="/productlist/Sports%20Wear">Sports Wear</NavLink>
-                    <NavLink to="/productlist/Active%20Wear"> Active Wear</NavLink>
-                    <NavLink to="/productlist/Fitness%20Wear"> Gym Wear</NavLink>
-                </div>
+      <NavLink
+        to="/productlist/Sports%20Wear"
+        className="relative group"
+      >
+        Sports Wear
+        <motion.div
+          className="absolute bottom-0 left-0 h-0.5 bg-white"
+          initial={{ width: '0%', left: '50%' }}
+          whileHover={{ width: '100%', left: '0%' }}
+          transition={{ duration: 0.3, ease: 'easeOut' }}
+        />
+      </NavLink>
+      <NavLink
+        to="/productlist/Active%20Wear"
+        className="relative group"
+      >
+        Active Wear
+        <motion.div
+          className="absolute bottom-0 left-0 h-0.5 bg-white"
+          initial={{ width: '0%', left: '50%' }}
+          whileHover={{ width: '100%', left: '0%' }}
+          transition={{ duration: 0.3, ease: 'easeOut' }}
+        />
+      </NavLink>
+      <NavLink
+        to="/productlist/Fitness%20Wear"
+        className="relative group"
+      >
+        Gym Wear
+        <motion.div
+          className="absolute bottom-0 left-0 h-0.5 bg-white"
+          initial={{ width: '0%', left: '50%' }}
+          whileHover={{ width: '100%', left: '0%' }}
+          transition={{ duration: 0.3, ease: 'easeOut' }}
+        />
+      </NavLink>
+    </div>
 
                 {isLoggedIn ? (
                     <div className="flex">

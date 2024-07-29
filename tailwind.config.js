@@ -9,7 +9,7 @@ module.exports = {
       },
       colors: {
         'custom-gray': 'rgb(200, 200, 200)',
-        'custom-other-gray': 'rgb(226, 226, 226)',
+        'custom-light-red': '#fff9f9',
         'custom-red': '#1a0303',
       },
       fontSize: {

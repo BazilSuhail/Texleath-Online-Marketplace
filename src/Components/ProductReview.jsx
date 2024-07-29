@@ -47,7 +47,7 @@ const FetchReviews = ({ productId }) => {
             setPage(prevPage => prevPage + 1);
         }
     };
-    
+
     return (
         <div>
             <h2>Product Reviews</h2>
@@ -90,10 +90,11 @@ const ReviewProduct = () => {
     const [error, setError] = useState('');
     const [success, setSuccess] = useState('');
     const [reviews, setReviews] = useState([]);
-    console.log(reviews);
-    const [page, setPage] = useState(1);
+    const [page] = useState(1);
     const [hasMore, setHasMore] = useState(true);
+    console.log(hasMore);
 
+    console.log(reviews);
     useEffect(() => {
         const fetchUserDetails = async () => {
             try {
@@ -160,11 +161,6 @@ const ReviewProduct = () => {
         }
     };
 
-    const handleLoadMore = () => {
-        if (hasMore) {
-            setPage(prevPage => prevPage + 1);
-        }
-    };
     return (
         <div className="max-w-2xl mx-auto p-4">
             <h1 className="text-2xl font-bold mb-4">Submit Your Review</h1>
