@@ -3,6 +3,8 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { setCart } from '../redux/cartSlice';
+import { IoLockClosedOutline } from "react-icons/io5";
+import { IoMail } from "react-icons/io5";
 
 const Login = () => {
     const [email, setEmail] = useState('');
@@ -69,68 +71,45 @@ const Login = () => {
     };
 
     return (
-        <main>
-            {/*
-            <h2>Login</h2>
-            <form onSubmit={handleSubmit}>
-                <div>
-                    <label htmlFor="email">Email</label>
-                    <input
-                        type="email"
-                        id="email"
+        <main className='flex mt-[40px] md:mt-[0px] md:h-[calc(100vh-140px)] flex-col  items-center justify-center'>
+            <form onSubmit={handleSubmit} className="w-[100vw] sm:w-[520px] form ">
+                <div className='text-red-800 text-[35px] text-center font-bold'>Welcome Back</div>
+                <div className='text-red-800 text-[15px] text-center font-medium'>Please enter Email and Password</div>
+                <div className='h-[3px] bg-red-200 w-[90%] mx-auto mb-[15px]'></div>
+                {error && <div className='text-red-500 p-[5px] border-2 border-red-600 rounded-md'>Error: {error}</div>}
+                <div className="flex-column">
+                    <label>Email </label>
+                </div>
+                <div className="inputForm">
+                    <IoMail className='text-red-800' size={23} />
+                    <input type="email"
+                        className="input" required
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
-                        required
-                    />
+                        placeholder="Enter your Email" />
                 </div>
-                <div>
-                    <label htmlFor="password">Password</label>
-                    <input
-                        type="password"
-                        id="password"
+
+                <div className="flex-column">
+                    <label>Password </label>
+                </div>
+                <div className="inputForm">
+                    <IoLockClosedOutline className='text-red-800' size={23} />
+                    <input type="password" className="input" required
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
-                        required
-                    />
+                        placeholder="Enter your Password" />
                 </div>
-                {error && <p style={{ color: 'red' }}>{error}</p>}
-                <button type="submit">Login</button>
-            </form>*/}
 
-            <div className='flex items-center justify-center w-[100vw] h-[100vh]'>
-                <div className='border-2 border-gray-600 rounded-[25px] p-[25px] h-[480px] md:h-[510px] w-[350px] md:w-[590px] flex flex-col'>
-                    <h2 className='text-white bg-black rounded-md w-[100%] p-[8px] text-center text-3xl'>Signin</h2>
-                    {error && <div>Error: {error}</div>}
-                    <div className='flex items-center mt-[20px] justify-center'>
-
-                        <p className='text-lg md:text-xl font-medium '>Dont Have An Account </p>
-                        <p onClick={() => { navigate("/signup") }} className='cursor-pointer ml-[10px] underline font-bold text-2xl text-blue-800'>SignUP</p>
-
-                    </div>
-                    <form onSubmit={handleSubmit} className='flex flex-col'>
-                        <p className='text-xl md:text-2xl font-semibold mt-[28px]'>Email:</p>
-                        <input
-                            type="email"
-                            value={email}
-                            onChange={(e) => setEmail(e.target.value)}
-                            className='text-lg border-2 border-gray-600 placeholder:text-gray-600 font-medium rounded-xl mt-[8px] p-[8px]'
-                            placeholder="Enter Email"
-                            required
-                        />
-                        <p className='text-xl md:text-2xl font-semibold mt-[5px]'>Password:</p>
-                        <input
-                            type="password"
-                            value={password}
-                            onChange={(e) => setPassword(e.target.value)}
-                            className='text-lg border-2 border-gray-600 placeholder:text-gray-600 font-medium rounded-xl mt-[8px] p-[8px]'
-                            placeholder="Enter Password"
-                            required
-                        />
-                        <button className='mt-[42px] bg-gray-800 shadow-custom-light text-[25px] md:text-[30px] rounded-[30px] text-white py-[8px]' type="submit">Signin</button>
-                    </form>
+                <div>
+                    <input type="checkbox" />
+                    <label className='ml-[5px]'>Remember me </label>
                 </div>
-            </div>
-
+                <button className="button-submit  text-[22px]" type="submit">Sign In</button>
+                <p className="p mt-[-5px] text-[18px]">
+                    Don't have an account?
+                    <span className="span text-red-700 underline" onClick={() => { navigate("/register") }}>Sign Up</span>
+                </p>
+            </form>
         </main>
     );
 };

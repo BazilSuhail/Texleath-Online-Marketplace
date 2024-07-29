@@ -1,4 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice ,createSelector} from '@reduxjs/toolkit';
 
 // Function to save cart state to localStorage
 const saveCartToLocalStorage = (cart) => {
@@ -52,3 +52,9 @@ const cartSlice = createSlice({
 
 export const { addToCart, removeFromCart, clearCart, updateQuantity, setCart } = cartSlice.actions;
 export default cartSlice.reducer;
+
+// Selector to get cart length
+export const selectCartLength = createSelector(
+    state => state.cart, // Selector function to get the cart state from Redux store
+    cart => cart.length // Compute the length of the cart
+);

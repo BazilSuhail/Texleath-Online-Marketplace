@@ -1,4 +1,4 @@
-import React, { useState, useEffect,useCallback } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
 
@@ -17,9 +17,6 @@ const FetchReviews = ({ productId }) => {
             const response = await axios.get(`http://localhost:3001/api/reviews/${productId}`, {
                 params: { page, limit: 4 }
             });
-
-            // Log response to check for duplicates
-            console.log('Fetched reviews:', response.data.reviews);
 
             // Remove duplicates
             const newReviews = response.data.reviews;
@@ -50,7 +47,7 @@ const FetchReviews = ({ productId }) => {
             setPage(prevPage => prevPage + 1);
         }
     };
-
+    
     return (
         <div>
             <h2>Product Reviews</h2>
@@ -70,10 +67,11 @@ const FetchReviews = ({ productId }) => {
                     <p>No reviews available.</p>
                 )}
             </div>
+
             {hasMore && (
-                <button 
-                    onClick={handleLoadMore} 
-                    disabled={loading} 
+                <button
+                    onClick={handleLoadMore}
+                    disabled={loading}
                     className="px-4 py-2 bg-blue-500 text-white rounded mt-4"
                 >
                     {loading ? 'Loading...' : 'Load More'}
@@ -92,6 +90,7 @@ const ReviewProduct = () => {
     const [error, setError] = useState('');
     const [success, setSuccess] = useState('');
     const [reviews, setReviews] = useState([]);
+    console.log(reviews);
     const [page, setPage] = useState(1);
     const [hasMore, setHasMore] = useState(true);
 
@@ -166,7 +165,6 @@ const ReviewProduct = () => {
             setPage(prevPage => prevPage + 1);
         }
     };
-
     return (
         <div className="max-w-2xl mx-auto p-4">
             <h1 className="text-2xl font-bold mb-4">Submit Your Review</h1>

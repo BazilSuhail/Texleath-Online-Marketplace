@@ -1,7 +1,7 @@
 import { useEffect, useState, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { removeFromCart, clearCart, updateQuantity, setCart } from '../redux/cartSlice';
+import { removeFromCart, clearCart, updateQuantity } from '../redux/cartSlice';
 import axios from 'axios';
 
 const Cart = () => {

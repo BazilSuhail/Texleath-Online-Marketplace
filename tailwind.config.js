@@ -8,8 +8,9 @@ module.exports = {
         'xsx': '940px',
       },
       colors: {
-        'custom-back-grey': '#6d5700e7',
-        'custom-blue': '#001433',
+        'custom-gray': 'rgb(200, 200, 200)',
+        'custom-other-gray': 'rgb(226, 226, 226)',
+        'custom-red': '#1a0303',
       },
       fontSize: {
         'custom-sz': '25px',
@@ -17,7 +18,7 @@ module.exports = {
         'custom-size': '20px',
       },
       boxShadow: {
-        'custom-light': '1px 1px 10px rgb(0, 30, 65)',
+        'custom-shadow': '1px 1px 10px #ffb7b7',
         'custom-dark': '0px 0px 5px rgb(0, 30, 65, 0.488 )',
       },
       keyframes: {
