@@ -248,13 +248,13 @@ const Navbar = () => {
 
                                 <NavLink to="/productlist" onClick={handleMenuToggle} className="text-white text-md mt-[15px] text-lg mr-[15px]"> About Us</NavLink>
                                 <div className="my-[5px] "></div>
-                                <NavLink to="/productlist" onClick={handleMenuToggle} className="text-white text-md text-lg mr-[15px]"> FAQ's</NavLink>
+                                <NavLink to="/faqs" onClick={handleMenuToggle} className="text-white text-md text-lg mr-[15px]"> FAQ's</NavLink>
                                 <div className="my-[5px] "></div>
-                                <NavLink to="/productlist" onClick={handleMenuToggle} className="text-white text-md text-lg mr-[15px]">Privacy Policy</NavLink>
+                                <NavLink to="/customerSupport" onClick={handleMenuToggle} className="text-white text-md text-lg mr-[15px]">Customer Support</NavLink>
                                 <div className="my-[5px] "></div>
-                                <NavLink to="/productlist" onClick={handleMenuToggle} className="text-white text-md text-lg mr-[15px]">Terms Of Service</NavLink>
+                                <NavLink to="/privacyPolicy" onClick={handleMenuToggle} className="text-white text-md text-lg mr-[15px]">Privacy Policy</NavLink>
                                 <div className="my-[5px] "></div>
-                                <NavLink to="/productlist" onClick={handleMenuToggle} className="text-white text-md text-lg mr-[15px]">Customer Support</NavLink>
+                                <NavLink to="/termsOfService" onClick={handleMenuToggle} className="text-white text-md text-lg mr-[15px]">Terms Of Service</NavLink>
                                 <div className="my-[5px] "></div>
                                
                                 <div className="h-[2px] w-[85%] bg-red-50  my-[8px]"></div>

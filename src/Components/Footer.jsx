@@ -21,10 +21,10 @@ const Footer = () => {
                         <h3 className='lg:ml-[55px] text-xl font-semibold mb-4'>Quick Links</h3>
                         <ul className='lg:ml-[55px]'>
                             <li><Link to='/about' className='hover:underline'>About Us</Link></li>
-                            <li><Link to='/contact' className='hover:underline'>Contact</Link></li>
                             <li><Link to='/faqs' className='hover:underline'>FAQ's</Link></li>
+                            <li><Link to='/customerSupport' className='hover:underline'>Customer Support</Link></li>
                             <li><Link to='/privacyPolicy' className='hover:underline'>Privacy Policy</Link></li>
-                            <li><Link to='/terms-of-service' className='hover:underline'>Terms of Service</Link></li>
+                            <li><Link to='/termsOfService' className='hover:underline'>Terms of Service</Link></li>
                         </ul>
                     </div>
 

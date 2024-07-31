@@ -15,6 +15,8 @@ import ReviewProduct from "./Components/ProductReview";
 import Footer from "./Components/Footer";
 import FAQPage from "./Components/Pages/Faq";
 import PrivacyPolicy from "./Components/Pages/PrivacyPolicy";
+import TermsOfService from "./Components/Pages/TermOfService";
+import CustomerSupport from "./Components/Pages/CustomerSupport";
 
 const App = () => {
   return (
@@ -39,6 +41,8 @@ const App = () => {
         <Route path="/faqs" element={<FAQPage />} />
 
         <Route path="/privacyPolicy" element={<PrivacyPolicy />} />
+        <Route path="/termsOfService" element={<TermsOfService />} />
+        <Route path="/customerSupport" element={<CustomerSupport />} />
 
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
