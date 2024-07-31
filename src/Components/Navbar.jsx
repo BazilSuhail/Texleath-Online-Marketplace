@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useCallback } from "react";
 import axios from 'axios';
+import { FaChevronDown, FaChevronUp } from 'react-icons/fa';
 
 import { IoMenu, IoClose } from "react-icons/io5";
 import { useSelector } from 'react-redux';
@@ -14,6 +15,13 @@ const Navbar = () => {
     const cartLength = useSelector(selectCartLength);
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+
+    const [openIndex, setOpenIndex] = useState(null);
+
+    const handleToggle = (index) => {
+        setOpenIndex(openIndex === index ? null : index);
+    };
 
     // Use useCallback to memoize the fetchProfile function
     const fetchProfile = useCallback(async () => {
@@ -92,8 +100,9 @@ const Navbar = () => {
                     : <div className="h-[10px] bg-gradient-to-r from-red-950 via-custom-red to-red-950 w-full"></div>
                 }
             </div>
+            
 
-            <NavLink to="/" className="h-[55px] pt-[5px] xsx:flex hidden items-center justify-center w-full pb-[5px] overflow-hidden">
+            <NavLink to="/" className=" h-[55px] pt-[5px] xsx:flex hidden items-center justify-center w-full pb-[5px] overflow-hidden">
                 <img src={texleathlogo} alt="kasm kjanf" className="w-[45px] h-[45px]" />
                 <div className="text-red-700 ml-[4px] text-[30px] font-bold">TEXLEATH</div>
                 <div className="text-red-100 ml-[5px] text-[30px] font-bold">INDUSTRIES</div>
@@ -106,52 +115,28 @@ const Navbar = () => {
                 </div>
 
                 <div className="flex items-center space-x-8 ml-[-25px] font-medium text-white">
-                    <NavLink
-                        to="/productlist/Sports%20Wear"
-                        className="relative group"
-                    >
-                        Sports Wear
-                        <motion.div
-                            className="absolute bottom-0 left-0 h-0.5 bg-white"
-                            initial={{ width: '0%', left: '50%' }}
-                            whileHover={{ width: '100%', left: '0%' }}
-                            transition={{ duration: 0.3, ease: 'easeOut' }}
-                        />
+
+                    <NavLink to="/productlist/Sports%20Wear" className="relative group">
+                        Sports  
                     </NavLink>
-                    <NavLink
-                        to="/productlist/Active%20Wear"
-                        className="relative group"
-                    >
-                        Active Wear
-                        <motion.div
-                            className="absolute bottom-0 left-0 h-0.5 bg-white"
-                            initial={{ width: '0%', left: '50%' }}
-                            whileHover={{ width: '100%', left: '0%' }}
-                            transition={{ duration: 0.3, ease: 'easeOut' }}
-                        />
+
+                    <NavLink to="/productlist/Active%20Wear" className="relative group">
+                        Active Wear 
                     </NavLink>
-                    <NavLink
-                        to="/productlist/Fitness%20Wear"
-                        className="relative group"
-                    >
-                        Gym Wear
-                        <motion.div
-                            className="absolute bottom-0 left-0 h-0.5 bg-white"
-                            initial={{ width: '0%', left: '50%' }}
-                            whileHover={{ width: '100%', left: '0%' }}
-                            transition={{ duration: 0.3, ease: 'easeOut' }}
-                        />
+
+                    <NavLink to="/productlist/Fitness%20Wear" className="relative group">
+                        Gym Wear 
                     </NavLink>
                 </div>
 
                 {isLoggedIn ? (
                     <div className="flex">
                         <NavLink to="/cart"><MdShoppingCart className="text-red-200 hover:scale-110 hover:text-red-500 mt-[8px] text-[32px]" /></NavLink>
-                        <p className="text-white text-lg font-bold mr-[5px]">{cartLength}</p>
+                        <p className=" text-md w-[23px] h-[23px] bg-white text-red-700 rounded-full text-center font-extrabold mr-[5px]">{cartLength}</p>
                         <NavLink to="/profile"><IoPersonCircleOutline className="text-white hover:text-red-600 text-[45px]" /></NavLink>
                     </div>
                 ) : (
-                    <NavLink to="/login" className="text-white text-lg hover:bg-red-950 shadow-custom-shadow bg-red-700  border-white px-[8px] rounded-lg mr-[15px]">
+                    <NavLink to="/login" className="text-white mt-[15px] text-[17px] w-[140px] xl:ml-[-65px] text-center py-[3px] hover:bg-red-950 bg-red-900 border border-white px-[8px] rounded-lg mr-[15px]">
                         Start Shopping
                     </NavLink>
                 )}
@@ -159,7 +144,7 @@ const Navbar = () => {
             </div>
 
 
-            <div className="relative  text-white xsx:hidden">
+            <div className="relative text-white xsx:hidden">
                 <div className="flex items-center h-[70px] justify-between bg-gradient-to-r from-red-950 via-custom-red to-red-950 px-4 py-3 z-50 relative">
                     <div className="flex items-center">
                         <motion.div
@@ -183,7 +168,8 @@ const Navbar = () => {
                     </div>
                     <div className="flex">
                         <NavLink to="/cart"><MdShoppingCart className="text-white hover:scale-110 hover:text-red-500 mt-[5px] text-[28px]" /></NavLink>
-                        <p className="text-white text-md mb-[4px] font-bold mr-[5px]">{cartLength}</p>
+
+                        <p className=" text-md w-[23px] h-[23px] bg-white text-red-700 rounded-full text-center font-extrabold mr-[5px]">{cartLength}</p>
                         <motion.div
                             key={isMenuOpen ? 'close' : 'menu'} // Unique key to trigger animation on change
                             initial={{ opacity: 0, rotate: isMenuOpen ? 180 : -180 }}
@@ -211,7 +197,7 @@ const Navbar = () => {
                             animate={{ width: "70vw", transition: { duration: 0.5 } }}
                             exit={{ width: 0, transition: { duration: 0.3, delay: 0.3 } }}
                             className="fixed inset-0 bg-navbar-color bg-gradient-to-r from-red-950 to-custom-red flex w-[70vw] flex-col h-screen px-4 py-3 z-30"
-                            onClick={handleMenuToggle}
+
                         >
                             <div className='my-[25px]'></div>
                             {/* Menu items */}
@@ -219,17 +205,75 @@ const Navbar = () => {
                                 initial={{ x: -100, opacity: 0 }}
                                 animate={{ x: 0, opacity: 1, transition: { duration: 0.5, delay: 0.5 } }}
                                 exit={{ x: -100, opacity: 0, transition: { duration: 0.2 } }}
-                                className="flex flex-col mt-10"
-                                onClick={handleMenuToggle}
+                                className="flex flex-col mt-[50px]"
                             >
+                                <NavLink to="/" onClick={handleMenuToggle} className="text-white mb-[12px] text-md text-xl  mr-[15px]"> Home</NavLink>
+                               
+                                <NavLink to="/productlist/All" onClick={handleMenuToggle} className="text-white  mb-[12px] text-md text-lg mr-[15px]"> Catalog</NavLink>
+                               
+                                <div key={index} className='mb-4'>
+                                    <button
+                                        className="text-white text-md text-xl flex items-center w-full justify-between mr-[15px]"
+                                        onClick={() => handleToggle(index)}
+                                        type='button'
+                                    >
+                                        <span>Categories</span>
+                                        <motion.div
+                                            initial={{ rotate: 0 }}
+                                            animate={{ rotate: openIndex === index ? 360 : 0 }}
+                                            transition={{ duration: 0.5 }}
+                                            className='text-red-50 text-xl mt'
+                                        >
+                                            {openIndex === index ? <FaChevronUp /> : <FaChevronDown />}
+                                        </motion.div>
+                                    </button>
+                                    <AnimatePresence>
+                                        {openIndex === index && (
+                                            <motion.div
+                                                initial={{ opacity: 0, height: 0 }}
+                                                animate={{ opacity: 1, height: 'auto' }}
+                                                exit={{ opacity: 0, height: 0 }}
+                                                transition={{ duration: 0.2 }}
+                                                className='mt-2 text-white flex flex-col my-[15px] space-y-3 px-4'
+                                            >
+                                                <div className="w-[50%] bg-red-100 h-[2px] rounded-2xl mt-[8px]"></div>
+                                                <NavLink onClick={handleMenuToggle} to="/productlist/Active%20Wear">Active Wear</NavLink>
+                                                <NavLink onClick={handleMenuToggle} to="/productlist/Sports%20Wear">Sports Wear</NavLink>
+                                                <NavLink onClick={handleMenuToggle} to="/productlist/Fitness%20Wear">Fitness Wear</NavLink>
+                                            </motion.div>
+                                        )}
+                                    </AnimatePresence>
+                                </div>
+                                <div className="h-[2px] w-[85%] bg-red-50 mt-[-5px]"></div>
 
-                                <NavLink to="/" className="text-white text-md text-lg mr-[15px]"> Home</NavLink>
-                                <NavLink to="/productlist" className="text-white text-md text-lg mr-[15px]"> List</NavLink>
-                                <NavLink to="/cart" className="text-white text-md text-lg mr-[15px]">Cart</NavLink>
-                                <NavLink to="/orders-tracking" className="text-white text-md text-lg mr-[15px]">Orders</NavLink>
+                                <NavLink to="/productlist" onClick={handleMenuToggle} className="text-white text-md mt-[15px] text-lg mr-[15px]"> About Us</NavLink>
+                                <div className="my-[5px] "></div>
+                                <NavLink to="/productlist" onClick={handleMenuToggle} className="text-white text-md text-lg mr-[15px]"> FAQ's</NavLink>
+                                <div className="my-[5px] "></div>
+                                <NavLink to="/productlist" onClick={handleMenuToggle} className="text-white text-md text-lg mr-[15px]">Privacy Policy</NavLink>
+                                <div className="my-[5px] "></div>
+                                <NavLink to="/productlist" onClick={handleMenuToggle} className="text-white text-md text-lg mr-[15px]">Terms Of Service</NavLink>
+                                <div className="my-[5px] "></div>
+                                <NavLink to="/productlist" onClick={handleMenuToggle} className="text-white text-md text-lg mr-[15px]">Customer Support</NavLink>
+                                <div className="my-[5px] "></div>
+                               
+                                <div className="h-[2px] w-[85%] bg-red-50  my-[8px]"></div>
+
+                                {isLoggedIn ? (
+                                    <div  className="flex">
+                                         <NavLink onClick={handleMenuToggle}  to="/profile" className="flex items-center mt-[7px]"><IoPersonCircleOutline className="text-red-100 hover:text-red-600 text-[45px]" /><span className="font-medium underline ml-[2px] text-xl text-white">My Profile</span></NavLink>
+                                    </div>
+                                ) : (
+                                    <NavLink to="/login" onClick={handleMenuToggle} className="text-white mt-[15px] text-md w-[130px] text-center py-[3px] hover:bg-red-950 bg-red-900 border border-white px-[8px] rounded-lg mr-[15px]">
+                                        Start Shopping
+                                    </NavLink>
+                                )}
+
+                                {/*                           
                                 <NavLink to="/login" className="text-white text-md text- mr-[15px]">Login</NavLink>
                                 <NavLink to="/register" className="text-white text-md text-lg mr-[15px]">Register</NavLink>
-                                <NavLink to="/profile" className="text-white text-md text-lg mr-[15px]">Profile</NavLink>
+                                <NavLink to="/profile" className="text-white text-md text-lg mr-[15px]">Profile</NavLink> 
+                                */}
 
                             </motion.div>
 

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { setCart } from '../redux/cartSlice';
+import { setCart } from '../../redux/cartSlice';
 import { IoLockClosedOutline } from "react-icons/io5";
 import { IoMail } from "react-icons/io5";
 

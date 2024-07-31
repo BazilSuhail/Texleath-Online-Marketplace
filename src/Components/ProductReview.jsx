@@ -37,22 +37,22 @@ const ReviewsList = ({ productId }) => {
   const displayedReviews = reviews.slice(0, visibleCount);
 
   return (
-    <div>
-      <h2>Reviews for Product ID:</h2>
+    <div className='lg:mt-[-15px] mb-[25px]'>
+
       {reviews.length === 0 ? (
         <p>No reviews made till now.Make Review NOW !!!</p>
       ) : (
         <ul>
           {displayedReviews.map((review) => (
-            <div key={review._id} className='my-[15px] shadow-custom-card w-[98%] xsx:w-[95%] mx-auto rounded-lg p-[10px]'>
+            <div key={review._id} className='my-[25px] shadow-custom-card w-[98%] z-10 flex flex-col xsx:w-[95%] mx-auto rounded-lg p-[10px]'>
               <div className='flex justify-between'>
 
                 <p className='ml-[8px] text-2xl font-bold'>{review.name}</p>
                 <p className='text-gray-700 font-bold'>{new Date(review.date).toLocaleDateString()}</p>
               </div>
 
-              <div className='text-gray-600 mt-[7px] flex items-center ml-[8px] cursor-help'><span className='text-gray-500 mt-[2px] mr-[5px] text-[22px]'><IoMail /></span>{ review.email}</div>
-             
+              <div className='text-gray-600 mt-[7px] flex items-center ml-[8px] cursor-help'><span className='text-gray-500 mt-[2px] mr-[5px] text-[22px]'><IoMail /></span>{review.email}</div>
+
               <div className='my-[10px] flex'>
                 <div className='text-lg text-gray-500 underline font-medium mr-[10px]'>Rating:</div>
                 {Array.from({ length: 5 }, (_, index) => (
@@ -64,7 +64,7 @@ const ReviewsList = ({ productId }) => {
                 ))}
               </div>
               <div className='mt-[4px] font-bold text-2xl text-black'>Review: </div>
-            <p className='mt-[10px] border-2  overflow-x-auto scrollbar-hide  border-gray-300 rounded-md w-[100%] p-[10px] font-bold pt-[10px] text-md text-gray-700'>{review.description}</p>
+              <p className='mt-[10px] border-2  overflow-x-auto scrollbar-hide border-gray-300 rounded-md w-[100%] p-[10px] font-bold pt-[10px] text-md text-gray-700'>{review.description}</p>
 
 
               { /*
@@ -78,7 +78,9 @@ const ReviewsList = ({ productId }) => {
         </ul>
       )}
       {visibleCount < reviews.length && (
-        <button className='bg-red-800 text-white text-2xl  rounded-lg font-semibold px-[10px] ml-[65px]' onClick={handleShowMore}>Show More</button>
+        <div className='flex bg-white w-[80%] mx-auto pb-[25px] pt-[180px] rounded-full shadow-custom-blured z-50 mt-[-190px]'>
+          <button className='bg-red-800 text-white text-xl py-[6px] rounded-md font-semibold mx-auto px-[15px]' onClick={handleShowMore}>Show More</button>
+        </div>
       )}
     </div>
   );

@@ -208,7 +208,6 @@ const ProductDetails = () => {
 
           {/*<button className='my-[15px] text-2xl bg-green-800 text-white' onClick={() => handleProductReview(id)}>See Reviews</button>*/}
         </div>
-
       </div>
 
       <div className='mt-[35px] xl:mt-[-95px]'>
@@ -218,8 +217,7 @@ const ProductDetails = () => {
 
       <div className='mb-[35px] mt-[25px]'>
         <div className='flex flex-col w-screen justify-center items-center'>
-          <div className='text-5xl text-red-950 font-bold'>Reviews</div>
-
+          <div className='text-4xl text-red-950 font-bold'>Reviews</div>
           <div className='flex my-[8px] items-center'>
             <div className='w-4 h-4 rounded-full bg-red-800'></div>
             <div className='w-[320px] h-[4px] rounded-xl  mx-[15px] bg-red-800'></div>

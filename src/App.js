@@ -5,13 +5,16 @@ import Navbar from "./Components/Navbar";
 import Dashboard from "./Components/Dashboard";
 import ProductDetails from "./Components/ProductDetails";
 import ProductList from "./Components/ProductList";
-import Login from "./Components/LoginUser";
-import Register from "./Components/RegisterUser";
-import Profile from "./Components/Profile";
+import Login from "./Components/authentication/LoginUser";
+import Register from "./Components/authentication/RegisterUser";
+import Profile from "./Components/authentication/Profile";
 import Cart from "./Components/Cart";
 import OrderList from "./Components/PlaceOrder";
 import ShowOrders from "./Components/ShowOrder";
 import ReviewProduct from "./Components/ProductReview";
+import Footer from "./Components/Footer";
+import FAQPage from "./Components/Pages/Faq";
+import PrivacyPolicy from "./Components/Pages/PrivacyPolicy";
 
 const App = () => {
   return (
@@ -33,10 +36,15 @@ const App = () => {
         <Route path="/place-order" element={<OrderList />} />
         <Route path="/orders-tracking" element={<ShowOrders />} />
 
+        <Route path="/faqs" element={<FAQPage />} />
+
+        <Route path="/privacyPolicy" element={<PrivacyPolicy />} />
+
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/profile" element={<Profile />} />
       </Routes>
+      <Footer/>
     </Router>
   );
 };

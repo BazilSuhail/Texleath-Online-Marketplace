@@ -2,8 +2,8 @@ import React, { useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { clearCart } from '../redux/cartSlice';
-import ShowOrders from './ShowOrder';
+import { clearCart } from '../../redux/cartSlice';
+import ShowOrders from '../ShowOrder';
 import { RiLogoutBoxRLine } from "react-icons/ri";
 import { FaRegEdit } from "react-icons/fa";
 

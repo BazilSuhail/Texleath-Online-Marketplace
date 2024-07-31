@@ -21,7 +21,7 @@ const OrderList = () => {
 
     // Get user ID from token when component mounts
     useEffect(() => {
-        const token = localStorage.getItem('token'); // Replace with your token retrieval method
+        const token = localStorage.getItem('token');
         const id = decodeToken(token);
         setUserId(id);
     }, [decodeToken]);
@@ -97,7 +97,7 @@ const OrderList = () => {
 
     return (
 
-        <div className=' xsx:w-[80%] mx-auto'>
+        <div className=' xsx:w-[70%] xl:w-[60%] mx-auto'>
 
             <h1 className="text-4xl mt-[15px] text-center font-bold">Final Bill</h1>
 
@@ -140,8 +140,7 @@ const OrderList = () => {
                                 <div className='flex items-center mt-[8px]'>
                                     <p className='w-[12px] ml-[4px] h-[12px] rounded-full mr-[6px] bg-red-800 '></p>
                                     <h3 className="text-xl xsx:text-2xl mb-[2px] underline font-bold">{product.name || 'Unknown Product'}</h3>
-                                </div>{/*
-                                <h2 className="text-lg font-bold">{product.name || 'Unknown Product'}</h2> */}
+                                </div> 
 
                                 <p className="text-md ml-[20px] font-bold text-black">
                                     <span className='font-semibold text-red-900  mr-[5px]'>Quantity:</span>  {item.quantity}
@@ -155,11 +154,6 @@ const OrderList = () => {
                                     <span className='font-semibold text-red-900 mr-[5px]'>Discounted Price through Sales:</span>${discountedPrice.toFixed(2)}
                                 </p>
 
-                                {/*<p className="text-lg">
-                                    Discounted Price through Sales: ${discountedPrice.toFixed(2)}
-                                    {product.sale && <span className="text-red-500 line-through">${product.price.toFixed(2)}</span>}
-                                </p>*/}
-
                                 <div className='flex justify-between'>
                                     <p className="text-xl ml-[12px] text-red-400 underline font-bold rounded-md p-[5px]">Total Price:</p>
                                     <p  className="text-2xl text-red-800 font-bold rounded-md p-[5px]"><span className='text-lg mr-[4px]'>Rs.</span>{(discountedPrice * item.quantity).toFixed(2)}</p>
@@ -169,16 +163,7 @@ const OrderList = () => {
                         </div>
                     );
                 })}
-               {/*} <div className="mt-4">
-                    <h2 className="text-xl font-bold">Total Bill: ${calculateTotalBill()}</h2>
-                    <button
-                        onClick={handleConfirmOrder}
-                        className="px-4 py-2 bg-blue-500 text-white rounded-md mt-4"
-                    >
-                        Confirm Order
-                    </button>
-                </div>
-                */}
+                
             </div>
         </div>
     );
