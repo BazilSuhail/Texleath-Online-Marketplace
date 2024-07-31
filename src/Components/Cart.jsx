@@ -106,17 +106,17 @@ const Cart = () => {
             ) : (
                 <div className=' xsx:w-[80%] mx-auto'>
 
-                    <div className='flex justify-between'>
-                        <h1 className="text-2xl font-bold">Shopping Cart</h1>
-                        <div className='text-lg font-semibold'>
-                            <button onClick={handleClearCart} className="px-4 border-2 border- hover:bg-white hover:text-red-600 py-2 bg-red-600 border-red-600 rounded-2xl text-white">Clear Cart</button>
-                            <button onClick={handleSaveCart} className="px-4 py-2 border-2 hover:bg-white hover:text-blue-700 bg-blue-600 border-blue-600  rounded-2xl text-white ml-4">Save for Later</button>
+                    <div className='flex xsx:flex-row flex-col justify-between'>
+                        <h1 className="text-2xl xsx:text-left text-center font-bold">Shopping Cart</h1>
+                        <div className='mt-[15px] xsx:mt-0 xsx:text-lg font-semibold'>
+                            <button onClick={handleClearCart} className="px-4 border-2 hover:bg-white hover:text-red-600 py-[4px] bg-red-600 border-red-600 rounded-2xl text-white">Clear Cart</button>
+                            <button onClick={handleSaveCart} className="px-4 py-[4px] border-2 hover:bg-white hover:text-blue-700 bg-blue-600 border-blue-600  rounded-2xl text-white ml-[5px]">Save for Later</button>
                         </div>
                     </div>
 
                     <div className='flex border p-[15px] rounded-xl flex-col'>
                         <div className='text-xl font-bold'>Checkout</div>
-                        <div className='border-b border-t border-gray-400 text-md font-semibold'>
+                        <div className='border-b border-t border-gray-400 text-sm md:text-md font-semibold'>
                             <div className='flex mt-[15px] justify-between'>
                                 <p>Your Cart Subtotal:</p>
                                 <p className='px-[8px] text-xl rounded-xl'><span className='text-lg'>Rs.</span>{calculateTotalBill()}</p>
@@ -129,13 +129,13 @@ const Cart = () => {
                                 <p>Delivery Charges (*On Delivery):</p>
                                 <p className='px-[8px] text-xl rounded-xl'><span className='text-lg'>Rs.</span>200</p>
                             </div>
-                            </div>
-                            
+                        </div>
+
                         <div className='flex justify-between'>
                             <p className='px-[8px] text-4xl mt-[10px] font-bold rounded-xl'><span className='text-xl font-medium mr-[3px]'>Rs.</span>200</p>
                             <button onClick={navigateToOrderList} className="border-2 text-[20px] font-bold mt-[15px] py-[5px] hover:bg-white hover:text-green-800 bg-green-700 border-green-700 rounded-2xl px-[25px] text-white">Checkout</button>
-                            </div>
-                            
+                        </div>
+
                     </div>
 
                     <div className="mt-4">
@@ -180,7 +180,7 @@ const CartItem = ({ id, quantity, onIncrease, onDecrease, onRemove }) => {
         : product.price.toFixed(2);
 
     return (
-        <div className="flex  items-center justify-between mb-[28px] bg-custom-light-red border rounded-2xl border-red-700 p-4">
+        <div className="flex xsx:flex-row flex-col items-center justify-between mb-[28px] bg-custom-light-red border rounded-2xl border-red-700 p-4">
 
             <div className='w-[200px] h-[180px]'>
                 <img
@@ -188,28 +188,29 @@ const CartItem = ({ id, quantity, onIncrease, onDecrease, onRemove }) => {
                     alt={product.name}
                     className=" h-[180px] mx-auto object-cover"
                 />
+                
             </div>
-            <div className="ml-4 flex-1">
-                <div className='flex justify-between'>
-                    <h2 className="text-[28px] underline font-bold">{product.name}</h2>
-                    <button onClick={onRemove} className="px-[20px] rounded-[28px] bg-red-800  hover:bg-red-300 hover:text-red-700 font-bold text-white">Remove</button>
+            <div className="md:ml-4 flex-1">
+                <div className='flex my-[15px] xsx:my-0 justify-between'>
+                    <h2 className="text-[24px] md:text-[28px] underline font-bold">{product.name}</h2>
+                    <button onClick={onRemove} className="px-[12px] md:px-[20px] rounded-[28px] bg-red-800 hover:bg-red-300 hover:text-red-700 font-bold text-white">Remove</button>
                 </div>
 
-                <p className="text-lg flex items-center my-[5px]">
+                <div className="text-sm md:text-lg  flex items-center my-[5px]">
                     <span className='font-medium mt-[3px] text-red-950 mr-[5px]'>Item Price:</span>
                     {product.sale && <span className="text-red-500 mt-[3px] font-medium mr-[8px] line-through">${product.price.toFixed(2)}</span>}
-                    <span className='text-[28px] text-green-800 font-bold'>${discountedPrice}</span>
-                </p>
+                    <span className='text-[24px] md:text-[28px] text-green-800 font-bold'>${discountedPrice}</span>
+                </div>
 
-                <div className='flex  justify-between items-center'>
+                <div className='flex justify-between md:mx-0 mx-auto flex-row items-center'>
                     <div className="mt-2 py-[5px] px-[15px] rounded-2xl flex items-center space-x-2">
-                        <button onClick={onDecrease} className="w-8 h-8 text-2xl rounded-full text-white bg-red-900 flex items-center justify-center">-</button>
-                        <span className="text-xl font-bold rounded-md px-[10px]  bg-red-100 py-[3px] ">{quantity}</span>
-                        <button onClick={onIncrease} className="w-8 h-8 text-2xl rounded-full bg-red-900 text-white flex items-center justify-center">+</button>
+                        <button onClick={onDecrease} className="w-6 h-6 md:w-8 md:h-8 text-2xl rounded-full text-white bg-red-900 flex items-center justify-center">-</button>
+                        <span className="text-md md:text-xl font-bold rounded-md px-[10px]  bg-red-100 py-[3px] ">{quantity}</span>
+                        <button onClick={onIncrease} className="w-6 h-6 md:w-8 md:h-8 text-2xl rounded-full bg-red-900 text-white flex items-center justify-center">+</button>
                     </div>
 
-                    <p className="text-lg text-green-800 font-bold rounded-md p-[5px]">
-                        Item Checkout: <span className='bg-green-200 px-[8px] py-[2px] rounded-lg border-2 border-green-800'>${(discountedPrice * quantity).toFixed(2)}</span>
+                    <p className="text-md flex px-[15px]  items-center md:text-lg text-green-800 font-bold rounded-md p-[5px]">
+                        <span className='text-[15px] text-center'>Item Checkout:</span> <span className='bg-green-200 px-[8px] py-[2px] rounded-lg border-2 border-green-800'>${(discountedPrice * quantity).toFixed(2)}</span>
                     </p>
                 </div>
             </div>

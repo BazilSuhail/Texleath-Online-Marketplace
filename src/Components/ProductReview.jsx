@@ -1,233 +1,224 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { useParams } from 'react-router-dom';
+import { FaStar } from 'react-icons/fa';
 
-const FetchReviews = ({ productId }) => {
-    const [reviews, setReviews] = useState([]);
-    const [page, setPage] = useState(1);
-    const [hasMore, setHasMore] = useState(true);
-    const [loading, setLoading] = useState(false);
+import { IoMail } from "react-icons/io5";
+//import { useParams } from 'react-router-dom';
 
-    // Use useCallback to memoize the fetchReviews function
-    const fetchReviews = useCallback(async () => {
-        if (loading) return; // Prevent duplicate requests while loading
 
-        setLoading(true);
-        try {
-            const response = await axios.get(`http://localhost:3001/api/reviews/${productId}`, {
-                params: { page, limit: 4 }
-            });
+const ReviewsList = ({ productId }) => {
+  const [reviews, setReviews] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [visibleCount, setVisibleCount] = useState(4);
 
-            // Remove duplicates
-            const newReviews = response.data.reviews;
-            const uniqueReviews = Array.from(new Map(newReviews.map(review => [review._id, review])).values());
-
-            setReviews(prevReviews => {
-                // Combine and filter duplicates
-                const allReviews = [...prevReviews, ...uniqueReviews];
-                return Array.from(new Map(allReviews.map(review => [review._id, review])).values());
-            });
-
-            // Check if there are more reviews to fetch
-            setHasMore(response.data.reviews.length > 0);
-        } catch (error) {
-            console.error('Error fetching reviews:', error);
-            setHasMore(false); // Stop fetching if there's an error
-        } finally {
-            setLoading(false);
-        }
-    }, [loading, page, productId]); // Include all dependencies
-
-    useEffect(() => {
-        fetchReviews();
-    }, [fetchReviews]); // Use fetchReviews in dependency array
-
-    const handleLoadMore = () => {
-        if (hasMore && !loading) {
-            setPage(prevPage => prevPage + 1);
-        }
+  useEffect(() => {
+    const fetchReviews = async () => {
+      try {
+        const response = await axios.get(`http://localhost:3001/api/reviews/${productId}`);
+        setReviews(response.data.reviews);
+      } catch (err) {
+        setError(err.message);
+      } finally {
+        setLoading(false);
+      }
     };
 
-    return (
-        <div>
-            <h2>Product Reviews</h2>
-            <div>
-                {reviews.length > 0 ? (
-                    reviews.map(review => (
-                        <div key={review._id} className="bg-gray-300 my-[10px] shadow-lg p-4 rounded">
-                            <h3 className="text-lg font-semibold">{review.name}</h3>
-                            <p>Email: {review.email}</p>
-                            <p>Phone: {review.phone}</p>
-                            <p>Date: {new Date(review.date).toLocaleDateString()}</p>
-                            <p>Rating: {review.rating}</p>
-                            <p>{review.description}</p>
-                        </div>
-                    ))
-                ) : (
-                    <p>No reviews available.</p>
-                )}
+    fetchReviews();
+  }, [productId]);
+
+  const handleShowMore = () => {
+    setVisibleCount(prevCount => Math.min(prevCount + 4, reviews.length));
+  };
+
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>Error: {error}</p>;
+
+  const displayedReviews = reviews.slice(0, visibleCount);
+
+  return (
+    <div>
+      <h2>Reviews for Product ID:</h2>
+      {reviews.length === 0 ? (
+        <p>No reviews made till now.Make Review NOW !!!</p>
+      ) : (
+        <ul>
+          {displayedReviews.map((review) => (
+            <div key={review._id} className='my-[15px] shadow-custom-card w-[98%] xsx:w-[95%] mx-auto rounded-lg p-[10px]'>
+              <div className='flex justify-between'>
+
+                <p className='ml-[8px] text-2xl font-bold'>{review.name}</p>
+                <p className='text-gray-700 font-bold'>{new Date(review.date).toLocaleDateString()}</p>
+              </div>
+
+              <div className='text-gray-600 mt-[7px] flex items-center ml-[8px] cursor-help'><span className='text-gray-500 mt-[2px] mr-[5px] text-[22px]'><IoMail /></span>{ review.email}</div>
+             
+              <div className='my-[10px] flex'>
+                <div className='text-lg text-gray-500 underline font-medium mr-[10px]'>Rating:</div>
+                {Array.from({ length: 5 }, (_, index) => (
+                  <FaStar
+                    size={25}
+                    key={index}
+                    className={index < review.rating ? 'text-yellow-500' : 'text-gray-300'}
+                  />
+                ))}
+              </div>
+              <div className='mt-[4px] font-bold text-2xl text-black'>Review: </div>
+            <p className='mt-[10px] border-2  overflow-x-auto scrollbar-hide  border-gray-300 rounded-md w-[100%] p-[10px] font-bold pt-[10px] text-md text-gray-700'>{review.description}</p>
+
+
+              { /*
+               <p>Phone: {review.phone}</p>
+              <p>Date: {new Date(review.date).toLocaleDateString()}</p>
+              <p>Rating: {review.rating}</p>
+              <p>Description: {review.description}</p>
+              */}
             </div>
-
-            {hasMore && (
-                <button
-                    onClick={handleLoadMore}
-                    disabled={loading}
-                    className="px-4 py-2 bg-blue-500 text-white rounded mt-4"
-                >
-                    {loading ? 'Loading...' : 'Load More'}
-                </button>
-            )}
-        </div>
-    );
+          ))}
+        </ul>
+      )}
+      {visibleCount < reviews.length && (
+        <button className='bg-red-800 text-white text-2xl  rounded-lg font-semibold px-[10px] ml-[65px]' onClick={handleShowMore}>Show More</button>
+      )}
+    </div>
+  );
 };
 
+const ReviewProduct = ({ productId }) => {
+  //const { productId } = useParams();
+  const [user, setUser] = useState(null);
+  const [rating, setRating] = useState(1);
+  const [review, setReview] = useState('');
+  const [error, setError] = useState('');
+  const [success, setSuccess] = useState('');
 
-const ReviewProduct = () => {
-    const { productId } = useParams();
-    const [user, setUser] = useState(null);
-    const [rating, setRating] = useState(1);
-    const [review, setReview] = useState('');
-    const [error, setError] = useState('');
-    const [success, setSuccess] = useState('');
-    const [reviews, setReviews] = useState([]);
-    const [page] = useState(1);
-    const [hasMore, setHasMore] = useState(true);
-    console.log(hasMore);
-
-    console.log(reviews);
-    useEffect(() => {
-        const fetchUserDetails = async () => {
-            try {
-                const token = localStorage.getItem('token');
-                if (token) {
-                    const response = await axios.get('http://localhost:3001/api/auth/profile', {
-                        headers: { 'Authorization': `Bearer ${token}` }
-                    });
-                    setUser(response.data);
-                }
-            } catch (error) {
-                setError('Failed to fetch user details');
-            }
-        };
-
-        fetchUserDetails();
-    }, []);
-
-    useEffect(() => {
-        const fetchReviews = async () => {
-            try {
-                const response = await axios.get(`http://localhost:3001/api/reviews/${productId}`, {
-                    params: { page, limit: 4 }
-                });
-                setReviews(prevReviews => [...prevReviews, ...response.data.reviews]);
-                setHasMore(response.data.hasMore);
-            } catch (error) {
-                setError('Failed to fetch reviews');
-            }
-        };
-
-        fetchReviews();
-    }, [productId, page]);
-
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        try {
-            if (!user) {
-                setError('User not found');
-                return;
-            }
-
-            const reviewData = {
-                productId,
-                review: {
-                    name: user.fullName,
-                    email: user.email,
-                    phone: user.contact,
-                    date: new Date(),
-                    rating,
-                    description: review
-                }
-            };
-
-            await axios.post('http://localhost:3001/api/reviews', reviewData, {
-                headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` }
-            });
-
-            setSuccess('Review submitted successfully');
-            setRating(1);
-            setReview('');
-        } catch (error) {
-            setError('Failed to submit review');
+  useEffect(() => {
+    const fetchUserDetails = async () => {
+      try {
+        const token = localStorage.getItem('token');
+        if (token) {
+          const response = await axios.get('http://localhost:3001/api/auth/profile', {
+            headers: { 'Authorization': `Bearer ${token}` }
+          });
+          setUser(response.data);
         }
+      } catch (error) {
+        setError('Failed to fetch user details');
+      }
     };
 
-    return (
-        <div className="max-w-2xl mx-auto p-4">
-            <h1 className="text-2xl font-bold mb-4">Submit Your Review</h1>
-            {error && <p className="text-red-500">{error}</p>}
-            {success && <p className="text-green-500">{success}</p>}
-            <form onSubmit={handleSubmit} className="space-y-4">
-                <div>
-                    <label htmlFor="rating" className="block text-sm font-medium text-gray-700">Rating (1-5)</label>
-                    <input
-                        type="number"
-                        id="rating"
-                        name="rating"
-                        value={rating}
-                        min="1"
-                        max="5"
-                        onChange={(e) => setRating(Number(e.target.value))}
-                        className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm"
-                        required
-                    />
-                </div>
-                <div>
-                    <label htmlFor="review" className="block text-sm font-medium text-gray-700">Review</label>
-                    <textarea
-                        id="review"
-                        name="review"
-                        value={review}
-                        onChange={(e) => setReview(e.target.value)}
-                        className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm"
-                        required
-                    />
-                </div>
-                <button
-                    type="submit"
-                    className="px-4 py-2 bg-blue-500 text-white rounded-md"
-                >
-                    Submit Review
-                </button>
-            </form>
+    fetchUserDetails();
+  }, []);
 
-            <FetchReviews productId={productId} />
-            {/*  <div className="mt-8">
-                <h2 className="text-xl font-semibold mb-4">Product Reviews</h2>
-                {reviews.length === 0 ? (
-                    <p>No reviews yet.</p>
-                ) : (
-                    <ul className="space-y-4">
-                        {reviews.map((review, index) => (
-                            <li key={index} className="p-4 border rounded-md">
-                                <p><strong>{review.name}</strong> ({review.email})</p>
-                                <p>Rating: {review.rating}</p>
-                                <p>{review.description}</p>
-                                <p><small>{new Date(review.date).toLocaleString()}</small></p>
-                            </li>
-                        ))}
-                    </ul>
-                )}
-                {hasMore && (
-                    <button
-                        onClick={handleLoadMore}
-                        className="mt-4 px-4 py-2 bg-blue-500 text-white rounded-md"
-                    >
-                        Load More
-                    </button>
-                )}
-            </div> */}
-        </div>
-    );
+
+  const handleStarClick = (index) => {
+    setRating(index + 1); // Set rating based on star index (1-based)
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      if (!user) {
+        setError('User not found');
+        return;
+      }
+
+      const reviewData = {
+        productId,
+        review: {
+          name: user.fullName,
+          email: user.email,
+          phone: user.contact,
+          date: new Date(),
+          rating,
+          description: review
+        }
+      };
+
+      await axios.post('http://localhost:3001/api/reviews', reviewData, {
+        headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` }
+      });
+
+      setSuccess('Review submitted successfully');
+      setRating(1);
+      setReview('');
+    } catch (error) {
+      setError('Failed to submit review');
+    }
+  };
+
+  return (
+    <div className='w-[96vw] xl:w-[95vw] lg:px-[0px] px-[6px] mx-auto grid grid-cols-1 lg:grid-cols-11'>
+      <div className='col-span-4'>
+        <h1 className="text-2xl font-bold mb-4">Submit Your Review</h1>
+        {error && <p className="text-red-500">{error}</p>}
+        {success && <p className="text-green-500">{success}</p>}
+        <form onSubmit={handleSubmit} className="space-y-4">
+          {/*
+          <div>
+            <label htmlFor="rating" className="block text-sm font-medium text-gray-700">Rating (1-5)</label>
+            <input
+              type="number"
+              id="rating"
+              name="rating"
+              value={rating}
+              min="1"
+              max="5"
+              onChange={(e) => setRating(Number(e.target.value))}
+              className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm"
+              required
+            />
+          </div>
+   <div>
+            <label htmlFor="review" className="block text-sm font-medium text-gray-700">Review</label>
+            <textarea
+              id="review"
+              name="review"
+              value={review}
+              onChange={(e) => setReview(e.target.value)}
+              className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm"
+              required
+            />
+          </div>
+
+         */}
+          <div className="flex items-center  ml-[19px]">
+            <label className="mr-[10px] text-xl font-semibold">Rating:</label>
+            {[...Array(5)].map((_, index) => (
+              <FaStar
+                size={25}
+                key={index}
+                className={`cursor-pointer ${index < rating ? 'text-yellow-500' : 'text-gray-300'}`}
+                onClick={() => handleStarClick(index)}
+              />
+            ))}
+          </div>
+
+          <textarea
+            value={review}
+            onChange={(e) => setReview(e.target.value)}
+            placeholder="Write your review..."
+            required
+            className="p-2 border-2 border-gray-600 w-[95%] h-[150px] mx-auto text-md font-medium  rounded"
+          />
+
+
+          <button
+            type="submit"
+            className="px-4 py-2 bg-blue-500 text-white rounded-md"
+          >
+            Submit Review
+          </button>
+        </form>
+      </div>
+
+      <div className='col-span-7'>
+
+        <ReviewsList productId={productId} />
+      </div>
+    </div>
+  );
 };
+
 
 export default ReviewProduct;

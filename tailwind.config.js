@@ -20,6 +20,7 @@ module.exports = {
       boxShadow: {
         'custom-shadow': '1px 1px 10px #ffb7b7',
         'custom-dark': '0px 0px 5px rgb(0, 30, 65, 0.488 )',
+        'custom-card': '0px 0px 9px rgba(76, 76, 76, 0.718)',
       },
       keyframes: {
         fadeInOut: {

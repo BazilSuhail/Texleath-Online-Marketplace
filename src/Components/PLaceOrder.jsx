@@ -91,13 +91,41 @@ const OrderList = () => {
             return total;
         }, 0).toFixed(2);
     };
+    
 
     if (!cart.length) return <p>Your cart is empty</p>;
 
     return (
-        <div className="p-4">
-            <h1 className="text-2xl font-bold">Order List</h1>
-            <div className="mt-4">
+
+        <div className=' xsx:w-[80%] mx-auto'>
+
+            <h1 className="text-4xl mt-[15px] text-center font-bold">Final Bill</h1>
+
+            <div className='flex border p-[15px] rounded-xl flex-col'>
+                <div className='text-xl font-bold'>Checkout</div>
+                <div className='border-b border-t border-gray-400 text-md font-semibold'>
+                    <div className='flex mt-[15px] justify-between'>
+                        <p>Your Cart Subtotal:</p>
+                        <p className='px-[8px] text-xl rounded-xl'><span className='text-lg'>Rs.</span>{calculateTotalBill()}</p>
+                    </div>
+                    <div className='flex mt-[8px] justify-between'>
+                        <p>Discount Through Applied Sales:</p>
+                        <p className='px-[8px] text-xl rounded-xl'><span className='text-lg'>Rs.</span>{calculateTotalBill()}</p>
+                    </div>
+                    <div className='flex my-[8px] justify-between'>
+                        <p>Delivery Charges (*On Delivery):</p>
+                        <p className='px-[8px] text-xl rounded-xl'><span className='text-lg'>Rs.</span>200</p>
+                    </div>
+                </div>
+
+                <div className='flex justify-between'>
+                    <p className='px-[8px] text-4xl mt-[10px] font-bold rounded-xl'><span className='text-xl font-medium mr-[3px]'>Rs.</span>{calculateTotalBill()}</p>
+                    <button onClick={handleConfirmOrder} className="border-2 text-[20px] font-bold mt-[15px] py-[5px] hover:bg-white hover:text-green-800 bg-green-700 border-green-700 rounded-2xl px-[25px] text-white">Place Order</button>
+                </div>
+
+            </div>
+
+            <div className="mt-4 md:px-0 px-[8px]">
                 {cart.map(item => {
                     const product = products.find(p => p._id === item.id);
                     if (!product) return null;
@@ -107,22 +135,41 @@ const OrderList = () => {
                         : product.price;
 
                     return (
-                        <div key={item.id} className="flex items-center justify-between mb-4 border p-4">
+                        <div key={item.id} className="border flex flex-col bg-custom-light-red border-gray-400 rounded-lg p-4 mb-4">
                             <div className="ml-4 flex-1">
-                                <h2 className="text-lg font-bold">{product.name || 'Unknown Product'}</h2>
-                                <p className="text-lg">
-                                    Price: ${discountedPrice.toFixed(2)}
+                                <div className='flex items-center mt-[8px]'>
+                                    <p className='w-[12px] ml-[4px] h-[12px] rounded-full mr-[6px] bg-red-800 '></p>
+                                    <h3 className="text-xl xsx:text-2xl mb-[2px] underline font-bold">{product.name || 'Unknown Product'}</h3>
+                                </div>{/*
+                                <h2 className="text-lg font-bold">{product.name || 'Unknown Product'}</h2> */}
+
+                                <p className="text-md ml-[20px] font-bold text-black">
+                                    <span className='font-semibold text-red-900  mr-[5px]'>Quantity:</span>  {item.quantity}
+                                </p>
+
+                                <p className="text-md ml-[20px] font-bold text-black">
+                                    <span className='font-semibold text-red-900  mr-[5px]'>Actual Price:</span>${product.price.toFixed(2)}
+                                </p>
+
+                                <p className="text-md ml-[20px] font-bold text-black">
+                                    <span className='font-semibold text-red-900 mr-[5px]'>Discounted Price through Sales:</span>${discountedPrice.toFixed(2)}
+                                </p>
+
+                                {/*<p className="text-lg">
+                                    Discounted Price through Sales: ${discountedPrice.toFixed(2)}
                                     {product.sale && <span className="text-red-500 line-through">${product.price.toFixed(2)}</span>}
-                                </p>
-                                <p className="text-lg font-bold">Quantity: {item.quantity}</p>
-                                <p className="text-lg bg-green-600 font-bold rounded-md text-white p-[5px]">
-                                    Total Price: ${(discountedPrice * item.quantity).toFixed(2)}
-                                </p>
+                                </p>*/}
+
+                                <div className='flex justify-between'>
+                                    <p className="text-xl ml-[12px] text-red-400 underline font-bold rounded-md p-[5px]">Total Price:</p>
+                                    <p  className="text-2xl text-red-800 font-bold rounded-md p-[5px]"><span className='text-lg mr-[4px]'>Rs.</span>{(discountedPrice * item.quantity).toFixed(2)}</p>
+                                </div>
+
                             </div>
                         </div>
                     );
                 })}
-                <div className="mt-4">
+               {/*} <div className="mt-4">
                     <h2 className="text-xl font-bold">Total Bill: ${calculateTotalBill()}</h2>
                     <button
                         onClick={handleConfirmOrder}
@@ -131,6 +178,7 @@ const OrderList = () => {
                         Confirm Order
                     </button>
                 </div>
+                */}
             </div>
         </div>
     );

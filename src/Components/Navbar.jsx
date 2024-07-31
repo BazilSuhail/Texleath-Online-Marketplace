@@ -106,43 +106,43 @@ const Navbar = () => {
                 </div>
 
                 <div className="flex items-center space-x-8 ml-[-25px] font-medium text-white">
-      <NavLink
-        to="/productlist/Sports%20Wear"
-        className="relative group"
-      >
-        Sports Wear
-        <motion.div
-          className="absolute bottom-0 left-0 h-0.5 bg-white"
-          initial={{ width: '0%', left: '50%' }}
-          whileHover={{ width: '100%', left: '0%' }}
-          transition={{ duration: 0.3, ease: 'easeOut' }}
-        />
-      </NavLink>
-      <NavLink
-        to="/productlist/Active%20Wear"
-        className="relative group"
-      >
-        Active Wear
-        <motion.div
-          className="absolute bottom-0 left-0 h-0.5 bg-white"
-          initial={{ width: '0%', left: '50%' }}
-          whileHover={{ width: '100%', left: '0%' }}
-          transition={{ duration: 0.3, ease: 'easeOut' }}
-        />
-      </NavLink>
-      <NavLink
-        to="/productlist/Fitness%20Wear"
-        className="relative group"
-      >
-        Gym Wear
-        <motion.div
-          className="absolute bottom-0 left-0 h-0.5 bg-white"
-          initial={{ width: '0%', left: '50%' }}
-          whileHover={{ width: '100%', left: '0%' }}
-          transition={{ duration: 0.3, ease: 'easeOut' }}
-        />
-      </NavLink>
-    </div>
+                    <NavLink
+                        to="/productlist/Sports%20Wear"
+                        className="relative group"
+                    >
+                        Sports Wear
+                        <motion.div
+                            className="absolute bottom-0 left-0 h-0.5 bg-white"
+                            initial={{ width: '0%', left: '50%' }}
+                            whileHover={{ width: '100%', left: '0%' }}
+                            transition={{ duration: 0.3, ease: 'easeOut' }}
+                        />
+                    </NavLink>
+                    <NavLink
+                        to="/productlist/Active%20Wear"
+                        className="relative group"
+                    >
+                        Active Wear
+                        <motion.div
+                            className="absolute bottom-0 left-0 h-0.5 bg-white"
+                            initial={{ width: '0%', left: '50%' }}
+                            whileHover={{ width: '100%', left: '0%' }}
+                            transition={{ duration: 0.3, ease: 'easeOut' }}
+                        />
+                    </NavLink>
+                    <NavLink
+                        to="/productlist/Fitness%20Wear"
+                        className="relative group"
+                    >
+                        Gym Wear
+                        <motion.div
+                            className="absolute bottom-0 left-0 h-0.5 bg-white"
+                            initial={{ width: '0%', left: '50%' }}
+                            whileHover={{ width: '100%', left: '0%' }}
+                            transition={{ duration: 0.3, ease: 'easeOut' }}
+                        />
+                    </NavLink>
+                </div>
 
                 {isLoggedIn ? (
                     <div className="flex">
@@ -182,7 +182,7 @@ const Navbar = () => {
                         </motion.div>
                     </div>
                     <div className="flex">
-                        <NavLink onClick={handleMenuToggle} to="/cart"><MdShoppingCart className="text-white hover:scale-110 hover:text-red-500 mt-[5px] text-[28px]" /></NavLink>
+                        <NavLink to="/cart"><MdShoppingCart className="text-white hover:scale-110 hover:text-red-500 mt-[5px] text-[28px]" /></NavLink>
                         <p className="text-white text-md mb-[4px] font-bold mr-[5px]">{cartLength}</p>
                         <motion.div
                             key={isMenuOpen ? 'close' : 'menu'} // Unique key to trigger animation on change

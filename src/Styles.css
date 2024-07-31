@@ -369,3 +369,25 @@
   scrollbar-color: #ff9d9d #f1f1f1; /* Thumb color and track color */
   border-radius: 12px; /* Rounded corners for the thumb */
 }
+ 
+.otherImages-scrollbar {
+  scrollbar-width: thin; /* For Firefox */
+  scrollbar-color: #ffaeae   #ffffff; /* For Firefox */
+}
+
+.otherImages-scrollbar::-webkit-scrollbar {
+  width: 6px; /* Width of the scrollbar */
+}
+
+.otherImages-scrollbar::-webkit-scrollbar-track {
+  background: #ffffff; /* Background color of the track */
+}
+
+.otherImages-scrollbar::-webkit-scrollbar-thumb {
+  background: #ffaeae; /* Color of the draggable part of the scrollbar */
+  border-radius: 6px; /* Rounded corners of the scrollbar thumb */
+}
+
+.otherImages-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: #ffaeae; /* Color of the scrollbar thumb when hovered */
+}

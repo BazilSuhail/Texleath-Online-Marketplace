@@ -47,17 +47,17 @@ const ShowOrders = () => {
                 order.orders.map(singleOrder => (
                     <div key={singleOrder._id} className="border  flex flex-col bg-custom-light-red border-gray-400 rounded-lg p-4 mb-4">
 
-                        <div className='flex justify-between items-center'>
-                            <p className="text-xl px-[8px] rounded-lg border border-yellow-400 text-yellow-800 bg-yellow-100 font-bold mb-2">
+                        <div className='flex xsx:flex-row flex-col justify-between xsx:items-center'>
+                            <p className="text-md xsx:text-xl px-[8px] rounded-lg border border-yellow-400 text-yellow-800 bg-yellow-100 font-bold mb-2">
                                 <span className='font-medium mr-[5px]'> Days Passed:</span>
-                                {Math.floor((new Date() - new Date(singleOrder.orderDate)) / (1000 * 60 * 60 * 24))}<span className='font-medium text-[18px] ml-[2px]'>days</span>
+                                {Math.floor((new Date() - new Date(singleOrder.orderDate)) / (1000 * 60 * 60 * 24))}<span className='font-medium xsx:text-[18px] ml-[2px]'>days</span>
                             </p>
                             <h2 className="text-lg bg-red-700 flex items-center px-[12px] rounded-xl text-white font-bold mb-2">
                                 <span className='text-sm font-normal mb-[2px] mr-[10px]'>Order Date: </span>{new Date(singleOrder.orderDate).toLocaleDateString()}
                             </h2>
                         </div>
 
-                        <p className="text-md flex items-center ml-auto bg-green-200 text-green-800 border border-green-800 px-[15px] rounded-2xl font-bold mb-2">
+                        <p className="text-md flex items-center xsx:ml-auto bg-green-200 text-green-800 border border-green-800 px-[15px] rounded-2xl font-bold mb-2">
                             Bill Checkout: <span className='font-bold ml-[6px] text-xl text-green-900'>${singleOrder.total ? singleOrder.total.toFixed(2) : 'N/A'}</span>
                         </p>
                         <div className="border-t border-gray-500 mt-2 pt-2">
