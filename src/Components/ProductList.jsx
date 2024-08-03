@@ -27,8 +27,8 @@ const SearchFilter = ({ products }) => {
     setIsFocused(!isFocused);
   };
   return (
-    <div>
-      <div className="my-[15px] px-[15px] flex mx-auto">
+    <div className='mb-[35px]'>
+      <div className="my-[15px] px-[5px] lg:px-[15px] flex mx-auto">
         <IoMdSearch
           onClick={handleIconClick}
           className="text-[45px] border-2 border-red-700 rounded-full text-red-700 p-[3px] mr-[18px] cursor-pointer"
@@ -52,7 +52,7 @@ const SearchFilter = ({ products }) => {
 
         <div className="mt-4 border-t pt-4">
           <h2 className="text-xl font-semibold mb-2">Search Results:</h2>
-          <div className="grid grid-cols-3 gap-4">
+          <div className="mx-auto my-[45px] grid grid-cols-2 overflow-hidden lg:grid-cols-3 xl:grid-cols-4 ">
             {filteredProducts.length > 0 ? (
               filteredProducts.map((product) => {
                 const discountedPrice = product.sale
@@ -61,21 +61,33 @@ const SearchFilter = ({ products }) => {
 
                 return (
                   <div
-                    key={product._id}
-                    className="block border p-4 rounded-lg shadow-lg cursor-pointer"
+                    key={product._id} 
+                    className="block p-[10px] overflow-x-hidden sm:p-[5px] cursor-pointer"
                     onClick={() => navigate(`/products/${product._id}`)}
                   >
                     <img
                       src={`http://localhost:3001/uploads/${product.image}`}
                       alt={product.name}
-                      className="w-300 h-300 object-cover w-[200px] h-[200px] mb-4"
+                      className="object-cover mx-auto h-[200px] w-[180px] hover:scale-105 transition duration-700  md:h-[400px] md:w-[340px] lg:w-[300px]  lg:h-[335px] sm:h-[320px] sm:w-[280px] mb-4"
                     />
-                    <h2 className="text-xl font-bold">{product.name}</h2>
-                    <h2 className="text-xl font-bold">{product.category}</h2>
-                    <h2 className="text-xl font-bold">{product.subcategory}</h2>
-                    <p className="text-lg text-gray-700">
-                      ${discountedPrice} {product.sale && <span className="text-red-500 line-through">${product.price.toFixed(2)}</span>}
-                    </p>
+
+                    <div className='mx-auto w-[180px] md:w-[340px] lg:w-[300px] sm:w-[280px] '>
+
+                      <h1 className='text-xl md:text-[25px] lg:text-[30px] mb-[6px] underline underline-offset-1 font-medium'>{product.name}</h1>
+
+                      <div className='md:mt-[10px] mt-[0px] inline-block'>
+                        <p className="text-[10px] md:text-[13px] font-medium px-[10px] py-[2px] rounded-xl bg-gray-600 text-white">{product.category}</p>
+                      </div>
+
+                      <div className='ml-[8px] inline-block'>
+                        <p className="text-[10px] md:text-[13px] font-medium px-[10px] py-[2px] rounded-xl bg-custom-gray">{product.subcategory}</p>
+                      </div>
+
+                      <p className="my-[5px] flex justify-between items-center">
+                        {product.sale && <span className="text-red-500 bg-red-200 font-medium rounded-xl text-sm md:text-md px-[12px] line-through">Rs.{product.price.toFixed(2)}</span>}
+                        <span className='text-2xl lg:text-3xl ml-[6px] mb-[3px] font-medium'><span className='text-[20px] font-normal'> Rs.</span>{parseInt(discountedPrice)}</span>
+                      </p>
+                    </div>
                   </div>
                 );
               })
@@ -179,20 +191,19 @@ const ProductList = () => {
       <SearchFilter products={filteredProducts} />
 
       {/* Category filter */}
-      <div className="mb-4">
-        <label className="block text-lg font-medium">Filter by Category:</label>
-        <div className="mt-2 flex flex-wrap gap-2">
-          <div onClick={() => handleCategoryClick('All')} className={`p-2 cursor-pointer border rounded ${selectedCategory === 'All' ? 'bg-blue-500 text-white' : 'bg-white'}`}>
+      <div className="my-[4px] ml-[7px] lg:ml-[25px]">
+        <div className="mt-2 flex text-sm sm:text-md  md:text-lg w-[100%] overflow-x-auto font-medium text-red-900 whitespace-nowrap gap-2">
+          <div onClick={() => handleCategoryClick('All')} className={`px-[12px] py-[3px]  cursor-pointer rounded ${selectedCategory === 'All' ? 'bg-red-900 text-white' : 'bg-red-100 '}`}>
             All Categories
           </div>
 
-          <div onClick={() => handleCategoryClick('Sports Wear')} className={`p-2 cursor-pointer border rounded ${selectedCategory === 'Sports Wear' ? 'bg-blue-500 text-white' : 'bg-white'}`} >
+          <div onClick={() => handleCategoryClick('Sports Wear')} className={`px-[12px] py-[3px] cursor-pointer rounded ${selectedCategory === 'Sports Wear' ? 'bg-red-900 text-white' : 'bg-red-100'}`} >
             Sports Wear
           </div>
-          <div onClick={() => handleCategoryClick('Fitness Wear')} className={`p-2 cursor-pointer border rounded ${selectedCategory === 'Fitness Wear' ? 'bg-blue-500 text-white' : 'bg-white'}`} >
+          <div onClick={() => handleCategoryClick('Fitness Wear')} className={`px-[12px] py-[3px] cursor-pointer rounded ${selectedCategory === 'Fitness Wear' ? 'bg-red-900 text-white' : 'bg-red-100'}`} >
             Fitness Wear
           </div>
-          <div onClick={() => handleCategoryClick('Gym Wear')} className={`p-2 cursor-pointer border rounded ${selectedCategory === 'Gym Wear' ? 'bg-blue-500 text-white' : 'bg-white'}`} >
+          <div onClick={() => handleCategoryClick('Gym Wear')} className={`px-[12px] py-[3px] cursor-pointer rounded ${selectedCategory === 'Gym Wear' ? 'bg-red-900 text-white' : 'bg-red-100'}`} >
             Gym Wear
           </div>
 
@@ -202,7 +213,7 @@ const ProductList = () => {
               <div
                 key={category._id}
                 onClick={() => handleCategoryClick(category.name)}
-                className={`p-2 cursor-pointer border rounded ${selectedCategory === category.name ? 'bg-blue-500 text-white' : 'bg-white'}`}
+                className={`px-[12px] py-[3px] cursor-pointer rounded ${selectedCategory === category.name ? 'bg-red-900 text-white' : 'bg-red-100'}`}
               >
                 {category.name}
               </div>
@@ -212,12 +223,11 @@ const ProductList = () => {
       </div>
 
       {selectedCategory !== 'All' && (
-        <div className="mb-4">
-          <label className="block text-lg font-medium">Filter by Subcategory:</label>
-          <div className="mt-2 flex flex-wrap gap-2">
+        <div className="my-4 ml-[7px] lg:ml-[25px] ">
+          <div className="mt-2 flex text-sm sm:text-md lg:text-lg font-medium text-red-900 flex-wrap gap-2">
             <div
               onClick={() => handleSubcategoryClick('All')}
-              className={`p-2 cursor-pointer border rounded ${selectedSubcategory === 'All' ? 'bg-blue-500 text-white' : 'bg-white'}`}
+              className={`px-[12px] py-[3px] cursor-pointer rounded ${selectedSubcategory === 'All' ? 'bg-red-900 text-white' : 'bg-red-100'}`}
             >
               All Subcategories
             </div>
@@ -225,7 +235,7 @@ const ProductList = () => {
               <div
                 key={subcategory._id}
                 onClick={() => handleSubcategoryClick(subcategory.name)}
-                className={`p-2 cursor-pointer border rounded ${selectedSubcategory === subcategory.name ? 'bg-blue-500 text-white' : 'bg-white'}`}
+                className={`px-[12px] py-[3px] cursor-pointer rounded ${selectedSubcategory === subcategory.name ? 'bg-red-900 text-white' : 'bg-red-100'}`}
               >
                 {subcategory.name}
               </div>
@@ -235,7 +245,7 @@ const ProductList = () => {
       )}
 
       {/* Product list */}
-      <div className="mx-auto grid grid-cols-2 overflow-hidden lg:grid-cols-3 xl:grid-cols-4 ">
+      <div className="mx-auto my-[45px] grid grid-cols-2 overflow-hidden lg:grid-cols-3 xl:grid-cols-4 ">
         {filteredProducts.map((product) => {
           const discountedPrice = product.sale
             ? (product.price - (product.price * product.sale) / 100).toFixed(2)
@@ -255,7 +265,7 @@ const ProductList = () => {
               />
               <div className='mx-auto w-[180px] md:w-[340px] lg:w-[300px] sm:w-[280px] '>
 
-                <h1 className='text-xl md:text-[25px] lg:text-[30px] mb-[6px]  font-medium'>{product.name}</h1>
+                <h1 className='text-xl md:text-[25px] lg:text-[30px] mb-[6px] underline underline-offset-1 font-medium'>{product.name}</h1>
 
                 <div className='md:mt-[10px] mt-[0px] inline-block'>
                   <p className="text-[10px] md:text-[13px] font-medium px-[10px] py-[2px] rounded-xl bg-gray-600 text-white">{product.category}</p>

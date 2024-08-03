@@ -3,6 +3,78 @@ import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { clearCart } from '../redux/cartSlice';
+import { FaDollarSign, FaGift, FaTruck } from 'react-icons/fa'; 
+import { FiFileText } from 'react-icons/fi';
+import { motion } from 'framer-motion';
+import { FaTimes } from 'react-icons/fa';
+
+
+const Modal = ({ isOpen, onClose, onConfirm }) => {
+    if (!isOpen) return null;
+  
+    // Define animation properties
+    const modalVariants = {
+      hidden: {
+        opacity: 0,
+        scale: 0.8,
+        y: '200px',
+      },
+      visible: {
+        opacity: 1,
+        scale: 1,
+        y: '0px',
+        transition: { duration: 0.3, ease: 'easeOut' },
+      },
+      exit: {
+        opacity: 0, 
+        y: '1-200px',
+        transition: { duration: 1, ease: 'easeIn' },
+      },
+    };
+  
+    return (
+      <div
+        className='fixed inset-0 bg-gray-600 bg-opacity-50 flex justify-center items-center z-50'
+        initial="hidden"
+        animate="visible"
+        exit="exit"
+        variants={modalVariants}
+      >
+        <motion.div
+          className='bg-white p-6 rounded-lg shadow-lg max-w-sm w-full'
+          initial={{ opacity: 0, scale: 0.9 }}
+          animate={{ opacity: 1, scale: 1 }}
+          exit={{ opacity: 0, scale: 0.9 }}
+          transition={{ duration: 0.3 }}
+        >
+          <div className='flex justify-between items-center'>
+            <h2 className='text-2xl font-bold'>Confirm Order</h2>
+            <button onClick={onClose} className='text-gray-500 hover:text-gray-700'>
+              <FaTimes size={20} />
+            </button>
+          </div>
+          <p className='mt-4 text-md font-medium'>
+            Are you sure you want to place this order? Once confirmed, you will not be able to modify it.
+          </p>
+          <div className='flex justify-end mt-6'>
+            <button
+              onClick={onClose}
+              className='bg-red-500 text-white font-semibold px-4 py-2 rounded-lg mr-2'
+            >
+              Cancel
+            </button>
+            <button
+              onClick={onConfirm}
+              className='bg-green-900 text-white px-4 py-2 rounded-lg'
+            >
+              Confirm
+            </button>
+          </div>
+        </motion.div>
+      </div>
+    );
+  };
+  
 
 const OrderList = () => {
     const cart = useSelector(state => state.cart);
@@ -10,6 +82,7 @@ const OrderList = () => {
     const navigate = useNavigate();
     const [products, setProducts] = useState([]);
     const [userId, setUserId] = useState(null);
+    const [isModalOpen, setIsModalOpen] = useState(false); // Modal state
 
     // Function to decode JWT token
     const decodeToken = useCallback((token) => {
@@ -63,14 +136,12 @@ const OrderList = () => {
             orderDate: new Date().toISOString(),
             total: calculateTotalBill()
         };
-        console.log(cart);
-        console.log(order);
+
         try {
             await axios.post(`http://localhost:3001/api/place-order/orders/${userId}`, order);
             alert('Order confirmed!');
             dispatch(clearCart());
 
-            console.log(cart);
             await axios.post('http://localhost:3001/api/cartState/cart/save', { userId, items: [] });
             navigate('/profile'); // Redirect to profile or another appropriate page
         } catch (error) {
@@ -91,38 +162,47 @@ const OrderList = () => {
             return total;
         }, 0).toFixed(2);
     };
-    
+
+    const openModal = () => setIsModalOpen(true);
+    const closeModal = () => setIsModalOpen(false);
 
     if (!cart.length) return <p>Your cart is empty</p>;
 
     return (
+        <div className='xsx:w-[70%] flex flex-col xl:w-[60%] mx-auto'>
+            <h1 className="text-4xl flex items-center mx-auto text-red-900 underline underline-offset-4 mt-[15px] text-center font-bold">
+                <FiFileText className='mt-[8px] mr-[5px]' />
+                Final Invoice
+            </h1>
 
-        <div className=' xsx:w-[70%] xl:w-[60%] mx-auto'>
-
-            <h1 className="text-4xl mt-[15px] text-center font-bold">Final Bill</h1>
-
-            <div className='flex border p-[15px] rounded-xl flex-col'>
-                <div className='text-xl font-bold'>Checkout</div>
-                <div className='border-b border-t border-gray-400 text-md font-semibold'>
+            <div className='flex border shadow-custom-card mt-[25px] p-[15px] rounded-xl flex-col'>
+                <div className='text-2xl font-bold'>Checkout</div>
+                <div className='border-b border-t border-gray-400 text-[17px] font-semibold'>
                     <div className='flex mt-[15px] justify-between'>
-                        <p>Your Cart Subtotal:</p>
+                        <p className='flex items-center'><FaDollarSign className='text-green-600' />Your Cart Subtotal:</p>
                         <p className='px-[8px] text-xl rounded-xl'><span className='text-lg'>Rs.</span>{calculateTotalBill()}</p>
                     </div>
                     <div className='flex mt-[8px] justify-between'>
-                        <p>Discount Through Applied Sales:</p>
+                        <p className='flex items-center'><FaGift className='text-blue-600 mr-2' />Discount Through Applied Sales:</p>
                         <p className='px-[8px] text-xl rounded-xl'><span className='text-lg'>Rs.</span>{calculateTotalBill()}</p>
                     </div>
                     <div className='flex my-[8px] justify-between'>
-                        <p>Delivery Charges (*On Delivery):</p>
+                        <p className='flex items-center'><FaTruck className='text-red-600 mr-2' />Delivery Charges (*On Delivery):</p>
                         <p className='px-[8px] text-xl rounded-xl'><span className='text-lg'>Rs.</span>200</p>
                     </div>
                 </div>
 
                 <div className='flex justify-between'>
-                    <p className='px-[8px] text-4xl mt-[10px] font-bold rounded-xl'><span className='text-xl font-medium mr-[3px]'>Rs.</span>{calculateTotalBill()}</p>
-                    <button onClick={handleConfirmOrder} className="border-2 text-[20px] font-bold mt-[15px] py-[5px] hover:bg-white hover:text-green-800 bg-green-700 border-green-700 rounded-2xl px-[25px] text-white">Place Order</button>
+                    <p className='px-[8px] text-4xl mt-[10px] font-bold rounded-xl'>
+                        <span className='text-xl font-medium mr-[3px]'>Rs.</span>{calculateTotalBill()}
+                    </p>
+                    <button
+                        onClick={openModal}
+                        className="border-2 text-[20px] font-bold mt-[15px] py-[5px] hover:bg-white hover:bg-gradient-to-tl hover:scale-95 transition duration-300 bg-gradient-to-tr from-red-500 via-red-950 to-red-500  border-red-700 rounded-2xl px-[25px] text-red-50"
+                    >
+                        Place Order
+                    </button>
                 </div>
-
             </div>
 
             <div className="mt-4 md:px-0 px-[8px]">
@@ -140,14 +220,14 @@ const OrderList = () => {
                                 <div className='flex items-center mt-[8px]'>
                                     <p className='w-[12px] ml-[4px] h-[12px] rounded-full mr-[6px] bg-red-800 '></p>
                                     <h3 className="text-xl xsx:text-2xl mb-[2px] underline font-bold">{product.name || 'Unknown Product'}</h3>
-                                </div> 
+                                </div>
 
                                 <p className="text-md ml-[20px] font-bold text-black">
-                                    <span className='font-semibold text-red-900  mr-[5px]'>Quantity:</span>  {item.quantity}
+                                    <span className='font-semibold text-red-900 mr-[5px]'>Quantity:</span>  {item.quantity}
                                 </p>
 
                                 <p className="text-md ml-[20px] font-bold text-black">
-                                    <span className='font-semibold text-red-900  mr-[5px]'>Actual Price:</span>${product.price.toFixed(2)}
+                                    <span className='font-semibold text-red-900 mr-[5px]'>Actual Price:</span>${product.price.toFixed(2)}
                                 </p>
 
                                 <p className="text-md ml-[20px] font-bold text-black">
@@ -156,17 +236,25 @@ const OrderList = () => {
 
                                 <div className='flex justify-between'>
                                     <p className="text-xl ml-[12px] text-red-400 underline font-bold rounded-md p-[5px]">Total Price:</p>
-                                    <p  className="text-2xl text-red-800 font-bold rounded-md p-[5px]"><span className='text-lg mr-[4px]'>Rs.</span>{(discountedPrice * item.quantity).toFixed(2)}</p>
+                                    <p className="text-2xl text-red-800 font-bold rounded-md p-[5px]"><span className='text-lg mr-[4px]'>Rs.</span>{(discountedPrice * item.quantity).toFixed(2)}</p>
                                 </div>
-
                             </div>
                         </div>
                     );
                 })}
-                
             </div>
+
+            <Modal
+                isOpen={isModalOpen}
+                onClose={closeModal}
+                onConfirm={() => {
+                    closeModal();
+                    handleConfirmOrder();
+                }}
+            />
         </div>
     );
 };
+
 
 export default OrderList;

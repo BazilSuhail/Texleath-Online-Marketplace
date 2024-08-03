@@ -2,7 +2,7 @@ import React from "react";
 import { BrowserRouter as Router, Routes, Route, } from "react-router-dom";
 
 import Navbar from "./Components/Navbar";
-import Dashboard from "./Components/Dashboard";
+import HomePage from "./Components/HomePage";
 import ProductDetails from "./Components/ProductDetails";
 import ProductList from "./Components/ProductList";
 import Login from "./Components/authentication/LoginUser";
@@ -24,7 +24,7 @@ const App = () => {
       <Navbar />
       <Routes>
 
-        <Route exact path="/" element={<Dashboard />} />
+        <Route exact path="/" element={<HomePage />} />
 
         {/*  <Route path="/productlist" element={<ProductList  />} /> */}
         <Route path="/productlist/:category?/:subcategory?" element={<ProductList />} />

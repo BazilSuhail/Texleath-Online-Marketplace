@@ -100,7 +100,7 @@ const Navbar = () => {
                     : <div className="h-[10px] bg-gradient-to-r from-red-950 via-custom-red to-red-950 w-full"></div>
                 }
             </div>
-            
+
 
             <NavLink to="/" className=" h-[55px] pt-[5px] xsx:flex hidden items-center justify-center w-full pb-[5px] overflow-hidden">
                 <img src={texleathlogo} alt="kasm kjanf" className="w-[45px] h-[45px]" />
@@ -117,15 +117,15 @@ const Navbar = () => {
                 <div className="flex items-center space-x-8 ml-[-25px] font-medium text-white">
 
                     <NavLink to="/productlist/Sports%20Wear" className="relative group">
-                        Sports  
+                        Sports
                     </NavLink>
 
                     <NavLink to="/productlist/Active%20Wear" className="relative group">
-                        Active Wear 
+                        Active Wear
                     </NavLink>
 
                     <NavLink to="/productlist/Fitness%20Wear" className="relative group">
-                        Gym Wear 
+                        Gym Wear
                     </NavLink>
                 </div>
 
@@ -136,11 +136,15 @@ const Navbar = () => {
                         <NavLink to="/profile"><IoPersonCircleOutline className="text-white hover:text-red-600 text-[45px]" /></NavLink>
                     </div>
                 ) : (
+                    <NavLink to="/login" className="text-[17px] w-[140px] xl:ml-[-65px] py-[3px] text-center z-30  bg-rose-950 border border-white rounded-md text-white relative font-semibold font-sans after:-z-20 after:absolute after:h-1 after:w-1 after:bg-rose-500 after:left-5 overflow-hidden after:bottom-0 after:translate-y-full after:rounded-md after:hover:scale-[300] after:hover:transition-all after:hover:duration-700 after:transition-all after:duration-700 transition-all duration-700 ">
+                        Start Shpping
+                    </NavLink>
+
+                )}
+                {/*
                     <NavLink to="/login" className="text-white mt-[15px] text-[17px] w-[140px] xl:ml-[-65px] text-center py-[3px] hover:bg-red-950 bg-red-900 border border-white px-[8px] rounded-lg mr-[15px]">
                         Start Shopping
-                    </NavLink>
-                )}
-
+                    </NavLink> */}
             </div>
 
 
@@ -195,7 +199,7 @@ const Navbar = () => {
                         <motion.div
                             initial={{ width: 0 }}
                             animate={{ width: "70vw", transition: { duration: 0.5 } }}
-                            exit={{ width: 0, transition: { duration: 0.3, delay: 0.3 } }}
+                            exit={{ width: 0, transition: { duration: 0.3, delay: 0.1 } }}
                             className="fixed inset-0 bg-navbar-color bg-gradient-to-r from-red-950 to-custom-red flex w-[70vw] flex-col h-screen px-4 py-3 z-30"
 
                         >
@@ -203,14 +207,13 @@ const Navbar = () => {
                             {/* Menu items */}
                             <motion.div
                                 initial={{ x: -100, opacity: 0 }}
-                                animate={{ x: 0, opacity: 1, transition: { duration: 0.5, delay: 0.5 } }}
+                                animate={{ x: 0, opacity: 1, transition: { duration: 0.5, delay: 0.3 } }}
                                 exit={{ x: -100, opacity: 0, transition: { duration: 0.2 } }}
                                 className="flex flex-col mt-[50px]"
                             >
                                 <NavLink to="/" onClick={handleMenuToggle} className="text-white mb-[12px] text-md text-xl  mr-[15px]"> Home</NavLink>
-                               
                                 <NavLink to="/productlist/All" onClick={handleMenuToggle} className="text-white  mb-[12px] text-md text-lg mr-[15px]"> Catalog</NavLink>
-                               
+
                                 <div key={index} className='mb-4'>
                                     <button
                                         className="text-white text-md text-xl flex items-center w-full justify-between mr-[15px]"
@@ -256,12 +259,12 @@ const Navbar = () => {
                                 <div className="my-[5px] "></div>
                                 <NavLink to="/termsOfService" onClick={handleMenuToggle} className="text-white text-md text-lg mr-[15px]">Terms Of Service</NavLink>
                                 <div className="my-[5px] "></div>
-                               
+
                                 <div className="h-[2px] w-[85%] bg-red-50  my-[8px]"></div>
 
                                 {isLoggedIn ? (
-                                    <div  className="flex">
-                                         <NavLink onClick={handleMenuToggle}  to="/profile" className="flex items-center mt-[7px]"><IoPersonCircleOutline className="text-red-100 hover:text-red-600 text-[45px]" /><span className="font-medium underline ml-[2px] text-xl text-white">My Profile</span></NavLink>
+                                    <div className="flex">
+                                        <NavLink onClick={handleMenuToggle} to="/profile" className="flex items-center mt-[7px]"><IoPersonCircleOutline className="text-red-100 hover:text-red-600 text-[45px]" /><span className="font-medium underline ml-[2px] text-xl text-white">My Profile</span></NavLink>
                                     </div>
                                 ) : (
                                     <NavLink to="/login" onClick={handleMenuToggle} className="text-white mt-[15px] text-md w-[130px] text-center py-[3px] hover:bg-red-950 bg-red-900 border border-white px-[8px] rounded-lg mr-[15px]">
