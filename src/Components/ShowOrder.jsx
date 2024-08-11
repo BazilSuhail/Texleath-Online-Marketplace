@@ -73,6 +73,10 @@ const ShowOrders = () => {
                                         </p>
 
                                         <p className="text-md ml-[20px] font-bold text-black">
+                                            <span className='font-semibold text-red-900 '>Selected Size:</span> <span className='px-[10px] pb-[2px] rounded-md bg-red-900 text-white'>{item.size}</span>
+                                        </p>
+
+                                        <p className="text-md ml-[20px] font-bold text-black">
                                             <span className='font-semibold text-red-900 '>Price:</span> ${item.price ? item.price.toFixed(2) : 'N/A'}
                                         </p>
 

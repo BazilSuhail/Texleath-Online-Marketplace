@@ -111,7 +111,7 @@ const ProductDetails = () => {
 
   const handleAddToCart = () => {
     if (product) {
-      dispatch(addToCart({ id: product._id, quantity }));
+      dispatch(addToCart({ id: product._id, quantity, size: selectedSize }));
     }
   };
 

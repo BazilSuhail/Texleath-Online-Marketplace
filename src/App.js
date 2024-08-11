@@ -17,6 +17,7 @@ import FAQPage from "./Components/Pages/Faq";
 import PrivacyPolicy from "./Components/Pages/PrivacyPolicy";
 import TermsOfService from "./Components/Pages/TermOfService";
 import CustomerSupport from "./Components/Pages/CustomerSupport";
+import About from "./Components/Pages/About";
 
 const App = () => {
   return (
@@ -29,6 +30,8 @@ const App = () => {
         {/*  <Route path="/productlist" element={<ProductList  />} /> */}
         <Route path="/productlist/:category?/:subcategory?" element={<ProductList />} />
 
+
+        <Route path="/about" element={<About />} />
 
         <Route path="/products/:id" element={<ProductDetails />} />
 

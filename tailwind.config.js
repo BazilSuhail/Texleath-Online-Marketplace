@@ -5,7 +5,10 @@ module.exports = {
   theme: {
     extend: {
       screens: {
-        'xsx': '940px',
+        'xsx': '900px',
+      },
+      fontWeight: {
+        'extra-black': '900',
       },
       colors: {
         'custom-gray': 'rgb(200, 200, 200)',
@@ -20,6 +23,9 @@ module.exports = {
       boxShadow: {
         'custom-shadow': '1px 1px 10px #ffb7b7',
         'custom-dark': '0px 0px 5px rgb(0, 30, 65, 0.488 )',
+        'custom-text': '0px 0px 2px rgb(0, 30, 0 )',
+
+
         'custom-card': '0px 0px 9px rgba(76, 76, 76, 0.718)',
         'custom-blured': '0px -80px 70px #ffeded',
         'custom-blured-2': '0px -120px 70px #ffeded',

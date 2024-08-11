@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { removeFromCart, clearCart, updateQuantity } from '../redux/cartSlice';
 import axios from 'axios';
+
 const Cart = () => {
     const cart = useSelector(state => state.cart);
     const dispatch = useDispatch();
@@ -39,24 +40,24 @@ const Cart = () => {
         fetchProducts();
     }, [cart]);
 
-    const handleRemoveFromCart = id => {
-        dispatch(removeFromCart(id));
+    const handleRemoveFromCart = (id, size) => {
+        dispatch(removeFromCart({ id, size }));
     };
 
     const handleClearCart = () => {
         dispatch(clearCart());
     };
 
-    const handleIncreaseQuantity = id => {
-        dispatch(updateQuantity({ id, quantity: getQuantity(id) + 1 }));
+    const handleIncreaseQuantity = (id, size) => {
+        dispatch(updateQuantity({ id, quantity: getQuantity(id, size) + 1, size }));
     };
 
-    const handleDecreaseQuantity = id => {
-        dispatch(updateQuantity({ id, quantity: Math.max(getQuantity(id) - 1, 1) }));
+    const handleDecreaseQuantity = (id, size) => {
+        dispatch(updateQuantity({ id, quantity: Math.max(getQuantity(id, size) - 1, 1), size }));
     };
 
-    const getQuantity = id => {
-        const item = cart.find(product => product.id === id);
+    const getQuantity = (id, size) => {
+        const item = cart.find(product => product.id === id && product.size === size);
         return item ? item.quantity : 1;
     };
 
@@ -89,6 +90,7 @@ const Cart = () => {
 
     const handleSaveCart = async () => {
         try {
+            console.log(cart);
             await axios.post('http://localhost:3001/api/cartState/cart/save', { userId, items: cart });
             alert('Cart saved successfully!');
         } catch (error) {
@@ -105,7 +107,6 @@ const Cart = () => {
                 </p>
             ) : (
                 <div className=' xsx:w-[80%] mx-auto'>
-
                     <div className='flex xsx:flex-row flex-col justify-between'>
                         <h1 className="text-2xl xsx:text-left text-center font-bold">Shopping Cart</h1>
                         <div className='mt-[15px] xsx:mt-0 xsx:text-lg font-semibold'>
@@ -135,18 +136,18 @@ const Cart = () => {
                             <p className='px-[8px] text-4xl mt-[10px] font-bold rounded-xl'><span className='text-xl font-medium mr-[3px]'>Rs.</span>200</p>
                             <button onClick={navigateToOrderList} className="border-2 text-[20px] font-bold mt-[15px] py-[5px] hover:bg-white hover:text-green-800 bg-green-700 border-green-700 rounded-2xl px-[25px] text-white">Checkout</button>
                         </div>
-
                     </div>
 
                     <div className="mt-4">
                         {cart.map(item => (
                             <CartItem
-                                key={item.id}
+                                key={`${item.id}-${item.size}`}
                                 id={item.id}
+                                size={item.size}
                                 quantity={item.quantity}
-                                onIncrease={() => handleIncreaseQuantity(item.id)}
-                                onDecrease={() => handleDecreaseQuantity(item.id)}
-                                onRemove={() => handleRemoveFromCart(item.id)}
+                                onIncrease={() => handleIncreaseQuantity(item.id, item.size)}
+                                onDecrease={() => handleDecreaseQuantity(item.id, item.size)}
+                                onRemove={() => handleRemoveFromCart(item.id, item.size)}
                             />
                         ))}
                     </div>
@@ -157,7 +158,7 @@ const Cart = () => {
 };
 
 
-const CartItem = ({ id, quantity, onIncrease, onDecrease, onRemove }) => {
+const CartItem = ({ id, size, quantity, onIncrease, onDecrease, onRemove }) => {
     const [product, setProduct] = useState(null);
 
     useEffect(() => {
@@ -181,14 +182,12 @@ const CartItem = ({ id, quantity, onIncrease, onDecrease, onRemove }) => {
 
     return (
         <div className="flex xsx:flex-row flex-col items-center justify-between mb-[28px] bg-custom-light-red border rounded-2xl border-red-700 p-4">
-
             <div className='w-[200px] h-[180px]'>
                 <img
                     src={`http://localhost:3001/uploads/${product.image}`}
                     alt={product.name}
                     className=" h-[180px] mx-auto object-cover"
                 />
-                
             </div>
             <div className="md:ml-4 flex-1">
                 <div className='flex my-[15px] xsx:my-0 justify-between'>
@@ -198,8 +197,13 @@ const CartItem = ({ id, quantity, onIncrease, onDecrease, onRemove }) => {
 
                 <div className="text-sm md:text-lg  flex items-center my-[5px]">
                     <span className='font-medium mt-[3px] text-red-950 mr-[5px]'>Item Price:</span>
-                    {product.sale && <span className="text-red-500 mt-[3px] font-medium mr-[8px] line-through">${product.price.toFixed(2)}</span>}
-                    <span className='text-[24px] md:text-[28px] text-green-800 font-bold'>${discountedPrice}</span>
+                    {product.sale && <span className='text-red-600 line-through'>{product.price}</span>}
+                    <span className='text-lg font-bold'>{discountedPrice}</span>
+                </div>
+
+                <div className="text-sm md:text-lg flex items-center my-[5px]">
+                    <span className='font-medium mt-[3px] text-red-950 mr-[5px]'>Size:</span>
+                    <span className='text-lg font-bold'>{size}</span>
                 </div>
 
                 <div className='flex justify-between md:mx-0 mx-auto flex-row items-center'>

@@ -127,8 +127,9 @@ const OrderList = () => {
                     ? product.price - (product.price * product.sale) / 100
                     : product.price;
                 return {
-                    name: product?.name || 'Unknown Product',
+                    name: product?.name || 'Unknown Product', 
                     price: product?.price || 0,
+                    size: item?.size || 'No size Selected',
                     discountedPrice: discountedPrice || 0,
                     quantity: item.quantity
                 };
@@ -136,6 +137,7 @@ const OrderList = () => {
             orderDate: new Date().toISOString(),
             total: calculateTotalBill()
         };
+        console.log(order);
 
         try {
             await axios.post(`http://localhost:3001/api/place-order/orders/${userId}`, order);
@@ -224,6 +226,10 @@ const OrderList = () => {
 
                                 <p className="text-md ml-[20px] font-bold text-black">
                                     <span className='font-semibold text-red-900 mr-[5px]'>Quantity:</span>  {item.quantity}
+                                </p>
+
+                                <p className="text-md ml-[20px] font-bold text-black">
+                                    <span className='font-semibold text-red-900 mr-[5px]'>Selected Size:</span>  {item.size}
                                 </p>
 
                                 <p className="text-md ml-[20px] font-bold text-black">

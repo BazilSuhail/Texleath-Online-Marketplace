@@ -110,9 +110,13 @@ const Navbar = () => {
 
             <div className="w-full xsx:flex hidden h-[55px] pt-[8px]  p-4 items-center justify-between z-50">
                 <div>
-                    <NavLink to="/avout" className="text-white font-serif ml-[15px]"> About</NavLink>
-                    <NavLink to="/productlist/All" className="text-white font-serif ml-[12px]"> Catalog</NavLink>
-                </div>
+                    <NavLink to="/about" className="text-gray-200  font-semibold cursor-pointer relative border-none bg-transparent transition-all duration-800 ease-[cubic-bezier(0.25,0.8,0.25,1)] focus:text-white hover:text-white after:content-[''] after:pointer-events-none after:absolute after:bottom-[-2px] after:left-1/2 after:w-0 after:h-[2px] after:bg-white after:transition-all after:duration-400 after:ease-[cubic-bezier(0.25,0.8,0.25,1)] focus:after:w-full focus:after:left-0 hover:after:w-full hover:after:left-0 mt-[10px]" >
+                        About
+                    </NavLink>
+                    <NavLink to="/productlist/All" className="text-gray-200 ml-[12px] font-semibold cursor-pointer relative border-none bg-transparent transition-all duration-800 ease-[cubic-bezier(0.25,0.8,0.25,1)] focus:text-white hover:text-white after:content-[''] after:pointer-events-none after:absolute after:bottom-[-2px] after:left-1/2 after:w-0 after:h-[2px] after:bg-white after:transition-all after:duration-400 after:ease-[cubic-bezier(0.25,0.8,0.25,1)] focus:after:w-full focus:after:left-0 hover:after:w-full hover:after:left-0 mt-[10px]" >
+                        Catalog
+                    </NavLink>
+                   </div>
 
                 <div className="flex items-center space-x-8 ml-[-25px] font-medium text-white">
 
