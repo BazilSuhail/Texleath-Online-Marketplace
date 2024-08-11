@@ -26,12 +26,7 @@ module.exports = {
         'custom-text': '0px 0px 2px rgb(0, 30, 0 )',
 
 
-        'custom-card': '0px 0px 9px rgba(76, 76, 76, 0.718)',
-        'custom-blured': '0px -80px 70px #ffeded',
-        'custom-blured-2': '0px -120px 70px #ffeded',
-        'custom-blured-3': '0px -160px 70px #ffeded',
-        'custom-blured-4': '0px -200px 70px #ffeded',
-        'custom-blured-5': '0px -230px 40px #ffeded',
+        'custom-card': '0px 0px 9px rgba(76, 76, 76, 0.718)', 
       },
       keyframes: {
         fadeInOut: {
