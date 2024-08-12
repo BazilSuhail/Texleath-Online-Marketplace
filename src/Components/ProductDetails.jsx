@@ -15,7 +15,7 @@ const MediaCarousel = ({ mainImage, otherImages }) => {
 
   return (
     <div className='w-full flex xl:flex-row flex-col'>
-      <div className="lg:mb-0 mb-[25px] xl:hidden flex px-[6px] lg:h-[650px] xl:order-1 order-2 otherImages-scrollbar overflow-y-auto">
+      <div className="lg:mb-0 mb-[25px] xl:hidden flex px-[6px] xl:h-[650px] xl:order-1 order-2 otherImages-scrollbar overflow-y-auto">
         <div className='thumbnail m-2 cursor-pointer' onClick={() => handleMediaClick(mainImage)}>
           <div className='w-[150px] h-[180px]'>
             <img
@@ -153,7 +153,7 @@ const ProductDetails = () => {
           />
         </div>
 
-        <div className='lg:h-screen xsx:pl-[15px] flex flex-col col-span-4'>
+        <div className='xl:h-screen xsx:pl-[15px] flex flex-col col-span-4'>
           <div className='text-lg  w-[140px] py-[3px] text-center rounded-md text-white bg-red-500'>Sale: <span className='font-bold text-xl'>{product.sale}%</span> <span className='text-sm'>OFF</span></div>
 
           <h1 className="text-3xl mt-[12px] font-bold">{product.name}</h1>

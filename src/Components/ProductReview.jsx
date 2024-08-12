@@ -15,7 +15,7 @@ const ReviewsList = ({ productId }) => {
   useEffect(() => {
     const fetchReviews = async () => {
       try {
-        const response = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/reviews/${productId}`);
+        const response = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/product-reviews/reviews/${productId}`);
         setReviews(response.data.reviews);
       } catch (err) {
         setError(err.message);
@@ -137,7 +137,7 @@ const ReviewProduct = ({ productId }) => {
         }
       };
 
-      await axios.post(`${process.env.REACT_APP_API_BASE_URL}/reviews`, reviewData, {
+      await axios.post(`${process.env.REACT_APP_API_BASE_URL}/product-reviews/reviews`, reviewData, {
         headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` }
       });
 

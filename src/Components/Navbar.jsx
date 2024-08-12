@@ -28,7 +28,7 @@ const Navbar = () => {
         try {
             const token = localStorage.getItem('token');
             if (token) {
-                const response = await axios.get('http://localhost:3001/api/auth/profile', {
+                const response = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/auth/profile`, {
                     headers: { 'Authorization': `Bearer ${token}` }
                 });
                 if (response.status === 200) {

@@ -23,7 +23,7 @@ const Register = () => {
         }
 
         try {
-            await axios.post('http://localhost:3001/api/auth/register', { email, password });
+            await axios.post(`${process.env.REACT_APP_API_BASE_URL}/auth/register`, { email, password });
             setSuccess('Registration successful! Please log in.');
             setError('');
             setTimeout(() => navigate('/login'), 1000);

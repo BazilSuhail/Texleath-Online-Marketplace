@@ -271,7 +271,7 @@ const HomePage = () => {
             <h3 className="text-3xl font-bold text-red-800 text-center mb-2">Free Shipping</h3>
             <p className='text-gray-400 font-serif text-center'>Receive your product Within 2-3 Working days. Free Cash on Delivery all over Pakistan.</p>
           </div>
-          <div className="bg-white p-6 rounded-lg mb-[45px] shadow-lg">
+          <div className="bg-white p-6 rounded-lg md:mb-[45px] shadow-lg">
             <FaShippingFast className="text-red-600 text-[105px] mb-4 mx-auto" />
             <h3 className="text-3xl font-bold text-red-800 text-center mb-2">Return or Refunded</h3>
             <p className='text-gray-400 font-serif text-center'>You can return your product within 7 days of receiving it. To request a refund.</p>

@@ -30,7 +30,7 @@ const Profile = () => {
         try {
             const token = localStorage.getItem('token');
             if (token) {
-                const response = await axios.get('http://localhost:3001/api/auth/profile', {
+                const response = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/auth/profile`, {
                     headers: { 'Authorization': `Bearer ${token}` }
                 });
                 setUser(response.data);
@@ -72,7 +72,7 @@ const Profile = () => {
         e.preventDefault();
         try {
             const token = localStorage.getItem('token');
-            await axios.put('http://localhost:3001/api/auth/profile', formData, {
+            await axios.put(`${process.env.REACT_APP_API_BASE_URL}/auth/profile`, formData, {
                 headers: { 'Authorization': `Bearer ${token}` }
             });
             // Optionally refetch the profile data to reflect updates
