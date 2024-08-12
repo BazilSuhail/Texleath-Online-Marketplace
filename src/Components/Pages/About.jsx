@@ -142,7 +142,7 @@ const About = () => {
           </div>
         </motion.section>
 
-        <section className='md:w-[90%] w-[95%] mt-[35px] xl:w-[80%] mx-auto flex  bg-gradient-to-tr from-red-600 via-red-300 to-red-600 rounded-md py-[40px] sm:py-[85px] xsx:py-[105px]' >
+        <section className='md:w-[90%] w-[95%] mt-[35px] xl:w-[80%] mx-auto flex  bg-gradient-to-t from-red-400 via-red-100 to-red-400 rounded-md py-[40px] sm:py-[85px] xsx:py-[105px]' >
         <div className='w-[40%] mt-[-28px] lg:mt-[-15px] xl:mt-[5px] sm:ml-[45px] ml-[35px] mr-[-45px] scale-75 sm:scale-125 xsx:scale-150'>
           <div className="cycle-loader"></div>
         </div>
