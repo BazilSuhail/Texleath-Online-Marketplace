@@ -253,7 +253,7 @@ const Navbar = () => {
                                 </div>
                                 <div className="h-[2px] w-[85%] bg-red-50 mt-[-5px]"></div>
 
-                                <NavLink to="/productlist" onClick={handleMenuToggle} className="text-white text-md mt-[15px] text-lg mr-[15px]"> About Us</NavLink>
+                                <NavLink to="/about" onClick={handleMenuToggle} className="text-white text-md mt-[15px] text-lg mr-[15px]"> About Us</NavLink>
                                 <div className="my-[5px] "></div>
                                 <NavLink to="/faqs" onClick={handleMenuToggle} className="text-white text-md text-lg mr-[15px]"> FAQ's</NavLink>
                                 <div className="my-[5px] "></div>

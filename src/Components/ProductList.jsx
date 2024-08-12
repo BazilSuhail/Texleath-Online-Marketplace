@@ -61,7 +61,7 @@ const SearchFilter = ({ products }) => {
 
                 return (
                   <div
-                    key={product._id} 
+                    key={product._id}
                     className="block p-[10px] overflow-x-hidden sm:p-[5px] cursor-pointer"
                     onClick={() => navigate(`/products/${product._id}`)}
                   >
@@ -73,8 +73,10 @@ const SearchFilter = ({ products }) => {
 
                     <div className='mx-auto w-[180px] md:w-[340px] lg:w-[300px] sm:w-[280px] '>
 
-                      <h1 className='text-xl md:text-[25px] lg:text-[30px] mb-[6px] underline underline-offset-1 font-medium'>{product.name}</h1>
-
+                      <h1 className='text-xl md:text-[25px] lg:text-[25px] mb-[6px] text-red-900 font-medium'>
+                        {product.name.length > 22 ? `${product.name.substring(0, 22)}...` : product.name}
+                      </h1>
+                      
                       <div className='md:mt-[10px] mt-[0px] inline-block'>
                         <p className="text-[10px] md:text-[13px] font-medium px-[10px] py-[2px] rounded-xl bg-gray-600 text-white">{product.category}</p>
                       </div>
@@ -85,7 +87,7 @@ const SearchFilter = ({ products }) => {
 
                       <p className="my-[5px] flex justify-between items-center">
                         {product.sale && <span className="text-red-500 bg-red-200 font-medium rounded-xl text-sm md:text-md px-[12px] line-through">Rs.{product.price.toFixed(2)}</span>}
-                        <span className='text-2xl lg:text-3xl ml-[6px] mb-[3px] font-medium'><span className='text-[20px] font-normal'> Rs.</span>{parseInt(discountedPrice)}</span>
+                        <span className='text-[22px] ml-[6px] mb-[3px] font-medium'><span className='text-[20px] font-normal'> Rs.</span>{parseInt(discountedPrice)}</span>
                       </p>
                     </div>
                   </div>
@@ -265,7 +267,9 @@ const ProductList = () => {
               />
               <div className='mx-auto w-[180px] md:w-[340px] lg:w-[300px] sm:w-[280px] '>
 
-                <h1 className='text-xl md:text-[25px] lg:text-[30px] mb-[6px] underline underline-offset-1 font-medium'>{product.name}</h1>
+                <h1 className='text-xl md:text-[25px] lg:text-[25px] mb-[6px] text-red-900 font-medium'>
+                  {product.name.length > 22 ? `${product.name.substring(0, 22)}...` : product.name}
+                </h1>
 
                 <div className='md:mt-[10px] mt-[0px] inline-block'>
                   <p className="text-[10px] md:text-[13px] font-medium px-[10px] py-[2px] rounded-xl bg-gray-600 text-white">{product.category}</p>
@@ -277,7 +281,7 @@ const ProductList = () => {
 
                 <p className="my-[5px] flex justify-between items-center">
                   {product.sale && <span className="text-red-500 bg-red-200 font-medium rounded-xl text-sm md:text-md px-[12px] line-through">Rs.{product.price.toFixed(2)}</span>}
-                  <span className='text-2xl lg:text-3xl ml-[6px] mb-[3px] font-medium'><span className='text-[20px] font-normal'> Rs.</span>{parseInt(discountedPrice)}</span>
+                  <span className='text-[22px] ml-[6px] mb-[3px] font-medium'><span className='text-[20px] font-normal'> Rs.</span>{parseInt(discountedPrice)}</span>
                 </p>
               </div>
             </div>

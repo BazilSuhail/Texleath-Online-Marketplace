@@ -184,14 +184,16 @@ const HomePage = () => {
                   className="object-cover mx-auto h-[200px] w-[180px] hover:scale-105 transition duration-700 md:h-[400px] md:w-[340px] lg:w-[300px] lg:h-[335px] sm:h-[320px] sm:w-[280px] mb-4"
                 />
                 <div className="mx-auto w-[180px] md:w-[340px] lg:w-[300px] sm:w-[280px]">
-                  <h1 className="text-xl md:text-[25px] lg:text-[30px] mb-[15px] font-medium">{product.name}</h1>
+                  <h1 className='text-xl md:text-[25px] lg:text-[25px] mb-[6px] text-red-900 font-medium'>
+                    {product.name.length > 22 ? `${product.name.substring(0, 22)}...` : product.name}
+                  </h1>
 
                   {product.sale && (
                     <span className="text-red-500 bg-red-200 font-medium rounded-xl text-[12px] px-[12px] line-through">
                       Rs.{product.price.toFixed(2)}
                     </span>
                   )}
-                  <span className="text-[20px] lg:text-[28px] ml-[6px] mb-[3px] font-medium">
+                  <span className="text-[20px] lg:text-[22px] ml-[6px] mb-[3px] font-medium">
                     <span className="text-[20px] font-normal"> Rs.</span>{parseInt(discountedPrice)}
                   </span>
                 </div>
@@ -309,7 +311,7 @@ const HomePage = () => {
 
 
       <div className='h-[4px] w-[95%] mx-auto my-[45px] rounded-lg bg-red-700'></div>
-      
+
       <section className='md:w-[90%] xl:w-[55%] w-[95%]  mb-[45px] mx-auto mt-[35px]'>
         <div className='flex w-full justify-center mb-[35px] items-center mx-auto'>
           <FaRegHandshake className='text-[45px] md:text-[75px] text-red-900 mr-3' />
