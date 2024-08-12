@@ -103,7 +103,7 @@ const OrderList = () => {
         const fetchProducts = async () => {
             try {
                 const productResponses = await Promise.all(
-                    cart.map(item => axios.get(`http://localhost:3001/api/fetchproducts/products/${item.id}`))
+                    cart.map(item => axios.get(`${process.env.REACT_APP_API_BASE_URL}/fetchproducts/products/${item.id}`))
                 );
                 setProducts(productResponses.map(response => response.data));
             } catch (error) {
@@ -140,11 +140,11 @@ const OrderList = () => {
         console.log(order);
 
         try {
-            await axios.post(`http://localhost:3001/api/place-order/orders/${userId}`, order);
+            await axios.post(`${process.env.REACT_APP_API_BASE_URL}/place-order/orders/${userId}`, order);
             alert('Order confirmed!');
             dispatch(clearCart());
 
-            await axios.post('http://localhost:3001/api/cartState/cart/save', { userId, items: [] });
+            await axios.post(`${process.env.REACT_APP_API_BASE_URL}/cartState/cart/save`, { userId, items: [] });
             navigate('/profile'); // Redirect to profile or another appropriate page
         } catch (error) {
             console.error('Error confirming order:', error);

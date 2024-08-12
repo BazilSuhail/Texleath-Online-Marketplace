@@ -12,7 +12,15 @@ import { BiSolidCustomize } from "react-icons/bi";
 
 import { FaRegHandshake } from 'react-icons/fa';
 
-import HomePage1 from "../Assets/HomePage1.jpg"
+import HomePage1 from "../Assets/home1.jpg"
+
+
+import fitness from "../Assets/fitness.jpg"
+import gym from "../Assets/gym.jpg"
+import sports from "../Assets/sports.jpg"
+import safety from "../Assets/safety.jpg"
+import active from "../Assets/active.jpg"
+import gloves from "../Assets/gloves.jpg"
 
 const reviews = [
   {
@@ -66,7 +74,7 @@ const HomePage = () => {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const response = await axios.get('http://localhost:3001/api/homeproducts'); // Adjust API endpoint as needed
+        const response = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/homeproducts`); // Adjust API endpoint as needed
         setProducts(response.data);
       } catch (err) {
         setError(err.message);
@@ -103,34 +111,46 @@ const HomePage = () => {
 
       <section className='lg:mt-[45px] mt-[25px]'>
         <h1 className='text-2xl mb-[20px] md:text-[35px]  text-center font-bold text-red-900'>Popular Categories</h1>
-        <div className='md:w-[90%]  xl:w-[60%] mx-auto grid grid-cols-3'>
+        <div className='md:w-[90%]  xl:w-[50%] mx-auto grid grid-cols-3'>
           <div>
-            <div className='w-[90px] md:w-[160px] mx-auto rounded-full h-[90px] md:h-[160px] bg-red-900 mt-5 md:mt-10 '></div>
+            <div className='w-[90px] md:w-[160px] mx-auto h-[90px] md:h-[160px] mt-5 md:mt-10 '>
+            <img src={sports} alt="" className='w-full  rounded-full h-full' />
+            </div>
             <div className='text-red-800 font-bold md:mt-[10px] mt-[8px] text-center text-[14px] md:text-[20px]'>Sports Wear</div>
           </div>
 
           <div>
-            <div className='w-[90px] md:w-[160px] mx-auto rounded-full h-[90px] md:h-[160px] bg-red-900 mt-5 md:mt-10 '></div>
+          <div className='w-[90px] md:w-[160px] mx-auto h-[90px] md:h-[160px] mt-5 md:mt-10 '>
+            <img src={active} alt="" className='w-full  rounded-full h-full' />
+            </div>
             <div className='text-red-800 font-bold md:mt-[10px] mt-[8px] text-center text-[14px] md:text-[20px]'>Active Wear</div>
           </div>
 
           <div>
-            <div className='w-[90px] md:w-[160px] mx-auto rounded-full h-[90px] md:h-[160px] bg-red-900 mt-5 md:mt-10 '></div>
+          <div className='w-[90px] md:w-[160px] mx-auto h-[90px] md:h-[160px] mt-5 md:mt-10 '>
+            <img src={gym} alt="" className='w-full  rounded-full h-full' />
+            </div>
             <div className='text-red-800 font-bold md:mt-[10px] mt-[8px] text-center text-[14px] md:text-[20px]'>Gym Wear</div>
           </div>
 
           <div>
-            <div className='w-[90px] md:w-[160px] mx-auto rounded-full h-[90px] md:h-[160px] bg-red-900 mt-5 md:mt-10 '></div>
+            <div className='w-[90px] md:w-[160px] mx-auto h-[90px] md:h-[160px] mt-5 md:mt-10 '>
+            <img src={gloves} alt="" className='w-full  rounded-full h-full' />
+            </div>
             <div className='text-red-800 font-bold md:mt-[10px] mt-[8px] text-center text-[14px] md:text-[20px]'>Gloves</div>
           </div>
 
           <div>
-            <div className='w-[90px] md:w-[160px] mx-auto rounded-full h-[90px] md:h-[160px] bg-red-900 mt-5 md:mt-10 '></div>
+          <div className='w-[90px] md:w-[160px] mx-auto h-[90px] md:h-[160px] mt-5 md:mt-10 '>
+            <img src={fitness} alt="" className='w-full  rounded-full h-full' />
+            </div>
             <div className='text-red-800 font-bold md:mt-[10px] mt-[8px] text-center text-[14px] md:text-[20px]'>Fitness Wear</div>
           </div>
 
           <div>
-            <div className='w-[90px] md:w-[160px] mx-auto rounded-full h-[90px] md:h-[160px] bg-red-900 mt-5 md:mt-10 '></div>
+          <div className='w-[90px] md:w-[160px] mx-auto h-[90px] md:h-[160px] mt-5 md:mt-10 '>
+            <img src={safety} alt="" className='w-full  rounded-full h-full' />
+            </div>
             <div className='text-red-800 font-bold md:mt-[10px] mt-[8px] text-center text-[14px] md:text-[20px]'>Safety Wear</div>
           </div>
 

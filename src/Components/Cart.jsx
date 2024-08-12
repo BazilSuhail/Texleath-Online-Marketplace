@@ -29,7 +29,7 @@ const Cart = () => {
         const fetchProducts = async () => {
             try {
                 const productResponses = await Promise.all(
-                    cart.map(item => axios.get(`http://localhost:3001/api/fetchproducts/products/${item.id}`))
+                    cart.map(item => axios.get(`${process.env.REACT_APP_API_BASE_URL}/fetchproducts/products/${item.id}`))
                 );
                 setProducts(productResponses.map(response => response.data));
             } catch (error) {
@@ -91,7 +91,7 @@ const Cart = () => {
     const handleSaveCart = async () => {
         try {
             console.log(cart);
-            await axios.post('http://localhost:3001/api/cartState/cart/save', { userId, items: cart });
+            await axios.post(`${process.env.REACT_APP_API_BASE_URL}/cartState/cart/save`, { userId, items: cart });
             alert('Cart saved successfully!');
         } catch (error) {
             console.error('Error saving cart:', error);
@@ -100,13 +100,15 @@ const Cart = () => {
     };
 
     return (
-        <div className="p-4">
+        <div>
             {cart.length === 0 ? (
-                <p className='p-[15px] bg-red-100 border-2 border-red-700 rounded-2xl text-xl text-red-600 mx-auto text-center xsx:w-[80%]'>
-                    Your cart is empty
-                </p>
+                <div className='bg-gray-50 h-[calc(100vh-220px)] flex justify-center items-center w-screen'>
+                    <p className='p-[15px] bg-red-100 border-2 border-red-700 rounded-2xl text-xl text-red-600 mx-auto text-center w-[280px]'>
+                        Your cart is empty
+                    </p>
+                </div>
             ) : (
-                <div className=' xsx:w-[80%] mx-auto'>
+                <div className=' xsx:w-[80%] p-3 mx-auto'>
                     <div className='flex xsx:flex-row flex-col justify-between'>
                         <h1 className="text-2xl xsx:text-left text-center font-bold">Shopping Cart</h1>
                         <div className='mt-[15px] xsx:mt-0 xsx:text-lg font-semibold'>
@@ -164,7 +166,7 @@ const CartItem = ({ id, size, quantity, onIncrease, onDecrease, onRemove }) => {
     useEffect(() => {
         const fetchProduct = async () => {
             try {
-                const response = await axios.get(`http://localhost:3001/api/fetchproducts/products/${id}`);
+                const response = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/fetchproducts/products/${id}`);
                 setProduct(response.data);
             } catch (error) {
                 console.error('Error fetching product:', error);

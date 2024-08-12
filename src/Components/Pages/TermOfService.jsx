@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef, useEffect } from 'react';
 import { FaRegHandshake, FaListAlt, FaRegClock, FaExclamationTriangle } from 'react-icons/fa';
 import { motion } from 'framer-motion';
 
@@ -13,8 +13,15 @@ const textVariants = {
 };
 
 const TermsOfService = () => {
+  const TermsOfServiceref = useRef(null); // Create a ref for the Privacy Policy section
+
+  useEffect(() => {
+    if (TermsOfServiceref.current) {
+      TermsOfServiceref.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  }, []);
   return (
-    <div className='bg-red-50 min-h-screen py-8 px-4 md:px-8'>
+    <div ref={TermsOfServiceref} className='bg-red-50 min-h-screen py-8 px-4 md:px-8'>
       <div className='max-w-4xl mx-auto bg-white shadow-xl rounded-lg p-8'>
         <motion.h1
           className='text-3xl underline md:text-4xl font-bold mb-8 text-red-700 text-center'

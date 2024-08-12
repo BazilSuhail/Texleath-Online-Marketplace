@@ -15,7 +15,7 @@ const ReviewsList = ({ productId }) => {
   useEffect(() => {
     const fetchReviews = async () => {
       try {
-        const response = await axios.get(`http://localhost:3001/api/reviews/${productId}`);
+        const response = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/reviews/${productId}`);
         setReviews(response.data.reviews);
       } catch (err) {
         setError(err.message);
@@ -99,7 +99,7 @@ const ReviewProduct = ({ productId }) => {
       try {
         const token = localStorage.getItem('token');
         if (token) {
-          const response = await axios.get('http://localhost:3001/api/auth/profile', {
+          const response = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/auth/profile`, {
             headers: { 'Authorization': `Bearer ${token}` }
           });
           setUser(response.data);
@@ -137,7 +137,7 @@ const ReviewProduct = ({ productId }) => {
         }
       };
 
-      await axios.post('http://localhost:3001/api/reviews', reviewData, {
+      await axios.post(`${process.env.REACT_APP_API_BASE_URL}/reviews`, reviewData, {
         headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` }
       });
 

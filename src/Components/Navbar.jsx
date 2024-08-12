@@ -113,22 +113,21 @@ const Navbar = () => {
                     <NavLink to="/about" className="text-gray-200  font-semibold cursor-pointer relative border-none bg-transparent transition-all duration-800 ease-[cubic-bezier(0.25,0.8,0.25,1)] focus:text-white hover:text-white after:content-[''] after:pointer-events-none after:absolute after:bottom-[-2px] after:left-1/2 after:w-0 after:h-[2px] after:bg-white after:transition-all after:duration-400 after:ease-[cubic-bezier(0.25,0.8,0.25,1)] focus:after:w-full focus:after:left-0 hover:after:w-full hover:after:left-0 mt-[10px]" >
                         About
                     </NavLink>
-                    <NavLink to="/productlist/All" className="text-gray-200 ml-[12px] font-semibold cursor-pointer relative border-none bg-transparent transition-all duration-800 ease-[cubic-bezier(0.25,0.8,0.25,1)] focus:text-white hover:text-white after:content-[''] after:pointer-events-none after:absolute after:bottom-[-2px] after:left-1/2 after:w-0 after:h-[2px] after:bg-white after:transition-all after:duration-400 after:ease-[cubic-bezier(0.25,0.8,0.25,1)] focus:after:w-full focus:after:left-0 hover:after:w-full hover:after:left-0 mt-[10px]" >
+                    <NavLink to="/productlist/All" className="text-red-200 ml-[12px] font-bold cursor-pointer relative border-none bg-transparent transition-all duration-800 ease-[cubic-bezier(0.25,0.8,0.25,1)] focus:text-white hover:text-white after:content-[''] after:pointer-events-none after:absolute after:bottom-[-2px] after:left-1/2 after:w-0 after:h-[2px] after:bg-white after:transition-all after:duration-400 after:ease-[cubic-bezier(0.25,0.8,0.25,1)] focus:after:w-full focus:after:left-0 hover:after:w-full hover:after:left-0 mt-[10px]" >
                         Catalog
                     </NavLink>
-                   </div>
+                </div>
 
                 <div className="flex items-center space-x-8 ml-[-25px] font-medium text-white">
-
-                    <NavLink to="/productlist/Sports%20Wear" className="relative group">
+                    <NavLink to="/productlist/Sports%20Wear" className="text-gray-200  font-semibold cursor-pointer relative border-none bg-transparent transition-all duration-800 ease-[cubic-bezier(0.25,0.8,0.25,1)] focus:text-white hover:text-white after:content-[''] after:pointer-events-none after:absolute after:bottom-[-2px] after:left-1/2 after:w-0 after:h-[2px] after:bg-white after:transition-all after:duration-400 after:ease-[cubic-bezier(0.25,0.8,0.25,1)] focus:after:w-full focus:after:left-0 hover:after:w-full hover:after:left-0 mt-[10px]">
                         Sports
                     </NavLink>
 
-                    <NavLink to="/productlist/Active%20Wear" className="relative group">
+                    <NavLink to="/productlist/Active%20Wear" className="text-gray-200  font-semibold cursor-pointer relative border-none bg-transparent transition-all duration-800 ease-[cubic-bezier(0.25,0.8,0.25,1)] focus:text-white hover:text-white after:content-[''] after:pointer-events-none after:absolute after:bottom-[-2px] after:left-1/2 after:w-0 after:h-[2px] after:bg-white after:transition-all after:duration-400 after:ease-[cubic-bezier(0.25,0.8,0.25,1)] focus:after:w-full focus:after:left-0 hover:after:w-full hover:after:left-0 mt-[10px]">
                         Active Wear
                     </NavLink>
 
-                    <NavLink to="/productlist/Fitness%20Wear" className="relative group">
+                    <NavLink to="/productlist/Fitness%20Wear" className="text-gray-200  font-semibold cursor-pointer relative border-none bg-transparent transition-all duration-800 ease-[cubic-bezier(0.25,0.8,0.25,1)] focus:text-white hover:text-white after:content-[''] after:pointer-events-none after:absolute after:bottom-[-2px] after:left-1/2 after:w-0 after:h-[2px] after:bg-white after:transition-all after:duration-400 after:ease-[cubic-bezier(0.25,0.8,0.25,1)] focus:after:w-full focus:after:left-0 hover:after:w-full hover:after:left-0 mt-[10px]">
                         Gym Wear
                     </NavLink>
                 </div>
@@ -175,9 +174,12 @@ const Navbar = () => {
                         </motion.div>
                     </div>
                     <div className="flex">
-                        <NavLink to="/cart"><MdShoppingCart className="text-white hover:scale-110 hover:text-red-500 mt-[5px] text-[28px]" /></NavLink>
-
-                        <p className=" text-md w-[23px] h-[23px] bg-white text-red-700 rounded-full text-center font-extrabold mr-[5px]">{cartLength}</p>
+                        {isLoggedIn &&
+                            <>
+                                <NavLink to="/cart"><MdShoppingCart className="text-white hover:scale-110 hover:text-red-500 mt-[5px] text-[28px]" /></NavLink>
+                                <p className=" text-md w-[23px] h-[23px] bg-white text-red-700 rounded-full text-center font-extrabold mr-[5px]">{cartLength}</p>
+                            </>
+                        }
                         <motion.div
                             key={isMenuOpen ? 'close' : 'menu'} // Unique key to trigger animation on change
                             initial={{ opacity: 0, rotate: isMenuOpen ? 180 : -180 }}
@@ -187,7 +189,6 @@ const Navbar = () => {
                             className="cursor-pointer text-gray-300"
                             onClick={handleMenuToggle}
                         >
-
                             {isMenuOpen ? (
                                 <IoClose size={35} />
                             ) : (
@@ -205,7 +206,6 @@ const Navbar = () => {
                             animate={{ width: "70vw", transition: { duration: 0.5 } }}
                             exit={{ width: 0, transition: { duration: 0.3, delay: 0.1 } }}
                             className="fixed inset-0 bg-navbar-color bg-gradient-to-r from-red-950 to-custom-red flex w-[70vw] flex-col h-screen px-4 py-3 z-30"
-
                         >
                             <div className='my-[25px]'></div>
                             {/* Menu items */}

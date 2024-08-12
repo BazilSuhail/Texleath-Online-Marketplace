@@ -94,7 +94,7 @@ const ProductDetails = () => {
   useEffect(() => {
     const fetchProduct = async () => {
       try {
-        const response = await axios.get(`http://localhost:3001/api/fetchproducts/products/${id}`);
+        const response = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/fetchproducts/products/${id}`);
         setProduct(response.data);
         // Set the first size as selected by default
         if (response.data.size.length > 0) {

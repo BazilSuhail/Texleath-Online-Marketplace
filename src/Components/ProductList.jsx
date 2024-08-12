@@ -127,7 +127,7 @@ const ProductList = () => {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const response = await axios.get('http://localhost:3001/api/fetchproducts/products');
+        const response = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/fetchproducts/products`);
         setProducts(response.data);
       } catch (error) {
         console.error('Error fetching products:', error);
@@ -141,7 +141,7 @@ const ProductList = () => {
   useEffect(() => {
     const fetchCategories = async () => {
       try {
-        const response = await axios.get('http://localhost:3001/api/category');
+        const response = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/category`);
         setCategories(response.data);
       } catch (error) {
         console.error('Error fetching categories:', error);
@@ -160,7 +160,7 @@ const ProductList = () => {
 
     const fetchSubcategories = async () => {
       try {
-        const response = await axios.get('http://localhost:3001/api/subcategories');
+        const response = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/subcategories`);
         const filteredSubcategories = response.data.filter(subcat => subcat.category === selectedCategory);
         setSubcategories(filteredSubcategories);
       } catch (error) {

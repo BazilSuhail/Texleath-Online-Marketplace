@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { FaRegStar, FaRegHandshake, FaUserTie } from 'react-icons/fa';
 
@@ -10,6 +10,15 @@ import AboutPage from "../../Assets/HomePage1.jpg"
 
 const About = () => {
   // Animation variants
+  const Aboutref = useRef(null); // Create a ref for the Privacy Policy section
+
+  useEffect(() => {
+    if (Aboutref.current) {
+      Aboutref.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  }, []);
+
+  
   const sectionVariants = {
     hidden: { opacity: 0, y: 20 },
     visible: { opacity: 1, y: 0, transition: { duration: 0.6 } },
@@ -21,7 +30,7 @@ const About = () => {
   };
 
   return (
-    <div className="about-us bg-gray-50 py-10 sm:px-6 lg:px-0">
+    <div ref={Aboutref} className="about-us bg-gray-50 py-10 sm:px-6 lg:px-0">
       <div className="container mx-auto">
 
         <motion.section

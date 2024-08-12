@@ -1,7 +1,6 @@
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { FaQuestionCircle, FaChevronDown, FaChevronUp } from 'react-icons/fa';
 import { motion, AnimatePresence } from 'framer-motion';
-import { useState } from 'react';
 
 const faqs = [
     {
@@ -44,6 +43,13 @@ const faqs = [
 
 const FAQPage = () => {
     const [openIndex, setOpenIndex] = useState(null);
+    const faqRef = useRef(null); // Create a ref for the FAQ section
+
+    useEffect(() => {
+        if (faqRef.current) {
+            faqRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+    }, []);
 
     const handleToggle = (index) => {
         setOpenIndex(openIndex === index ? null : index);
@@ -51,7 +57,7 @@ const FAQPage = () => {
 
     return (
         <div className='bg-red-50 min-h-screen py-8 px-4 md:px-8'>
-            <div className='max-w-4xl mx-auto bg-white shadow-lg rounded-lg p-6'>
+            <div ref={faqRef} className='max-w-4xl mx-auto bg-white shadow-lg rounded-lg p-6'>
                 <h1 className='text-2xl md:text-3xl font-bold mb-6 text-center text-red-700'>
                     <FaQuestionCircle className='inline mr-2' />
                     Frequently Asked Questions
