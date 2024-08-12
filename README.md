@@ -49,15 +49,19 @@ Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 - **Submit Reviews**: Users can submit reviews for products, including rating and comments.
 - **Review Pagination**: Reviews are displayed in groups of four with a 'Load More' button to view additional reviews.
 
+
+# Live Demo
+## Check out the latest demo of Project [Texleath](https://texleath.netlify.app). 
+
 ## In case this doesnt work, follow these steps as an alternative and Install required Dependancies
 At first create a React App using following command:
 
 ```bash
-   npx create-react-app charity-system
+   npx create-react-app myproject
 ```
  Clone the project using following command
 ```bash
-  git clone https://github.com/BazilSuhail/ClientSide-Charity-Network.git
+  git clone  https://github.com/BazilSuhail/Ecommerce-Client.git
 ```
 Go to the project directory
 ```bash
@@ -70,6 +74,4 @@ Afterwards simply run this command to install all required dependancies and pack
 ```bash
 npm i react-redux react-icons react-router-dom axios framer-motion jwt-decode
 ``` 
-# `Live Demo` 
-## Check out the latest demo of Project [Texleath](https://texleath.netlify.app). 
   
