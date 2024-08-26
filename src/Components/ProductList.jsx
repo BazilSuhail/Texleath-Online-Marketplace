@@ -118,7 +118,7 @@ const ProductList = () => {
   const [selectedSubcategory, setSelectedSubcategory] = useState('All');
 
   useEffect(() => {
-    console.log("Hey I RAN !!!");
+    //console.log("Hey I RAN !!!");
     setSelectedCategory(urlCategory);
     console.log(urlCategory);
   }, [urlCategory]);
