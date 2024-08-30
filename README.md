@@ -1,23 +1,23 @@
-# Texleath
-#### `Texleath`, premier destination for high-quality clothing sales, manufacturing, and export. This e-commerce platform offers a sleek and elegant design, reflecting the premium nature of our products. With a focus on user experience, our site provides a seamless and engaging shopping experience, complemented by advanced features and interactive elements.
+# Texleath (E-commerce Client Side)
+#### Texleath, a premier destination for high-quality clothing sales, manufacturing, and export. This e-commerce platform offers a sleek and elegant design, reflecting the premium nature of our products. With a focus on user experience, our site provides a seamless and engaging shopping experience, complemented by advanced features and interactive elements.
 
 # Run Locally
 
  Clone the project using following command
 ```bash
-  git clone https://github.com/BazilSuhail/Ecommerce-Client.git
+   git clone https://github.com/BazilSuhail/Ecommerce-Client.git
 ```
 Go to the project directory
 ```bash
-cd my-project
+   cd my-project
 ```
 Then **Run** this command in your terminal to install all required dependancies:
 ```bash
-  npm install
+   npm install
 ```
 In the project directory, you can run:
 ```bash
-  npm start
+   npm start
 ``` 
 Runs the app in the development mode.\
 Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
