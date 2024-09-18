@@ -12,6 +12,8 @@ import { BiSolidCustomize } from "react-icons/bi";
 
 import { FaRegHandshake } from 'react-icons/fa';
 
+import MainLoader from './Pages/mainLoader';
+
 import HomePage1 from "../Assets/home1.jpg"
 
 
@@ -86,8 +88,8 @@ const HomePage = () => {
     fetchProducts();
   }, []);
 
-  if (loading) return <p>Loading...</p>;
-  console.log(error);
+  if (loading) return <MainLoader />;
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
@@ -95,11 +97,13 @@ const HomePage = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Mock submission logic
     setStatus('Your message has been sent successfully!');
     setFormData({ name: '', email: '', message: '' });
-  };
-  //if (error) return <p>Error: {error}</p>;
+  }; 
+
+  if (error){
+    console.log(error);
+  }
 
 
   return (
@@ -114,42 +118,42 @@ const HomePage = () => {
         <div className='md:w-[90%]  xl:w-[50%] mx-auto grid grid-cols-3'>
           <div>
             <div className='w-[90px] md:w-[160px] mx-auto h-[90px] md:h-[160px] mt-5 md:mt-10 '>
-            <img src={sports} alt="" className='w-full  rounded-full h-full' />
+              <img src={sports} alt="" className='w-full  rounded-full h-full' />
             </div>
             <div className='text-red-800 font-bold md:mt-[10px] mt-[8px] text-center text-[14px] md:text-[20px]'>Sports Wear</div>
           </div>
 
           <div>
-          <div className='w-[90px] md:w-[160px] mx-auto h-[90px] md:h-[160px] mt-5 md:mt-10 '>
-            <img src={active} alt="" className='w-full  rounded-full h-full' />
+            <div className='w-[90px] md:w-[160px] mx-auto h-[90px] md:h-[160px] mt-5 md:mt-10 '>
+              <img src={active} alt="" className='w-full  rounded-full h-full' />
             </div>
             <div className='text-red-800 font-bold md:mt-[10px] mt-[8px] text-center text-[14px] md:text-[20px]'>Active Wear</div>
           </div>
 
           <div>
-          <div className='w-[90px] md:w-[160px] mx-auto h-[90px] md:h-[160px] mt-5 md:mt-10 '>
-            <img src={gym} alt="" className='w-full  rounded-full h-full' />
+            <div className='w-[90px] md:w-[160px] mx-auto h-[90px] md:h-[160px] mt-5 md:mt-10 '>
+              <img src={gym} alt="" className='w-full  rounded-full h-full' />
             </div>
             <div className='text-red-800 font-bold md:mt-[10px] mt-[8px] text-center text-[14px] md:text-[20px]'>Gym Wear</div>
           </div>
 
           <div>
             <div className='w-[90px] md:w-[160px] mx-auto h-[90px] md:h-[160px] mt-5 md:mt-10 '>
-            <img src={gloves} alt="" className='w-full  rounded-full h-full' />
+              <img src={gloves} alt="" className='w-full  rounded-full h-full' />
             </div>
             <div className='text-red-800 font-bold md:mt-[10px] mt-[8px] text-center text-[14px] md:text-[20px]'>Gloves</div>
           </div>
 
           <div>
-          <div className='w-[90px] md:w-[160px] mx-auto h-[90px] md:h-[160px] mt-5 md:mt-10 '>
-            <img src={fitness} alt="" className='w-full  rounded-full h-full' />
+            <div className='w-[90px] md:w-[160px] mx-auto h-[90px] md:h-[160px] mt-5 md:mt-10 '>
+              <img src={fitness} alt="" className='w-full  rounded-full h-full' />
             </div>
             <div className='text-red-800 font-bold md:mt-[10px] mt-[8px] text-center text-[14px] md:text-[20px]'>Fitness Wear</div>
           </div>
 
           <div>
-          <div className='w-[90px] md:w-[160px] mx-auto h-[90px] md:h-[160px] mt-5 md:mt-10 '>
-            <img src={safety} alt="" className='w-full  rounded-full h-full' />
+            <div className='w-[90px] md:w-[160px] mx-auto h-[90px] md:h-[160px] mt-5 md:mt-10 '>
+              <img src={safety} alt="" className='w-full  rounded-full h-full' />
             </div>
             <div className='text-red-800 font-bold md:mt-[10px] mt-[8px] text-center text-[14px] md:text-[20px]'>Safety Wear</div>
           </div>

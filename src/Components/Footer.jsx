@@ -6,17 +6,15 @@ const Footer = () => {
     return (
         <footer className='bg-gradient-to-r from-red-950 via-custom-red to-red-950 pt-[45px] text-white'>
             <div className='mx-auto px-6'>
-                <div className='flex flex-wrap justify-between'>
-                    {/* Company Information */}
+                <div className='flex flex-wrap justify-between'> 
                     <div className='w-full md:w-1/4 mb-6'>
                         <h2 className='text-2xl font-bold mb-4'>Texleath Industries</h2>
                         <p className='mb-2'>Your trusted partner in clothing and manufacturing.</p>
                         <p className='mb-2'>Reiman Road, Sialkot, Pakistan</p>
                         <p className='mb-2'>Phone: +92 1111111111</p>
-                        <p>Email: <a href='managment@textleathindustries.com' className='underline'>info@yourcompany.com</a></p>
+                        <p>Email: <a href='managment@textleathindustries.com' className='underline'>support.staff@texleathindustries.com</a></p>
                     </div>
-
-                    {/* Quick Links */}
+ 
                     <div className='w-full md:w-1/4 mb-6'>
                         <h3 className='lg:ml-[55px] text-xl font-semibold mb-4'>Quick Links</h3>
                         <ul className='lg:ml-[55px]'>
