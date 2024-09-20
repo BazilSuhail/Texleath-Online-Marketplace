@@ -66,7 +66,7 @@ const SearchFilter = ({ products }) => {
                     onClick={() => navigate(`/products/${product._id}`)}
                   >
                     <img
-                      src={`http://localhost:3001/uploads/${product.image}`}
+                      src={`${process.env.REACT_APP_API_BASE_URL}/uploads/${product.image}`}
                       alt={product.name}
                       className="object-cover mx-auto h-[200px] w-[180px] hover:scale-105 transition duration-700  md:h-[400px] md:w-[340px] lg:w-[300px]  lg:h-[335px] sm:h-[320px] sm:w-[280px] mb-4"
                     />
@@ -261,7 +261,7 @@ const ProductList = () => {
             >
               <img
                 loading='lazy'
-                src={`http://localhost:3001/uploads/${product.image}`}
+                src={`${process.env.REACT_APP_API_BASE_URL}/uploads/${product.image}`}
                 alt={product.name}
                 className="object-cover mx-auto h-[200px] w-[180px] hover:scale-105 transition duration-700  md:h-[400px] md:w-[340px] lg:w-[300px]  lg:h-[335px] sm:h-[320px] sm:w-[280px] mb-4"
               />

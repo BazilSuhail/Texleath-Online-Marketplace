@@ -148,8 +148,8 @@ const ProductDetails = () => {
       <div className='w-[96vw] xl:w-[95vw] lg:px-[0px] px-[6px] mx-auto grid grid-cols-1 lg:grid-cols-11'>
         <div className="col-span-7">
           <MediaCarousel
-            mainImage={`http://localhost:3001/uploads/${product.image}`}
-            otherImages={product.otherImages.map(image => `http://localhost:3001/uploads/${image}`)}
+            mainImage={`${process.env.REACT_APP_API_BASE_URL}/uploads/${product.image}`}
+            otherImages={product.otherImages.map(image => `${process.env.REACT_APP_API_BASE_URL}/uploads/${image}`)}
           />
         </div>
 
