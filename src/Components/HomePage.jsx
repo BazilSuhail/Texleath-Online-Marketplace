@@ -17,12 +17,12 @@ import MainLoader from './Pages/mainLoader';
 import HomePage1 from "../Assets/home1.jpg"
 
 
-import fitness from "../Assets/fitness.jpg"
-import gym from "../Assets/gym.jpg"
-import sports from "../Assets/sports.jpg"
-import safety from "../Assets/safety.jpg"
-import active from "../Assets/active.jpg"
-import gloves from "../Assets/gloves.jpg"
+import fitness from "../Assets/fitness.webp"
+import gym from "../Assets/gym.webp"
+import sports from "../Assets/sports.webp"
+import safety from "../Assets/safety.webp"
+import active from "../Assets/active.webp"
+import gloves from "../Assets/gloves.webp"
 
 const reviews = [
   {
