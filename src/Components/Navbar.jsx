@@ -10,20 +10,18 @@ import { MdShoppingCart } from "react-icons/md";
 import { NavLink } from "react-router-dom";
 import { IoPersonCircleOutline } from "react-icons/io5";
 import texleathlogo from "../texleathlogo.svg";
-const Navbar = () => {
 
+const Navbar = () => {
     const cartLength = useSelector(selectCartLength);
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [isLoggedIn, setIsLoggedIn] = useState(false);
-
 
     const [openIndex, setOpenIndex] = useState(null);
 
     const handleToggle = (index) => {
         setOpenIndex(openIndex === index ? null : index);
     };
-
-    // Use useCallback to memoize the fetchProfile function
+    
     const fetchProfile = useCallback(async () => {
         try {
             const token = localStorage.getItem('token');

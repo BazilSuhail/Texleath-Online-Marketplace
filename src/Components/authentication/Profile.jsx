@@ -6,6 +6,7 @@ import { clearCart } from '../../redux/cartSlice';
 import ShowOrders from '../ShowOrder';
 import { RiLogoutBoxRLine } from "react-icons/ri";
 import { FaRegEdit } from "react-icons/fa";
+import MainLoader from '../Pages/mainLoader';
 
 const Profile = () => {
     const [user, setUser] = useState(null);
@@ -23,9 +24,8 @@ const Profile = () => {
     });
     const [isEditing, setIsEditing] = useState(false);
     const navigate = useNavigate();
-    const dispatch = useDispatch(); // Use useDispatch to dispatch actions
+    const dispatch = useDispatch();
 
-    // Use useCallback to memoize the fetchProfile function
     const fetchProfile = useCallback(async () => {
         try {
             const token = localStorage.getItem('token');
@@ -75,7 +75,6 @@ const Profile = () => {
             await axios.put(`${process.env.REACT_APP_API_BASE_URL}/auth/profile`, formData, {
                 headers: { 'Authorization': `Bearer ${token}` }
             });
-            // Optionally refetch the profile data to reflect updates
             fetchProfile();
             setIsEditing(false);
         } catch (error) {
@@ -85,36 +84,29 @@ const Profile = () => {
 
     const handleLogout = () => {
         localStorage.removeItem('token');
-        dispatch(clearCart()); // Clear cart on logout
-
-        window.location.reload(); // Refresh the whole website
+        dispatch(clearCart());
+        window.location.reload();
         navigate('/login');
     };
     const handle_See_orders = () => {
         navigate('/orders-tracking');
     };
 
-
-
-
     useEffect(() => {
         fetchProfile();
     }, [fetchProfile]);
 
     if (error) return <p className="text-red-500">{error}</p>;
-    if (!user) return <p>Loading...</p>;
+    if (!user) return <div className='h-screen w-screen pt-[-96px]'> <MainLoader /></div>;
 
     return (
         <div className="w-full flex xsx:flex-row flex-col xsx:p-[15px]">
             <div className='xsx:w-[40%] xsx:p-[0px] p-[15px]'>
-
-            
-            {user.fullName === "" ?
-                        <div className='font-bold text-red-500 mb-[25px] text-lg'> * Kindly Before Placing Any Orders.Remember to FIll out Details for Faster Checkout.Only Entered info will be used for Shipping.</div>
-                        :
-                        <h1 className=" text-[35px] text-red-700 font-bold mb-4">Welcome, <span className='text-black'>{user.fullName}</span></h1>
-                    }
-
+                {user.fullName === "" ?
+                    <div className='font-bold text-red-500 mb-[25px] text-lg'> * Kindly Before Placing Any Orders.Remember to FIll out Details for Faster Checkout.Only Entered info will be used for Shipping.</div>
+                    :
+                    <h1 className=" text-[35px] text-red-700 font-bold mb-4">Welcome, <span className='text-black'>{user.fullName}</span></h1>
+                }
                 {isEditing ? (
                     <form onSubmit={handleSubmit} className="space-y-4">
                         <div>

@@ -12,7 +12,6 @@ import { FaTimes } from 'react-icons/fa';
 const Modal = ({ isOpen, onClose, onConfirm }) => {
     if (!isOpen) return null;
   
-    // Define animation properties
     const modalVariants = {
       hidden: {
         opacity: 0,
@@ -82,17 +81,15 @@ const OrderList = () => {
     const navigate = useNavigate();
     const [products, setProducts] = useState([]);
     const [userId, setUserId] = useState(null);
-    const [isModalOpen, setIsModalOpen] = useState(false); // Modal state
+    const [isModalOpen, setIsModalOpen] = useState(false);
 
-    // Function to decode JWT token
     const decodeToken = useCallback((token) => {
         if (!token) return null;
         const payload = token.split('.')[1];
         const decoded = JSON.parse(atob(payload));
-        return decoded.id; // Adjust according to your JWT structure
+        return decoded.id;
     }, []);
 
-    // Get user ID from token when component mounts
     useEffect(() => {
         const token = localStorage.getItem('token');
         const id = decodeToken(token);
@@ -145,7 +142,7 @@ const OrderList = () => {
             dispatch(clearCart());
 
             await axios.post(`${process.env.REACT_APP_API_BASE_URL}/cartState/cart/save`, { userId, items: [] });
-            navigate('/profile'); // Redirect to profile or another appropriate page
+            navigate('/profile');
         } catch (error) {
             console.error('Error confirming order:', error);
             alert('Failed to confirm order.');

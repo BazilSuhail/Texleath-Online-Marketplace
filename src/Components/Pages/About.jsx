@@ -9,8 +9,7 @@ import { GiCheckMark, GiFactory, GiPencilBrush } from 'react-icons/gi';
 import AboutPage from "../../Assets/HomePage1.jpg"
 
 const About = () => {
-  // Animation variants
-  const Aboutref = useRef(null); // Create a ref for the Privacy Policy section
+  const Aboutref = useRef(null);
 
   useEffect(() => {
     if (Aboutref.current) {

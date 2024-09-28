@@ -5,6 +5,7 @@ import { useDispatch } from 'react-redux';
 import { addToCart } from '../redux/cartSlice';
 import { motion } from 'framer-motion';
 import ReviewProduct from './ProductReview';
+import MainLoader from './Pages/mainLoader';
 
 const MediaCarousel = ({ mainImage, otherImages }) => {
   const [activeMedia, setActiveMedia] = useState(mainImage);
@@ -88,7 +89,7 @@ const ProductDetails = () => {
 
   const [isIncreasing, setisIncreasing] = useState(true);
   const [quantity, setQuantity] = useState(1);
-  const [selectedSize, setSelectedSize] = useState(null); // State for the selected size
+  const [selectedSize, setSelectedSize] = useState(null);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -96,7 +97,6 @@ const ProductDetails = () => {
       try {
         const response = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/fetchproducts/products/${id}`);
         setProduct(response.data);
-        // Set the first size as selected by default
         if (response.data.size.length > 0) {
           setSelectedSize(response.data.size[0]);
         }
@@ -123,7 +123,7 @@ const ProductDetails = () => {
   const handleDecreaseQuantity = () => {
     setQuantity(prevQuantity => (prevQuantity > 1 ? prevQuantity - 1 : 1));
     setisIncreasing(false);
-    setKey(prevKey => prevKey + 1); // Change key to trigger animation
+    setKey(prevKey => prevKey + 1);
   };
 
   /*
@@ -133,11 +133,11 @@ const ProductDetails = () => {
   */
 
   const handleSizeClick = (size) => {
-    setSelectedSize(size); // Update the selected size state
+    setSelectedSize(size);
     console.log('Selected size:', size);
   };
 
-  if (!product) return <p>Loading...</p>;
+  if (!product) return <div className='h-screen w-screen pt-[-96px]'> <MainLoader /></div>;
 
   const discountedPrice = product.sale
     ? (product.price - (product.price * product.sale) / 100).toFixed(2)
@@ -194,10 +194,10 @@ const ProductDetails = () => {
 
             <div className="w-[150px] flex justify-center border border-red-800 mx-[-5px] py-[3px] text-4xl">
               <motion.span
-                key={key} // Key helps Framer Motion to identify the change in value
+                key={key}
                 initial={{ opacity: 0, y: isIncreasing ? 12 : -12 }}
                 animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: isIncreasing ? -12 : 12 }} // Increased y value for more visible exit animation
+                exit={{ opacity: 0, y: isIncreasing ? -12 : 12 }}
                 transition={{ type: "spring", stiffness: 300, duration: 1.2 }}
               >
                 {quantity}
@@ -214,10 +214,6 @@ const ProductDetails = () => {
             </span>
             <p className="flex items-center justify-center text-white group-hover:translate-x-[10px] text-lg font-semibold transition-transform duration-500">Add to Cart</p>
           </button>
-
-
-          {/*<button onClick={handleAddToCart} className="mt-[25px] xl:w-[85%] w-[98%] border-2 text-[25px] font-semibold text-red-700 rounded-md hover:bg-red-700 hover:text-white border-red-600  py-[8px]">Add to Cart</button>
-          <button className='my-[15px] text-2xl bg-green-800 text-white' onClick={() => handleProductReview(id)}>See Reviews</button>*/}
         </div>
       </div>
 
@@ -237,9 +233,7 @@ const ProductDetails = () => {
 
         </div>
       </div>
-
       <ReviewProduct productId={id} />
-
     </div>
   );
 };

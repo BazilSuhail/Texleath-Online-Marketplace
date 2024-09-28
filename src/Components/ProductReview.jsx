@@ -1,10 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { FaStar } from 'react-icons/fa';
-
 import { IoMail } from "react-icons/io5";
-//import { useParams } from 'react-router-dom';
-
 
 const ReviewsList = ({ productId }) => {
   const [reviews, setReviews] = useState([]);
@@ -65,14 +62,6 @@ const ReviewsList = ({ productId }) => {
               </div>
               <div className='mt-[4px] font-bold text-2xl text-black'>Review: </div>
               <p className='mt-[10px] border-2  overflow-x-auto scrollbar-hide border-gray-300 rounded-md w-[100%] p-[10px] font-bold pt-[10px] text-md text-gray-700'>{review.description}</p>
-
-
-              { /*
-               <p>Phone: {review.phone}</p>
-              <p>Date: {new Date(review.date).toLocaleDateString()}</p>
-              <p>Rating: {review.rating}</p>
-              <p>Description: {review.description}</p>
-              */}
             </div>
           ))}
         </ul>
@@ -114,7 +103,7 @@ const ReviewProduct = ({ productId }) => {
 
 
   const handleStarClick = (index) => {
-    setRating(index + 1); // Set rating based on star index (1-based)
+    setRating(index + 1);
   };
 
   const handleSubmit = async (e) => {
@@ -156,34 +145,6 @@ const ReviewProduct = ({ productId }) => {
         {error && <p className="text-red-500">{error}</p>}
         {success && <p className="text-green-500">{success}</p>}
         <form onSubmit={handleSubmit} className="space-y-4">
-          {/*
-          <div>
-            <label htmlFor="rating" className="block text-sm font-medium text-gray-700">Rating (1-5)</label>
-            <input
-              type="number"
-              id="rating"
-              name="rating"
-              value={rating}
-              min="1"
-              max="5"
-              onChange={(e) => setRating(Number(e.target.value))}
-              className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm"
-              required
-            />
-          </div>
-   <div>
-            <label htmlFor="review" className="block text-sm font-medium text-gray-700">Review</label>
-            <textarea
-              id="review"
-              name="review"
-              value={review}
-              onChange={(e) => setReview(e.target.value)}
-              className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm"
-              required
-            />
-          </div>
-
-         */}
           <div className="flex items-center  ml-[19px]">
             <label className="mr-[10px] text-xl font-semibold">Rating:</label>
             {[...Array(5)].map((_, index) => (

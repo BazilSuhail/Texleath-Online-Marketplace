@@ -3,6 +3,7 @@ import axios from 'axios';
 import { useNavigate, useParams } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { IoMdSearch } from "react-icons/io";
+import MainLoader from './Pages/mainLoader';
 
 const SearchFilter = ({ products }) => {
   const navigate = useNavigate();
@@ -11,7 +12,6 @@ const SearchFilter = ({ products }) => {
   const [filteredProducts, setFilteredProducts] = useState([]);
 
   useEffect(() => {
-    // Filter products whenever the searchTerm changes
     setFilteredProducts(
       products.filter(product =>
         product.name.toLowerCase().includes(searchTerm.toLowerCase())
@@ -99,9 +99,6 @@ const SearchFilter = ({ products }) => {
           </div>
         </div>
       }
-
-      {/* Filtered products display */}
-
     </div >
   );
 };
@@ -109,35 +106,33 @@ const SearchFilter = ({ products }) => {
 
 const ProductList = () => {
   const navigate = useNavigate();
-
   const { category: urlCategory } = useParams();
   const [products, setProducts] = useState([]);
   const [categories, setCategories] = useState([]);
   const [subcategories, setSubcategories] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState(urlCategory);
   const [selectedSubcategory, setSelectedSubcategory] = useState('All');
+  const [loadingProducts, setLoadingProducts] = useState(true);
 
   useEffect(() => {
-    //console.log("Hey I RAN !!!");
     setSelectedCategory(urlCategory);
-    console.log(urlCategory);
   }, [urlCategory]);
 
-  // Fetch products
   useEffect(() => {
     const fetchProducts = async () => {
+      setLoadingProducts(true);
       try {
         const response = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/fetchproducts/products`);
         setProducts(response.data);
       } catch (error) {
         console.error('Error fetching products:', error);
       }
+      setLoadingProducts(false); 
     };
 
     fetchProducts();
   }, []);
 
-  // Fetch categories
   useEffect(() => {
     const fetchCategories = async () => {
       try {
@@ -151,7 +146,6 @@ const ProductList = () => {
     fetchCategories();
   }, []);
 
-  // Fetch subcategories based on selected category
   useEffect(() => {
     if (selectedCategory === 'All') {
       setSubcategories([]);
@@ -171,13 +165,11 @@ const ProductList = () => {
     fetchSubcategories();
   }, [selectedCategory]);
 
-  // Filter products based on selected category and subcategory
   const filteredProducts = products.filter(product => {
     const matchesCategory = selectedCategory === 'All' || product.category === selectedCategory;
     const matchesSubcategory = selectedSubcategory === 'All' || product.subcategory === selectedSubcategory;
     return matchesCategory && matchesSubcategory;
   });
-
 
   const handleCategoryClick = (categoryName) => {
     setSelectedCategory(categoryName);
@@ -186,13 +178,14 @@ const ProductList = () => {
   const handleSubcategoryClick = (subcategoryName) => {
     setSelectedSubcategory(subcategoryName);
   };
+
   const excludedCategories = ['Fitness Wear', 'Sports Wear', 'Gym Wear'];
+
+  if (loadingProducts) return <div className='h-screen w-screen pt-[-96px]'> <MainLoader /></div>;
+
   return (
     <div className='overflow-x-hidden'>
-      {/* Search filter */}
       <SearchFilter products={filteredProducts} />
-
-      {/* Category filter */}
       <div className="my-[4px] ml-[7px] lg:ml-[25px]">
         <div className="mt-2 flex text-sm sm:text-md  md:text-lg w-[100%] overflow-x-auto font-medium text-red-900 whitespace-nowrap gap-2">
           <div onClick={() => handleCategoryClick('All')} className={`px-[12px] py-[3px]  cursor-pointer rounded ${selectedCategory === 'All' ? 'bg-red-900 text-white' : 'bg-red-100 '}`}>
@@ -210,7 +203,7 @@ const ProductList = () => {
           </div>
 
           {categories
-            .filter(category => !excludedCategories.includes(category.name)) // Filter out excluded categories
+            .filter(category => !excludedCategories.includes(category.name))
             .map(category => (
               <div
                 key={category._id}

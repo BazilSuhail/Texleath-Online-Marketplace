@@ -88,7 +88,7 @@ const HomePage = () => {
     fetchProducts();
   }, []);
 
-  if (loading) return <MainLoader />;
+  //if (loading) return <MainLoader />;
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -99,9 +99,9 @@ const HomePage = () => {
     e.preventDefault();
     setStatus('Your message has been sent successfully!');
     setFormData({ name: '', email: '', message: '' });
-  }; 
+  };
 
-  if (error){
+  if (error) {
     console.log(error);
   }
 
@@ -186,51 +186,55 @@ const HomePage = () => {
 
       <div className='h-[3px] w-screen mx-auto bg-red-200 mt-[-15px]'></div>
 
-      {/* Hero Section*/}
-      <section className='mb-[45px]'>
-        <h1 className='text-2xl my-[50px] md:text-[35px] text-center font-bold text-red-900'>Recent Updated Catalog</h1>
-        <div className="mx-auto my-[45px] grid grid-cols-2 overflow-hidden lg:grid-cols-3 xl:grid-cols-4">
-          {products.map((product) => {
-            const discountedPrice = product.sale
-              ? (product.price - (product.price * product.sale) / 100).toFixed(2)
-              : product.price.toFixed(2);
+      {
+        loading ?
+          <MainLoader /> :
+          <section className='mb-[45px]'>
+            <h1 className='text-2xl my-[50px] md:text-[35px] text-center font-bold text-red-900'>Recent Updated Catalog</h1>
+            <div className="mx-auto my-[45px] grid grid-cols-2 overflow-hidden lg:grid-cols-3 xl:grid-cols-4">
+              {products.map((product) => {
+                const discountedPrice = product.sale
+                  ? (product.price - (product.price * product.sale) / 100).toFixed(2)
+                  : product.price.toFixed(2);
 
-            return (
-              <div
-                key={product._id}
-                onClick={() => navigate(`/products/${product._id}`)}
-                className="block p-[10px] overflow-x-hidden sm:p-[5px] cursor-pointer"
-              >
-                <img
-                  loading="lazy"
-                  src={`${process.env.REACT_APP_API_BASE_URL}/uploads/${product.image}`}
-                  alt={product.name}
-                  className="object-cover mx-auto h-[200px] w-[180px] hover:scale-105 transition duration-700 md:h-[400px] md:w-[340px] lg:w-[300px] lg:h-[335px] sm:h-[320px] sm:w-[280px] mb-4"
-                />
-                <div className="mx-auto w-[180px] md:w-[340px] lg:w-[300px] sm:w-[280px]">
-                  <h1 className='text-xl md:text-[25px] lg:text-[25px] mb-[6px] text-red-900 font-medium'>
-                    {product.name.length > 22 ? `${product.name.substring(0, 22)}...` : product.name}
-                  </h1>
+                return (
+                  <div
+                    key={product._id}
+                    onClick={() => navigate(`/products/${product._id}`)}
+                    className="block p-[10px] overflow-x-hidden sm:p-[5px] cursor-pointer"
+                  >
+                    <img
+                      loading="lazy"
+                      src={`${process.env.REACT_APP_API_BASE_URL}/uploads/${product.image}`}
+                      alt={product.name}
+                      className="object-cover mx-auto h-[200px] w-[180px] hover:scale-105 transition duration-700 md:h-[400px] md:w-[340px] lg:w-[300px] lg:h-[335px] sm:h-[320px] sm:w-[280px] mb-4"
+                    />
+                    <div className="mx-auto w-[180px] md:w-[340px] lg:w-[300px] sm:w-[280px]">
+                      <h1 className='text-xl md:text-[25px] lg:text-[25px] mb-[6px] text-red-900 font-medium'>
+                        {product.name.length > 22 ? `${product.name.substring(0, 22)}...` : product.name}
+                      </h1>
 
-                  {product.sale && (
-                    <span className="text-red-500 bg-red-200 font-medium rounded-xl text-[12px] px-[12px] line-through">
-                      Rs.{product.price.toFixed(2)}
-                    </span>
-                  )}
-                  <span className="text-[20px] lg:text-[22px] ml-[6px] mb-[3px] font-medium">
-                    <span className="text-[20px] font-normal"> Rs.</span>{parseInt(discountedPrice)}
-                  </span>
-                </div>
-              </div>
-            );
-          })}
-        </div>
-        <div className='w-full flex'>
-          <button onClick={() => navigate(`/productlist/All`)} className="mx-auto shop-now relative overflow-hidden px-8 py-4 border-2 border-white text-white text-lg font-bold rounded-[35px] bg-red-500 shadow-md hover:bg-red-800 hover:text-white hover:shadow-lg active:scale-90 transition-transform duration-300">
-            Shop now
-          </button>
-        </div>
-      </section>
+                      {product.sale && (
+                        <span className="text-red-500 bg-red-200 font-medium rounded-xl text-[12px] px-[12px] line-through">
+                          Rs.{product.price.toFixed(2)}
+                        </span>
+                      )}
+                      <span className="text-[20px] lg:text-[22px] ml-[6px] mb-[3px] font-medium">
+                        <span className="text-[20px] font-normal"> Rs.</span>{parseInt(discountedPrice)}
+                      </span>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+            <div className='w-full flex'>
+              <button onClick={() => navigate(`/productlist/All`)} className="mx-auto shop-now relative overflow-hidden px-8 py-4 border-2 border-white text-white text-lg font-bold rounded-[35px] bg-red-500 shadow-md hover:bg-red-800 hover:text-white hover:shadow-lg active:scale-90 transition-transform duration-300">
+                Shop now
+              </button>
+            </div>
+          </section>
+      }
+
 
       <section className="pb-16 flex flex-col items-center bg-red-950">
         <h2 className="text-4xl text-ceter mt-[25px] font-bold mb-8 text-red-50">

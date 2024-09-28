@@ -1,21 +1,20 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import axios from 'axios';
+import noOrder_svg from "../Assets/cart.webp";
 
 const ShowOrders = () => {
     const [orders, setOrders] = useState([]);
     const [userId, setUserId] = useState(null);
 
-    // Function to decode JWT token
     const decodeToken = useCallback((token) => {
         if (!token) return null;
         const payload = token.split('.')[1];
         const decoded = JSON.parse(atob(payload));
-        return decoded.id; // Adjust according to your JWT structure
+        return decoded.id;
     }, []);
 
-    // Get user ID from token when component mounts
     useEffect(() => {
-        const token = localStorage.getItem('token'); // Replace with your token retrieval method
+        const token = localStorage.getItem('token');
         const id = decodeToken(token);
         setUserId(id);
     }, [decodeToken]);
@@ -37,7 +36,19 @@ const ShowOrders = () => {
     }, [userId]);
 
     if (!Array.isArray(orders) || !orders.length) {
-        return <p>No orders found</p>;
+        return <div className='flex justify-center lg:mt-[105px] items-center w-full'>
+            <div className='text-center'>
+                <img
+                    src={noOrder_svg}
+                    alt='Cart Icon'
+                    className='mx-auto lg:scale-[0.88] w-[280px] h-[280px]'
+                />
+                <p className='px-[15px] py-[6px] rounded-[8px] mt-[15px] text-[20px] text-[#192aad] font-[600] bg-[#e8f0ff] mx-auto text-center '>
+                    No Penfing Order
+                </p>
+
+            </div>
+        </div>;
     }
 
     return (

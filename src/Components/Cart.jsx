@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { removeFromCart, clearCart, updateQuantity } from '../redux/cartSlice';
 import axios from 'axios';
+import cart_svg from "../Assets/noOrder.webp";
 
 const Cart = () => {
     const cart = useSelector(state => state.cart);
@@ -16,7 +17,7 @@ const Cart = () => {
         if (!token) return null;
         const payload = token.split('.')[1];
         const decoded = JSON.parse(atob(payload));
-        return decoded.id; // Adjust according to your JWT structure
+        return decoded.id;
     }, []);
 
     useEffect(() => {
@@ -103,10 +104,19 @@ const Cart = () => {
         <div>
             {cart.length === 0 ? (
                 <div className='bg-gray-50 h-[calc(100vh-220px)] flex justify-center items-center w-screen'>
-                    <p className='p-[15px] bg-red-100 border-2 border-red-700 rounded-2xl text-xl text-red-600 mx-auto text-center w-[280px]'>
-                        Your cart is empty
-                    </p>
+                    <div className='text-center'>
+                        <img
+                            src={cart_svg}
+                            alt='Cart Icon'
+                            className='mx-auto lg:scale-[0.88] w-[280px] h-[280px]'
+                        />
+                        <p className='px-[15px] py-[6px] rounded-[8px] mt-[8px] text-[20px] text-[#d66868] font-[600] bg-[#ffe8e8] mx-auto text-center '>
+                            Your cart is empty
+                        </p>
+
+                    </div>
                 </div>
+
             ) : (
                 <div className=' xsx:w-[80%] p-3 mx-auto'>
                     <div className='flex xsx:flex-row flex-col justify-between'>
@@ -186,7 +196,7 @@ const CartItem = ({ id, size, quantity, onIncrease, onDecrease, onRemove }) => {
         <div className="flex xsx:flex-row flex-col items-center justify-between mb-[28px] bg-custom-light-red border rounded-2xl border-red-700 p-4">
             <div className='w-[200px] h-[180px]'>
                 <img
-                    src={`http://localhost:3001/uploads/${product.image}`}
+                    src={`${process.env.REACT_APP_API_BASE_URL}/uploads/${product.image}`}
                     alt={product.name}
                     className=" h-[180px] mx-auto object-cover"
                 />
