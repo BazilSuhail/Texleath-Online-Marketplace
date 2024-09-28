@@ -7,6 +7,7 @@ import { motion } from 'framer-motion';
 import ReviewProduct from './ProductReview';
 import MainLoader from './Pages/mainLoader';
 
+
 const MediaCarousel = ({ mainImage, otherImages }) => {
   const [activeMedia, setActiveMedia] = useState(mainImage);
 
@@ -66,7 +67,7 @@ const MediaCarousel = ({ mainImage, otherImages }) => {
         ))}
       </div>
 
-      <div className='lg:mb-0 mb-[25px] sm:w-full mx-auto h-[380px] w-[320px] sm:h-[340px] md:h-[420px] lg:w-[350px] lg:h-[430px] xl:w-[420px] xl:h-[550px]'>
+      <div className='lg:mb-0 xl:mt-[-15px] mb-[25px] sm:w-full mx-auto h-[380px] w-[320px] sm:h-[340px] md:h-[420px] lg:w-[350px] lg:h-[430px] xl:w-[420px] xl:h-[550px]'>
         <div className='relative w-full h-full'>
           <img
             src={activeMedia}
@@ -126,12 +127,6 @@ const ProductDetails = () => {
     setKey(prevKey => prevKey + 1);
   };
 
-  /*
-  const handleProductReview = (productId) => {
-      navigate(`/reviews/${productId}`);
-    };
-  */
-
   const handleSizeClick = (size) => {
     setSelectedSize(size);
     console.log('Selected size:', size);
@@ -144,7 +139,7 @@ const ProductDetails = () => {
     : product.price.toFixed(2);
 
   return (
-    <div className='pt-[18px]'>
+    <div className='pt-[18px] xl:pt-[40px]'>
       <div className='w-[96vw] xl:w-[95vw] lg:px-[0px] px-[6px] mx-auto grid grid-cols-1 lg:grid-cols-11'>
         <div className="col-span-7">
           <MediaCarousel
@@ -162,13 +157,13 @@ const ProductDetails = () => {
             <p className="text-lg ml-[9px] underline font-bold">{product.subcategory}</p>
           </div>
 
-          <div className="my-[8px]">
+          <div className="mb-[8px]">
             <p className="text-lg font-medium mb-[8px]">Available Sizes:</p>
             <div className="flex flex-wrap">
               {product.size.map((size, index) => (
                 <button
                   key={index}
-                  className={`px-4 text-xl transition duration-200 font-semibold py-2 m-1 border border-gray-300 rounded-lg ${selectedSize === size ? 'bg-red-800 text-white' : 'bg-gray-100'}`}
+                  className={`transition duration-200 font-semibold px-4 text-[18px] py-2 m-1 border border-gray-300 rounded-lg ${selectedSize === size ? 'bg-red-800 text-white' : 'bg-gray-100'}`}
                   onClick={() => handleSizeClick(size)}
                 >
                   {size}
@@ -178,21 +173,20 @@ const ProductDetails = () => {
           </div>
 
           <p className="text-md mt-[8px] flex items-center font-medium">
-            <span className='underline'>Available Stock: </span>
+            <span className='text-red-700 px-[4px] rounded-lg  bg-red-100'>Available Stock: </span>
             <span className='text-xl ml-[6px] text-red-700'>{product.stock}</span>
           </p>
 
-          <p className="text-xl my-[22px]">
+          <p className="text-xl my-[14px]">
             {product.sale && <span className="text-red-500 line-through">${product.price.toFixed(2)}</span>}
-            <span className='text-2xl ml-[7px] font-semibold'>${discountedPrice}</span>
+            <span className='text-2xl ml-[12px] font-semibold'>${discountedPrice}</span>
           </p>
 
 
-          <p className='text-xl mt-[12px]  font-mono'>Quantity</p>
+          <p className='text-xl mt-[6px] font-mono'>Quantity</p>
           <div className="flex items-center mt-[5px]">
-            <button onClick={handleDecreaseQuantity} className="text-5xl rounded-l-[20px] text-white bg-red-800 w-[55px]">-</button>
-
-            <div className="w-[150px] flex justify-center border border-red-800 mx-[-5px] py-[3px] text-4xl">
+            <button onClick={handleDecreaseQuantity} className="text-[29.5px] rounded-l-[20px] text-white bg-red-800 w-[55px]">-</button>
+            <div className="w-[150px] flex justify-center border border-red-800 mx-[-5px] py-[3px] text-[24px]">
               <motion.span
                 key={key}
                 initial={{ opacity: 0, y: isIncreasing ? 12 : -12 }}
@@ -203,10 +197,10 @@ const ProductDetails = () => {
                 {quantity}
               </motion.span>
             </div>
-            <button onClick={handleIncreaseQuantity} className="text-5xl rounded-r-[20px] text-white bg-red-800 w-[55px]">+</button>
+            <button onClick={handleIncreaseQuantity} className="text-[29.5px] rounded-r-[20px] text-white bg-red-800 w-[55px]">+</button>
           </div>
 
-          <button onClick={handleAddToCart} className="flex items-center justify-center w-[220px] mt-[35px] h-[50px] rounded-lg border-none bg-red-700 hover:bg-red-900 text-white cursor-pointer transition-transform duration-500 overflow-hidden shadow-md relative group active:scale-125">
+          <button onClick={handleAddToCart} className="flex items-center justify-center w-[220px] mt-[20px] h-[50px] rounded-lg border-none bg-red-700 text-white cursor-pointer transition-transform duration-500 overflow-hidden shadow-md relative group active:bg-[#400f0f]">
             <span className="absolute -left-[45px] w-[40px] h-[40px] bg-transparent rounded-full flex items-center justify-center z-10 transition-transform duration-500 group-hover:translate-x-[80px] group-hover:rounded-full">
               <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 576 512" fill="currentColor" className="text-white">
                 <path d="M0 24C0 10.7 10.7 0 24 0H69.5c22 0 41.5 12.8 50.6 32h411c26.3 0 45.5 25 38.6 50.4l-41 152.3c-8.5 31.4-37 53.3-69.5 53.3H170.7l5.4 28.5c2.2 11.3 12.1 19.5 23.6 19.5H488c13.3 0 24 10.7 24 24s-10.7 24-24 24H199.7c-34.6 0-64.3-24.6-70.7-58.5L77.4 54.5c-.7-3.8-4-6.5-7.9-6.5H24C10.7 48 0 37.3 0 24zM128 464a48 48 0 1 1 96 0 48 48 0 1 1 -96 0zm336-48a48 48 0 1 1 0 96 48 48 0 1 1 0-96z"></path>

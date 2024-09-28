@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { FaStar } from 'react-icons/fa';
 import { IoMail } from "react-icons/io5";
+import comments_svg from "../Assets/noComments.webp";
+import MainLoader from './Pages/mainLoader';
 
 const ReviewsList = ({ productId }) => {
   const [reviews, setReviews] = useState([]);
@@ -28,8 +30,20 @@ const ReviewsList = ({ productId }) => {
     setVisibleCount(prevCount => Math.min(prevCount + 4, reviews.length));
   };
 
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p>Error: {error}</p>;
+  if (loading) return <div className='h-full w-full'> <MainLoader /></div>;
+  if (error) return <div className='bg-gray-50 flex justify-center items-center w-full'>
+    <div className='text-center'>
+      <img
+        src={comments_svg}
+        alt='Cart Icon'
+        className='mx-auto lg:scale-[0.75] scale-[0.8] w-[280px] h-[280px]'
+      />
+      <p className='px-[15px] py-[6px] rounded-[8px] mt-[-16px] text-[15px] text-blue-500 font-[600] bg-blue-100 mx-auto text-center '>
+      No reviews made till now. <span className='font-[700] text-blue-800'>Make Review NOW !!</span>
+      </p>
+
+    </div>
+  </div>;
 
   const displayedReviews = reviews.slice(0, visibleCount);
 
@@ -76,7 +90,6 @@ const ReviewsList = ({ productId }) => {
 };
 
 const ReviewProduct = ({ productId }) => {
-  //const { productId } = useParams();
   const [user, setUser] = useState(null);
   const [rating, setRating] = useState(1);
   const [review, setReview] = useState('');
@@ -139,7 +152,7 @@ const ReviewProduct = ({ productId }) => {
   };
 
   return (
-    <div className='w-[96vw] xl:w-[95vw] lg:px-[0px] px-[6px] mx-auto grid grid-cols-1 lg:grid-cols-11'>
+    <div className='w-[96vw] xl:w-[95vw] mb-[25px] lg:px-[0px] px-[6px] mx-auto grid grid-cols-1 lg:grid-cols-11'>
       <div className='col-span-4'>
         <h1 className="text-2xl font-bold mb-4">Submit Your Review</h1>
         {error && <p className="text-red-500">{error}</p>}
@@ -164,11 +177,9 @@ const ReviewProduct = ({ productId }) => {
             required
             className="p-2 border-2 border-gray-600 w-[95%] h-[150px] mx-auto text-md font-medium  rounded"
           />
-
-
           <button
             type="submit"
-            className="px-4 py-2 bg-blue-500 text-white rounded-md"
+            className="px-4 py-2 bg-red-800 text-white rounded-md"
           >
             Submit Review
           </button>
@@ -176,7 +187,6 @@ const ReviewProduct = ({ productId }) => {
       </div>
 
       <div className='col-span-7'>
-
         <ReviewsList productId={productId} />
       </div>
     </div>

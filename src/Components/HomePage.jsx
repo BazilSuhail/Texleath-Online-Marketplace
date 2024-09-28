@@ -88,8 +88,6 @@ const HomePage = () => {
     fetchProducts();
   }, []);
 
-  //if (loading) return <MainLoader />;
-
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
@@ -109,8 +107,8 @@ const HomePage = () => {
   return (
     <main className="font-sans bg-gray-50 min-h-screen text-gray-800">
 
-      <section className='px-[10px] pt-[8px]'>
-        <img src={HomePage1} alt="" className='rounded-lg w-full lg:h-[570px]' />
+      <section className='lg:h-[590px] bg-[#210909]'>
+        <img src={HomePage1} alt="" className='w-full lg:h-[570px]' />
       </section>
 
       <section className='lg:mt-[45px] mt-[25px]'>

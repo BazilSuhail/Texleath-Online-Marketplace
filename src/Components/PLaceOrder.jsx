@@ -3,77 +3,76 @@ import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { clearCart } from '../redux/cartSlice';
-import { FaDollarSign, FaGift, FaTruck } from 'react-icons/fa'; 
+import { FaDollarSign, FaGift, FaTruck, FaTimes } from 'react-icons/fa';
 import { FiFileText } from 'react-icons/fi';
-import { motion } from 'framer-motion';
-import { FaTimes } from 'react-icons/fa';
-
+import { motion } from 'framer-motion'; 
+import cart_svg from "../Assets/noOrder.webp";
 
 const Modal = ({ isOpen, onClose, onConfirm }) => {
     if (!isOpen) return null;
-  
+
     const modalVariants = {
-      hidden: {
-        opacity: 0,
-        scale: 0.8,
-        y: '200px',
-      },
-      visible: {
-        opacity: 1,
-        scale: 1,
-        y: '0px',
-        transition: { duration: 0.3, ease: 'easeOut' },
-      },
-      exit: {
-        opacity: 0, 
-        y: '1-200px',
-        transition: { duration: 1, ease: 'easeIn' },
-      },
+        hidden: {
+            opacity: 0,
+            scale: 0.8,
+            y: '200px',
+        },
+        visible: {
+            opacity: 1,
+            scale: 1,
+            y: '0px',
+            transition: { duration: 0.3, ease: 'easeOut' },
+        },
+        exit: {
+            opacity: 0,
+            y: '1-200px',
+            transition: { duration: 1, ease: 'easeIn' },
+        },
     };
-  
+
     return (
-      <div
-        className='fixed inset-0 bg-gray-600 bg-opacity-50 flex justify-center items-center z-50'
-        initial="hidden"
-        animate="visible"
-        exit="exit"
-        variants={modalVariants}
-      >
-        <motion.div
-          className='bg-white p-6 rounded-lg shadow-lg max-w-sm w-full'
-          initial={{ opacity: 0, scale: 0.9 }}
-          animate={{ opacity: 1, scale: 1 }}
-          exit={{ opacity: 0, scale: 0.9 }}
-          transition={{ duration: 0.3 }}
+        <div
+            className='fixed inset-0 bg-gray-600 bg-opacity-50 flex justify-center items-center z-50'
+            initial="hidden"
+            animate="visible"
+            exit="exit"
+            variants={modalVariants}
         >
-          <div className='flex justify-between items-center'>
-            <h2 className='text-2xl font-bold'>Confirm Order</h2>
-            <button onClick={onClose} className='text-gray-500 hover:text-gray-700'>
-              <FaTimes size={20} />
-            </button>
-          </div>
-          <p className='mt-4 text-md font-medium'>
-            Are you sure you want to place this order? Once confirmed, you will not be able to modify it.
-          </p>
-          <div className='flex justify-end mt-6'>
-            <button
-              onClick={onClose}
-              className='bg-red-500 text-white font-semibold px-4 py-2 rounded-lg mr-2'
+            <motion.div
+                className='bg-white p-6 rounded-lg shadow-lg max-w-sm w-full'
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.9 }}
+                transition={{ duration: 0.3 }}
             >
-              Cancel
-            </button>
-            <button
-              onClick={onConfirm}
-              className='bg-green-900 text-white px-4 py-2 rounded-lg'
-            >
-              Confirm
-            </button>
-          </div>
-        </motion.div>
-      </div>
+                <div className='flex justify-between items-center'>
+                    <h2 className='text-2xl font-bold'>Confirm Order</h2>
+                    <button onClick={onClose} className='text-gray-500 hover:text-gray-700'>
+                        <FaTimes size={20} />
+                    </button>
+                </div>
+                <p className='mt-4 text-md font-medium'>
+                    Are you sure you want to place this order? Once confirmed, you will not be able to modify it.
+                </p>
+                <div className='flex justify-end mt-6'>
+                    <button
+                        onClick={onClose}
+                        className='bg-red-500 text-white font-semibold px-4 py-2 rounded-lg mr-2'
+                    >
+                        Cancel
+                    </button>
+                    <button
+                        onClick={onConfirm}
+                        className='bg-green-900 text-white px-4 py-2 rounded-lg'
+                    >
+                        Confirm
+                    </button>
+                </div>
+            </motion.div>
+        </div>
     );
-  };
-  
+};
+
 
 const OrderList = () => {
     const cart = useSelector(state => state.cart);
@@ -124,7 +123,7 @@ const OrderList = () => {
                     ? product.price - (product.price * product.sale) / 100
                     : product.price;
                 return {
-                    name: product?.name || 'Unknown Product', 
+                    name: product?.name || 'Unknown Product',
                     price: product?.price || 0,
                     size: item?.size || 'No size Selected',
                     discountedPrice: discountedPrice || 0,
@@ -165,7 +164,19 @@ const OrderList = () => {
     const openModal = () => setIsModalOpen(true);
     const closeModal = () => setIsModalOpen(false);
 
-    if (!cart.length) return <p>Your cart is empty</p>;
+    if (!cart.length) return <div className='bg-gray-50 h-[calc(100vh-220px)] flex justify-center items-center w-screen'>
+        <div className='text-center'>
+            <img
+                src={cart_svg}
+                alt='Cart Icon'
+                className='mx-auto lg:scale-[0.88] w-[280px] h-[280px]'
+            />
+            <p className='px-[15px] py-[6px] rounded-[8px] mt-[8px] text-[20px] text-[#d66868] font-[600] bg-[#ffe8e8] mx-auto text-center '>
+                Your cart is empty
+            </p>
+
+        </div>
+    </div>;
 
     return (
         <div className='xsx:w-[70%] flex flex-col xl:w-[60%] mx-auto'>

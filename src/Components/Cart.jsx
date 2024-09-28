@@ -101,9 +101,9 @@ const Cart = () => {
     };
 
     return (
-        <div>
+        <div className='bg-gray-100'>
             {cart.length === 0 ? (
-                <div className='bg-gray-50 h-[calc(100vh-220px)] flex justify-center items-center w-screen'>
+                <div className='h-[calc(100vh-220px)] flex justify-center items-center w-screen'>
                     <div className='text-center'>
                         <img
                             src={cart_svg}
@@ -118,7 +118,7 @@ const Cart = () => {
                 </div>
 
             ) : (
-                <div className=' xsx:w-[80%] p-3 mx-auto'>
+                <div className=' xsx:w-[80%]  p-3 mx-auto'>
                     <div className='flex xsx:flex-row flex-col justify-between'>
                         <h1 className="text-2xl xsx:text-left text-center font-bold">Shopping Cart</h1>
                         <div className='mt-[15px] xsx:mt-0 xsx:text-lg font-semibold'>
@@ -127,16 +127,16 @@ const Cart = () => {
                         </div>
                     </div>
 
-                    <div className='flex border p-[15px] rounded-xl flex-col'>
+                    <div className='flex bg-white border mt-[15px] p-[15px] rounded-xl flex-col'>
                         <div className='text-xl font-bold'>Checkout</div>
-                        <div className='border-b border-t border-gray-400 text-sm md:text-md font-semibold'>
+                        <div className='border-b border-t border-gray-500 text-sm md:text-md font-semibold'>
                             <div className='flex mt-[15px] justify-between'>
                                 <p>Your Cart Subtotal:</p>
-                                <p className='px-[8px] text-xl rounded-xl'><span className='text-lg'>Rs.</span>{calculateTotalBill()}</p>
+                                <p className='px-[8px] text-xl rounded-xl'><span className='text-lg'>Rs.</span>{calculateActualTotalBill()}</p>
                             </div>
                             <div className='flex mt-[8px] justify-between'>
                                 <p>Discount Through Applied Sales:</p>
-                                <p className='px-[8px] text-xl rounded-xl'><span className='text-lg'>Rs.</span>{calculateActualTotalBill()}</p>
+                                <p className='px-[8px] text-xl rounded-xl'><span className='text-lg'>Rs.</span>{calculateTotalBill()}</p>
                             </div>
                             <div className='flex my-[8px] justify-between'>
                                 <p>Delivery Charges (*On Delivery):</p>
@@ -193,7 +193,7 @@ const CartItem = ({ id, size, quantity, onIncrease, onDecrease, onRemove }) => {
         : product.price.toFixed(2);
 
     return (
-        <div className="flex xsx:flex-row flex-col items-center justify-between mb-[28px] bg-custom-light-red border rounded-2xl border-red-700 p-4">
+        <div className="flex xsx:flex-row flex-col items-center justify-between xl:px-[15px] lg:py-[18px] mb-[28px] rounded-2xl bg-white">
             <div className='w-[200px] h-[180px]'>
                 <img
                     src={`${process.env.REACT_APP_API_BASE_URL}/uploads/${product.image}`}
@@ -204,7 +204,7 @@ const CartItem = ({ id, size, quantity, onIncrease, onDecrease, onRemove }) => {
             <div className="md:ml-4 flex-1">
                 <div className='flex my-[15px] xsx:my-0 justify-between'>
                     <h2 className="text-[24px] md:text-[28px] underline font-bold">{product.name}</h2>
-                    <button onClick={onRemove} className="px-[12px] md:px-[20px] rounded-[28px] bg-red-800 hover:bg-red-300 hover:text-red-700 font-bold text-white">Remove</button>
+                    <button onClick={onRemove} className="px-[12px] md:px-[20px] h-[35px] text-[14px] lg:text-[17px] rounded-[28px] bg-red-800 hover:bg-red-300 hover:text-red-700 font-bold text-white">Remove</button>
                 </div>
 
                 <div className="text-sm md:text-lg  flex items-center my-[5px]">
@@ -226,7 +226,7 @@ const CartItem = ({ id, size, quantity, onIncrease, onDecrease, onRemove }) => {
                     </div>
 
                     <p className="text-md flex px-[15px]  items-center md:text-lg text-green-800 font-bold rounded-md p-[5px]">
-                        <span className='text-[15px] text-center'>Item Checkout:</span> <span className='bg-green-200 px-[8px] py-[2px] rounded-lg border-2 border-green-800'>${(discountedPrice * quantity).toFixed(2)}</span>
+                        <span className='text-[15px] text-center'>Item Checkout:</span> <span className='px-[8px] py-[2px] rounded-[22px] ml-[8px] bg-green-200 text-green-700'>${(discountedPrice * quantity).toFixed(2)}</span>
                     </p>
                 </div>
             </div>
