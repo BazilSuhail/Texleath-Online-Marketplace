@@ -26,7 +26,7 @@ module.exports = {
         'custom-text': '0px 0px 2px rgb(0, 30, 0 )',
 
 
-        'custom-card': '0px 0px 9px rgba(76, 76, 76, 0.718)', 
+        'custom-card': '0px 0px 9px rgba(76, 76, 76, 0.718)',
       },
       keyframes: {
         fadeInOut: {
@@ -39,5 +39,19 @@ module.exports = {
       }
     },
   },
-  plugins: [],
+  plugins: [
+    function ({ addUtilities }) {
+      const newUtilities = {
+        '.no-scrollbar': {
+          '-webkit-overflow-scrolling': 'touch',
+          'scrollbar-width': 'none',
+          '-ms-overflow-style': 'none',
+          '&::-webkit-scrollbar': {
+            display: 'none',
+          },
+        },
+      };
+      addUtilities(newUtilities, ['responsive']);
+    },
+  ],
 }

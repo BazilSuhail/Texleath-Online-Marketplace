@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 import { useDispatch } from 'react-redux';
 import { addToCart } from '../redux/cartSlice';
@@ -85,6 +85,7 @@ const MediaCarousel = ({ mainImage, otherImages }) => {
 
 const ProductDetails = () => {
   const { id } = useParams();
+  const navigate = useNavigate();
   const [product, setProduct] = useState(null);
   const [key, setKey] = useState(0);
 
@@ -110,15 +111,22 @@ const ProductDetails = () => {
   }, [id]);
 
   const handleAddToCart = () => {
-    if (product) {
-      dispatch(addToCart({ id: product._id, quantity, size: selectedSize }));
+    const token = localStorage.getItem('token');
+    //console.log(token);
+    if (token === null) {
+      navigate("/login");
+    }
+    else {
+      if (product) {
+        dispatch(addToCart({ id: product._id, quantity, size: selectedSize }));
+      }
     }
   };
 
   const handleIncreaseQuantity = () => {
     setQuantity(prevQuantity => prevQuantity + 1);
     setisIncreasing(true);
-    setKey(prevKey => prevKey + 1); // Change key to trigger animation
+    setKey(prevKey => prevKey + 1);
   };
 
   const handleDecreaseQuantity = () => {
@@ -129,7 +137,7 @@ const ProductDetails = () => {
 
   const handleSizeClick = (size) => {
     setSelectedSize(size);
-    console.log('Selected size:', size);
+    //console.log('Selected size:', size);
   };
 
   if (!product) return <div className='h-screen w-screen pt-[-96px]'> <MainLoader /></div>;

@@ -17,7 +17,7 @@ const Login = () => {
     const fetchUserCart = async (userId) => {
         try {
             const response = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/cartState/cart/${userId}`);
-            console.log('Fetch cart response:', response);
+            //console.log('Fetch cart response:', response);
             if (response.status === 200) {
                 dispatch(setCart(response.data.items));
             }
@@ -50,18 +50,13 @@ const Login = () => {
             console.log('Login response:', response);
             if (response.data.token) {
                 localStorage.setItem('token', response.data.token);
-
-                // Decode token to get user ID
+ 
                 const decodedToken = parseJwt(response.data.token);
-                const userId = decodedToken?.id; // Adjust this based on your token structure
-
-                console.log('User ID:', userId);
-
-                // Fetch and set the cart state
+                const userId = decodedToken?.id;  
+                
                 await fetchUserCart(userId);
-
                 navigate('/profile');
-                window.location.reload(); // Refresh the whole website
+                window.location.reload();
             } else {
                 setError('Login failed: No token received');
             }

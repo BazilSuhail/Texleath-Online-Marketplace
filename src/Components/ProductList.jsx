@@ -187,7 +187,7 @@ const ProductList = () => {
     <div className='overflow-x-hidden'>
       <SearchFilter products={filteredProducts} />
       <div className="my-[4px] ml-[7px] lg:ml-[25px]">
-        <div className="mt-2 flex text-sm sm:text-md  md:text-lg w-[100%] overflow-x-auto font-medium text-red-900 whitespace-nowrap gap-2">
+        <div className="mt-2 flex text-sm sm:text-md  md:text-lg w-[100%] overflow-x-auto  font-medium no-scrollbar text-red-900 whitespace-nowrap gap-2">
           <div onClick={() => handleCategoryClick('All')} className={`px-[12px] py-[3px]  cursor-pointer rounded ${selectedCategory === 'All' ? 'bg-red-900 text-white' : 'bg-red-100 '}`}>
             All Categories
           </div>
@@ -219,7 +219,7 @@ const ProductList = () => {
 
       {selectedCategory !== 'All' && (
         <div className="my-4 ml-[7px] lg:ml-[25px] ">
-          <div className="mt-2 flex text-sm sm:text-md lg:text-lg font-medium text-red-900 flex-wrap gap-2">
+          <div className="mt-2 flex text-sm sm:text-md  md:text-lg w-[100%] overflow-x-auto  font-medium no-scrollbar text-red-900 whitespace-nowrap gap-2">
             <div
               onClick={() => handleSubcategoryClick('All')}
               className={`px-[12px] py-[3px] cursor-pointer rounded ${selectedSubcategory === 'All' ? 'bg-red-900 text-white' : 'bg-red-100'}`}

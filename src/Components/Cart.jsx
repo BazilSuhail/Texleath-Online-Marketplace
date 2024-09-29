@@ -10,7 +10,6 @@ const Cart = () => {
     const dispatch = useDispatch();
     const [products, setProducts] = useState([]);
     const navigate = useNavigate();
-
     const [userId, setUserId] = useState(null);
 
     const decodeToken = useCallback((token) => {
@@ -113,10 +112,8 @@ const Cart = () => {
                         <p className='px-[15px] py-[6px] rounded-[8px] mt-[8px] text-[20px] text-[#d66868] font-[600] bg-[#ffe8e8] mx-auto text-center '>
                             Your cart is empty
                         </p>
-
                     </div>
                 </div>
-
             ) : (
                 <div className=' xsx:w-[80%]  p-3 mx-auto'>
                     <div className='flex xsx:flex-row flex-col justify-between'>

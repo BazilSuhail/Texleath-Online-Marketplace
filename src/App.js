@@ -24,28 +24,21 @@ const App = () => {
     <Router>
       <Navbar />
       <Routes>
-
         <Route exact path="/" element={<HomePage />} />
 
-        {/*  <Route path="/productlist" element={<ProductList  />} /> */}
-        <Route path="/productlist/:category?/:subcategory?" element={<ProductList />} />
-
-
+        <Route path="/faqs" element={<FAQPage />} />
         <Route path="/about" element={<About />} />
+        <Route path="/privacyPolicy" element={<PrivacyPolicy />} />
+        <Route path="/termsOfService" element={<TermsOfService />} />
+        <Route path="/customerSupport" element={<CustomerSupport />} />
 
+        <Route path="/productlist/:category?/:subcategory?" element={<ProductList />} />
         <Route path="/products/:id" element={<ProductDetails />} />
-
         <Route path="/reviews/:productId" element={<ReviewProduct />} />
 
         <Route path="/cart" element={<Cart />} />
         <Route path="/place-order" element={<OrderList />} />
         <Route path="/orders-tracking" element={<ShowOrders />} />
-
-        <Route path="/faqs" element={<FAQPage />} />
-
-        <Route path="/privacyPolicy" element={<PrivacyPolicy />} />
-        <Route path="/termsOfService" element={<TermsOfService />} />
-        <Route path="/customerSupport" element={<CustomerSupport />} />
 
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
