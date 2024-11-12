@@ -4,105 +4,73 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { IoMdSearch } from "react-icons/io";
 import MainLoader from './Pages/mainLoader';
+import { RiCloseFill } from 'react-icons/ri';
 
-const SearchFilter = ({ products }) => {
-  const navigate = useNavigate();
-  const [isFocused, setIsFocused] = useState(false);
+const SearchFilter = ({ closeModal, products }) => {
   const [searchTerm, setSearchTerm] = useState('');
   const [filteredProducts, setFilteredProducts] = useState([]);
 
   useEffect(() => {
-    setFilteredProducts(
-      products.filter(product =>
-        product.name.toLowerCase().includes(searchTerm.toLowerCase())
-      )
-    );
+    if (searchTerm !== '') {
+      setFilteredProducts(
+        products.filter(product =>
+          product.name.toLowerCase().includes(searchTerm.toLowerCase())
+        )
+      );
+    } else {
+      setFilteredProducts([]);
+    }
   }, [searchTerm, products]);
 
-  const handleSearchChange = (e) => {
-    setSearchTerm(e.target.value);
-  };
-
-  const handleIconClick = () => {
-    setIsFocused(!isFocused);
-  };
   return (
-    <div className='mb-[35px]'>
-      <div className="my-[15px] px-[5px] lg:px-[15px] flex mx-auto">
-        <IoMdSearch
-          onClick={handleIconClick}
-          className="text-[45px] border-2 border-red-700 rounded-full text-red-700 p-[3px] mr-[18px] cursor-pointer"
-        />
-        <motion.input
-          id="search"
-          type="text"
-          value={searchTerm}
-          onChange={handleSearchChange}
-          placeholder="Search by product name"
-          className={` border-2 border-white placeholder:text-red-900 rounded-lg p-2 ${isFocused ? 'border-red-500 bg-red-100' : 'bg-white'}`}
-          initial={{ width: '0%' }}
-          animate={{ width: isFocused ? '100%' : '0%' }}
-          transition={{ duration: 0.6 }}
-          onFocus={() => setIsFocused(true)}
-          onBlur={() => setIsFocused(false)}
-        />
-      </div>
+    <div className="fixed inset-0 z-50 w-full xsx:px-0 px-[15px] flex items-center justify-center bg-black bg-opacity-50">
+      <motion.div className="bg-white overflow-hidden rounded-lg pb-[55px] px-6 w-full h-[80vh] max-w-3xl"
+        initial={{ x: '-100%' }}
+        animate={{ x: '0%' }}
+        exit={{ x: '100%' }}
+        transition={{ duration: 0.2,stiffness:'spring' }}
+      >
+        <button onClick={closeModal} className="text-red-700 font-bold float-right pt-[10px] mb-4">
+          <RiCloseFill size={28}/>
+        </button>
 
-      {isFocused &&
+        <div className="flex border-[2px] w-full border-red-700 text-red-800 rounded-[25px] px-[15px] font-[500] text-[15px] items-center">
+          <IoMdSearch size={26} />
+          <input
+            type="text"
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            className='focus:outline-none focus:border-none w-full pl-[8px] py-[8px] style-none placeholder:text-red-800' placeholder='Search by product name ...' />
+        </div>
 
-        <div className="mt-4 border-t pt-4">
-          <h2 className="text-xl font-semibold mb-2">Search Results:</h2>
-          <div className="mx-auto my-[45px] grid grid-cols-2 overflow-hidden lg:grid-cols-3 xl:grid-cols-4 ">
+        {searchTerm && (
+          <div className="h-full overflow-y-auto grid no-scrollbar mt-[15px] grid-cols-2  gap-4 lg:grid-cols-3 xl:grid-cols-4">
             {filteredProducts.length > 0 ? (
-              filteredProducts.map((product) => {
-                const discountedPrice = product.sale
-                  ? (product.price - (product.price * product.sale) / 100).toFixed(2)
-                  : product.price.toFixed(2);
-
-                return (
-                  <div
-                    key={product._id}
-                    className="block p-[10px] overflow-x-hidden sm:p-[5px] cursor-pointer"
-                    onClick={() => navigate(`/products/${product._id}`)}
-                  >
-                    <img
-                      src={`${process.env.REACT_APP_API_BASE_URL}/uploads/${product.image}`}
-                      alt={product.name}
-                      className="object-cover mx-auto h-[200px] w-[180px] hover:scale-105 transition duration-700  md:h-[400px] md:w-[340px] lg:w-[300px]  lg:h-[335px] sm:h-[320px] sm:w-[280px] mb-4"
-                    />
-
-                    <div className='mx-auto w-[180px] md:w-[340px] lg:w-[300px] sm:w-[280px] '>
-
-                      <h1 className='text-xl md:text-[25px] lg:text-[25px] mb-[6px] text-red-900 font-medium'>
-                        {product.name.length > 22 ? `${product.name.substring(0, 22)}...` : product.name}
-                      </h1>
-                      
-                      <div className='md:mt-[10px] mt-[0px] inline-block'>
-                        <p className="text-[10px] md:text-[13px] font-medium px-[10px] py-[2px] rounded-xl bg-gray-600 text-white">{product.category}</p>
-                      </div>
-
-                      <div className='ml-[8px] inline-block'>
-                        <p className="text-[10px] md:text-[13px] font-medium px-[10px] py-[2px] rounded-xl bg-custom-gray">{product.subcategory}</p>
-                      </div>
-
-                      <p className="my-[5px] flex justify-between items-center">
-                        {product.sale && <span className="text-red-500 bg-red-200 font-medium rounded-xl text-sm md:text-md px-[12px] line-through">Rs.{product.price.toFixed(2)}</span>}
-                        <span className='text-[22px] ml-[6px] mb-[3px] font-medium'><span className='text-[20px] font-normal'> Rs.</span>{parseInt(discountedPrice)}</span>
-                      </p>
-                    </div>
-                  </div>
-                );
-              })
+              filteredProducts.map((product) => (
+                <div key={product._id} className="p-4">
+                  <img
+                    src={`${process.env.REACT_APP_API_BASE_URL}/uploads/${product.image}`}
+                    alt={product.name}
+                    className="object-cover mx-auto h-[200px] w-[180px]"
+                  />
+                  <h1 className="text-lg text-red-900 font-medium">
+                  {product.name.length > 22 ? `${product.name.substring(0, 22)}...` : product.name}
+                  </h1>
+                  <p className="text-xs text-gray-600">{product.category}</p>
+                  <p className="mt-2 text-lg font-medium text-red-700">
+                    Rs.{product.price}
+                  </p>
+                </div>
+              ))
             ) : (
-              <p>No products found.</p>
+              <p className='bg-red-50 rounded-md py-[4px] text-center w-full text-red-900 mx-auto'>No products found.</p>
             )}
           </div>
-        </div>
-      }
-    </div >
+        )}
+      </motion.div>
+    </div>
   );
 };
-
 
 const ProductList = () => {
   const navigate = useNavigate();
@@ -113,6 +81,10 @@ const ProductList = () => {
   const [selectedCategory, setSelectedCategory] = useState(urlCategory);
   const [selectedSubcategory, setSelectedSubcategory] = useState('All');
   const [loadingProducts, setLoadingProducts] = useState(true);
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const openModal = () => setIsModalOpen(true);
+  const closeModal = () => setIsModalOpen(false);
 
   useEffect(() => {
     setSelectedCategory(urlCategory);
@@ -127,13 +99,14 @@ const ProductList = () => {
       } catch (error) {
         console.error('Error fetching products:', error);
       }
-      setLoadingProducts(false); 
+      setLoadingProducts(false);
     };
 
     fetchProducts();
   }, []);
 
   useEffect(() => {
+    window.scrollTo(0, 0);
     const fetchCategories = async () => {
       try {
         const response = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/category`);
@@ -181,11 +154,18 @@ const ProductList = () => {
 
   const excludedCategories = ['Fitness Wear', 'Sports Wear', 'Gym Wear'];
 
-  if (loadingProducts) return <div className='h-screen w-screen pt-[-96px]'> <MainLoader /></div>;
+  if (loadingProducts) return <div className='h-screen xsx:pt-[130px] pt-[30px] w-screen'> <MainLoader /></div>;
 
   return (
-    <div className='overflow-x-hidden  xsx:pt-[150px] pt-[120px] '>
-      <SearchFilter products={filteredProducts} />
+    <div className='overflow-x-hidden w-full xsx:pt-[170px] pt-[120px] '> 
+      <div className='w-full mb-[15px] px-[15px]'>
+        <button onClick={openModal} className="flex border-[2px] w-full border-red-700 text-red-800 rounded-[25px] px-[15px] py-[8px] font-[500] text-[15px] items-center">
+          <IoMdSearch size={26} /> <span className='ml-[5px]'>Search by product name ...</span>
+        </button>
+      </div>
+      {isModalOpen && <SearchFilter products={filteredProducts} closeModal={closeModal} />}
+
+
       <div className="my-[4px] ml-[7px] lg:ml-[25px]">
         <div className="mt-2 flex text-sm sm:text-md  md:text-lg w-[100%] overflow-x-auto  font-medium no-scrollbar text-red-900 whitespace-nowrap gap-2">
           <div onClick={() => handleCategoryClick('All')} className={`px-[12px] py-[3px]  cursor-pointer rounded ${selectedCategory === 'All' ? 'bg-red-900 text-white' : 'bg-red-100 '}`}>
@@ -273,7 +253,7 @@ const ProductList = () => {
                 </div>
 
                 <p className="my-[5px] flex justify-between items-center">
-                  {product.sale && <span className="text-red-500 bg-red-200 font-medium rounded-xl text-sm md:text-md px-[12px] line-through">Rs.{product.price.toFixed(2)}</span>}
+                  {product.sale ? <span className="text-red-500 bg-red-200 font-medium rounded-xl text-sm md:text-md px-[12px] line-through">Rs.{product.price.toFixed(2)}</span> : <span className='text-white'>lll</span>}
                   <span className='text-[22px] ml-[6px] mb-[3px] font-medium'><span className='text-[20px] font-normal'> Rs.</span>{parseInt(discountedPrice)}</span>
                 </p>
               </div>

@@ -96,11 +96,11 @@ const Profile = () => {
         fetchProfile();
     }, [fetchProfile]);
 
-    if (error) return <p className="text-red-500">{error}</p>;
+    if (error) return <p className="text-red-500 mx-[25px] bg-red-100 py-[4px] px-[15px] rounded-lg">{error}</p>;
     if (!user) return <div className='h-screen w-screen pt-[-96px]'> <MainLoader /></div>;
 
     return (
-        <div className="w-full flex xsx:flex-row flex-col xsx:p-[15px]">
+        <div className="w-full  xsx:pt-[150px] pt-[120px]  flex xsx:flex-row flex-col xsx:p-[15px]">
             <div className='xsx:w-[40%] xsx:p-[0px] p-[15px]'>
                 {user.fullName === "" ?
                     <div className='font-bold text-red-500 mb-[25px] text-lg'> * Kindly Before Placing Any Orders.Remember to FIll out Details for Faster Checkout.Only Entered info will be used for Shipping.</div>

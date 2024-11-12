@@ -66,7 +66,7 @@ const Login = () => {
     };
 
     return (
-        <main className='flex mt-[40px] md:mt-[0px] md:h-[calc(100vh-140px)] flex-col  items-center justify-center'>
+        <main className='flex xsx:pt-[150px] pt-[120px] min-h-screen flex-col  items-center justify-center'>
             <form onSubmit={handleSubmit} className="w-[100vw] sm:w-[520px] form ">
                 <div className='text-red-800 text-[35px] text-center font-bold'>Welcome Back</div>
                 <div className='text-red-800 text-[15px] text-center font-medium'>Please enter Email and Password</div>

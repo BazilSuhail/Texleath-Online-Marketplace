@@ -7,14 +7,14 @@ import { AiOutlineFileText } from 'react-icons/ai';
 import { BiCheckCircle } from 'react-icons/bi';
 import { TbCreditCardRefund } from "react-icons/tb";
 import { FaShippingFast, FaStar } from "react-icons/fa";
-import { FaPeoplePulling } from "react-icons/fa6";
+import { FaArrowRightLong, FaPeoplePulling } from "react-icons/fa6";
 import { BiSolidCustomize } from "react-icons/bi";
 
 import { FaRegHandshake } from 'react-icons/fa';
 
 import MainLoader from './Pages/mainLoader';
 
-import HomePage1 from "../Assets/home1.jpg"
+import HomePage1 from "../Assets/home.jpg"
 
 
 import fitness from "../Assets/fitness.webp"
@@ -106,9 +106,34 @@ const HomePage = () => {
 
 
   return (
-    <main className="font-sans  xsx:pt-[150px] pt-[120px]  bg-gray-50 min-h-screen text-gray-800">
-      <section className='lg:h-[590px] bg-[#210909]'>
-        <img src={HomePage1} alt="" className='w-full lg:h-[570px]' />
+    <main className="font-sans bg-gray-50 min-h-screen text-gray-800">
+      <section className="relative xsx:pt-[150px] pt-[120px] bg-gradient-to-r w-full from-red-950 via-custom-red to-red-950 overflow-hidden h-[calc(100vh+140px)]">
+        <div className="absolute xsx:pt-[150px] pt-[120px] inset-0 overflow-hidden">
+          <img
+            src={HomePage1}
+            alt="Connection error ..."
+            className="object-cover w-full h-full"
+          />
+        </div>
+
+        <div className='bg-gradient-to-r absolute z-30 opacity-55 from-red-950 via-custom-red to-red-950 h-full w-full'></div>
+
+        <div className='absolute z-40 xsx:scale-[1] md:scale-[0.8] scale-[0.92] flex flex-col justify-center mt-[-150px] items-center h-full w-full'>
+          <h2 className='text-[20px] md:text-[24px] font-bold'>
+            <span className='text-red-100 font-[600] mr-[7px]'>Welcome to,</span>
+            <span className="text-red-700 mr-[7px]">TEXLEATH</span>
+            <span className="text-white">INDUSTRIES</span>
+          </h2>
+          <div className='text-[55px] md:text-[75px] text-center font-[700] text-white'>
+            <p className='flex md:flex-row flex-col'><span className='md:mt-0 mt-[-35px]'>Where Fashion</span><p className='md:mt-0 mt-[-10px] md:ml-[18px]'>Meets</p></p>
+            <p className='mt-[-15px] md:mt-[-24px]'>Craftsmanship</p>
+          </div>
+          
+        <div className='text-white flex border-t-[2px] pt-[4px] border-white w-[120px] items-center justify-center mt-[45px] text-[18px] z-50'>
+          <span className='mr-[8px]'>Shop</span>
+          <FaArrowRightLong />
+        </div>
+        </div>
       </section>
 
       <section className='lg:mt-[45px] mt-[25px]'>

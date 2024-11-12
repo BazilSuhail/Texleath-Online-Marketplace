@@ -31,15 +31,15 @@ const ReviewsList = ({ productId }) => {
   };
 
   if (loading) return <div className='h-full w-full'> <MainLoader /></div>;
-  if (error) return <div className='bg-gray-50 flex justify-center items-center w-full'>
+  if (error) return <div className='flex justify-center items-center w-full'>
     <div className='text-center'>
       <img
         src={comments_svg}
         alt='Cart Icon'
-        className='mx-auto lg:scale-[0.75] scale-[0.8] w-[280px] h-[280px]'
+        className='mx-auto mix-blend-multiply lg:scale-[0.75] scale-[0.8] w-[280px] h-[280px]'
       />
       <p className='px-[15px] py-[6px] rounded-[8px] mt-[-16px] text-[15px] text-blue-500 font-[600] bg-blue-100 mx-auto text-center '>
-      No reviews made till now. <span className='font-[700] text-blue-800'>Make Review NOW !!</span>
+        No reviews made till now. <span className='font-[700] text-blue-800'>Make Review NOW !!</span>
       </p>
 
     </div>

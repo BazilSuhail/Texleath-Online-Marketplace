@@ -151,7 +151,7 @@ const ProductDetails = () => {
     : product.price.toFixed(2);
 
   return (
-    <div className='pt-[18px] xl:pt-[40px]'>
+    <div className='xsx:pt-[190px] pt-[120px]'>
       <div className='w-[96vw] xl:w-[95vw] lg:px-[0px] px-[6px] mx-auto grid grid-cols-1 lg:grid-cols-11'>
         <div className="col-span-7">
           <MediaCarousel
