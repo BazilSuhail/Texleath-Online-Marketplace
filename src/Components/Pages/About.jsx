@@ -17,7 +17,7 @@ const About = () => {
     }
   }, []);
 
-  
+
   const sectionVariants = {
     hidden: { opacity: 0, y: 20 },
     visible: { opacity: 1, y: 0, transition: { duration: 0.6 } },
@@ -151,14 +151,14 @@ const About = () => {
         </motion.section>
 
         <section className='md:w-[90%] w-[95%] mt-[35px] xl:w-[80%] mx-auto flex  bg-gradient-to-t from-red-400 via-red-100 to-red-400 rounded-md py-[40px] sm:py-[85px] xsx:py-[105px]' >
-        <div className='w-[40%] mt-[-28px] lg:mt-[-15px] xl:mt-[5px] sm:ml-[45px] ml-[35px] mr-[-45px] scale-75 sm:scale-125 xsx:scale-150'>
-          <div className="cycle-loader"></div>
-        </div>
-        <div className='w-[60%] flex flex-col justify-center'>
-          <p className='text-[30px] sm:text-[45px] xsx:text-[55px] xl:text-[68px] text-white font-extrabold text-center'>FREE DELIVERY</p>
-          <p className='text-[17px] sm:text-[32px] xsx:text-[40px] xl:text-[50px] text-red-200 font-medium text-center'>ON <span className='text-red-500'>PKR 10,000</span> OR ABOVE</p>
-        </div>
-      </section>
+          <div className='w-[40%] mt-[-28px] lg:mt-[-15px] xl:mt-[5px] sm:ml-[45px] ml-[35px] mr-[-45px] scale-75 sm:scale-125 xsx:scale-150'>
+            <div className="cycle-loader"></div>
+          </div>
+          <div className='w-[60%] flex flex-col justify-center'>
+            <p className='text-[30px] sm:text-[45px] xsx:text-[55px] xl:text-[68px] text-white font-extrabold text-center'>FREE DELIVERY</p>
+            <p className='text-[17px] sm:text-[32px] xsx:text-[40px] xl:text-[50px] text-red-200 font-medium text-center'>ON <span className='text-red-500'>PKR 10,000</span> OR ABOVE</p>
+          </div>
+        </section>
 
         {/* Meet the Team Section */}
         <motion.section
@@ -214,7 +214,7 @@ const About = () => {
           initial="hidden"
           animate="visible"
         >
-           <h2 className="text-2xl md:text-4xl font-bold mb-4 text-red-50 text-center">Our Values</h2>
+          <h2 className="text-2xl md:text-4xl font-bold mb-4 text-red-50 text-center">Our Values</h2>
           <p className="text-lg text-red-300 font-serif text-center mb-4">
             At Texleath Industries, our values are the cornerstone of our business. They guide our actions, shape our culture, and define our commitment to excellence.
           </p>

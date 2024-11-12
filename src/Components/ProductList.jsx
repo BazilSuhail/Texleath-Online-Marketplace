@@ -27,7 +27,7 @@ const SearchFilter = ({ products }) => {
     setIsFocused(!isFocused);
   };
   return (
-    <div className='pt-[70px]'>
+    <div className='mb-[35px]'>
       <div className="my-[15px] px-[5px] lg:px-[15px] flex mx-auto">
         <IoMdSearch
           onClick={handleIconClick}
