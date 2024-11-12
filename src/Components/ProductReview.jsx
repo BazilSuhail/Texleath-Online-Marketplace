@@ -48,7 +48,7 @@ const ReviewsList = ({ productId }) => {
   const displayedReviews = reviews.slice(0, visibleCount);
 
   return (
-    <div className='lg:mt-[-15px] mb-[25px]'>
+    <div className='lg:mt-[-15px]  xsx:pt-[150px] pt-[120px] mb-[25px]'>
 
       {reviews.length === 0 ? (
         <p>No reviews made till now.Make Review NOW !!!</p>

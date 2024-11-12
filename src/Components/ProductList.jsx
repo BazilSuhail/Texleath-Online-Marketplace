@@ -184,7 +184,7 @@ const ProductList = () => {
   if (loadingProducts) return <div className='h-screen w-screen pt-[-96px]'> <MainLoader /></div>;
 
   return (
-    <div className='overflow-x-hidden'>
+    <div className='overflow-x-hidden  xsx:pt-[150px] pt-[120px] '>
       <SearchFilter products={filteredProducts} />
       <div className="my-[4px] ml-[7px] lg:ml-[25px]">
         <div className="mt-2 flex text-sm sm:text-md  md:text-lg w-[100%] overflow-x-auto  font-medium no-scrollbar text-red-900 whitespace-nowrap gap-2">

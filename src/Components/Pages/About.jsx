@@ -1,4 +1,3 @@
-import React, { useRef, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { FaRegStar, FaRegHandshake, FaUserTie } from 'react-icons/fa';
 
@@ -9,16 +8,8 @@ import { GiCheckMark, GiFactory, GiPencilBrush } from 'react-icons/gi';
 import AboutPage from "../../Assets/HomePage1.jpg"
 
 const About = () => {
-  const Aboutref = useRef(null);
 
-  useEffect(() => {
-    if (Aboutref.current) {
-      Aboutref.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }
-  }, []);
-
-
-  const sectionVariants = {
+    const sectionVariants = {
     hidden: { opacity: 0, y: 20 },
     visible: { opacity: 1, y: 0, transition: { duration: 0.6 } },
   };
@@ -29,9 +20,8 @@ const About = () => {
   };
 
   return (
-    <div ref={Aboutref} className="about-us bg-gray-50 py-10 sm:px-6 lg:px-0">
+    <div className="about-us  xsx:pt-[150px] pt-[120px]  bg-gray-50 pb-10 sm:px-6 lg:px-0">
       <div className="container mx-auto">
-
         <motion.section
           variants={sectionVariants}
           initial="hidden"

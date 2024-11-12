@@ -95,6 +95,10 @@ const ProductDetails = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
+    window.scrollTo(0, 0);
+}, []);
+
+  useEffect(() => {
     const fetchProduct = async () => {
       try {
         const response = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/fetchproducts/products/${id}`);

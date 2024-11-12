@@ -13,6 +13,9 @@ const ShowOrders = () => {
         return decoded.id;
     }, []);
 
+    
+    window.scrollTo(0, 0);
+
     useEffect(() => {
         const token = localStorage.getItem('token');
         const id = decodeToken(token);
@@ -52,7 +55,7 @@ const ShowOrders = () => {
     }
 
     return (
-        <div className="p-4">
+        <div className="p-4  xsx:pt-[150px] pt-[120px] ">
             <h1 className="text-[28px] font-bold text-red-900 mb-[3px]">Orders Placed</h1>
             {orders.map(order => (
                 order.orders.map(singleOrder => (

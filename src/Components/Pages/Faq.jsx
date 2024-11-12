@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { FaQuestionCircle, FaChevronDown, FaChevronUp } from 'react-icons/fa';
 import { motion, AnimatePresence } from 'framer-motion';
 
@@ -43,12 +43,9 @@ const faqs = [
 
 const FAQPage = () => {
     const [openIndex, setOpenIndex] = useState(null);
-    const faqRef = useRef(null); // Create a ref for the FAQ section
 
     useEffect(() => {
-        if (faqRef.current) {
-            faqRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        }
+        window.scrollTo(0, 0);
     }, []);
 
     const handleToggle = (index) => {
@@ -57,7 +54,7 @@ const FAQPage = () => {
 
     return (
         <div className='bg-red-50 min-h-screen py-8 px-4 md:px-8'>
-            <div ref={faqRef} className='max-w-4xl mx-auto bg-white shadow-lg rounded-lg p-6'>
+            <div className='max-w-4xl mx-auto bg-white shadow-lg rounded-lg p-6'>
                 <h1 className='text-2xl md:text-3xl font-bold mb-6 text-center text-red-700'>
                     <FaQuestionCircle className='inline mr-2' />
                     Frequently Asked Questions
@@ -68,7 +65,7 @@ const FAQPage = () => {
                     <div className='h-[3px] w-[89%] mx-auto bg-red-800 '></div>
                     <div className='w-4 h-[100%]  ml-[5px] rounded-full bg-red-800'></div>
                 </div>
-                
+
                 <p className='text-lg text-red-800 font-medium mb-6'>
                     Welcome to the FAQ section of Texleath Industries. Here you'll find answers to common questions about our products, services, and policies. If you have any other inquiries, feel free to reach out to our customer support team.
                 </p>

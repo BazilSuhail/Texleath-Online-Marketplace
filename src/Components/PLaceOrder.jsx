@@ -179,7 +179,7 @@ const OrderList = () => {
     </div>;
 
     return (
-        <div className='xsx:w-[70%] flex flex-col xl:w-[60%] mx-auto'>
+        <div className='xsx:w-[70%]  xsx:pt-[150px] pt-[120px]  flex flex-col xl:w-[60%] mx-auto'>
             <h1 className="text-4xl flex items-center mx-auto text-red-900 underline underline-offset-4 mt-[15px] text-center font-bold">
                 <FiFileText className='mt-[8px] mr-[5px]' />
                 Final Invoice

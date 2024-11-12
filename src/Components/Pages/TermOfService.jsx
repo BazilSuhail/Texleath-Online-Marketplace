@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from 'react';
+import { useEffect } from 'react';
 import { FaRegHandshake, FaListAlt, FaRegClock, FaExclamationTriangle } from 'react-icons/fa';
 import { motion } from 'framer-motion';
 
@@ -13,15 +13,12 @@ const textVariants = {
 };
 
 const TermsOfService = () => {
-  const TermsOfServiceref = useRef(null); // Create a ref for the Privacy Policy section
 
   useEffect(() => {
-    if (TermsOfServiceref.current) {
-      TermsOfServiceref.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }
+    window.scrollTo(0, 0);
   }, []);
   return (
-    <div ref={TermsOfServiceref} className='bg-red-50 min-h-screen py-8 px-4 md:px-8'>
+    <div className='bg-red-50  xsx:pt-[150px] pt-[120px]  min-h-screen py-8 px-4 md:px-8'>
       <div className='max-w-4xl mx-auto bg-white shadow-xl rounded-lg p-8'>
         <motion.h1
           className='text-3xl underline md:text-4xl font-bold mb-8 text-red-700 text-center'
@@ -62,7 +59,7 @@ const TermsOfService = () => {
             By accessing or using our services, you agree to comply with and be bound by these Terms of Service. If you do not agree with any part of these terms, you must not use our services.
           </motion.p>
         </section>
-        
+
         <section className='mb-10'>
           <motion.h2
             className='text-2xl font-semibold text-red-800 mb-4 flex items-center'
@@ -84,7 +81,7 @@ const TermsOfService = () => {
             Users must provide accurate information and use our services responsibly. You are responsible for maintaining the confidentiality of your account and for all activities that occur under your account.
           </motion.p>
         </section>
-        
+
         <section className='mb-10'>
           <motion.h2
             className='text-2xl font-semibold text-red-800 mb-4 flex items-center'

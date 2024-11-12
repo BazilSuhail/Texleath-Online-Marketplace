@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from 'react';
+import { useEffect } from 'react';
 import { FaShieldAlt, FaLock, FaCheckCircle, FaExclamationTriangle } from 'react-icons/fa';
 import { motion } from 'framer-motion';
 
@@ -13,15 +13,12 @@ const textVariants = {
 };
 
 const PrivacyPolicy = () => {
-  const privacyPolicyRef = useRef(null); // Create a ref for the Privacy Policy section
 
   useEffect(() => {
-    if (privacyPolicyRef.current) {
-      privacyPolicyRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }
-  }, []);
+    window.scrollTo(0, 0);
+}, []);
   return (
-    <div ref={privacyPolicyRef} className='bg-gray-50 min-h-screen py-8 px-4 md:px-8'>
+    <div  className='bg-gray-50 xsx:pt-[150px] pt-[120px] min-h-screen py-8 px-4 md:px-8'>
       <div className='max-w-4xl mx-auto bg-white shadow-lg rounded-lg p-6'>
         <motion.h1
           className='text-3xl font-bold mb-6 text-center text-red-700'

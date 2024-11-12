@@ -1,4 +1,4 @@
-import React, { useState,useRef, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { FaPhoneAlt, FaEnvelope, FaMapMarkerAlt, FaRegHandshake } from 'react-icons/fa';
 import { motion } from 'framer-motion';
 
@@ -20,15 +20,10 @@ const detailVariants = {
 const CustomerSupport = () => {
   const [formData, setFormData] = useState({ name: '', email: '', message: '' });
   const [status, setStatus] = useState('');
-
-  const CustomerSupportref = useRef(null); // Create a ref for the Privacy Policy section
-
+ 
   useEffect(() => {
-    if (CustomerSupportref.current) {
-      CustomerSupportref.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }
-  }, []);
-
+    window.scrollTo(0, 0);
+}, []);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -43,7 +38,7 @@ const CustomerSupport = () => {
   };
 
   return (
-    <div ref={CustomerSupportref} className='bg-gray-100 min-h-screen py-8 px-4 md:px-8'>
+    <div className='bg-gray-100  xsx:pt-[150px] pt-[120px]  min-h-screen pb-8 px-4 md:px-8'>
       <div className='max-w-4xl mx-auto bg-white shadow-lg rounded-lg p-6 md:p-8'>
         <motion.h1
           className='text-3xl md:text-4xl font-bold underline underline-offset-8 mb-6 md:mb-8 text-red-700 text-center'

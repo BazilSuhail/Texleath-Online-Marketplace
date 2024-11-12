@@ -4,7 +4,11 @@
 
 @import "./Styles.css";
 
-/* Customize the scrollbar for Webkit browsers (Chrome, Safari) */
+
+*{
+  scroll-behavior: smooth;
+}
+
 ::-webkit-scrollbar { 
   width: 7px; 
   height: 12px; 

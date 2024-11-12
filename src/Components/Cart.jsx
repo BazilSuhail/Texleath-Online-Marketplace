@@ -20,6 +20,10 @@ const Cart = () => {
     }, []);
 
     useEffect(() => {
+        window.scrollTo(0, 0);
+    }, []);
+
+    useEffect(() => {
         const token = localStorage.getItem('token');
         const id = decodeToken(token);
         setUserId(id);
@@ -190,7 +194,7 @@ const CartItem = ({ id, size, quantity, onIncrease, onDecrease, onRemove }) => {
         : product.price.toFixed(2);
 
     return (
-        <div className="flex xsx:flex-row flex-col items-center justify-between xl:px-[15px] lg:py-[18px] mb-[28px] rounded-2xl bg-white">
+        <div className="flex xsx:flex-row  xsx:pt-[150px] pt-[120px]  flex-col items-center justify-between xl:px-[15px] lg:py-[18px] mb-[28px] rounded-2xl bg-white">
             <div className='w-[200px] h-[180px]'>
                 <img
                     src={`${process.env.REACT_APP_API_BASE_URL}/uploads/${product.image}`}

@@ -74,6 +74,7 @@ const HomePage = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
+    window.scrollTo(0, 0);
     const fetchProducts = async () => {
       try {
         const response = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/homeproducts`); // Adjust API endpoint as needed
@@ -105,8 +106,7 @@ const HomePage = () => {
 
 
   return (
-    <main className="font-sans bg-gray-50 min-h-screen text-gray-800">
-
+    <main className="font-sans  xsx:pt-[150px] pt-[120px]  bg-gray-50 min-h-screen text-gray-800">
       <section className='lg:h-[590px] bg-[#210909]'>
         <img src={HomePage1} alt="" className='w-full lg:h-[570px]' />
       </section>

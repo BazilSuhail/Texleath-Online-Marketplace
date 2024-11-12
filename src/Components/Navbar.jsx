@@ -15,12 +15,42 @@ const Navbar = () => {
     const cartLength = useSelector(selectCartLength);
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [isLoggedIn, setIsLoggedIn] = useState(false);
+  
 
     const [openIndex, setOpenIndex] = useState(null);
+ 
+    const [isScrollingUp, setIsScrollingUp] = useState(true);
+    const [prevScrollPos, setPrevScrollPos] = useState(0);
+    const [scrollPos, setScrollPos] = useState(0);
+  
+    useEffect(() => {
+      const handleScroll = () => {
+        const currentScrollPos = window.scrollY;
+        setScrollPos(currentScrollPos);
+  
+        if (currentScrollPos > prevScrollPos) {
+          setIsScrollingUp(false); // Hides navbar on scroll down
+        } else {
+          setIsScrollingUp(true);  // Shows navbar on scroll up
+        }
+  
+        setPrevScrollPos(currentScrollPos);
+      };
+  
+      window.addEventListener("scroll", handleScroll);
+      return () => window.removeEventListener("scroll", handleScroll);
+    }, [prevScrollPos]);
+  
+    const getNavbarPosition = () => {
+      if (scrollPos === 0) return 0;           // Fully visible at top of page
+      if (isScrollingUp) return -35;            // Partially visible when scrolling up
+      return -150;                             // Hidden on scroll down
+    };
 
     const handleToggle = (index) => {
         setOpenIndex(openIndex === index ? null : index);
     };
+ 
     
     const fetchProfile = useCallback(async () => {
         try {
@@ -49,9 +79,7 @@ const Navbar = () => {
     const handleMenuToggle = () => {
         setIsMenuOpen(!isMenuOpen);
     };
-
-
-    // Text Fade animation  
+   
     const texts = ["HURRY UP SHOW NOW !!", "FREE DELIVERY ON USD 200 AND ABOVE IN USA", "Buy Any 3 Products and Get "];
     const [index, setIndex] = useState(0);
 
@@ -65,9 +93,12 @@ const Navbar = () => {
     });
 
     return (
-        <nav className="bg-gradient-to-r from-red-950 via-custom-red to-red-950 ">
-            {/* Navbar for larger screens */}
-
+        <motion.nav
+        className="fixed top-0 w-full bg-gradient-to-r from-red-950 via-custom-red to-red-950 z-50"
+        initial={{ y: 0 }}
+        animate={{ y: getNavbarPosition() }}
+        transition={{ duration: 0.3 }}
+      > 
             <div className="h-[30px] pb-[5px] z-50 relative bg-gradient-to-r from-red-950 via-custom-red to-red-950  overflow-hidden">
                 <AnimatePresence>
                     {texts.map((text, i) => (
@@ -288,7 +319,7 @@ const Navbar = () => {
                 </AnimatePresence>
             </div>
 
-        </nav>
+        </motion.nav>
     );
 };
 
