@@ -16,7 +16,7 @@ const Login = () => {
 
     const fetchUserCart = async (userId) => {
         try {
-            const response = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/cartState/cart/${userId}`);
+            const response = await axios.get(`${import.meta.env.VITE_REACT_APP_API_BASE_URL}/cartState/cart/${userId}`);
             //console.log('Fetch cart response:', response);
             if (response.status === 200) {
                 dispatch(setCart(response.data.items));
@@ -46,7 +46,7 @@ const Login = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.post(`${process.env.REACT_APP_API_BASE_URL}/auth/login`, { email, password });
+            const response = await axios.post(`${import.meta.env.VITE_REACT_APP_API_BASE_URL}/auth/login`, { email, password });
             console.log('Login response:', response);
             if (response.data.token) {
                 localStorage.setItem('token', response.data.token);

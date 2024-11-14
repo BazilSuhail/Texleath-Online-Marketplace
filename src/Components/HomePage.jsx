@@ -12,10 +12,7 @@ import { BiSolidCustomize } from "react-icons/bi";
 
 import { FaRegHandshake } from 'react-icons/fa';
 
-import MainLoader from './Pages/mainLoader';
-
-import HomePage1 from "../Assets/home.jpg"
-
+import MainLoader from './Pages/mainLoader';  
 
 import fitness from "../Assets/fitness.webp"
 import gym from "../Assets/gym.webp"
@@ -23,6 +20,8 @@ import sports from "../Assets/sports.webp"
 import safety from "../Assets/safety.webp"
 import active from "../Assets/active.webp"
 import gloves from "../Assets/gloves.webp"
+
+import HomePagePhoto from "../assets/home.webp"
 
 const reviews = [
   {
@@ -77,7 +76,7 @@ const HomePage = () => {
     window.scrollTo(0, 0);
     const fetchProducts = async () => {
       try {
-        const response = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/homeproducts`); // Adjust API endpoint as needed
+        const response = await axios.get(`${import.meta.env.VITE_REACT_APP_API_BASE_URL}/homeproducts`); // Adjust API endpoint as needed
         setProducts(response.data);
       } catch (err) {
         setError(err.message);
@@ -110,7 +109,7 @@ const HomePage = () => {
       <section className="relative xsx:pt-[150px] pt-[120px] bg-gradient-to-r w-full from-red-950 via-custom-red to-red-950 overflow-hidden h-[calc(100vh+140px)]">
         <div className="absolute xsx:pt-[150px] pt-[120px] inset-0 overflow-hidden">
           <img
-            src={HomePage1}
+            src={HomePagePhoto}
             alt="Connection error ..."
             className="object-cover w-full h-full"
           />
@@ -125,7 +124,7 @@ const HomePage = () => {
             <span className="text-white">INDUSTRIES</span>
           </h2>
           <div className='text-[55px] md:text-[75px] text-center font-[700] text-white'>
-            <p className='flex md:flex-row flex-col'><span className='md:mt-0 mt-[-35px]'>Where Fashion</span><p className='md:mt-0 mt-[-10px] md:ml-[18px]'>Meets</p></p>
+            <p className='flex md:flex-row flex-col'><span className='md:mt-0 mt-[-35px]'>Where Fashion</span><span className='md:mt-0 mt-[-10px] md:ml-[18px]'>Meets</span></p>
             <p className='mt-[-15px] md:mt-[-24px]'>Craftsmanship</p>
           </div>
           
@@ -228,7 +227,7 @@ const HomePage = () => {
                   >
                     <img
                       loading="lazy"
-                      src={`${process.env.REACT_APP_API_BASE_URL}/uploads/${product.image}`}
+                      src={`${import.meta.env.VITE_REACT_APP_API_BASE_URL}/uploads/${product.image}`}
                       alt={product.name}
                       className="object-cover mx-auto h-[200px] w-[180px] hover:scale-105 transition duration-700 md:h-[400px] md:w-[340px] lg:w-[300px] lg:h-[335px] sm:h-[320px] sm:w-[280px] mb-4"
                     />

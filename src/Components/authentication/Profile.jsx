@@ -30,7 +30,7 @@ const Profile = () => {
         try {
             const token = localStorage.getItem('token');
             if (token) {
-                const response = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/auth/profile`, {
+                const response = await axios.get(`${import.meta.env.VITE_REACT_APP_API_BASE_URL}/auth/profile`, {
                     headers: { 'Authorization': `Bearer ${token}` }
                 });
                 setUser(response.data);
@@ -72,7 +72,7 @@ const Profile = () => {
         e.preventDefault();
         try {
             const token = localStorage.getItem('token');
-            await axios.put(`${process.env.REACT_APP_API_BASE_URL}/auth/profile`, formData, {
+            await axios.put(`${import.meta.env.VITE_REACT_APP_API_BASE_URL}/auth/profile`, formData, {
                 headers: { 'Authorization': `Bearer ${token}` }
             });
             fetchProfile();
@@ -100,7 +100,7 @@ const Profile = () => {
     if (!user) return <div className='h-screen w-screen pt-[-96px]'> <MainLoader /></div>;
 
     return (
-        <div className="w-full  xsx:pt-[150px] pt-[120px]  flex xsx:flex-row flex-col xsx:p-[15px]">
+        <div className="w-full  xsx:pt-[150px] pt-[120px] min-h-screen flex xsx:flex-row flex-col xsx:p-[15px]">
             <div className='xsx:w-[40%] xsx:p-[0px] p-[15px]'>
                 {user.fullName === "" ?
                     <div className='font-bold text-red-500 mb-[25px] text-lg'> * Kindly Before Placing Any Orders.Remember to FIll out Details for Faster Checkout.Only Entered info will be used for Shipping.</div>

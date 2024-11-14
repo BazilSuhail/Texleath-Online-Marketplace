@@ -33,7 +33,7 @@ const Cart = () => {
         const fetchProducts = async () => {
             try {
                 const productResponses = await Promise.all(
-                    cart.map(item => axios.get(`${process.env.REACT_APP_API_BASE_URL}/fetchproducts/products/${item.id}`))
+                    cart.map(item => axios.get(`${import.meta.env.VITE_REACT_APP_API_BASE_URL}/fetchproducts/products/${item.id}`))
                 );
                 setProducts(productResponses.map(response => response.data));
             } catch (error) {
@@ -95,7 +95,7 @@ const Cart = () => {
     const handleSaveCart = async () => {
         try {
             console.log(cart);
-            await axios.post(`${process.env.REACT_APP_API_BASE_URL}/cartState/cart/save`, { userId, items: cart });
+            await axios.post(`${import.meta.env.VITE_REACT_APP_API_BASE_URL}/cartState/cart/save`, { userId, items: cart });
             alert('Cart saved successfully!');
         } catch (error) {
             console.error('Error saving cart:', error);
@@ -104,7 +104,7 @@ const Cart = () => {
     };
 
     return (
-        <div className='bg-gray-100'>
+        <div className='bg-gray-100 pt-[150px] min-h-screen'>
             {cart.length === 0 ? (
                 <div className='h-[calc(100vh-220px)] flex justify-center items-center w-screen'>
                     <div className='text-center'>
@@ -177,7 +177,7 @@ const CartItem = ({ id, size, quantity, onIncrease, onDecrease, onRemove }) => {
     useEffect(() => {
         const fetchProduct = async () => {
             try {
-                const response = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/fetchproducts/products/${id}`);
+                const response = await axios.get(`${import.meta.env.VITE_REACT_APP_API_BASE_URL}/fetchproducts/products/${id}`);
                 setProduct(response.data);
             } catch (error) {
                 console.error('Error fetching product:', error);
@@ -194,10 +194,10 @@ const CartItem = ({ id, size, quantity, onIncrease, onDecrease, onRemove }) => {
         : product.price.toFixed(2);
 
     return (
-        <div className="flex xsx:flex-row  xsx:pt-[150px] pt-[120px]  flex-col items-center justify-between xl:px-[15px] lg:py-[18px] mb-[28px] rounded-2xl bg-white">
+        <div className="flex xsx:flex-row  xsx:pt-[150px] pt-[120px] flex-col items-center justify-between xl:px-[15px] lg:py-[18px] mb-[28px] rounded-2xl bg-white">
             <div className='w-[200px] h-[180px]'>
                 <img
-                    src={`${process.env.REACT_APP_API_BASE_URL}/uploads/${product.image}`}
+                    src={`${import.meta.env.VITE_REACT_APP_API_BASE_URL}/uploads/${product.image}`}
                     alt={product.name}
                     className=" h-[180px] mx-auto object-cover"
                 />

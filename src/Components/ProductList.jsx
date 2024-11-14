@@ -49,7 +49,7 @@ const SearchFilter = ({ closeModal, products }) => {
               filteredProducts.map((product) => (
                 <div key={product._id} className="p-4">
                   <img
-                    src={`${process.env.REACT_APP_API_BASE_URL}/uploads/${product.image}`}
+                    src={`${import.meta.env.VITE_REACT_APP_API_BASE_URL}/uploads/${product.image}`}
                     alt={product.name}
                     className="object-cover mx-auto h-[200px] w-[180px]"
                   />
@@ -94,7 +94,7 @@ const ProductList = () => {
     const fetchProducts = async () => {
       setLoadingProducts(true);
       try {
-        const response = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/fetchproducts/products`);
+        const response = await axios.get(`${import.meta.env.VITE_REACT_APP_API_BASE_URL}/fetchproducts/products`);
         setProducts(response.data);
       } catch (error) {
         console.error('Error fetching products:', error);
@@ -109,7 +109,7 @@ const ProductList = () => {
     window.scrollTo(0, 0);
     const fetchCategories = async () => {
       try {
-        const response = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/category`);
+        const response = await axios.get(`${import.meta.env.VITE_REACT_APP_API_BASE_URL}/category`);
         setCategories(response.data);
       } catch (error) {
         console.error('Error fetching categories:', error);
@@ -127,7 +127,7 @@ const ProductList = () => {
 
     const fetchSubcategories = async () => {
       try {
-        const response = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/subcategories`);
+        const response = await axios.get(`${import.meta.env.VITE_REACT_APP_API_BASE_URL}/subcategories`);
         const filteredSubcategories = response.data.filter(subcat => subcat.category === selectedCategory);
         setSubcategories(filteredSubcategories);
       } catch (error) {
@@ -234,7 +234,7 @@ const ProductList = () => {
             >
               <img
                 loading='lazy'
-                src={`${process.env.REACT_APP_API_BASE_URL}/uploads/${product.image}`}
+                src={`${import.meta.env.VITE_REACT_APP_API_BASE_URL}/uploads/${product.image}`}
                 alt={product.name}
                 className="object-cover mx-auto h-[200px] w-[180px] hover:scale-105 transition duration-700  md:h-[400px] md:w-[340px] lg:w-[300px]  lg:h-[335px] sm:h-[320px] sm:w-[280px] mb-4"
               />

@@ -27,7 +27,7 @@ const ShowOrders = () => {
             if (!userId) return;
 
             try {
-                const response = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/place-order/orders/${userId}`);
+                const response = await axios.get(`${import.meta.env.VITE_REACT_APP_API_BASE_URL}/place-order/orders/${userId}`);
                 console.log('Fetched orders:', response.data); // Debug log
                 setOrders(response.data);
             } catch (error) {

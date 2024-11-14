@@ -101,7 +101,7 @@ const ProductDetails = () => {
   useEffect(() => {
     const fetchProduct = async () => {
       try {
-        const response = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/fetchproducts/products/${id}`);
+        const response = await axios.get(`${import.meta.env.VITE_REACT_APP_API_BASE_URL}/fetchproducts/products/${id}`);
         setProduct(response.data);
         if (response.data.size.length > 0) {
           setSelectedSize(response.data.size[0]);
@@ -155,8 +155,8 @@ const ProductDetails = () => {
       <div className='w-[96vw] xl:w-[95vw] lg:px-[0px] px-[6px] mx-auto grid grid-cols-1 lg:grid-cols-11'>
         <div className="col-span-7">
           <MediaCarousel
-            mainImage={`${process.env.REACT_APP_API_BASE_URL}/uploads/${product.image}`}
-            otherImages={product.otherImages.map(image => `${process.env.REACT_APP_API_BASE_URL}/uploads/${image}`)}
+            mainImage={`${import.meta.env.VITE_REACT_APP_API_BASE_URL}/uploads/${product.image}`}
+            otherImages={product.otherImages.map(image => `${import.meta.env.VITE_REACT_APP_API_BASE_URL}/uploads/${image}`)}
           />
         </div>
 
