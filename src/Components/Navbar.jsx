@@ -83,11 +83,11 @@ const Navbar = () => {
     const texts = ["HURRY UP SHOW NOW !!", "FREE DELIVERY ON USD 200 AND ABOVE IN USA", "Buy Any 3 Products and Get "];
     const [index, setIndex] = useState(0);
 
-    // Change text index every 2 seconds
+    
     useEffect(() => {
         const interval = setInterval(() => {
             setIndex((prevIndex) => (prevIndex + 1) % texts.length);
-        }, 5000); // Change text every 2 seconds
+        }, 5000);
 
         return () => clearInterval(interval);
     });
@@ -99,7 +99,7 @@ const Navbar = () => {
         animate={{ y: getNavbarPosition() }}
         transition={{ duration: 0.3 }}
       > 
-            <div className="h-[30px] pb-[5px] z-50 relative bg-gradient-to-r from-red-950 via-custom-red to-red-950  overflow-hidden">
+            <div className="h-[30px] pb-[5px] z-[999] relative bg-gradient-to-r from-red-950 via-custom-red to-red-950  overflow-hidden">
                 <AnimatePresence>
                     {texts.map((text, i) => (
                         i === index && (
@@ -181,7 +181,7 @@ const Navbar = () => {
 
 
             <div className="relative text-white xsx:hidden">
-                <div className="flex items-center h-[70px] justify-between bg-gradient-to-r from-red-950 via-custom-red to-red-950 px-4 py-3 z-50 relative">
+                <div className="flex z-[999] items-center h-[70px] justify-between bg-gradient-to-r from-red-950 via-custom-red to-red-950 px-4 py-3 relative">
                     <div className="flex items-center">
                         <motion.div
                             initial={{ opacity: 1 }}
@@ -210,11 +210,11 @@ const Navbar = () => {
                             </>
                         }
                         <motion.div
-                            key={isMenuOpen ? 'close' : 'menu'} // Unique key to trigger animation on change
+                            key={isMenuOpen ? 'close' : 'menu'} 
                             initial={{ opacity: 0, rotate: isMenuOpen ? 180 : -180 }}
                             animate={{ opacity: 1, rotate: 0 }}
-                            exit={{ opacity: 0, rotate: isMenuOpen ? -180 : 180 }} // Animate out with reverse rotation
-                            transition={{ duration: 0.3 }} // Duration for the animation
+                            exit={{ opacity: 0, rotate: isMenuOpen ? -180 : 180 }} 
+                            transition={{ duration: 0.3 }}
                             className="cursor-pointer text-gray-300"
                             onClick={handleMenuToggle}
                         >
@@ -232,11 +232,11 @@ const Navbar = () => {
                     {isMenuOpen && (
                         <motion.div
                             initial={{ width: 0 }}
-                            animate={{ width: "70vw", transition: { duration: 0.5 } }}
+                            animate={{ width: "100vw", transition: { duration: 0.5 } }}
                             exit={{ width: 0, transition: { duration: 0.3, delay: 0.1 } }}
-                            className="fixed inset-0 bg-navbar-color bg-gradient-to-r from-red-950 to-custom-red flex w-[70vw] flex-col h-screen px-4 py-3 z-30"
+                            className="fixed mt-[65px] pb[45px] inset-0 bg-gradient-to-r from-red-950 via-custom-red to-red-950 flex w-[100vw] flex-col h-screen px-4 py-3"
                         >
-                            <div className='my-[25px]'></div>
+                            <div className='my-[10px]'></div>
                             {/* Menu items */}
                             <motion.div
                                 initial={{ x: -100, opacity: 0 }}

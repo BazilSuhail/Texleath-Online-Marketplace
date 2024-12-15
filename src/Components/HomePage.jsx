@@ -118,12 +118,12 @@ const HomePage = () => {
         <div className='bg-gradient-to-r absolute z-30 opacity-55 from-red-950 via-custom-red to-red-950 h-full w-full'></div>
 
         <div className='absolute z-40 xsx:scale-[1] md:scale-[0.8] scale-[0.92] flex flex-col justify-center mt-[-150px] items-center h-full w-full'>
-          <h2 className='text-[20px] md:text-[24px] font-bold'>
+          <h2 className='text-[17px] sm:text-[20px] md:mb-0 mb-[45px] md:text-[24px] font-bold'>
             <span className='text-red-100 font-[600] mr-[7px]'>Welcome to,</span>
             <span className="text-red-700 mr-[7px]">TEXLEATH</span>
             <span className="text-white">INDUSTRIES</span>
           </h2>
-          <div className='text-[55px] md:text-[75px] text-center font-[700] text-white'>
+          <div className='text-[50px] md:text-[75px] text-center font-[700] text-white'>
             <p className='flex md:flex-row flex-col'><span className='md:mt-0 mt-[-35px]'>Where Fashion</span><span className='md:mt-0 mt-[-10px] md:ml-[18px]'>Meets</span></p>
             <p className='mt-[-15px] md:mt-[-24px]'>Craftsmanship</p>
           </div>

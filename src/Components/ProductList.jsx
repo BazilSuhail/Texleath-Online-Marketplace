@@ -166,19 +166,19 @@ const ProductList = () => {
       {isModalOpen && <SearchFilter products={filteredProducts} closeModal={closeModal} />}
 
 
-      <div className="my-[4px] ml-[7px] lg:ml-[25px]">
-        <div className="mt-2 flex text-sm sm:text-md  md:text-lg w-[100%] overflow-x-auto  font-medium no-scrollbar text-red-900 whitespace-nowrap gap-2">
-          <div onClick={() => handleCategoryClick('All')} className={`px-[12px] py-[3px]  cursor-pointer rounded ${selectedCategory === 'All' ? 'bg-red-900 text-white' : 'bg-red-100 '}`}>
+      <div className="mb-[4px] mt-[25px] ml-[7px] lg:ml-[25px]">
+        <div className="mt-2 flex text-sm md:text-[16px] w-[100%] overflow-x-auto  font-medium no-scrollbar text-red-900 whitespace-nowrap gap-2">
+          <div onClick={() => handleCategoryClick('All')} className={`px-[12px] py-[3px]  cursor-pointer rounded ${selectedCategory === 'All' ? 'bg-red-900 text-white' : 'bg-red-50 '}`}>
             All Categories
           </div>
 
-          <div onClick={() => handleCategoryClick('Sports Wear')} className={`px-[12px] py-[3px] cursor-pointer rounded ${selectedCategory === 'Sports Wear' ? 'bg-red-900 text-white' : 'bg-red-100'}`} >
+          <div onClick={() => handleCategoryClick('Sports Wear')} className={`px-[12px] py-[3px] cursor-pointer rounded ${selectedCategory === 'Sports Wear' ? 'bg-red-900 text-white' : 'bg-red-50'}`} >
             Sports Wear
           </div>
-          <div onClick={() => handleCategoryClick('Fitness Wear')} className={`px-[12px] py-[3px] cursor-pointer rounded ${selectedCategory === 'Fitness Wear' ? 'bg-red-900 text-white' : 'bg-red-100'}`} >
+          <div onClick={() => handleCategoryClick('Fitness Wear')} className={`px-[12px] py-[3px] cursor-pointer rounded ${selectedCategory === 'Fitness Wear' ? 'bg-red-900 text-white' : 'bg-red-50'}`} >
             Fitness Wear
           </div>
-          <div onClick={() => handleCategoryClick('Gym Wear')} className={`px-[12px] py-[3px] cursor-pointer rounded ${selectedCategory === 'Gym Wear' ? 'bg-red-900 text-white' : 'bg-red-100'}`} >
+          <div onClick={() => handleCategoryClick('Gym Wear')} className={`px-[12px] py-[3px] cursor-pointer rounded ${selectedCategory === 'Gym Wear' ? 'bg-red-900 text-white' : 'bg-red-50'}`} >
             Gym Wear
           </div>
 
@@ -188,7 +188,7 @@ const ProductList = () => {
               <div
                 key={category._id}
                 onClick={() => handleCategoryClick(category.name)}
-                className={`px-[12px] py-[3px] cursor-pointer rounded ${selectedCategory === category.name ? 'bg-red-900 text-white' : 'bg-red-100'}`}
+                className={`px-[12px] py-[3px] cursor-pointer rounded ${selectedCategory === category.name ? 'bg-red-900 text-white' : 'bg-red-50'}`}
               >
                 {category.name}
               </div>
@@ -199,10 +199,10 @@ const ProductList = () => {
 
       {selectedCategory !== 'All' && (
         <div className="my-4 ml-[7px] lg:ml-[25px] ">
-          <div className="mt-2 flex text-sm sm:text-md  md:text-lg w-[100%] overflow-x-auto  font-medium no-scrollbar text-red-900 whitespace-nowrap gap-2">
+          <div className="mt-2 flex text-sm md:text-[16px] w-[100%] overflow-x-auto  font-medium no-scrollbar text-red-900 whitespace-nowrap gap-2">
             <div
               onClick={() => handleSubcategoryClick('All')}
-              className={`px-[12px] py-[3px] cursor-pointer rounded ${selectedSubcategory === 'All' ? 'bg-red-900 text-white' : 'bg-red-100'}`}
+              className={`px-[12px] py-[3px] cursor-pointer rounded ${selectedSubcategory === 'All' ? 'bg-red-900 text-white' : 'bg-red-50'}`}
             >
               All Subcategories
             </div>
@@ -210,7 +210,7 @@ const ProductList = () => {
               <div
                 key={subcategory._id}
                 onClick={() => handleSubcategoryClick(subcategory.name)}
-                className={`px-[12px] py-[3px] cursor-pointer rounded ${selectedSubcategory === subcategory.name ? 'bg-red-900 text-white' : 'bg-red-100'}`}
+                className={`px-[12px] py-[3px] cursor-pointer rounded ${selectedSubcategory === subcategory.name ? 'bg-red-900 text-white' : 'bg-red-50'}`}
               >
                 {subcategory.name}
               </div>
