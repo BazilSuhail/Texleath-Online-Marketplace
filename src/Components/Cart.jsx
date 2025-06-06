@@ -1,11 +1,170 @@
-import { useEffect, useState, useCallback } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
-import { removeFromCart, clearCart, updateQuantity } from '../redux/cartSlice';
-import axios from 'axios';
-import cart_svg from "../Assets/noOrder.webp";
+import { useCallback, useEffect, useState } from "react"
+import { motion } from "framer-motion"
+import { useDispatch, useSelector } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
+import { removeFromCart, clearCart, updateQuantity } from '../redux/cartSlice'
+import { FiTrash2, FiPlus, FiMinus, FiShoppingBag, FiMenu, FiX, FiArrowRight } from "react-icons/fi"
+import { Link } from "react-router-dom"
+import axios from "axios"
 
-const Cart = () => {
+ 
+
+// Custom Components
+const Button = ({ children, variant = "primary", size = "md", className = "", asChild, ...props }) => {
+    const baseClasses =
+        "inline-flex items-center justify-center font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none"
+
+    const variants = {
+        primary: "bg-black text-white hover:bg-gray-800 focus:ring-gray-500",
+        outline: "border border-gray-300 bg-white text-gray-700 hover:bg-gray-50 focus:ring-gray-500",
+        secondary: "bg-gray-100 text-gray-900 hover:bg-gray-200 focus:ring-gray-500",
+    }
+
+    const sizes = {
+        sm: "px-3 py-2 text-sm rounded-md",
+        md: "px-4 py-2 text-sm rounded-md",
+        lg: "px-6 py-3 text-base rounded-lg",
+    }
+
+    const classes = `${baseClasses} ${variants[variant]} ${sizes[size]} ${className}`
+
+    if (asChild && children?.type === Link) {
+        return (
+            <Link {...children.props} className={classes}>
+                {children.props.children}
+            </Link>
+        )
+    }
+
+    return (
+        <button className={classes} {...props}>
+            {children}
+        </button>
+    )
+}
+
+const Badge = ({ children, variant = "default", className = "" }) => {
+    const variants = {
+        default: "bg-black text-white",
+        secondary: "bg-gray-100 text-gray-900",
+        destructive: "bg-red-500 text-white",
+    }
+
+    return (
+        <span
+            className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${variants[variant]} ${className}`}
+        >
+            {children}
+        </span>
+    )
+}
+
+const Input = ({ className = "", ...props }) => {
+    return (
+        <input
+            className={`flex h-10 w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm placeholder:text-gray-500 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:border-transparent disabled:cursor-not-allowed disabled:opacity-50 ${className}`}
+            {...props}
+        />
+    )
+}
+
+const Separator = ({ className = "" }) => {
+    return <hr className={`border-gray-200 ${className}`} />
+}
+
+
+
+const CartItem = ({ id, size, quantity, onIncrease, onDecrease, onRemove, index }) => {
+    const [product, setProduct] = useState(null);
+
+    useEffect(() => {
+        const fetchProduct = async () => {
+            try {
+                const response = await axios.get(`${import.meta.env.VITE_REACT_APP_API_BASE_URL}/fetchproducts/products/${id}`);
+                setProduct(response.data);
+            } catch (error) {
+                console.error('Error fetching product:', error);
+            }
+        };
+
+        fetchProduct();
+    }, [id]);
+
+    if (!product) return null;
+
+    const discountedPrice = product.sale
+        ? product.price - (product.price * product.sale) / 100
+        : product.price;
+
+    const isDiscounted = product.sale && discountedPrice < product.price;
+
+    return (
+        <motion.div
+            key={`${id}-${size}`}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.4, delay: index * 0.1 }}
+            className="bg-white border border-gray-200 rounded-lg p-6"
+        >
+            <div className="flex gap-4">
+                <img
+                    src={`${import.meta.env.VITE_REACT_APP_API_BASE_URL}/uploads/${product.image}`}
+                    alt={product.name}
+                    className="rounded-lg border-[2px] border-gray-200 w-[110px] h-[120px] object-cover"
+                />
+                <div className="flex-1">
+                    <div className="flex justify-between items-start mb-2">
+                        <h3 className="font-semibold text-gray-900">{product.name}</h3>
+                        <button
+                            onClick={() => onRemove(id, size)}
+                            className="text-gray-400 hover:text-red-500 transition-colors"
+                        >
+                            <FiTrash2 className="w-5 h-5" />
+                        </button>
+                    </div> 
+                      <div className="text-sm text-gray-600 mb-3">
+                        <p>Size: {size}</p>
+                        <p>Price Count: {(discountedPrice * quantity).toFixed(2)}</p>
+                      </div>
+                    <div className="flex items-center justify-between">
+                        <div className="flex items-center space-x-3">
+                            <button
+                                onClick={() => onDecrease(id, size)}
+                                className="w-8 h-8 rounded-full border border-gray-300 flex items-center justify-center hover:bg-gray-50 transition-colors"
+                            >
+                                <FiMinus className="w-4 h-4" />
+                            </button>
+                            <span className="font-medium w-8 text-center">{quantity}</span>
+                            <button
+                                onClick={() => onIncrease(id, size)}
+                                className="w-8 h-8 rounded-full border border-gray-300 flex items-center justify-center hover:bg-gray-50 transition-colors"
+                            >
+                                <FiPlus className="w-4 h-4" />
+                            </button>
+                        </div>
+                        <div className="text-right">
+                            <div className="font-semibold text-gray-900">
+                                <span className="text-[13px] font-[600] text-gray-700">Rs. </span>
+                                {discountedPrice.toFixed(2)}
+                            </div>
+                            {isDiscounted && (
+                                <div className="text-sm text-gray-500 line-through">
+                                    Rs. {product.price.toFixed(2)}
+                                </div>
+                            )}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </motion.div>
+    );
+};
+
+
+export default function CartPage() {
+    const [promoCode, setPromoCode] = useState("")
+
+
     const cart = useSelector(state => state.cart);
     const dispatch = useDispatch();
     const [products, setProducts] = useState([]);
@@ -103,136 +262,179 @@ const Cart = () => {
         }
     };
 
+    // =====================
+
+    // const updateQuantity = (id, newQuantity) => {
+    //     if (newQuantity === 0) {
+    //         removeItem(id)
+    //         return
+    //     }
+    //     setProducts(products.map((item) => (item.id === id ? { ...item, quantity: newQuantity } : item)))
+    // }
+
+    // const removeItem = (id) => {
+    //     setProducts(products.filter((item) => item.id !== id))
+    // }
+
+    // const subtotal = products.reduce((sum, item) => sum + item.price * item.quantity, 0)
+    // const shipping = subtotal > 100 ? 0 : 9.99
+    // const tax = subtotal * 0.08
+    // const total = subtotal + shipping + tax
+
     return (
-        <div className='bg-gray-100 pt-[150px] min-h-screen'>
-            {cart.length === 0 ? (
-                <div className='h-[calc(100vh-220px)] flex justify-center items-center w-screen'>
-                    <div className='text-center'>
-                        <img
-                            src={cart_svg}
-                            alt='Cart Icon'
-                            className='mx-auto lg:scale-[0.88] w-[280px] h-[280px]'
-                        />
-                        <p className='px-[15px] py-[6px] rounded-[8px] mt-[8px] text-[20px] text-[#d66868] font-[600] bg-[#ffe8e8] mx-auto text-center '>
-                            Your cart is empty
-                        </p>
-                    </div>
-                </div>
+        <div className="min-h-screen bg-white max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+            {/* Page Header */}
+            <div className="mb-8">
+                <h1 className="text-3xl font-bold text-gray-900 mb-4">Shopping Cart</h1>
+                <p className="text-gray-600">Review your items and proceed to checkout</p>
+            </div>
+
+            {products.length === 0 ? (
+                <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="text-center py-16">
+                    <FiShoppingBag className="w-16 h-16 text-gray-300 mx-auto mb-4" />
+                    <h2 className="text-2xl font-semibold text-gray-900 mb-2">Your cart is empty</h2>
+                    <p className="text-gray-600 mb-8">Looks like you haven't added anything to your cart yet.</p>
+                    <Button className="bg-black hover:bg-gray-800">
+                        <Link to="/products" className="flex items-center">
+                            Continue Shopping
+                            <FiArrowRight className="ml-2 w-4 h-4" />
+                        </Link>
+                    </Button>
+                </motion.div>
             ) : (
-                <div className=' xsx:w-[80%]  p-3 mx-auto'>
-                    <div className='flex xsx:flex-row flex-col justify-between'>
-                        <h1 className="text-2xl xsx:text-left text-center font-bold">Shopping Cart</h1>
-                        <div className='mt-[15px] xsx:mt-0 xsx:text-lg font-semibold'>
-                            <button onClick={handleClearCart} className="px-4 border-2 hover:bg-white hover:text-red-600 py-[4px] bg-red-600 border-red-600 rounded-2xl text-white">Clear Cart</button>
-                            <button onClick={handleSaveCart} className="px-4 py-[4px] border-2 hover:bg-white hover:text-blue-700 bg-blue-600 border-blue-600  rounded-2xl text-white ml-[5px]">Save for Later</button>
-                        </div>
-                    </div>
-
-                    <div className='flex bg-white border mt-[15px] p-[15px] rounded-xl flex-col'>
-                        <div className='text-xl font-bold'>Checkout</div>
-                        <div className='border-b border-t border-gray-500 text-sm md:text-md font-semibold'>
-                            <div className='flex mt-[15px] justify-between'>
-                                <p>Your Cart Subtotal:</p>
-                                <p className='px-[8px] text-xl rounded-xl'><span className='text-lg'>Rs.</span>{calculateActualTotalBill()}</p>
-                            </div>
-                            <div className='flex mt-[8px] justify-between'>
-                                <p>Discount Through Applied Sales:</p>
-                                <p className='px-[8px] text-xl rounded-xl'><span className='text-lg'>Rs.</span>{calculateTotalBill()}</p>
-                            </div>
-                            <div className='flex my-[8px] justify-between'>
-                                <p>Delivery Charges (*On Delivery):</p>
-                                <p className='px-[8px] text-xl rounded-xl'><span className='text-lg'>Rs.</span>200</p>
-                            </div>
-                        </div>
-
-                        <div className='flex justify-between'>
-                            <p className='px-[8px] text-4xl mt-[10px] font-bold rounded-xl'><span className='text-xl font-medium mr-[3px]'>Rs.</span>200</p>
-                            <button onClick={navigateToOrderList} className="border-2 text-[20px] font-bold mt-[15px] py-[5px] hover:bg-white hover:text-green-800 bg-green-700 border-green-700 rounded-2xl px-[25px] text-white">Checkout</button>
-                        </div>
-                    </div>
-
-                    <div className="mt-4">
-                        {cart.map(item => (
-                            <CartItem
+                <div className="grid lg:grid-cols-3 gap-8">
+                    {/* Cart Items */}
+                    <div className="lg:col-span-2 space-y-4">
+                        {/* {cart.map((item, index) => (
+                            <motion.div
                                 key={`${item.id}-${item.size}`}
-                                id={item.id}
-                                size={item.size}
-                                quantity={item.quantity}
-                                onIncrease={() => handleIncreaseQuantity(item.id, item.size)}
-                                onDecrease={() => handleDecreaseQuantity(item.id, item.size)}
-                                onRemove={() => handleRemoveFromCart(item.id, item.size)}
-                            />
-                        ))}
+                                initial={{ opacity: 0, y: 20 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                transition={{ duration: 0.4, delay: index * 0.1 }}
+                                className="bg-white border border-gray-200 rounded-lg p-6"
+                            >
+                                <div className="flex gap-4">
+                                    <img
+                                        src={`${import.meta.env.VITE_REACT_APP_API_BASE_URL}/uploads/${item.image}`}
+                                        alt={item.name}
+                                        className="rounded-lg w-[120px] h-[120px] object-cover"
+                                    />
+                                    <div className="flex-1">
+                                        <div className="flex justify-between items-start mb-2">
+                                            <h3 className="font-semibold text-gray-900">{item.name}</h3>
+                                            <button
+                                                onClick={() => handleRemoveFromCart(item.id, item.size)}
+                                                className="text-gray-400 hover:text-red-500 transition-colors"
+                                            >
+                                                <FiTrash2 className="w-5 h-5" />
+                                            </button>
+                                        </div>
+                                        <div className="text-sm text-gray-600 mt-4 mb-6">
+                                            <p>Size: {item.size}</p>
+                                        </div>
+                                        <div className="flex items-center justify-between">
+                                            <div className="flex items-center space-x-3">
+                                                <button
+                                                    onClick={() => handleDecreaseQuantity(item.id, item.size)}
+                                                    className="w-8 h-8 rounded-full border border-gray-300 flex items-center justify-center hover:bg-gray-50 transition-colors"
+                                                >
+                                                    <FiMinus className="w-4 h-4" />
+                                                </button>
+                                                <span className="font-medium w-8 text-center">{item.quantity}</span>
+                                                <button
+                                                    onClick={() => handleIncreaseQuantity(item.id, item.size)}
+                                                    className="w-8 h-8 rounded-full border border-gray-300 flex items-center justify-center hover:bg-gray-50 transition-colors"
+                                                >
+                                                    <FiPlus className="w-4 h-4" />
+                                                </button>
+                                            </div>
+                                            <div className="text-right">
+                                                <div className="font-semibold text-gray-900">
+                                                    <span className="text-[13px] font-[600] text-gray-700">Rs. </span>
+                                                    {item.sale && `${(item.price - (item.price * item.sale) / 100).toFixed(2)}`}
+                                                </div>
+                                                {item.sale && (item.price - (item.price * item.sale) / 100) < item.price && (
+                                                    <div className="text-sm text-gray-500 line-through">
+                                                        Rs. {item.price.toFixed(2)}
+                                                    </div>
+                                                )}
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </motion.div>
+                        ))} */}
+
+                        {cart.map((item, index) => (
+    <CartItem
+        key={`${item.id}-${item.size}`}
+        id={item.id}
+        size={item.size}
+        quantity={item.quantity}
+        onIncrease={handleIncreaseQuantity}
+        onDecrease={handleDecreaseQuantity}
+        onRemove={handleRemoveFromCart}
+        index={index}
+    />
+))}
+
                     </div>
+
+                    {/* Order Summary */}
+                    <motion.div
+                        initial={{ opacity: 0, x: 20 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        transition={{ duration: 0.5, delay: 0.3 }}
+                        className="bg-gray-50 rounded-lg p-6 h-fit sticky top-24"
+                    >
+                        <h2 className="text-xl font-semibold text-gray-900 mb-6">Order Summary</h2>
+
+                        <div className="space-y-4 mb-6">
+                            <div className="flex justify-between">
+                                <span className="text-gray-600">Subtotal</span>
+                                <span className="font-medium">Rs {calculateActualTotalBill()}</span>
+                            </div>
+                            <div className="flex justify-between">
+                                <span className="text-gray-600">Discount</span>
+                                <span className="font-medium">{calculateTotalBill()}</span>
+                            </div>
+                            <div className="flex justify-between">
+                                <span className="text-gray-600">Shipping</span>
+                                <span className="font-medium">Rs. 200</span>
+                            </div>
+                            <Separator />
+                            <div className="flex justify-between text-lg font-semibold">
+                                <span>Total</span>
+                                <span>Rs. {(Number(calculateTotalBill()) + Number(200)).toFixed(2)}</span>
+                            </div>
+                        </div>
+
+                        <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-6">
+                            <p className="text-sm text-blue-800">Add Rs. {(Number(calculateTotalBill()) + Number(100)).toFixed(2)} more to get free shipping!</p>
+                        </div>
+
+                        <div className="mb-6">
+                            <label className="block text-sm font-medium text-gray-700 mb-2">Promo Code</label>
+                            <div className="flex gap-2">
+                                <Input value={promoCode} onChange={(e) => setPromoCode(e.target.value)} placeholder="Enter code" />
+                                <Button variant="outline">Apply</Button>
+                            </div>
+                        </div>
+
+                        <Link to="/place-order">
+                            <Button className="w-full bg-black hover:bg-gray-800 text-white mb-4" size="lg">
+                                Proceed to Checkout
+                            </Button>
+                        </Link>
+
+
+                        <Button variant="outline" className="w-full">
+                            <Link to="/products/All">Continue Shopping</Link>
+                        </Button>
+                    </motion.div>
                 </div>
             )}
         </div>
-    );
-};
-
-
-const CartItem = ({ id, size, quantity, onIncrease, onDecrease, onRemove }) => {
-    const [product, setProduct] = useState(null);
-
-    useEffect(() => {
-        const fetchProduct = async () => {
-            try {
-                const response = await axios.get(`${import.meta.env.VITE_REACT_APP_API_BASE_URL}/fetchproducts/products/${id}`);
-                setProduct(response.data);
-            } catch (error) {
-                console.error('Error fetching product:', error);
-            }
-        };
-
-        fetchProduct();
-    }, [id]);
-
-    if (!product) return null;
-
-    const discountedPrice = product.sale
-        ? (product.price - (product.price * product.sale) / 100).toFixed(2)
-        : product.price.toFixed(2);
-
-    return (
-        <div className="flex xsx:flex-row  xsx:pt-[150px] pt-[120px] flex-col items-center justify-between xl:px-[15px] lg:py-[18px] mb-[28px] rounded-2xl bg-white">
-            <div className='w-[200px] h-[180px]'>
-                <img
-                    src={`${import.meta.env.VITE_REACT_APP_API_BASE_URL}/uploads/${product.image}`}
-                    alt={product.name}
-                    className=" h-[180px] mx-auto object-cover"
-                />
-            </div>
-            <div className="md:ml-4 flex-1">
-                <div className='flex my-[15px] xsx:my-0 justify-between'>
-                    <h2 className="text-[24px] md:text-[28px] underline font-bold">{product.name}</h2>
-                    <button onClick={onRemove} className="px-[12px] md:px-[20px] h-[35px] text-[14px] lg:text-[17px] rounded-[28px] bg-red-800 hover:bg-red-300 hover:text-red-700 font-bold text-white">Remove</button>
-                </div>
-
-                <div className="text-sm md:text-lg  flex items-center my-[5px]">
-                    <span className='font-medium mt-[3px] text-red-950 mr-[5px]'>Item Price:</span>
-                    {product.sale && <span className='text-red-600 line-through'>{product.price}</span>}
-                    <span className='text-lg font-bold'>{discountedPrice}</span>
-                </div>
-
-                <div className="text-sm md:text-lg flex items-center my-[5px]">
-                    <span className='font-medium mt-[3px] text-red-950 mr-[5px]'>Size:</span>
-                    <span className='text-lg font-bold'>{size}</span>
-                </div>
-
-                <div className='flex justify-between md:mx-0 mx-auto flex-row items-center'>
-                    <div className="mt-2 py-[5px] px-[15px] rounded-2xl flex items-center space-x-2">
-                        <button onClick={onDecrease} className="w-6 h-6 md:w-8 md:h-8 text-2xl rounded-full text-white bg-red-900 flex items-center justify-center">-</button>
-                        <span className="text-md md:text-xl font-bold rounded-md px-[10px]  bg-red-100 py-[3px] ">{quantity}</span>
-                        <button onClick={onIncrease} className="w-6 h-6 md:w-8 md:h-8 text-2xl rounded-full bg-red-900 text-white flex items-center justify-center">+</button>
-                    </div>
-
-                    <p className="text-md flex px-[15px]  items-center md:text-lg text-green-800 font-bold rounded-md p-[5px]">
-                        <span className='text-[15px] text-center'>Item Checkout:</span> <span className='px-[8px] py-[2px] rounded-[22px] ml-[8px] bg-green-200 text-green-700'>${(discountedPrice * quantity).toFixed(2)}</span>
-                    </p>
-                </div>
-            </div>
-        </div>
-    );
-};
-
-export default Cart;
+    )
+}

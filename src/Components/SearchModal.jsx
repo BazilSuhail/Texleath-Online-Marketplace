@@ -1,9 +1,8 @@
-"use client"
-
 import { motion, AnimatePresence } from "framer-motion"
-import { Search, X, TrendingUp, Clock } from "lucide-react"
-import { useState, useEffect, useRef } from "react"
-import { useRouter } from "next/navigation"
+import { AiOutlineSearch, AiOutlineClose, AiOutlineClockCircle } from "react-icons/ai"
+import { BiTrendingUp } from "react-icons/bi"
+import { useState, useEffect, useRef } from "react" 
+import { useNavigate } from "react-router-dom"
 
 export default function SearchModal({ isOpen, onClose }) {
   const [searchQuery, setSearchQuery] = useState("")
@@ -17,7 +16,7 @@ export default function SearchModal({ isOpen, onClose }) {
   ])
 
   const searchInputRef = useRef(null)
-  const router = useRouter()
+  const naviagte = useNavigate()
 
   // Focus search input when modal opens
   useEffect(() => {
@@ -50,7 +49,7 @@ export default function SearchModal({ isOpen, onClose }) {
   const handleSearch = (query = searchQuery) => {
     if (query.trim()) {
       // Navigate to search results page with query parameter
-      router.push(`/search?q=${encodeURIComponent(query.trim())}`)
+      naviagte(`/search?q=${encodeURIComponent(query.trim())}`)
       onClose()
       setSearchQuery("")
     }
@@ -82,7 +81,7 @@ export default function SearchModal({ isOpen, onClose }) {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={onClose}
-            className="absolute inset-0 bg-black bg-opacity-50 backdrop-blur-sm"
+            className="absolute inset-0 bg-black/60 backdrop-blur-[2px]"
           />
 
           {/* Modal Content */}
@@ -96,7 +95,7 @@ export default function SearchModal({ isOpen, onClose }) {
             {/* Header */}
             <div className="flex items-center p-4 border-b border-gray-100">
               <div className="flex-1 relative">
-                <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+                <AiOutlineSearch className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
                 <input
                   ref={searchInputRef}
                   type="text"
@@ -113,7 +112,7 @@ export default function SearchModal({ isOpen, onClose }) {
                 onClick={onClose}
                 className="ml-4 p-2 text-gray-400 hover:text-gray-600 transition-colors"
               >
-                <X className="w-6 h-6" />
+                <AiOutlineClose className="w-6 h-6" />
               </motion.button>
             </div>
 
@@ -127,7 +126,7 @@ export default function SearchModal({ isOpen, onClose }) {
                     onClick={() => handleSearch()}
                     className="w-full flex items-center p-3 text-left rounded-lg hover:bg-blue-50 transition-colors"
                   >
-                    <Search className="w-5 h-5 text-blue-600 mr-3" />
+                    <AiOutlineSearch className="w-5 h-5 text-blue-600 mr-3" />
                     <span className="text-gray-700">
                       Search for "<span className="font-semibold text-blue-600">{searchQuery}</span>"
                     </span>
@@ -140,7 +139,7 @@ export default function SearchModal({ isOpen, onClose }) {
                   {recentSearches.length > 0 && (
                     <div>
                       <div className="flex items-center mb-3">
-                        <Clock className="w-4 h-4 text-gray-400 mr-2" />
+                        <AiOutlineClockCircle className="w-4 h-4 text-gray-400 mr-2" />
                         <h3 className="text-sm font-medium text-gray-500 uppercase tracking-wider">Recent Searches</h3>
                       </div>
                       <div className="space-y-1">
@@ -151,7 +150,7 @@ export default function SearchModal({ isOpen, onClose }) {
                             onClick={() => handleSuggestionClick(search)}
                             className="w-full flex items-center p-2 text-left rounded-lg hover:bg-gray-50 transition-all"
                           >
-                            <Clock className="w-4 h-4 text-gray-300 mr-3" />
+                            <AiOutlineClockCircle className="w-4 h-4 text-gray-300 mr-3" />
                             <span className="text-gray-700">{search}</span>
                           </motion.button>
                         ))}
@@ -162,7 +161,7 @@ export default function SearchModal({ isOpen, onClose }) {
                   {/* Trending Searches */}
                   <div>
                     <div className="flex items-center mb-3">
-                      <TrendingUp className="w-4 h-4 text-gray-400 mr-2" />
+                      <BiTrendingUp className="w-4 h-4 text-gray-400 mr-2" />
                       <h3 className="text-sm font-medium text-gray-500 uppercase tracking-wider">Trending Now</h3>
                     </div>
                     <div className="space-y-1">
@@ -173,7 +172,7 @@ export default function SearchModal({ isOpen, onClose }) {
                           onClick={() => handleSuggestionClick(search)}
                           className="w-full flex items-center p-2 text-left rounded-lg hover:bg-gray-50 transition-all"
                         >
-                          <TrendingUp className="w-4 h-4 text-red-400 mr-3" />
+                          <BiTrendingUp className="w-4 h-4 text-red-400 mr-3" />
                           <span className="text-gray-700">{search}</span>
                         </motion.button>
                       ))}

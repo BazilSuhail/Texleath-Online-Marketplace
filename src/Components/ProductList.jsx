@@ -105,7 +105,7 @@ const Slider = ({ value, onValueChange, max, step, className = "" }) => {
 export default function ProductsList() {
 
   const [products, setProducts] = useState([]);
-  const [categories, setCategories] = useState([]); 
+  const [categories, setCategories] = useState([]);
   const [loadingProducts, setLoadingProducts] = useState(true);
 
   const [isFilterOpen, setIsFilterOpen] = useState(false)
@@ -144,7 +144,7 @@ export default function ProductsList() {
           };
         });
 
-        console.log(productsRes.data); // This is your final result format
+        //console.log(productsRes.data); // This is your final result format
         setCategories(structuredCategories)
 
       } catch (error) {
@@ -160,41 +160,41 @@ export default function ProductsList() {
 
 
 
-const filteredProducts = useMemo(() => {
-  let filtered = products.filter((product) => {
-    const matchesSearch = product.name.toLowerCase().includes(searchTerm.toLowerCase());
-    const matchesCategory =
-      selectedCategories.length === 0 || selectedCategories.includes(product.category);
+  const filteredProducts = useMemo(() => {
+    let filtered = products.filter((product) => {
+      const matchesSearch = product.name.toLowerCase().includes(searchTerm.toLowerCase());
+      const matchesCategory =
+        selectedCategories.length === 0 || selectedCategories.includes(product.category);
 
-    const matchesSubcategory =
-      selectedSubcategories.length === 0 || selectedCategories.length === 0 || selectedSubcategories.includes(product.subcategory);
+      const matchesSubcategory =
+        selectedSubcategories.length === 0 || selectedCategories.length === 0 || selectedSubcategories.includes(product.subcategory);
 
-    const matchesPrice =
-      product.price >= priceRange[0] && product.price <= priceRange[1];
+      const matchesPrice =
+        product.price >= priceRange[0] && product.price <= priceRange[1];
 
-    return matchesSearch && matchesCategory && matchesSubcategory && matchesPrice;
-  });
+      return matchesSearch && matchesCategory && matchesSubcategory && matchesPrice;
+    });
 
-  // Sort products
-  switch (sortBy) {
-    case "price-low":
-      filtered.sort((a, b) => a.price - b.price);
-      break;
-    case "price-high":
-      filtered.sort((a, b) => b.price - a.price);
-      break;
-    case "rating":
-      filtered.sort((a, b) => b.rating - a.rating);
-      break;
-    case "newest":
-      filtered.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
-      break;
-    default:
-      break;
-  }
+    // Sort products
+    switch (sortBy) {
+      case "price-low":
+        filtered.sort((a, b) => a.price - b.price);
+        break;
+      case "price-high":
+        filtered.sort((a, b) => b.price - a.price);
+        break;
+      case "rating":
+        filtered.sort((a, b) => b.rating - a.rating);
+        break;
+      case "newest":
+        filtered.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+        break;
+      default:
+        break;
+    }
 
-  return filtered;
-}, [products, searchTerm, selectedCategories, selectedSubcategories, priceRange, sortBy]);
+    return filtered;
+  }, [products, searchTerm, selectedCategories, selectedSubcategories, priceRange, sortBy]);
 
   const handleCategoryChange = (category, checked) => {
     if (checked) {
@@ -333,11 +333,11 @@ const filteredProducts = useMemo(() => {
                     whileHover={{ y: -5 }}
                     className="group cursor-pointer"
                   >
-                    <Link to={`/product/${product._id}`}>
+                    <Link to={`/products/${product._id}`}>
                       <div className="bg-white rounded-lg shadow-sm hover:shadow-lg transition-shadow overflow-hidden border border-gray-100">
                         <div className="relative">
-                          <img 
-                  src={`${import.meta.env.VITE_REACT_APP_API_BASE_URL}/uploads/${product.image}` || "/placeholder.svg"}
+                          <img
+                            src={`${import.meta.env.VITE_REACT_APP_API_BASE_URL}/uploads/${product.image}` || "/placeholder.svg"}
                             alt={product.name}
                             className="w-full h-64 object-cover group-hover:scale-105 transition-transform duration-300"
                           />
@@ -385,7 +385,7 @@ const filteredProducts = useMemo(() => {
                     <Link to={`/product/${product.id}`}>
                       <div className="flex gap-4">
                         <img
-                  src={`${import.meta.env.VITE_REACT_APP_API_BASE_URL}/uploads/${product.image}` || "/placeholder.svg"}
+                          src={`${import.meta.env.VITE_REACT_APP_API_BASE_URL}/uploads/${product.image}` || "/placeholder.svg"}
                           alt={product.name}
                           className="w-[120px] rounded-lg object-cover"
                         />
