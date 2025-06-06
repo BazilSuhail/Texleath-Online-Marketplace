@@ -131,13 +131,13 @@ const Navbar = () => {
             </div>
 
 
-            <NavLink to="/" className=" h-[55px] pt-[5px] xsx:flex hidden items-center justify-center w-full pb-[5px] overflow-hidden">
+            <NavLink to="/" className=" h-[55px] pt-[5px] lg:flex hidden items-center justify-center w-full pb-[5px] overflow-hidden">
                 <img src={texleathlogo} alt="kasm kjanf" className="w-[45px] h-[45px]" />
                 <div className="text-red-700 ml-[4px] text-[30px] font-bold">TEXLEATH</div>
                 <div className="text-red-100 ml-[5px] text-[30px] font-bold">INDUSTRIES</div>
             </NavLink>
 
-            <div className="w-full xsx:flex hidden h-[55px] pt-[8px]  p-4 items-center justify-between z-50">
+            <div className="w-full lg:flex hidden h-[55px] pt-[8px]  p-4 items-center justify-between z-50">
                 <div>
                     <NavLink to="/about" className="text-gray-200  font-semibold cursor-pointer relative border-none bg-transparent transition-all duration-800 ease-[cubic-bezier(0.25,0.8,0.25,1)] focus:text-white hover:text-white after:content-[''] after:pointer-events-none after:absolute after:bottom-[-2px] after:left-1/2 after:w-0 after:h-[2px] after:bg-white after:transition-all after:duration-400 after:ease-[cubic-bezier(0.25,0.8,0.25,1)] focus:after:w-full focus:after:left-0 hover:after:w-full hover:after:left-0 mt-[10px]" >
                         About
@@ -173,14 +173,10 @@ const Navbar = () => {
                     </NavLink>
 
                 )}
-                {/*
-                    <NavLink to="/login" className="text-white mt-[15px] text-[17px] w-[140px] xl:ml-[-65px] text-center py-[3px] hover:bg-red-950 bg-red-900 border border-white px-[8px] rounded-lg mr-[15px]">
-                        Start Shopping
-                    </NavLink> */}
             </div>
 
 
-            <div className="relative text-white xsx:hidden">
+            <div className="relative text-white lg:hidden">
                 <div className="flex z-[999] items-center h-[70px] justify-between bg-gradient-to-r from-red-950 via-custom-red to-red-950 px-4 py-3 relative">
                     <div className="flex items-center">
                         <motion.div
