@@ -18,61 +18,8 @@ import { useDispatch } from "react-redux"
 import axios from "axios"
 import { addToCart } from "../redux/cartSlice"
 import MainLoader from "./Pages/mainLoader"
+import ReviewProduct from "./ProductReview"
 
-// Mock product data
-const product = {
-  id: 1,
-  name: "Premium Cotton T-Shirt",
-  price: 29.99,
-  originalPrice: 39.99,
-  description:
-    "Experience ultimate comfort with our premium cotton t-shirt. Made from 100% organic cotton, this shirt offers exceptional softness and breathability. Perfect for everyday wear, it features a classic fit that flatters all body types.",
-  images: [
-    "/placeholder.svg?height=600&width=500",
-    "/placeholder.svg?height=600&width=500",
-    "/placeholder.svg?height=600&width=500",
-    "/placeholder.svg?height=600&width=500",
-    "/placeholder.svg?height=600&width=500",
-  ],
-  category: "T-Shirts",
-  rating: 4.5,
-  reviews: 128,
-  colors: ["Black", "White", "Gray", "Navy"],
-  sizes: ["XS", "S", "M", "L", "XL", "XXL"],
-  features: ["100% Organic Cotton", "Pre-shrunk fabric", "Reinforced seams", "Machine washable", "Eco-friendly dyes"],
-  inStock: true,
-  stockCount: 15,
-}
-
-const reviews = [
-  {
-    id: 1,
-    name: "Sarah Johnson",
-    rating: 5,
-    date: "2024-01-15",
-    comment:
-      "Absolutely love this t-shirt! The quality is exceptional and it's so comfortable. The fit is perfect and it hasn't shrunk after multiple washes.",
-    verified: true,
-  },
-  {
-    id: 2,
-    name: "Mike Chen",
-    rating: 4,
-    date: "2024-01-10",
-    comment:
-      "Great quality shirt. The cotton feels premium and the color hasn't faded. Only wish it came in more color options.",
-    verified: true,
-  },
-  {
-    id: 3,
-    name: "Emily Davis",
-    rating: 5,
-    date: "2024-01-05",
-    comment:
-      "This is my third purchase of this shirt. The quality is consistent and it's become my go-to casual wear. Highly recommend!",
-    verified: true,
-  },
-]
 
 // Custom Components
 const Button = ({ children, variant = "primary", size = "md", className = "", ...props }) => {
@@ -131,24 +78,6 @@ const Select = ({ children, value, onValueChange, placeholder, className = "" })
   )
 }
 
-const Textarea = ({ className = "", ...props }) => {
-  return (
-    <textarea
-      className={`flex min-h-[80px] w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm placeholder:text-gray-500 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:border-transparent disabled:cursor-not-allowed disabled:opacity-50 ${className}`}
-      {...props}
-    />
-  )
-}
-
-const Input = ({ className = "", ...props }) => {
-  return (
-    <input
-      className={`flex h-10 w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm placeholder:text-gray-500 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:border-transparent disabled:cursor-not-allowed disabled:opacity-50 ${className}`}
-      {...props}
-    />
-  )
-}
-
 const Label = ({ htmlFor, children, className = "" }) => {
   return (
     <label htmlFor={htmlFor} className={`text-sm font-medium text-gray-700 ${className}`}>
@@ -177,32 +106,28 @@ export default function ProductDetailPage() {
  useEffect(() => {
   const fetchProduct = async () => {
     try {
+      console.log(id)
       const response = await axios.get(
         `${import.meta.env.VITE_REACT_APP_API_BASE_URL}/fetchproducts/products/${id}`
       );
       const productData = response.data;
-      console.log('Fetched Product Data:', productData);
+      //console.log('Fetched Product Data:', productData);
 
-      // Push main image into the start of otherImages array (avoid duplication)
       const mainImage = productData.image;
       let modifiedOtherImages = productData.otherImages || [];
-
-      // Remove if main image already exists in otherImages
       modifiedOtherImages = modifiedOtherImages.filter(img => img !== mainImage);
 
       // Push main image at index 0
       modifiedOtherImages.unshift(mainImage);
 
       // Log the updated array
-      console.log('Updated otherImages with main image first:', modifiedOtherImages);
+      //console.log('Updated otherImages with main image first:', modifiedOtherImages);
 
-      // Set updated product object
       setProduct({
         ...productData,
         otherImages: modifiedOtherImages,
       });
 
-      // Set default size
       if (productData.size?.length > 0) {
         setSelectedSize(productData.size[0]);
       }
@@ -276,6 +201,7 @@ export default function ProductDetailPage() {
   }
 
   return (
+    
     <main className="min-h-screen bg-white max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
       {/* Breadcrumb */}
       <section className="mb-4">
@@ -443,7 +369,7 @@ export default function ProductDetailPage() {
             </div>
 
             {/* Action Buttons */}
-            <div className="flex flex-col sm:flex-row gap-4">
+            <div className="flex gap-4">
               <Button onClick={handleAddToCart} className="flex w-[280px] bg-black hover:bg-gray-800 text-white" size="lg">
                 <FiShoppingBag className="w-5 h-5 mr-2" />
                 Add to Cart
@@ -458,6 +384,7 @@ export default function ProductDetailPage() {
 
       {/* Reviews Section */}
 
+      <ReviewProduct productId={id} />
       {/*
  <motion.div
         initial={{ opacity: 0, y: 40 }}

@@ -685,7 +685,10 @@
   animation: roadAnimation 1.4s linear infinite;
   border-left: 4px solid white;
 }
-
+.p{
+  color: #f3f3f3;
+}
+ 
 .lampPost {
   position: absolute;
   bottom: 0;

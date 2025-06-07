@@ -53,7 +53,7 @@ const MainLoader = () => {
               <rect
                 strokeWidth="3"
                 stroke="#282828"
-                fill="#DFDFDF"
+                fill="#f3f3f3"
                 rx="2.5"
                 height="90"
                 width="121"
