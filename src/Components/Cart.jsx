@@ -188,21 +188,6 @@ export default function CartPage() {
         setUserId(id);
     }, [decodeToken]);
 
-    useEffect(() => {
-        const fetchProducts = async () => {
-            try {
-                const productResponses = await Promise.all(
-                    cart.map(item => axios.get(`${import.meta.env.VITE_REACT_APP_API_BASE_URL}/fetchproducts/products/${item.id}`))
-                );
-                setProducts(productResponses.map(response => response.data));
-            } catch (error) {
-                console.error('Error fetching products:', error);
-            }
-        };
-
-        fetchProducts();
-    }, [cart]);
-
     const handleRemoveFromCart = (id, size) => {
         dispatch(removeFromCart({ id, size }));
     };
@@ -289,7 +274,7 @@ export default function CartPage() {
                 <p className="text-gray-600">Review your items and proceed to checkout</p>
             </div>
 
-            {products.length === 0 ? (
+            {cart.length === 0 ? (
                 <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="text-center py-16">
                     <FiShoppingBag className="w-16 h-16 text-gray-300 mx-auto mb-4" />
                     <h2 className="text-2xl font-semibold text-gray-900 mb-2">Your cart is empty</h2>

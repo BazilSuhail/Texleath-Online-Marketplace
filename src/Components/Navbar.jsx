@@ -6,6 +6,13 @@ import {
   AiOutlineHeart, 
   AiOutlineMenu 
 } from "react-icons/ai"
+import {
+  MdSports,
+  MdFitnessCenter,
+  MdDirectionsRun,
+  MdSafetyDivider,
+  MdAccessibility
+} from 'react-icons/md';
 import { 
   MdLaptop, 
   MdCheckroom, 
@@ -22,12 +29,17 @@ import texleathlogo from "../texleathlogo.svg"
 import { NavLink } from "react-router-dom"
 import { useSelector } from "react-redux"
 import { selectCartLength } from "../redux/cartSlice"
+import CartModal from "./CartModal";
 
 export default function Navbar() {
     const cartLength = useSelector(selectCartLength);
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [cartCount, setCartCount] = useState(3)
+  //const [cartCount, setCartCount] = useState(3)
+  const [isCartOpen, setIsCartOpen] = useState(false);
+  const openCartModal = () => setIsCartOpen(true);
+  const closeCartModal = () => setIsCartOpen(false);
+
   const [isSearchFocused, setIsSearchFocused] = useState(false)
   const [hoveredCategory, setHoveredCategory] = useState(false)
   const [isSearchModalOpen, setIsSearchModalOpen] = useState(false)
@@ -56,14 +68,12 @@ useEffect(() => {
 
 
   const categories = [
-    { name: "Electronics", href: "#", icon: MdLaptop },
-    { name: "Clothing", href: "#", icon: MdCheckroom },
-    { name: "Home & Kitchen", href: "#", icon: MdHome },
-    { name: "Beauty", href: "#", icon: MdAutoAwesome },
-    { name: "Sports", href: "#", icon: MdSportsBasketball },
-    { name: "Books", href: "#", icon: MdMenuBook },
-    { name: "Toys", href: "#", icon: MdToys },
-    { name: "Jewelry", href: "#", icon: MdDiamond },
+      { name: "Fitness Wear", href: "#", icon: MdFitnessCenter },
+    { name: "Sports Wear", href: "#", icon: MdSports },
+    { name: "Gym Wear", href: "#", icon: MdDirectionsRun },
+    { name: "Gloves", href: "#", icon: MdSafetyDivider },
+    { name: "Safety Wear", href: "#", icon: MdSafetyDivider },
+    { name: "Active Wear", href: "#", icon: MdAccessibility }
   ]
 
   const navItems = [ 
@@ -86,7 +96,7 @@ useEffect(() => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16 md:h-20">
           {/* Logo */}
-          <>
+          <div className="flex">
           <motion.div whileHover={{ scale: 1.05 }} className="flex-shrink-0">
           
             <NavLink to="/" className=" h-[55px] pt-[5px] lg:flex hidden items-center justify-center w-full pb-[5px] overflow-hidden">
@@ -98,7 +108,7 @@ useEffect(() => {
           </motion.div>
 
           {/* Navigation Links - Hidden on smaller screens */}
-          <div className="hidden md:flex items-center space-x-8">
+          <div className="hidden md:flex items-center ml-[25px] space-x-4">
             {navItems.map((item, index) => (
               <div
                 key={item.name}
@@ -129,10 +139,10 @@ useEffect(() => {
                         animate={{ opacity: 1, y: 0 }}
                         exit={{ opacity: 0, y: 10 }}
                         transition={{ duration: 0.2 }}
-                        className="absolute left-0 mt-2 w-64 rounded-lg bg-white shadow-xl border border-gray-100 z-50"
+                        className="absolute left-0 mt-2 w-[350px] rounded-lg bg-white shadow-xl border border-gray-100 z-[999]"
                       >
                         <div className="p-3">
-                          <h3 className="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-2 px-3">
+                          <h3 className="text-[12px] font-semibold text-gray-500 uppercase tracking-wider mb-3 px-3">
                             Browse Categories
                           </h3>
                           <div className="grid grid-cols-2 gap-1">
@@ -148,20 +158,21 @@ useEffect(() => {
                                   }}
                                   className="flex items-center px-3 py-2 text-sm text-gray-700 rounded-md hover:text-red-600 transition-colors duration-150"
                                 >
-                                  <IconComponent className="mr-2 text-lg text-red-500" />
-                                  <span>{category.name}</span>
+                                  <IconComponent className="mr-2 p-[6px] text-[32px] text-red-700 bg-red-50 rounded-[6px]" />
+                                  <span className="font-[600]">{category.name}</span>
                                 </motion.div>
                               )
                             })}
                           </div>
-                          <div className="mt-3 pt-3 border-t border-gray-100">
-                            <motion.div
-                              href="#"
+                          <div className="mt-3 border-t border-gray-100">
+                            <NavLink to="/productlist/All">
+                            <motion.div 
                               whileHover={{ x: 5 }}
-                              className="block px-3 py-2 text-sm font-medium text-red-600 hover:text-red-700"
+                              className="block px-3 py-2 text-[12px] underline underline-offset-2 font-medium text-red-600 hover:text-red-700"
                             >
                               View All Categories →
                             </motion.div>
+                            </NavLink>
                           </div>
                         </div>
                       </motion.div>
@@ -171,7 +182,7 @@ useEffect(() => {
               </div>
             ))}
           </div>
-          </>
+          </div>
 
         <div className="flex">
           {/* Search Button */}
@@ -209,7 +220,7 @@ useEffect(() => {
             {/* Unique Cart Button */}
            <NavLink to="/cart">
             <motion.button
-              onClick={handleAddToCart}
+              onClick={openCartModal}
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               initial={{ opacity: 0, x: 20 }}
@@ -223,12 +234,12 @@ useEffect(() => {
 
               {/* Cart Count Badge */}
               <AnimatePresence>
-                {cartCount > 0 && (
+                {cartLength > 0 && (
                   <motion.div
                     initial={{ scale: 0, opacity: 0 }}
                     animate={{ scale: 1, opacity: 1 }}
                     exit={{ scale: 0, opacity: 0 }}
-                    key={cartCount}
+                    key={cartLength}
                     className="absolute -top-2 -right-2 bg-red-500 text-white text-xs font-bold rounded-full w-6 h-6 flex items-center justify-center"
                   >
                     <motion.span
@@ -268,6 +279,7 @@ useEffect(() => {
      
       {/* Search Modal */}
       <SearchModal isOpen={isSearchModalOpen} onClose={() => setIsSearchModalOpen(false)} />
+      <CartModal isOpen={isCartOpen} onClose={closeCartModal} />
     </motion.nav>
   )
 }
