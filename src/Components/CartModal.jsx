@@ -145,7 +145,7 @@ const CartModal = ({ isOpen, onClose }) => {
                 initial="hidden"
                 animate="visible"
                 exit="exit"
-                className="flex-1 overflow-y-auto px-6 py-4"
+                className="flex-1 overflow-y-auto px-6 py-4 [scrollbar-width:none] [-ms-overflow-style:none]"
               >
 
                 {/* Header */}

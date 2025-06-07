@@ -1,93 +1,169 @@
-import React, { useEffect, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
-import axios from 'axios';
-import { useDispatch } from 'react-redux';
-import { addToCart } from '../redux/cartSlice';
-import { motion } from 'framer-motion';
-import ReviewProduct from './ProductReview';
-import MainLoader from './Pages/mainLoader';
+import { useEffect, useState } from "react"
+import { motion } from "framer-motion"
 
+import {
+  FiStar,
+  FiShoppingBag,
+  FiHeart,
+  FiShare2,
+  FiChevronLeft,
+  FiChevronRight,
+  FiPlus,
+  FiMinus,
+  FiMenu,
+  FiX,
+} from "react-icons/fi"
+import { Link, useNavigate, useParams } from "react-router-dom"
+import { useDispatch } from "react-redux"
+import axios from "axios"
+import { addToCart } from "../redux/cartSlice"
+import MainLoader from "./Pages/mainLoader"
 
-const MediaCarousel = ({ mainImage, otherImages }) => {
-  const [activeMedia, setActiveMedia] = useState(mainImage);
+// Mock product data
+const product = {
+  id: 1,
+  name: "Premium Cotton T-Shirt",
+  price: 29.99,
+  originalPrice: 39.99,
+  description:
+    "Experience ultimate comfort with our premium cotton t-shirt. Made from 100% organic cotton, this shirt offers exceptional softness and breathability. Perfect for everyday wear, it features a classic fit that flatters all body types.",
+  images: [
+    "/placeholder.svg?height=600&width=500",
+    "/placeholder.svg?height=600&width=500",
+    "/placeholder.svg?height=600&width=500",
+    "/placeholder.svg?height=600&width=500",
+    "/placeholder.svg?height=600&width=500",
+  ],
+  category: "T-Shirts",
+  rating: 4.5,
+  reviews: 128,
+  colors: ["Black", "White", "Gray", "Navy"],
+  sizes: ["XS", "S", "M", "L", "XL", "XXL"],
+  features: ["100% Organic Cotton", "Pre-shrunk fabric", "Reinforced seams", "Machine washable", "Eco-friendly dyes"],
+  inStock: true,
+  stockCount: 15,
+}
 
-  const handleMediaClick = (mediaUrl) => {
-    setActiveMedia(mediaUrl);
-  };
+const reviews = [
+  {
+    id: 1,
+    name: "Sarah Johnson",
+    rating: 5,
+    date: "2024-01-15",
+    comment:
+      "Absolutely love this t-shirt! The quality is exceptional and it's so comfortable. The fit is perfect and it hasn't shrunk after multiple washes.",
+    verified: true,
+  },
+  {
+    id: 2,
+    name: "Mike Chen",
+    rating: 4,
+    date: "2024-01-10",
+    comment:
+      "Great quality shirt. The cotton feels premium and the color hasn't faded. Only wish it came in more color options.",
+    verified: true,
+  },
+  {
+    id: 3,
+    name: "Emily Davis",
+    rating: 5,
+    date: "2024-01-05",
+    comment:
+      "This is my third purchase of this shirt. The quality is consistent and it's become my go-to casual wear. Highly recommend!",
+    verified: true,
+  },
+]
+
+// Custom Components
+const Button = ({ children, variant = "primary", size = "md", className = "", ...props }) => {
+  const baseClasses =
+    "inline-flex items-center justify-center font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none"
+
+  const variants = {
+    primary: "bg-black text-white hover:bg-gray-800 focus:ring-gray-500",
+    outline: "border border-gray-300 bg-white text-gray-700 hover:bg-gray-50 focus:ring-gray-500",
+    secondary: "bg-gray-100 text-gray-900 hover:bg-gray-200 focus:ring-gray-500",
+  }
+
+  const sizes = {
+    sm: "px-3 py-2 text-sm rounded-md",
+    md: "px-4 py-2 text-sm rounded-md",
+    lg: "px-6 py-3 text-base rounded-lg",
+  }
+
+  const classes = `${baseClasses} ${variants[variant]} ${sizes[size]} ${className}`
 
   return (
-    <div className='w-full flex xl:flex-row flex-col'>
-      <div className="lg:mb-0 mb-[25px] xl:hidden flex px-[6px] xl:h-[650px] xl:order-1 order-2 otherImages-scrollbar overflow-y-auto">
-        <div className='thumbnail m-2 cursor-pointer' onClick={() => handleMediaClick(mainImage)}>
-          <div className='w-[150px] h-[180px]'>
-            <img
-              src={mainImage}
-              alt="Sadasd"
-              style={{ width: '100%', height: '100%', objectFit: 'cover' }}
-              className={`rounded-md border-2 ${activeMedia === mainImage ? 'border-blue-500' : 'border-background-color'}`}
-            />
-          </div>
-        </div>
-        {otherImages.map((image, index) => (
-          <div key={index} className='thumbnail m-2 cursor-pointer' onClick={() => handleMediaClick(image)}>
-            <div className='relative w-[150px] h-[180px]'>
-              <img
-                src={image}
-                alt={`Thumbnail ${index}`}
-                style={{ width: '100%', height: '100%', objectFit: 'cover' }}
-                className={`rounded-md border-2 ${activeMedia === image ? 'border-blue-500' : 'border-background-color'}`}
-              />
-            </div>
-          </div>
-        ))}
-      </div>
+    <button className={classes} {...props}>
+      {children}
+    </button>
+  )
+}
 
-      <div className="lg:mb-0 mb-[25px] xl:flex hidden px-[6px] flex-wrap flex-col xl:h-[650px] my-auto overflow-y-hidden">
-        <div className='thumbnail mb-2 mx-2 cursor-pointer' onClick={() => handleMediaClick(mainImage)}>
-          <div className='w-[140px] h-[160px]'>
-            <img
-              src={mainImage}
-              alt="Sadasd"
-              style={{ width: '100%', height: '100%', objectFit: 'cover' }}
-              className={`rounded-md border-2 ${activeMedia === mainImage ? 'border-blue-500' : 'border-background-color'}`}
-            />
-          </div>
-        </div>
-        {otherImages.map((image, index) => (
-          <div key={index} className='thumbnail mb-2 mx-2 cursor-pointer' onClick={() => handleMediaClick(image)}>
-            <div className='relative w-[140px] h-[160px]'>
-              <img
-                src={image}
-                alt={`Thumbnail ${index}`}
-                style={{ width: '100%', height: '100%', objectFit: 'cover' }}
-                className={`rounded-md border-2 ${activeMedia === image ? 'border-blue-500' : 'border-background-color'}`}
-              />
-            </div>
-          </div>
-        ))}
-      </div>
+const Badge = ({ children, variant = "default", className = "" }) => {
+  const variants = {
+    default: "bg-black text-white",
+    secondary: "bg-gray-100 text-gray-900",
+    destructive: "bg-red-500 text-white",
+  }
 
-      <div className='lg:mb-0 xl:mt-[-15px] mb-[25px] sm:w-full mx-auto h-[380px] w-[320px] sm:h-[340px] md:h-[420px] lg:w-[350px] lg:h-[430px] xl:w-[420px] xl:h-[550px]'>
-        <div className='relative w-full h-full'>
-          <img
-            src={activeMedia}
-            alt="Main Media"
-            style={{ width: '100%', height: '100%', objectFit: 'cover' }}
-            className='rounded-md'
-          />
-        </div>
-      </div>
+  return (
+    <span
+      className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${variants[variant]} ${className}`}
+    >
+      {children}
+    </span>
+  )
+}
 
-    </div>
-  );
-};
+const Select = ({ children, value, onValueChange, placeholder, className = "" }) => {
+  return (
+    <select
+      value={value}
+      onChange={(e) => onValueChange(e.target.value)}
+      className={`flex w-full h-10 w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-gray-500 focus:border-transparent ${className}`}
+    >
+      <option value="" disabled>
+        {placeholder}
+      </option>
+      {children}
+    </select>
+  )
+}
 
+const Textarea = ({ className = "", ...props }) => {
+  return (
+    <textarea
+      className={`flex min-h-[80px] w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm placeholder:text-gray-500 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:border-transparent disabled:cursor-not-allowed disabled:opacity-50 ${className}`}
+      {...props}
+    />
+  )
+}
 
-const ProductDetails = () => {
+const Input = ({ className = "", ...props }) => {
+  return (
+    <input
+      className={`flex h-10 w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm placeholder:text-gray-500 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:border-transparent disabled:cursor-not-allowed disabled:opacity-50 ${className}`}
+      {...props}
+    />
+  )
+}
+
+const Label = ({ htmlFor, children, className = "" }) => {
+  return (
+    <label htmlFor={htmlFor} className={`text-sm font-medium text-gray-700 ${className}`}>
+      {children}
+    </label>
+  )
+}
+
+export default function ProductDetailPage() {
+
   const { id } = useParams();
   const navigate = useNavigate();
   const [product, setProduct] = useState(null);
   const [key, setKey] = useState(0);
+  const [selectedImage, setSelectedImage] = useState(0)
 
   const [isIncreasing, setisIncreasing] = useState(true);
   const [quantity, setQuantity] = useState(1);
@@ -96,27 +172,51 @@ const ProductDetails = () => {
 
   useEffect(() => {
     window.scrollTo(0, 0);
-}, []);
+  }, []);
 
-  useEffect(() => {
-    const fetchProduct = async () => {
-      try {
-        const response = await axios.get(`${import.meta.env.VITE_REACT_APP_API_BASE_URL}/fetchproducts/products/${id}`);
-        setProduct(response.data);
-        if (response.data.size.length > 0) {
-          setSelectedSize(response.data.size[0]);
-        }
-      } catch (error) {
-        console.error('Error fetching product:', error);
+ useEffect(() => {
+  const fetchProduct = async () => {
+    try {
+      const response = await axios.get(
+        `${import.meta.env.VITE_REACT_APP_API_BASE_URL}/fetchproducts/products/${id}`
+      );
+      const productData = response.data;
+      console.log('Fetched Product Data:', productData);
+
+      // Push main image into the start of otherImages array (avoid duplication)
+      const mainImage = productData.image;
+      let modifiedOtherImages = productData.otherImages || [];
+
+      // Remove if main image already exists in otherImages
+      modifiedOtherImages = modifiedOtherImages.filter(img => img !== mainImage);
+
+      // Push main image at index 0
+      modifiedOtherImages.unshift(mainImage);
+
+      // Log the updated array
+      console.log('Updated otherImages with main image first:', modifiedOtherImages);
+
+      // Set updated product object
+      setProduct({
+        ...productData,
+        otherImages: modifiedOtherImages,
+      });
+
+      // Set default size
+      if (productData.size?.length > 0) {
+        setSelectedSize(productData.size[0]);
       }
-    };
+    } catch (error) {
+      console.error('Error fetching product:', error);
+    }
+  };
 
-    fetchProduct();
-  }, [id]);
+  fetchProduct();
+}, [id]);
+
 
   const handleAddToCart = () => {
     const token = localStorage.getItem('token');
-    //console.log(token);
     if (token === null) {
       navigate("/login");
     }
@@ -141,7 +241,7 @@ const ProductDetails = () => {
 
   const handleSizeClick = (size) => {
     setSelectedSize(size);
-    //console.log('Selected size:', size);
+    
   };
 
   if (!product) return <div className='h-screen w-screen pt-[-96px]'> <MainLoader /></div>;
@@ -150,98 +250,327 @@ const ProductDetails = () => {
     ? (product.price - (product.price * product.sale) / 100).toFixed(2)
     : product.price.toFixed(2);
 
+  // ===============================
+
+  // const [selectedImage, setSelectedImage] = useState(0)
+  // const [selectedColor, setSelectedColor] = useState(product.colors[0])
+  // const [selectedSize, setSelectedSize] = useState("")
+  // const [quantity, setQuantity] = useState(1)
+  // const [isMenuOpen, setIsMenuOpen] = useState(false)
+  // const [newReview, setNewReview] = useState({ rating: 5, comment: "", name: "" })
+  // const [showReviewForm, setShowReviewForm] = useState(false)
+
+  // const handleAddToCart = () => {
+  //   if (!selectedSize) {
+  //     alert("Please select a size")
+  //     return
+  //   }
+  //   alert("Added to cart!")
+  // }
+
+  const handleSubmitReview = (e) => {
+    e.preventDefault()
+    console.log("New review:", newReview)
+    setShowReviewForm(false)
+    setNewReview({ rating: 5, comment: "", name: "" })
+  }
+
   return (
-    <div className='xsx:pt-[190px] pt-[120px]'>
-      <div className='w-[96vw] xl:w-[95vw] lg:px-[0px] px-[6px] mx-auto grid grid-cols-1 lg:grid-cols-11'>
-        <div className="col-span-7">
-          <MediaCarousel
-            mainImage={`${import.meta.env.VITE_REACT_APP_API_BASE_URL}/uploads/${product.image}`}
-            otherImages={product.otherImages.map(image => `${import.meta.env.VITE_REACT_APP_API_BASE_URL}/uploads/${image}`)}
-          />
+    <main className="min-h-screen bg-white max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+      {/* Breadcrumb */}
+      <section className="mb-4">
+        <div className="flex items-center space-x-2 text-sm text-gray-500">
+          <Link to="/" className="hover:text-gray-900">
+            Home
+          </Link>
+          <span>/</span>
+          <Link to="/products" className="hover:text-gray-900">
+            Products
+          </Link>
+          <span>/</span>
+          <span className="text-gray-900">{product.name}</span>
         </div>
+      </section>
 
-        <div className='xl:h-screen xsx:pl-[15px] flex flex-col col-span-4'>
-          <div className='text-lg  w-[140px] py-[3px] text-center rounded-md text-white bg-red-500'>Sale: <span className='font-bold text-xl'>{product.sale}%</span> <span className='text-sm'>OFF</span></div>
+      <section className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+        {/* Product Images */}
+        <div className="space-y-4">
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.5 }}
+            className="relative lg:aspect-square bg-gray-50 w-full rounded-lg overflow-hidden"
+          >
+            <img
+              src={`${import.meta.env.VITE_REACT_APP_API_BASE_URL}/uploads/${product.otherImages[selectedImage]}` || "/placeholder.svg"}
+              alt={product.name}
+              className="w-full h-[550px] sm:h-full sm:object-fit"
+            />
+            <button
+              onClick={() => setSelectedImage(selectedImage > 0 ? selectedImage - 1 : product.otherImages.length - 1)}
+              className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-white bg-opacity-80 hover:bg-opacity-100 rounded-full p-2 transition-all"
+            >
+              <FiChevronLeft className="w-5 h-5" />
+            </button>
+            <button
+              onClick={() => setSelectedImage(selectedImage < product.otherImages.length - 1 ? selectedImage + 1 : 0)}
+              className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-white bg-opacity-80 hover:bg-opacity-100 rounded-full p-2 transition-all"
+            >
+              <FiChevronRight className="w-5 h-5" />
+            </button>
+          </motion.div>
 
-          <h1 className="text-3xl mt-[12px] font-bold">{product.name}</h1>
-          <div className='flex my-[20px] items-center'>
-            <p className="text-md text-white font-normal bg-gray-600 font-serif w-[140px] py-[3px] text-center rounded-lg">{product.category}</p>
-            <p className="text-lg ml-[9px] underline font-bold">{product.subcategory}</p>
-          </div>
-
-          <div className="mb-[8px]">
-            <p className="text-lg font-medium mb-[8px]">Available Sizes:</p>
-            <div className="flex flex-wrap">
-              {product.size.map((size, index) => (
-                <button
-                  key={index}
-                  className={`transition duration-200 font-semibold px-4 text-[18px] py-2 m-1 border border-gray-300 rounded-lg ${selectedSize === size ? 'bg-red-800 text-white' : 'bg-gray-100'}`}
-                  onClick={() => handleSizeClick(size)}
-                >
-                  {size}
-                </button>
-              ))}
-            </div>
-          </div>
-
-          <p className="text-md mt-[8px] flex items-center font-medium">
-            <span className='text-red-700 px-[4px] rounded-lg  bg-red-100'>Available Stock: </span>
-            <span className='text-xl ml-[6px] text-red-700'>{product.stock}</span>
-          </p>
-
-          <p className="text-xl my-[14px]">
-            {product.sale && <span className="text-red-500 line-through">${product.price.toFixed(2)}</span>}
-            <span className='text-2xl ml-[12px] font-semibold'>${discountedPrice}</span>
-          </p>
-
-
-          <p className='text-xl mt-[6px] font-mono'>Quantity</p>
-          <div className="flex items-center mt-[5px]">
-            <button onClick={handleDecreaseQuantity} className="text-[29.5px] rounded-l-[20px] text-white bg-red-800 w-[55px]">-</button>
-            <div className="w-[150px] flex justify-center border border-red-800 mx-[-5px] py-[3px] text-[24px]">
-              <motion.span
-                key={key}
-                initial={{ opacity: 0, y: isIncreasing ? 12 : -12 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: isIncreasing ? -12 : 12 }}
-                transition={{ type: "spring", stiffness: 300, duration: 1.2 }}
+          {/* Thumbnail Images */}
+          <div className="flex space-x-2 overflow-x-auto [scrollbar-width:none] [-ms-overflow-style:none]">
+            {product.otherImages.map((image, index) => (
+              <button
+                key={index}
+                onClick={() => setSelectedImage(index)}
+                className={`flex-shrink-0 w-20 h-20 rounded-lg overflow-hidden border-2 transition-all ${selectedImage === index ? "border-black" : "border-gray-200 hover:border-gray-300"
+                  }`}
               >
-                {quantity}
-              </motion.span>
+                <img
+              src={`${import.meta.env.VITE_REACT_APP_API_BASE_URL}/uploads/${image}` || "/placeholder.svg"}
+                  alt={`${product.name} ${index + 1}`}
+                  width={80}
+                  height={80}
+                  className="w-full h-full object-cover"
+                />
+              </button>
+            ))}
+          </div>
+        </div>
+
+        {/* Product Details */}
+        <div className="space-y-6">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.2 }}
+          >
+            <div className="flex items-center gap-2 mb-2">
+              <Badge variant="secondary">{product.category}</Badge>
+              {product.price > discountedPrice && <Badge className="bg-red-500 hover:bg-red-600">Sale</Badge>}
             </div>
-            <button onClick={handleIncreaseQuantity} className="text-[29.5px] rounded-r-[20px] text-white bg-red-800 w-[55px]">+</button>
+            <h1 className="text-3xl font-bold text-gray-900 mb-4">{product.name}</h1>
+
+            {/* Rating */}
+            <div className="flex items-center gap-4 mb-4">
+              <div className="flex items-center">
+                {[...Array(5)].map((_, i) => (
+                  <FiStar
+                    key={i}
+                    className={`w-5 h-5 ${i < Math.floor(product.rating) ? "text-yellow-400 fill-current" : "text-gray-300"
+                      }`}
+                  />
+                ))}
+              </div>
+              <span className="text-gray-600">({product.reviews} reviews)</span>
+            </div>
+
+            {/* Price */}
+            <div className="flex items-center space-x-3 mb-6">
+              <span className="text-3xl font-bold text-gray-900">${product.price}</span>
+              {product.price > discountedPrice && (
+                <span className="text-xl text-gray-500 line-through">Rs. {discountedPrice}</span>
+              )}
+            </div>
+
+            {/* Description */}
+            <p className="text-gray-600 mb-6">
+              {product.description.length > 15
+                ?
+                product.description
+                :
+                'Experience ultimate comfort with our premium cotton t-shirt. Made from 100% organic cotton, this shirt offers exceptional softness and breathability. Perfect for everyday wear, it features a classic fit that flatters all body types.'
+              }
+            </p>
+          </motion.div>
+
+          {/* Product Options */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.4 }}
+            className="space-y-6"
+          >
+            {/* Size Selection */}
+            <div>
+              <Label className="text-base font-medium mb-3 block">Size</Label>
+              <Select
+                value={selectedSize}
+                onValueChange={setSelectedSize}
+                placeholder="Select a size"
+                className="w-full"
+              >
+                {product.size.map((size) => (
+                  <option key={size} value={size}>
+                    {size}
+                  </option>
+                ))}
+              </Select>
+            </div>
+
+            {/* Quantity */}
+            <div>
+              <Label className="text-base font-medium mb-3 block">Quantity</Label>
+              <div className="flex items-center space-x-3">
+                <button
+                onClick={handleDecreaseQuantity}
+                  className="w-10 h-10 rounded-full border border-gray-300 flex items-center justify-center hover:bg-gray-50 transition-colors"
+                >
+                  <FiMinus className="w-4 h-4" />
+                </button> 
+
+                  <motion.span
+                                key={key}
+                                initial={{ opacity: 0, y: isIncreasing ? 12 : -12 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                exit={{ opacity: 0, y: isIncreasing ? -12 : 12 }}
+                                transition={{ type: "spring", stiffness: 300, duration: 1.2 }}
+                                className="text-lg font-medium w-8 text-center"
+                              >
+                                {quantity}
+                              </motion.span>
+                <button
+                onClick={handleIncreaseQuantity}
+                  className="w-10 h-10 rounded-full border border-gray-300 flex items-center justify-center hover:bg-gray-50 transition-colors"
+                >
+                  <FiPlus className="w-4 h-4" />
+                </button>
+              </div>
+              <p className="text-sm text-gray-500 mt-2">{product.stock} items in stock</p>
+            </div>
+
+            {/* Action Buttons */}
+            <div className="flex flex-col sm:flex-row gap-4">
+              <Button onClick={handleAddToCart} className="flex w-[280px] bg-black hover:bg-gray-800 text-white" size="lg">
+                <FiShoppingBag className="w-5 h-5 mr-2" />
+                Add to Cart
+              </Button>
+              <Button variant="outline" size="lg">
+                <FiShare2 className="w-5 h-5" />
+              </Button>
+            </div>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Reviews Section */}
+
+      {/*
+ <motion.div
+        initial={{ opacity: 0, y: 40 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6 }}
+        className="mt-16"
+      >
+        <div className="border-t border-gray-200 pt-16">
+          <div className="flex items-center justify-between mb-8">
+            <h2 className="text-2xl font-bold text-gray-900">Customer Reviews</h2>
+            <Button onClick={() => setShowReviewForm(!showReviewForm)} variant="outline">
+              Write a Review
+            </Button>
           </div>
 
-          <button onClick={handleAddToCart} className="flex items-center justify-center w-[220px] mt-[20px] h-[50px] rounded-lg border-none bg-red-700 text-white cursor-pointer transition-transform duration-500 overflow-hidden shadow-md relative group active:bg-[#400f0f]">
-            <span className="absolute -left-[45px] w-[40px] h-[40px] bg-transparent rounded-full flex items-center justify-center z-10 transition-transform duration-500 group-hover:translate-x-[80px] group-hover:rounded-full">
-              <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 576 512" fill="currentColor" className="text-white">
-                <path d="M0 24C0 10.7 10.7 0 24 0H69.5c22 0 41.5 12.8 50.6 32h411c26.3 0 45.5 25 38.6 50.4l-41 152.3c-8.5 31.4-37 53.3-69.5 53.3H170.7l5.4 28.5c2.2 11.3 12.1 19.5 23.6 19.5H488c13.3 0 24 10.7 24 24s-10.7 24-24 24H199.7c-34.6 0-64.3-24.6-70.7-58.5L77.4 54.5c-.7-3.8-4-6.5-7.9-6.5H24C10.7 48 0 37.3 0 24zM128 464a48 48 0 1 1 96 0 48 48 0 1 1 -96 0zm336-48a48 48 0 1 1 0 96 48 48 0 1 1 0-96z"></path>
-              </svg>
-            </span>
-            <p className="flex items-center justify-center text-white group-hover:translate-x-[10px] text-lg font-semibold transition-transform duration-500">Add to Cart</p>
-          </button>
-        </div>
-      </div>
+           <motion.div
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: "auto" }}
+              exit={{ opacity: 0, height: 0 }}
+              className="bg-gray-50 rounded-lg p-6 mb-8"
+            >
+              <h3 className="text-lg font-semibold mb-4">Write Your Review</h3>
+              <form onSubmit={handleSubmitReview} className="space-y-4">
+                <div>
+                  <Label htmlFor="reviewer-name">Your Name</Label>
+                  <Input
+                    id="reviewer-name"
+                    value={newReview.name}
+                    onChange={(e) => setNewReview({ ...newReview, name: e.target.value })}
+                    required
+                  />
+                </div>
+                <div>
+                  <Label>Rating</Label>
+                  <div className="flex items-center space-x-1 mt-2">
+                    {[1, 2, 3, 4, 5].map((star) => (
+                      <button
+                        key={star}
+                        type="button"
+                        onClick={() => setNewReview({ ...newReview, rating: star })}
+                        className="focus:outline-none"
+                      >
+                        <FiStar
+                          className={`w-6 h-6 ${star <= newReview.rating ? "text-yellow-400 fill-current" : "text-gray-300"
+                            }`}
+                        />
+                      </button>
+                    ))}
+                  </div>
+                </div>
+                <div>
+                  <Label htmlFor="review-comment">Your Review</Label>
+                  <Textarea
+                    id="review-comment"
+                    value={newReview.comment}
+                    onChange={(e) => setNewReview({ ...newReview, comment: e.target.value })}
+                    rows={4}
+                    required
+                  />
+                </div>
+                <div className="flex gap-4">
+                  <Button type="submit" className="bg-black hover:bg-gray-800">
+                    Submit Review
+                  </Button>
+                  <Button type="button" variant="outline" onClick={() => setShowReviewForm(false)}>
+                    Cancel
+                  </Button>
+                </div>
+              </form>
+            </motion.div>
 
-      <div className='mt-[35px] xl:mt-[-95px]'>
-        <span className='text-3xl ml-[15px] font-bold text-red-900 underline'>Product Description:</span>
-        <div className='ml-[25px] text-xl font-medium text-red-950 mt-[5px]'> {product.description}</div>
-      </div>
-
-      <div className='mb-[35px] mt-[25px]'>
-        <div className='flex flex-col w-screen justify-center items-center'>
-          <div className='text-4xl text-red-950 font-bold'>Reviews</div>
-          <div className='flex my-[8px] items-center'>
-            <div className='w-4 h-4 rounded-full bg-red-800'></div>
-            <div className='w-[320px] h-[4px] rounded-xl  mx-[15px] bg-red-800'></div>
-            <div className='w-4 h-4 rounded-full bg-red-800'></div>
+            
+          <div className="space-y-6">
+            {reviews.map((review, index) => (
+              <motion.div
+                key={review.id}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: index * 0.1 }}
+                className="border-b border-gray-200 pb-6 last:border-b-0"
+              >
+                <div className="flex items-start justify-between mb-3">
+                  <div>
+                    <div className="flex items-center space-x-2 mb-1">
+                      <h4 className="font-semibold text-gray-900">{review.name}</h4>
+                      {review.verified && (
+                        <Badge variant="secondary" className="text-xs">
+                          Verified Purchase
+                        </Badge>
+                      )}
+                    </div>
+                    <div className="flex items-center space-x-2">
+                      <div className="flex items-center">
+                        {[...Array(5)].map((_, i) => (
+                          <FiStar
+                            key={i}
+                            className={`w-4 h-4 ${i < review.rating ? "text-yellow-400 fill-current" : "text-gray-300"
+                              }`}
+                          />
+                        ))}
+                      </div>
+                      <span className="text-sm text-gray-500">{review.date}</span>
+                    </div>
+                  </div>
+                </div>
+                <p className="text-gray-600">{review.comment}</p>
+              </motion.div>
+            ))}
           </div>
-
         </div>
-      </div>
-      <ReviewProduct productId={id} />
-    </div>
-  );
-};
+      </motion.div>
+*/}
 
-export default ProductDetails;
+    </main>
+  )
+}

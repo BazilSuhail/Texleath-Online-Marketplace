@@ -217,8 +217,7 @@ useEffect(() => {
               <AiOutlineUser className="w-6 h-6" />
             </motion.button>
 
-            {/* Unique Cart Button */}
-           <NavLink to="/cart">
+            {/* Unique Cart Button */}  
             <motion.button
               onClick={openCartModal}
               whileHover={{ scale: 1.05 }}
@@ -260,8 +259,7 @@ useEffect(() => {
                 whileHover={{ scale: 1.2, opacity: 0.3 }}
                 transition={{ duration: 0.3 }}
               />
-            </motion.button>
-            </NavLink>
+            </motion.button> 
             
             {/* Mobile Menu Button */}
             <motion.button
