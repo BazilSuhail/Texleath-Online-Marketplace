@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { removeFromCart, updateQuantity } from '../redux/cartSlice';
 import { FiMinus, FiPlus, FiTrash2, FiShoppingCart } from 'react-icons/fi';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
 
 const panelVariants = {
   hidden: { width: 0 },
@@ -189,17 +190,18 @@ const CartModal = ({ isOpen, onClose }) => {
                 animate="visible"
                 exit="exit"
                 className="px-6 py-3 bg-white border-t border-gray-200">
+                <Link to="/cart">
                 <button
                   onClick={() => {
                     onClose();
-                    window.location.href = '/cart';
                   }}
-                  className="w-full flex items-center justify-center gap-2 px-4 py-2 bg-black text-white rounded-lg hover:bg-gray-800 transition-colors"
+                  className="w-full flex items-center disabled:bg-gray-400 justify-center gap-2 px-4 py-2 bg-black text-white rounded-lg hover:bg-gray-800 transition-colors"
                   disabled={cart.length === 0}
                 >
                   <FiShoppingCart className="w-5 h-5" />
                   <span>Go to Cart</span>
                 </button>
+                </Link>
               </motion.div>
 
             </div>

@@ -42,21 +42,6 @@ const Button = ({ children, variant = "primary", size = "md", className = "", as
     )
 }
 
-const Badge = ({ children, variant = "default", className = "" }) => {
-    const variants = {
-        default: "bg-black text-white",
-        secondary: "bg-gray-100 text-gray-900",
-        destructive: "bg-red-500 text-white",
-    }
-
-    return (
-        <span
-            className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${variants[variant]} ${className}`}
-        >
-            {children}
-        </span>
-    )
-}
 
 const Input = ({ className = "", ...props }) => {
     return (
@@ -70,8 +55,6 @@ const Input = ({ className = "", ...props }) => {
 const Separator = ({ className = "" }) => {
     return <hr className={`border-gray-200 ${className}`} />
 }
-
-
 
 const CartItem = ({ id, size, quantity, onIncrease, onDecrease, onRemove, index }) => {
     const [product, setProduct] = useState(null);
@@ -161,14 +144,13 @@ const CartItem = ({ id, size, quantity, onIncrease, onDecrease, onRemove, index 
 
 
 export default function CartPage() {
-    const [promoCode, setPromoCode] = useState("")
-
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
 
     const cart = useSelector(state => state.cart);
-    const dispatch = useDispatch();
-    const [products, setProducts] = useState([]);
-    const navigate = useNavigate();
     const [userId, setUserId] = useState(null);
+    
+    const [promoCode, setPromoCode] = useState("")
 
     const decodeToken = useCallback((token) => {
         if (!token) return null;
@@ -214,7 +196,7 @@ export default function CartPage() {
 
     const calculateTotalBill = () => {
         return cart.reduce((total, item) => {
-            const product = products.find(p => p._id === item.id);
+            const product = cart.find(p => p._id === item.id);
             if (product) {
                 const discountedPrice = product.sale
                     ? (product.price - (product.price * product.sale) / 100)
@@ -227,7 +209,7 @@ export default function CartPage() {
 
     const calculateActualTotalBill = () => {
         return cart.reduce((total, item) => {
-            const product = products.find(p => p._id === item.id);
+            const product = cart.find(p => p._id === item.id);
             if (product) {
                 return total + (product.price * item.quantity);
             }
@@ -279,7 +261,7 @@ export default function CartPage() {
                     <h2 className="text-2xl font-semibold text-gray-900 mb-2">Your cart is empty</h2>
                     <p className="text-gray-600 mb-8">Looks like you haven't added anything to your cart yet.</p>
                     <Button className="bg-black hover:bg-gray-800">
-                        <Link to="/products" className="flex items-center">
+                        <Link to="/productlist/All" className="flex items-center">
                             Continue Shopping
                             <FiArrowRight className="ml-2 w-4 h-4" />
                         </Link>
