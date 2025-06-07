@@ -1,10 +1,9 @@
 import { useState, useEffect } from 'react';
-import { motion } from "framer-motion"
+import { motion, AnimatePresence } from "framer-motion"
 
 
 import axios from 'axios';
 import { FaStar } from 'react-icons/fa';
-import { IoMail } from "react-icons/io5";
 import comments_svg from "../Assets/noComments.webp";
 import MainLoader from './Pages/mainLoader';
 import { FiStar } from 'react-icons/fi';
@@ -55,24 +54,14 @@ const Label = ({ htmlFor, children, className = "" }) => {
   )
 }
 
-const Input = ({ className = "", ...props }) => {
-  return (
-    <input
-      className={`flex h-10 w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm placeholder:text-gray-500 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:border-transparent disabled:cursor-not-allowed disabled:opacity-50 ${className}`}
-      {...props}
-    />
-  )
-}
 
-
-const ReviewsList = ({ productId }) => {
+const ReviewsList = ({ productId, newReview }) => {
   const [reviews, setReviews] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [visibleCount, setVisibleCount] = useState(4);
 
   useEffect(() => {
-    console.log(productId)
     const fetchReviews = async () => {
       try {
         const response = await axios.get(`${import.meta.env.VITE_REACT_APP_API_BASE_URL}/product-reviews/reviews/${productId}`);
@@ -87,69 +76,92 @@ const ReviewsList = ({ productId }) => {
     fetchReviews();
   }, [productId]);
 
+  // Add new review to local state without refetching
+  useEffect(() => {
+    if (newReview) {
+      setReviews(prev => [newReview, ...prev]);
+    }
+  }, [newReview]);
+
   const handleShowMore = () => {
     setVisibleCount(prevCount => Math.min(prevCount + 4, reviews.length));
   };
 
-  if (loading) return <div className='h-full w-full'> <MainLoader /></div>;
-  if (error) return <div className='flex justify-center items-center w-full'>
-    <div className='text-center'>
-      <img
-        src={comments_svg}
-        alt='Cart Icon'
-        className='mx-auto mix-blend-multiply lg:scale-[0.75] scale-[0.8] w-[280px] h-[280px]'
-      />
-      <p className='px-[15px] py-[6px] rounded-[8px] mt-[-16px] text-[15px] text-blue-500 font-[600] bg-blue-100 mx-auto text-center '>
-        No reviews made till now. <span className='font-[700] text-blue-800'>Make Review NOW !!</span>
-      </p>
+  if (loading) return <div className='h-full w-full'><MainLoader /></div>;
 
+  if (error) return (
+    <div className='flex justify-center items-center w-full'>
+      <motion.div
+        initial={{ opacity: 0, scale: 0.9 }}
+        animate={{ opacity: 1, scale: 1 }}
+        className='text-center'
+      >
+        <img
+          src={comments_svg}
+          alt='Cart Icon'
+          className='mx-auto mix-blend-multiply lg:scale-[0.75] scale-[0.8] w-[280px] h-[280px]'
+        />
+        <p className='px-[15px] py-[6px] rounded-[8px] mt-[-16px] text-[15px] text-blue-500 font-[600] bg-blue-100 mx-auto text-center'>
+          No reviews made till now. <span className='font-[700] text-blue-800'>Make Review NOW !!</span>
+        </p>
+      </motion.div>
     </div>
-  </div>;
+  );
 
   const displayedReviews = reviews.slice(0, visibleCount);
 
   return (
+    <div className="space-y-6 lg:col-span-3 lg:pl-[15px]">
+      <h2 className="text-lg font-bold text-gray-900 mb-8">Customer Reviews</h2>
 
-    <div className="space-y-6 lg:col-span-3 lg:pl-[15px]"> 
-          <h2 className="text-lg font-bold text-gray-900 mb-8">Customer Reviews</h2>
-          
-      {displayedReviews.map((review, index) => (
-        <motion.div
-          key={review._id}
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: index * 0.1 }}
-          className="border-b border-gray-200 pb-6 last:border-b-0"
-        >
-          <div className="mb-3">
-            
-             <div className='flex w-full items-center justify-between'>
-                  <h4 className="font-semibold text-gray-900">{review.name}</h4>
-                  <span className="text-sm text-gray-500">
-                    {new Date(review.date).toLocaleDateString('en-US', {
-                      year: 'numeric',
-                      month: 'short',
-                      day: 'numeric',
-                      hour: '2-digit',
-                      minute: '2-digit'
-                    })}
-                  </span>
-                </div>
+      <AnimatePresence>
+        {displayedReviews.map((review, index) => (
+          <motion.div
+            key={review._id || index} // Use index as fallback for new reviews
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            transition={{ duration: 0.3, delay: index * 0.05 }}
+            className="border-b border-gray-200 pb-6 last:border-b-0"
+          >
+            <div className="mb-3">
+              <div className='flex w-full items-center justify-between'>
+                <h4 className="font-semibold text-gray-900">{review.name}</h4>
+                <span className="text-sm text-gray-500">
+                  {new Date(review.date).toLocaleDateString('en-US', {
+                    year: 'numeric',
+                    month: 'short',
+                    day: 'numeric',
+                    hour: '2-digit',
+                    minute: '2-digit'
+                  })}
+                </span>
+              </div>
 
               <div className="flex mt-1 items-center">
                 {[...Array(5)].map((_, i) => (
                   <FiStar
                     key={i}
-                    className={`w-4 h-4 ${i < review.rating ? "text-yellow-400 fill-current" : "text-gray-300"
-                      }`}
+                    className={`w-4 h-4 ${i < review.rating ? "text-yellow-400 fill-current" : "text-gray-300"}`}
                   />
                 ))}
               </div>
- 
-          </div>
-          <p className="text-gray-600">{review.description}</p>
-        </motion.div>
-      ))}
+            </div>
+            <p className="text-gray-600">{review.description}</p>
+          </motion.div>
+        ))}
+      </AnimatePresence>
+
+      {reviews.length > visibleCount && (
+        <motion.button
+          whileHover={{ scale: 1.02 }}
+          whileTap={{ scale: 0.98 }}
+          onClick={handleShowMore}
+          className="mt-4 px-4 py-2 bg-gray-100 text-gray-700 rounded-md hover:bg-gray-200 transition-colors"
+        >
+          Show More Reviews
+        </motion.button>
+      )}
     </div>
   );
 };
@@ -160,6 +172,8 @@ const ReviewProduct = ({ productId }) => {
   const [review, setReview] = useState('');
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [newReview, setNewReview] = useState(null);
 
   useEffect(() => {
     const fetchUserDetails = async () => {
@@ -179,16 +193,19 @@ const ReviewProduct = ({ productId }) => {
     fetchUserDetails();
   }, []);
 
-
   const handleStarClick = (index) => {
     setRating(index + 1);
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setIsSubmitting(true);
+    setError('');
+    setSuccess('');
+
     try {
       if (!user) {
-        setError('User not found');
+        setError('Please login to submit a review');
         return;
       }
 
@@ -204,60 +221,69 @@ const ReviewProduct = ({ productId }) => {
         }
       };
 
-      await axios.post(`${import.meta.env.VITE_REACT_APP_API_BASE_URL}/product-reviews/reviews`, reviewData, {
-        headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` }
-      });
+      const response = await axios.post(
+        `${import.meta.env.VITE_REACT_APP_API_BASE_URL}/product-reviews/reviews`,
+        reviewData,
+        {
+          headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` }
+        }
+      );
 
-      setSuccess('Review submitted successfully');
+      setNewReview(response.data.review); // Store the new review to pass to ReviewsList
+      setSuccess('Review submitted successfully!');
       setRating(1);
       setReview('');
+
+      // Clear success message after 3 seconds
+      setTimeout(() => setSuccess(''), 3000);
     } catch (error) {
-      setError('Failed to submit review');
+      setError(error.response?.data?.message || 'Failed to submit review');
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
   return (
-
     <motion.div
       initial={{ opacity: 0, y: 40 }}
       whileInView={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.6 }}
-      className="mt-16 grid lg:grid-cols-5"
+      className="mt-16 grid lg:grid-cols-5 gap-8"
     >
-      <div className="col-span-2 border-t border-gray-200">
-          <Button onClick={() => setShowReviewForm(!showReviewForm)} variant="outline">
-            Write a Review
-          </Button>
+      <div className="col-span-2 sticky top-0 border-t  border-gray-200 pt-6">
+
+        <Button variant="outline" className="mb-6">
+          Write a Review
+        </Button>
 
         <motion.div
           initial={{ opacity: 0, height: 0 }}
           animate={{ opacity: 1, height: "auto" }}
-          exit={{ opacity: 0, height: 0 }}
+          transition={{ duration: 0.3 }}
           className="bg-gray-50 rounded-lg py-4 px-6 mt-4 mr-5 border-[2px] border-gray-100"
-        > 
+        >
           <form onSubmit={handleSubmit} className="space-y-4">
-            {/* <div>
-                  <Label htmlFor="reviewer-name">Your Name</Label>
-                  <Input
-                    id="reviewer-name"
-                    value={review}
-                    onChange={(e) => setReview({ ...review, name: e.target.value })}
-                    required
-                  />
-                </div> */}
             <div>
               <Label>Rating</Label>
-              <div className="flex items-center space-x-1 mt-2">
+              <motion.div
+                className="flex items-center space-x-1 mt-2"
+                whileTap={{ scale: 0.95 }}
+              >
                 {[...Array(5)].map((_, index) => (
-                  <FaStar
-                    size={25}
+                  <motion.div
                     key={index}
-                    className={`cursor-pointer ${index < rating ? 'text-yellow-500' : 'text-gray-300'}`}
-                    onClick={() => handleStarClick(index)}
-                  />
+                    whileHover={{ scale: 1.1 }}
+                  >
+                    <FaStar
+                      size={25}
+                      className={`cursor-pointer ${index < rating ? 'text-yellow-500' : 'text-gray-300'}`}
+                      onClick={() => handleStarClick(index)}
+                    />
+                  </motion.div>
                 ))}
-              </div>
+              </motion.div>
             </div>
+
             <div>
               <Label htmlFor="review-comment">Your Review</Label>
               <Textarea
@@ -266,24 +292,61 @@ const ReviewProduct = ({ productId }) => {
                 onChange={(e) => setReview(e.target.value)}
                 rows={4}
                 required
+                className="resize-none"
               />
             </div>
+
             <div className="flex gap-4">
-              <Button type="submit" className="bg-black hover:bg-gray-800">
-                Submit Review
-              </Button>
-              <Button type="button" variant="outline" onClick={() => setShowReviewForm(false)}>
-                Cancel
+              <Button
+                type="submit"
+                className="bg-black hover:bg-gray-800"
+                disabled={isSubmitting}
+              >
+                {isSubmitting ? (
+                  <motion.span
+                    animate={{ rotate: 360 }}
+                    transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
+                    className="inline-block"
+                  >
+                    ⏳
+                  </motion.span>
+                ) : 'Submit Review'}
               </Button>
             </div>
           </form>
+
+          {/* Notification messages */}
+          <AnimatePresence>
+            {success && (
+              <motion.div
+               initial={{ opacity: 0, x: 20 }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: 20 }}
+            transition={{ duration: 0.3 }}
+            className="fixed top-4 right-4 z-50 bg-green-700 text-white px-4 py-3 rounded-md shadow-lg flex items-center gap-2"
+         >
+                {success}
+              </motion.div>
+            )}
+
+            {error && (
+              <motion.div
+                  initial={{ opacity: 0, x: 20 }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: 20 }}
+            transition={{ duration: 0.3 }}
+            className="fixed top-4 right-4 z-50 bg-red-700 text-white px-4 py-3 rounded-md shadow-lg flex items-center gap-2"
+          >
+                {error}
+              </motion.div>
+            )}
+          </AnimatePresence>
         </motion.div>
       </div>
 
-      <ReviewsList productId={productId} />
+      <ReviewsList productId={productId} newReview={newReview} />
     </motion.div>
   );
 };
-
 
 export default ReviewProduct;

@@ -1,17 +1,14 @@
 import { useEffect, useState } from "react"
-import { motion } from "framer-motion"
+import { AnimatePresence, motion } from "framer-motion"
 
 import {
   FiStar,
   FiShoppingBag,
-  FiHeart,
   FiShare2,
   FiChevronLeft,
   FiChevronRight,
   FiPlus,
   FiMinus,
-  FiMenu,
-  FiX,
 } from "react-icons/fi"
 import { Link, useNavigate, useParams } from "react-router-dom"
 import { useDispatch } from "react-redux"
@@ -99,6 +96,36 @@ export default function ProductDetailPage() {
   const [selectedSize, setSelectedSize] = useState(null);
   const dispatch = useDispatch();
 
+  const [isCopied, setIsCopied] = useState(false);
+
+  const copyUrlToClipboard = () => {
+    const url = window.location.href;
+    
+    // Copy to clipboard
+    navigator.clipboard.writeText(url)
+      .then(() => {
+        setIsCopied(true);
+        // Reset after 2 seconds
+        setTimeout(() => setIsCopied(false), 2000);
+      })
+      .catch(err => {
+        console.error('Failed to copy URL: ', err);
+        // Fallback for older browsers
+        const textArea = document.createElement('textarea');
+        textArea.value = url;
+        document.body.appendChild(textArea);
+        textArea.select();
+        try {
+          document.execCommand('copy');
+          setIsCopied(true);
+          setTimeout(() => setIsCopied(false), 2000);
+        } catch (err) {
+          console.error('Fallback copy failed: ', err);
+        }
+        document.body.removeChild(textArea);
+      });
+  };
+
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
@@ -106,12 +133,10 @@ export default function ProductDetailPage() {
  useEffect(() => {
   const fetchProduct = async () => {
     try {
-      console.log(id)
       const response = await axios.get(
         `${import.meta.env.VITE_REACT_APP_API_BASE_URL}/fetchproducts/products/${id}`
       );
       const productData = response.data;
-      //console.log('Fetched Product Data:', productData);
 
       const mainImage = productData.image;
       let modifiedOtherImages = productData.otherImages || [];
@@ -201,7 +226,6 @@ export default function ProductDetailPage() {
   }
 
   return (
-    
     <main className="min-h-screen bg-white max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
       {/* Breadcrumb */}
       <section className="mb-4">
@@ -374,130 +398,32 @@ export default function ProductDetailPage() {
                 <FiShoppingBag className="w-5 h-5 mr-2" />
                 Add to Cart
               </Button>
-              <Button variant="outline" size="lg">
+              <button onClick={copyUrlToClipboard} className="border-[3px] rounded-[7px] border-gray-200 px-[12px] focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none">
                 <FiShare2 className="w-5 h-5" />
-              </Button>
+              </button>
             </div>
           </motion.div>
         </div>
       </section>
 
       {/* Reviews Section */}
-
       <ReviewProduct productId={id} />
-      {/*
- <motion.div
-        initial={{ opacity: 0, y: 40 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6 }}
-        className="mt-16"
-      >
-        <div className="border-t border-gray-200 pt-16">
-          <div className="flex items-center justify-between mb-8">
-            <h2 className="text-2xl font-bold text-gray-900">Customer Reviews</h2>
-            <Button onClick={() => setShowReviewForm(!showReviewForm)} variant="outline">
-              Write a Review
-            </Button>
-          </div>
 
-           <motion.div
-              initial={{ opacity: 0, height: 0 }}
-              animate={{ opacity: 1, height: "auto" }}
-              exit={{ opacity: 0, height: 0 }}
-              className="bg-gray-50 rounded-lg p-6 mb-8"
-            >
-              <h3 className="text-lg font-semibold mb-4">Write Your Review</h3>
-              <form onSubmit={handleSubmitReview} className="space-y-4">
-                <div>
-                  <Label htmlFor="reviewer-name">Your Name</Label>
-                  <Input
-                    id="reviewer-name"
-                    value={newReview.name}
-                    onChange={(e) => setNewReview({ ...newReview, name: e.target.value })}
-                    required
-                  />
-                </div>
-                <div>
-                  <Label>Rating</Label>
-                  <div className="flex items-center space-x-1 mt-2">
-                    {[1, 2, 3, 4, 5].map((star) => (
-                      <button
-                        key={star}
-                        type="button"
-                        onClick={() => setNewReview({ ...newReview, rating: star })}
-                        className="focus:outline-none"
-                      >
-                        <FiStar
-                          className={`w-6 h-6 ${star <= newReview.rating ? "text-yellow-400 fill-current" : "text-gray-300"
-                            }`}
-                        />
-                      </button>
-                    ))}
-                  </div>
-                </div>
-                <div>
-                  <Label htmlFor="review-comment">Your Review</Label>
-                  <Textarea
-                    id="review-comment"
-                    value={newReview.comment}
-                    onChange={(e) => setNewReview({ ...newReview, comment: e.target.value })}
-                    rows={4}
-                    required
-                  />
-                </div>
-                <div className="flex gap-4">
-                  <Button type="submit" className="bg-black hover:bg-gray-800">
-                    Submit Review
-                  </Button>
-                  <Button type="button" variant="outline" onClick={() => setShowReviewForm(false)}>
-                    Cancel
-                  </Button>
-                </div>
-              </form>
-            </motion.div>
-
-            
-          <div className="space-y-6">
-            {reviews.map((review, index) => (
-              <motion.div
-                key={review.id}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
-                className="border-b border-gray-200 pb-6 last:border-b-0"
-              >
-                <div className="flex items-start justify-between mb-3">
-                  <div>
-                    <div className="flex items-center space-x-2 mb-1">
-                      <h4 className="font-semibold text-gray-900">{review.name}</h4>
-                      {review.verified && (
-                        <Badge variant="secondary" className="text-xs">
-                          Verified Purchase
-                        </Badge>
-                      )}
-                    </div>
-                    <div className="flex items-center space-x-2">
-                      <div className="flex items-center">
-                        {[...Array(5)].map((_, i) => (
-                          <FiStar
-                            key={i}
-                            className={`w-4 h-4 ${i < review.rating ? "text-yellow-400 fill-current" : "text-gray-300"
-                              }`}
-                          />
-                        ))}
-                      </div>
-                      <span className="text-sm text-gray-500">{review.date}</span>
-                    </div>
-                  </div>
-                </div>
-                <p className="text-gray-600">{review.comment}</p>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </motion.div>
-*/}
-
+      {/* Tooltip feedback */}
+      <AnimatePresence>
+        {isCopied && (
+         <motion.div
+            initial={{ opacity: 0, x: 20 }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: 20 }}
+            transition={{ duration: 0.3 }}
+            className="fixed top-4 right-4 z-50 bg-red-800 text-white px-4 py-3 rounded-md shadow-lg flex items-center gap-2"
+          >
+            <FiShare2 className="w-4 h-4" />
+            <span>Link copied to clipboard!</span>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </main>
   )
 }
