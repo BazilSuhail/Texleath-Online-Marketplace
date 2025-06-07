@@ -7,7 +7,6 @@ import { FiTrash2, FiPlus, FiMinus, FiShoppingBag, FiMenu, FiX, FiArrowRight } f
 import { Link } from "react-router-dom"
 import axios from "axios"
 
- 
 
 // Custom Components
 const Button = ({ children, variant = "primary", size = "md", className = "", asChild, ...props }) => {
@@ -121,11 +120,11 @@ const CartItem = ({ id, size, quantity, onIncrease, onDecrease, onRemove, index 
                         >
                             <FiTrash2 className="w-5 h-5" />
                         </button>
-                    </div> 
-                      <div className="text-sm text-gray-600 mb-3">
+                    </div>
+                    <div className="text-sm text-gray-600 mb-3">
                         <p>Size: {size}</p>
                         <p>Price Count: {(discountedPrice * quantity).toFixed(2)}</p>
-                      </div>
+                    </div>
                     <div className="flex items-center justify-between">
                         <div className="flex items-center space-x-3">
                             <button
@@ -352,17 +351,17 @@ export default function CartPage() {
                         ))} */}
 
                         {cart.map((item, index) => (
-    <CartItem
-        key={`${item.id}-${item.size}`}
-        id={item.id}
-        size={item.size}
-        quantity={item.quantity}
-        onIncrease={handleIncreaseQuantity}
-        onDecrease={handleDecreaseQuantity}
-        onRemove={handleRemoveFromCart}
-        index={index}
-    />
-))}
+                            <CartItem
+                                key={`${item.id}-${item.size}`}
+                                id={item.id}
+                                size={item.size}
+                                quantity={item.quantity}
+                                onIncrease={handleIncreaseQuantity}
+                                onDecrease={handleDecreaseQuantity}
+                                onRemove={handleRemoveFromCart}
+                                index={index}
+                            />
+                        ))}
 
                     </div>
 
