@@ -22,6 +22,9 @@ import { useDispatch } from "react-redux"
 import { clearCart } from "../../redux/cartSlice"
 import MainLoader from "../Pages/mainLoader"
 import axios from "axios"
+import Button from "../../utilities/Button"
+import Card from "../../utilities/Card"
+import ProfileInput from "../../utilities/ProfileInput"
 
 // Mock user data
 const mockUser = {
@@ -43,45 +46,45 @@ const mockUser = {
 }
 
 // Custom Components
-const Button = ({ children, variant = "primary", size = "md", className = "", ...props }) => {
-  const baseClasses =
-    "inline-flex items-center justify-center font-medium transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none"
+// const Button = ({ children, variant = "primary", size = "md", className = "", ...props }) => {
+//   const baseClasses =
+//     "inline-flex items-center justify-center font-medium transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none"
 
-  const variants = {
-    primary: "bg-red-600 text-white hover:bg-red-700 focus:ring-red-500 shadow-lg hover:shadow-xl",
-    outline: "border-2 border-red-500 text-red-600 hover:bg-red-50 focus:ring-red-500",
-    secondary: "bg-gray-100 text-gray-900 hover:bg-gray-200 focus:ring-gray-500",
-    ghost: "text-gray-600 hover:text-gray-900 hover:bg-gray-100",
-  }
+//   const variants = {
+//     primary: "bg-red-600 text-white hover:bg-red-700 focus:ring-red-500 shadow-lg hover:shadow-xl",
+//     outline: "border-2 border-red-500 text-red-600 hover:bg-red-50 focus:ring-red-500",
+//     secondary: "bg-gray-100 text-gray-900 hover:bg-gray-200 focus:ring-gray-500",
+//     ghost: "text-gray-600 hover:text-gray-900 hover:bg-gray-100",
+//   }
 
-  const sizes = {
-    sm: "px-3 py-2 text-sm rounded-lg",
-    md: "px-4 py-3 text-sm rounded-lg",
-    lg: "px-6 py-4 text-base rounded-xl",
-  }
+//   const sizes = {
+//     sm: "px-3 py-2 text-sm rounded-lg",
+//     md: "px-4 py-3 text-sm rounded-lg",
+//     lg: "px-6 py-4 text-base rounded-xl",
+//   }
 
-  const classes = `${baseClasses} ${variants[variant]} ${sizes[size]} ${className}`
+//   const classes = `${baseClasses} ${variants[variant]} ${sizes[size]} ${className}`
 
-  return (
-    <button className={classes} {...props}>
-      {children}
-    </button>
-  )
-}
+//   return (
+//     <button className={classes} {...props}>
+//       {children}
+//     </button>
+//   )
+// }
 
-const Input = ({ label, error, className = "", ...props }) => {
-  return (
-    <div className="space-y-1">
-      {label && <label className="block text-sm font-medium text-gray-700">{label}</label>}
-      <input
-        className={`flex h-12 w-full rounded-lg border-2 ${error ? "border-red-300 focus:border-red-500" : "border-gray-300 focus:border-red-500"
-          } bg-white px-4 py-3 text-sm placeholder:text-gray-500 focus:outline-none focus:ring-0 transition-colors ${className}`}
-        {...props}
-      />
-      {error && <p className="text-sm text-red-600">{error}</p>}
-    </div>
-  )
-}
+// const ProfileInput = ({ label, error, className = "", ...props }) => {
+//   return (
+//     <div className="space-y-1">
+//       {label && <label className="block text-sm font-medium text-gray-700">{label}</label>}
+//       <input
+//         className={`flex h-12 w-full rounded-lg border-2 ${error ? "border-red-300 focus:border-red-500" : "border-gray-300 focus:border-red-500"
+//           } bg-white px-4 py-3 text-sm placeholder:text-gray-500 focus:outline-none focus:ring-0 transition-colors ${className}`}
+//         {...props}
+//       />
+//       {error && <p className="text-sm text-red-600">{error}</p>}
+//     </div>
+//   )
+// }
 
 const Badge = ({ children, variant = "default", className = "" }) => {
   const variants = {
@@ -101,15 +104,7 @@ const Badge = ({ children, variant = "default", className = "" }) => {
   )
 }
 
-const Card = ({ children, className = "" }) => {
-  return (
-    <div
-      className={`bg-white rounded-2xl border border-gray-200 shadow-sm hover:shadow-md transition-shadow duration-300 ${className}`}
-    >
-      {children}
-    </div>
-  )
-}
+
 
 export default function ProfilePage() {
   const navigate = useNavigate();
@@ -154,14 +149,12 @@ export default function ProfilePage() {
       try {
         const token = localStorage.getItem('token');
         if (token) {
-          console.log("s")
           const response = await axios.get(`${import.meta.env.VITE_REACT_APP_API_BASE_URL}/auth/profile`, {
             headers: { 'Authorization': `Bearer ${token}` }
           });
-          console.log("ss")
 
           setUser(response.data);
-          console.log(response.data)
+
           setFormData({
             email: response.data.email,
             fullName: response.data.fullName,
@@ -375,14 +368,14 @@ export default function ProfilePage() {
                       Personal Details
                     </h3>
                     <div className="space-y-4">
-                      <Input
+                      <ProfileInput
                         label="Full Name"
                         value={formData.fullName}
                         onChange={(e) => handleInputChange("fullName", e.target.value)}
                         disabled={!isEditing}
                         className={!isEditing ? "bg-gray-50" : ""}
                       />
-                      <Input
+                      <ProfileInput
                         label="Email Address"
                         type="email"
                         value={formData.email}
@@ -390,7 +383,7 @@ export default function ProfilePage() {
                         disabled={!isEditing}
                         className={!isEditing ? "bg-gray-50" : ""}
                       />
-                      <Input
+                      <ProfileInput
                         label="Phone Number"
                         type="tel"
                         value={formData.contact}
@@ -410,7 +403,7 @@ export default function ProfilePage() {
                       Address Information
                     </h3>
                     <div className="space-y-4">
-                      <Input
+                      <ProfileInput
                         label="Street Address"
                         value={formData.address.street}
                         onChange={(e) => handleAddressInputChange("street", e.target.value, "address")}
@@ -418,14 +411,14 @@ export default function ProfilePage() {
                         className={!isEditing ? "bg-gray-50" : ""}
                       />
                       <div className="grid grid-cols-2 gap-4">
-                        <Input
+                        <ProfileInput
                           label="City"
                           value={formData.address.city}
                           onChange={(e) => handleInputChange("city", e.target.value)}
                           disabled={!isEditing}
                           className={!isEditing ? "bg-gray-50" : ""}
                         />
-                        <Input
+                        <ProfileInput
                           label="State"
                           value={formData.address.state}
                           onChange={(e) => handleAddressInputChange("state", e.target.value, "address")}
@@ -433,7 +426,7 @@ export default function ProfilePage() {
                           className={!isEditing ? "bg-gray-50" : ""}
                         />
                       </div>
-                      <Input
+                      <ProfileInput
                         label="Country"
                         value={formData.address.country}
                         onChange={(e) => handleAddressInputChange("country", e.target.value, "address")}

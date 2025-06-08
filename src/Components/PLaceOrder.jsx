@@ -1,12 +1,15 @@
-import React, { useEffect, useState, useCallback } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import { motion } from "framer-motion"
+import { Link, useNavigate } from 'react-router-dom';
 import { clearCart } from '../redux/cartSlice';
 import { FaDollarSign, FaGift, FaTruck, FaTimes } from 'react-icons/fa';
-import { FiFileText } from 'react-icons/fi';
-import { motion } from 'framer-motion'; 
+import { FiCheck, FiFileText, FiMapPin, FiUser } from 'react-icons/fi';
 import cart_svg from "../Assets/noOrder.webp";
+import Input from '../utilities/Input';
+import Button from '../utilities/Button';
+import ProfileInput from '../utilities/ProfileInput';
 
 const Modal = ({ isOpen, onClose, onConfirm }) => {
     if (!isOpen) return null;
@@ -74,12 +77,98 @@ const Modal = ({ isOpen, onClose, onConfirm }) => {
 };
 
 
+const CartItem = ({ id, size, quantity, index }) => {
+    const [product, setProduct] = useState(null);
+
+    useEffect(() => {
+        const fetchProduct = async () => {
+            try {
+                const response = await axios.get(`${import.meta.env.VITE_REACT_APP_API_BASE_URL}/fetchproducts/products/${id}`);
+                setProduct(response.data);
+            } catch (error) {
+                console.error('Error fetching product:', error);
+            }
+        };
+
+        fetchProduct();
+    }, [id]);
+
+    if (!product) return null;
+
+    const discountedPrice = product.sale
+        ? product.price - (product.price * product.sale) / 100
+        : product.price;
+
+    const isDiscounted = product.sale && discountedPrice < product.price;
+
+    return (
+        <motion.div
+            key={`${id}-${size}`}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.4, delay: index * 0.1 }}
+            className="bg-white border border-gray-200 rounded-lg p-3 md:p-6"
+        >
+            <div className="flex gap-4">
+                <img
+                    src={`${import.meta.env.VITE_REACT_APP_API_BASE_URL}/uploads/${product.image}`}
+                    alt={product.name}
+                    className="rounded-lg border-[2px] border-gray-200 w-[110px] h-[120px] object-cover"
+                />
+                <div className="flex-1">
+
+                    <h3 className="font-semibold mb-3 mt-1 text-gray-900">{product.name}</h3>
+
+                    <div className="text-[12px] md:text-sm text-gray-600 mb-4">
+                        <p>Qty: {quantity}</p>
+                        <p>Size: {size}</p>
+                    </div>
+                    <div className='flex items-center justify-between'>
+                        <div className="flex md:flex-row flex-col items-center">
+                            <div className="font-semibold text-[12px] md:text-[16px] text-gray-900">
+                                <span className="text-[10px] md:text-[13px] font-[600] text-gray-700">Rs. </span>
+                                {discountedPrice.toFixed(2)}
+                            </div>
+                            {isDiscounted && (
+                                <div className="text-[10px] ml-[8px] text-center md:text-[13px] text-gray-500 line-through">
+                                    Rs. {product.price.toFixed(2)}
+                                </div>
+                            )}
+                        </div>
+
+                        <div className="font-semibold text-gray-900">
+                            <span className="text-[13px] font-[600] text-gray-500">Total Price: </span>
+                            {(discountedPrice * quantity).toFixed(2)}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </motion.div>
+    );
+};
+
+
 const OrderList = () => {
     const cart = useSelector(state => state.cart);
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    const isEditing = false;
     const [products, setProducts] = useState([]);
     const [userId, setUserId] = useState(null);
+  const [user, setUser] = useState(null);
+
+  const [formData, setFormData] = useState({
+    email: '',
+    fullName: '',
+    bio: '',
+    address: {
+      city: '',
+      street: '',
+      country: ''
+    },
+    contact: ''
+  });
+
     const [isModalOpen, setIsModalOpen] = useState(false);
 
     const decodeToken = useCallback((token) => {
@@ -94,6 +183,35 @@ const OrderList = () => {
         const id = decodeToken(token);
         setUserId(id);
     }, [decodeToken]);
+
+    useEffect(() => {
+    const fetchProfile = async () => {
+      try {
+        const token = localStorage.getItem('token');
+        if (token) {
+          const response = await axios.get(`${import.meta.env.VITE_REACT_APP_API_BASE_URL}/auth/profile`, {
+            headers: { 'Authorization': `Bearer ${token}` }
+          });
+
+          setUser(response.data);
+            setFormData({
+            email: response.data.email,
+            fullName: response.data.fullName,
+            bio: response.data.bio,
+            address: response.data.address || { city: '', street: '', country: '' },
+            contact: response.data.contact || ''
+          });
+        }
+        else {
+          navigate('/login');
+        }
+      } catch (error) {
+        setError('Failed to fetch profile');
+      }
+    }
+
+    fetchProfile();
+  }, []);
 
     useEffect(() => {
         const fetchProducts = async () => {
@@ -161,6 +279,16 @@ const OrderList = () => {
         }, 0).toFixed(2);
     };
 
+    const calculateActualTotalBill = () => {
+        return cart.reduce((total, item) => {
+            const product = products.find(p => p._id === item.id);
+            if (product) {
+                return total + (product.price * item.quantity);
+            }
+            return total;
+        }, 0).toFixed(2);
+    };
+
     const openModal = () => setIsModalOpen(true);
     const closeModal = () => setIsModalOpen(false);
 
@@ -179,98 +307,171 @@ const OrderList = () => {
     </div>;
 
     return (
-        <div className='xsx:w-[70%]  xsx:pt-[150px] pt-[120px]  flex flex-col xl:w-[60%] mx-auto'>
-            <h1 className="text-4xl flex items-center mx-auto text-red-900 underline underline-offset-4 mt-[15px] text-center font-bold">
-                <FiFileText className='mt-[8px] mr-[5px]' />
-                Final Invoice
-            </h1>
-
-            <div className='flex border shadow-custom-card mt-[25px] p-[15px] rounded-xl flex-col'>
-                <div className='text-2xl font-bold'>Checkout</div>
-                <div className='border-b border-t border-gray-400 text-[17px] font-semibold'>
-                    <div className='flex mt-[15px] justify-between'>
-                        <p className='flex items-center'><FaDollarSign className='text-green-600' />Your Cart Subtotal:</p>
-                        <p className='px-[8px] text-xl rounded-xl'><span className='text-lg'>Rs.</span>{calculateTotalBill()}</p>
-                    </div>
-                    <div className='flex mt-[8px] justify-between'>
-                        <p className='flex items-center'><FaGift className='text-blue-600 mr-2' />Discount Through Applied Sales:</p>
-                        <p className='px-[8px] text-xl rounded-xl'><span className='text-lg'>Rs.</span>{calculateTotalBill()}</p>
-                    </div>
-                    <div className='flex my-[8px] justify-between'>
-                        <p className='flex items-center'><FaTruck className='text-red-600 mr-2' />Delivery Charges (*On Delivery):</p>
-                        <p className='px-[8px] text-xl rounded-xl'><span className='text-lg'>Rs.</span>200</p>
-                    </div>
-                </div>
-
-                <div className='flex justify-between'>
-                    <p className='px-[8px] text-4xl mt-[10px] font-bold rounded-xl'>
-                        <span className='text-xl font-medium mr-[3px]'>Rs.</span>{calculateTotalBill()}
-                    </p>
-                    <button
-                        onClick={openModal}
-                        className="border-2 text-[20px] font-bold mt-[15px] py-[5px] hover:bg-white hover:bg-gradient-to-tl hover:scale-95 transition duration-300 bg-gradient-to-tr from-red-500 via-red-950 to-red-500  border-red-700 rounded-2xl px-[25px] text-red-50"
-                    >
-                        Place Order
-                    </button>
-                </div>
+        <div className="min-h-screen bg-white max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+            {/* Page Header */}
+            <div className="mb-5">
+                <h1 className="text-[25px] font-bold text-gray-900">Checkout Invoice</h1>
+                <p className="text-gray-600">Review your items and proceed to checkout</p>
             </div>
 
-            <div className="mt-4 md:px-0 px-[8px]">
-                {cart.map(item => {
-                    const product = products.find(p => p._id === item.id);
-                    if (!product) return null;
+            {cart.length === 0 ? (
+                <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="text-center pb-16">
+                    <FiShoppingBag className="w-16 h-16 text-gray-300 mx-auto mb-4" />
+                    <h2 className="text-2xl font-semibold text-gray-900 mb-2">Your cart is empty</h2>
+                    <p className="text-gray-600 mb-8">Looks like you haven't added anything to your cart yet.</p>
+                    <Button className="bg-black hover:bg-gray-800">
+                        <Link to="/productlist/All" className="flex items-center">
+                            Continue Shopping
+                            <FiArrowRight className="ml-2 w-4 h-4" />
+                        </Link>
+                    </Button>
+                </motion.div>
+            ) : (
+                <div className="grid lg:grid-cols-5 gap-8">
+                    {/* Cart Items */}
+                    <div className="lg:col-span-3 space-y-4">
+                        <motion.div
+                            initial={{ opacity: 0, x: 20 }}
+                            animate={{ opacity: 1, x: 0 }}
+                            transition={{ duration: 0.5, delay: 0.3 }}
+                            className="bg-gray-50 rounded-lg pb-6 pt-4 px-6 h-fit border-[2px] border-gray-200 sticky top-24"
+                        >
+                            <h2 className="text-xl font-semibold text-gray-900 mb-4">Order Summary</h2>
 
-                    const discountedPrice = product.sale
-                        ? product.price - (product.price * product.sale) / 100
-                        : product.price;
-
-                    return (
-                        <div key={item.id} className="border flex flex-col bg-custom-light-red border-gray-400 rounded-lg p-4 mb-4">
-                            <div className="ml-4 flex-1">
-                                 <img
-                    src={`${import.meta.env.VITE_REACT_APP_API_BASE_URL}/uploads/${product.image}`}
-                    alt={product.name}
-                    className="rounded-lg border-[2px] border-gray-200 w-[110px] h-[120px] object-cover"
-                />
-                                <div className='flex items-center mt-[8px]'>
-                                    <p className='w-[12px] ml-[4px] h-[12px] rounded-full mr-[6px] bg-red-800 '></p>
-                                    <h3 className="text-xl xsx:text-2xl mb-[2px] underline font-bold">{product.name || 'Unknown Product'}</h3>
+                            <div className="space-y-3 mb-6">
+                                <div className="flex justify-between">
+                                    <span className="text-gray-600">Subtotal</span>
+                                    <span className="font-medium">Rs {calculateActualTotalBill()}</span>
+                                </div>
+                                <div className="flex justify-between">
+                                    <span className="text-gray-600">Discount</span>
+                                    <span className="font-medium">{calculateTotalBill()}</span>
+                                </div>
+                                <div className="flex justify-between">
+                                    <span className="text-gray-600">Shipping</span>
+                                    <span className="font-medium">Rs. 200</span>
                                 </div>
 
-                                <p className="text-md ml-[20px] font-bold text-black">
-                                    <span className='font-semibold text-red-900 mr-[5px]'>Quantity:</span>  {item.quantity}
-                                </p>
+                                <hr className="border-gray-200" />
 
-                                <p className="text-md ml-[20px] font-bold text-black">
-                                    <span className='font-semibold text-red-900 mr-[5px]'>Selected Size:</span>  {item.size}
-                                </p>
-
-                                <p className="text-md ml-[20px] font-bold text-black">
-                                    <span className='font-semibold text-red-900 mr-[5px]'>Actual Price:</span>${product.price.toFixed(2)}
-                                </p>
-
-                                <p className="text-md ml-[20px] font-bold text-black">
-                                    <span className='font-semibold text-red-900 mr-[5px]'>Discounted Price through Sales:</span>${discountedPrice.toFixed(2)}
-                                </p>
-
-                                <div className='flex justify-between'>
-                                    <p className="text-xl ml-[12px] text-red-400 underline font-bold rounded-md p-[5px]">Total Price:</p>
-                                    <p className="text-2xl text-red-800 font-bold rounded-md p-[5px]"><span className='text-lg mr-[4px]'>Rs.</span>{(discountedPrice * item.quantity).toFixed(2)}</p>
+                                <div className="flex justify-between text-lg font-semibold">
+                                    <span>Total</span>
+                                    <span>Rs. {(Number(calculateTotalBill()) + Number(200)).toFixed(2)}</span>
                                 </div>
                             </div>
-                        </div>
-                    );
-                })}
-            </div>
 
-            <Modal
-                isOpen={isModalOpen}
-                onClose={closeModal}
-                onConfirm={() => {
-                    closeModal();
-                    handleConfirmOrder();
-                }}
-            />
+                            <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-6">
+                                <p className="text-sm text-blue-800">Add Rs. {(Number(calculateTotalBill()) + Number(100)).toFixed(2)} more to get free shipping!</p>
+                            </div>
+
+                            <div className='grid grid-cols-1 gap-2 lg:grid-cols-2'>
+                                <Link to="/place-order">
+                                    <Button className="w-full bg-black flex items-center hover:bg-gray-800 text-white" variant="primary" size="lg">
+                                       <FiCheck className="mr-2" />
+                            Place Order
+                                    </Button>
+                                </Link>
+
+                                <Link to="/products/All">
+                                    <Button variant="outline" className="w-full">
+                                        Continue Shopping
+                                    </Button>
+                                </Link>
+
+                            </div>
+                        </motion.div>
+                        {cart.map((item, index) => (
+                            <CartItem
+                                key={`${item.id}-${item.size}`}
+                                id={item.id}
+                                size={item.size}
+                                quantity={item.quantity}
+                                index={index}
+                            />
+                        ))}
+                    </div>
+
+                    {/* Order Summary */}
+ <div className="gap-6 col-span-2">
+                {/* Personal Details */}
+                <div className="space-y-6">
+                  <div>
+                    <h3 className="text-lg font-semibold text-gray-900 mb-4 flex items-center">
+                      <FiUser className="mr-2 text-red-600" />
+                      Personal Details
+                    </h3>
+                    <div className="space-y-4">
+                      <ProfileInput
+                        label="Full Name"
+                        value={formData.fullName}
+                        onChange={(e) => handleInputChange("fullName", e.target.value)}
+                        disabled={!isEditing}
+                        className={!isEditing ? "bg-gray-50" : ""}
+                      />
+                      <ProfileInput
+                        label="Email Address"
+                        type="email"
+                        value={formData.email}
+                        onChange={(e) => handleInputChange("email", e.target.value)}
+                        disabled={!isEditing}
+                        className={!isEditing ? "bg-gray-50" : ""}
+                      />
+                      <ProfileInput
+                        label="Phone Number"
+                        type="tel"
+                        value={formData.contact}
+                        onChange={(e) => handleInputChange("contact", e.target.value)}
+                        disabled={!isEditing}
+                        className={!isEditing ? "bg-gray-50" : ""}
+                      />
+                    </div>
+                  </div>
+                </div>
+
+                {/* Address Information */}
+                <div className="space-y-6">
+                  <div>
+                    <h3 className="text-lg font-semibold text-gray-900 mb-4 flex items-center">
+                      <FiMapPin className="mr-2 text-red-600" />
+                      Address Information
+                    </h3>
+                    <div className="space-y-4">
+                      <ProfileInput
+                        label="Street Address"
+                        value={formData.address.street}
+                        onChange={(e) => handleAddressInputChange("street", e.target.value, "address")}
+                        disabled={!isEditing}
+                        className={!isEditing ? "bg-gray-50" : ""}
+                      />
+                      <div className="grid grid-cols-2 gap-4">
+                        <ProfileInput
+                          label="City"
+                          value={formData.address.city}
+                          onChange={(e) => handleInputChange("city", e.target.value)}
+                          disabled={!isEditing}
+                          className={!isEditing ? "bg-gray-50" : ""}
+                        />
+                        <ProfileInput
+                          label="State"
+                          value={formData.address.state}
+                          onChange={(e) => handleAddressInputChange("state", e.target.value, "address")}
+                          disabled={!isEditing}
+                          className={!isEditing ? "bg-gray-50" : ""}
+                        />
+                      </div>
+                      <ProfileInput
+                        label="Country"
+                        value={formData.address.country}
+                        onChange={(e) => handleAddressInputChange("country", e.target.value, "address")}
+                        disabled={!isEditing}
+                        className={!isEditing ? "bg-gray-50" : ""}
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+                </div>
+            )}
         </div>
     );
 };
