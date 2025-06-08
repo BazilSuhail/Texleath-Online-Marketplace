@@ -155,7 +155,6 @@ const OrderList = () => {
     const isEditing = false;
     const [products, setProducts] = useState([]);
     const [userId, setUserId] = useState(null);
-  const [user, setUser] = useState(null);
 
   const [formData, setFormData] = useState({
     email: '',
@@ -168,8 +167,6 @@ const OrderList = () => {
     },
     contact: ''
   });
-
-    const [isModalOpen, setIsModalOpen] = useState(false);
 
     const decodeToken = useCallback((token) => {
         if (!token) return null;
@@ -193,7 +190,6 @@ const OrderList = () => {
             headers: { 'Authorization': `Bearer ${token}` }
           });
 
-          setUser(response.data);
             setFormData({
             email: response.data.email,
             fullName: response.data.fullName,
@@ -242,6 +238,7 @@ const OrderList = () => {
                     : product.price;
                 return {
                     name: product?.name || 'Unknown Product',
+                    image: product?.image || 'Unknown Product',
                     price: product?.price || 0,
                     size: item?.size || 'No size Selected',
                     discountedPrice: discountedPrice || 0,
@@ -289,9 +286,6 @@ const OrderList = () => {
         }, 0).toFixed(2);
     };
 
-    const openModal = () => setIsModalOpen(true);
-    const closeModal = () => setIsModalOpen(false);
-
     if (!cart.length) return <div className='bg-gray-50 h-[calc(100vh-220px)] flex justify-center items-center w-screen'>
         <div className='text-center'>
             <img
@@ -327,14 +321,14 @@ const OrderList = () => {
                     </Button>
                 </motion.div>
             ) : (
-                <div className="grid lg:grid-cols-5 gap-8">
+                <div className="grid grid-cols-1 lg:grid-cols-5 gap-8">
                     {/* Cart Items */}
                     <div className="lg:col-span-3 space-y-4">
                         <motion.div
                             initial={{ opacity: 0, x: 20 }}
                             animate={{ opacity: 1, x: 0 }}
                             transition={{ duration: 0.5, delay: 0.3 }}
-                            className="bg-gray-50 rounded-lg pb-6 pt-4 px-6 h-fit border-[2px] border-gray-200 sticky top-24"
+                            className="bg-gray-50 rounded-lg pb-6 pt-4 px-6 h-fit border-[2px] border-gray-200"
                         >
                             <h2 className="text-xl font-semibold text-gray-900 mb-4">Order Summary</h2>
 
@@ -365,12 +359,13 @@ const OrderList = () => {
                             </div>
 
                             <div className='grid grid-cols-1 gap-2 lg:grid-cols-2'>
-                                <Link to="/place-order">
-                                    <Button className="w-full bg-black flex items-center hover:bg-gray-800 text-white" variant="primary" size="lg">
+                                    <button 
+                                    onClick={handleConfirmOrder}
+                                    className="w-full py-2 bg-gradient-to-r from-red-700 to-red-900 flex items-center justify-center rounded-[8px] hover:bg-gray-800 text-white">
                                        <FiCheck className="mr-2" />
                             Place Order
-                                    </Button>
-                                </Link>
+                                    </button>
+                                    
 
                                 <Link to="/products/All">
                                     <Button variant="outline" className="w-full">

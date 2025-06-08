@@ -167,7 +167,8 @@ export default function ProfilePage() {
           navigate('/login');
         }
       } catch (error) {
-        setError('Failed to fetch profile');
+          navigate('/login');
+          // setError('Failed to fetch profile');
       }
     }
 
@@ -289,7 +290,7 @@ export default function ProfilePage() {
                   Profile Information
                 </Link>
                 <Link
-                  to="/orders"
+                  to="/orders-tracking"
                   className="flex items-center px-4 py-3 text-gray-600 hover:text-gray-900 hover:bg-gray-50 rounded-lg transition-colors"
                 >
                   <FiPackage className="mr-3" />
