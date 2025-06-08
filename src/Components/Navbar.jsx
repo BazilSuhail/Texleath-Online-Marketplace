@@ -26,7 +26,7 @@ import {
 import { useEffect, useState } from "react"
 import SearchModal from "./SearchModal"
 import texleathlogo from "../texleathlogo.svg"
-import { NavLink } from "react-router-dom"
+import { Link, NavLink } from "react-router-dom"
 import { useSelector } from "react-redux"
 import { selectCartLength } from "../redux/cartSlice"
 import CartModal from "./CartModal";
@@ -206,6 +206,7 @@ useEffect(() => {
           <div className="flex items-center space-x-4">
 
             {/* User Account */}
+           <Link to="/profile">
             <motion.button
               whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.95 }}
@@ -217,6 +218,7 @@ useEffect(() => {
               <AiOutlineUser className="w-6 h-6" />
             </motion.button>
 
+           </Link>
             {/* Unique Cart Button */}  
             <motion.button
               onClick={openCartModal}

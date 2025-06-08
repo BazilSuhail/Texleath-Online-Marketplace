@@ -227,6 +227,11 @@ const OrderList = () => {
                     return (
                         <div key={item.id} className="border flex flex-col bg-custom-light-red border-gray-400 rounded-lg p-4 mb-4">
                             <div className="ml-4 flex-1">
+                                 <img
+                    src={`${import.meta.env.VITE_REACT_APP_API_BASE_URL}/uploads/${product.image}`}
+                    alt={product.name}
+                    className="rounded-lg border-[2px] border-gray-200 w-[110px] h-[120px] object-cover"
+                />
                                 <div className='flex items-center mt-[8px]'>
                                     <p className='w-[12px] ml-[4px] h-[12px] rounded-full mr-[6px] bg-red-800 '></p>
                                     <h3 className="text-xl xsx:text-2xl mb-[2px] underline font-bold">{product.name || 'Unknown Product'}</h3>

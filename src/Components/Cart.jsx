@@ -42,7 +42,6 @@ const Button = ({ children, variant = "primary", size = "md", className = "", as
     )
 }
 
-
 const Input = ({ className = "", ...props }) => {
     return (
         <input
@@ -55,6 +54,8 @@ const Input = ({ className = "", ...props }) => {
 const Separator = ({ className = "" }) => {
     return <hr className={`border-gray-200 ${className}`} />
 }
+
+
 
 const CartItem = ({ id, size, quantity, onIncrease, onDecrease, onRemove, index }) => {
     const [product, setProduct] = useState(null);
@@ -86,7 +87,7 @@ const CartItem = ({ id, size, quantity, onIncrease, onDecrease, onRemove, index 
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.4, delay: index * 0.1 }}
-            className="bg-white border border-gray-200 rounded-lg p-6"
+            className="bg-white border border-gray-200 rounded-lg p-3 md:p-6"
         >
             <div className="flex gap-4">
                 <img
@@ -104,7 +105,7 @@ const CartItem = ({ id, size, quantity, onIncrease, onDecrease, onRemove, index 
                             <FiTrash2 className="w-5 h-5" />
                         </button>
                     </div>
-                    <div className="text-sm text-gray-600 mb-3">
+                    <div className="text-[12px] md:text-sm text-gray-600 mb-3">
                         <p>Size: {size}</p>
                         <p>Price Count: {(discountedPrice * quantity).toFixed(2)}</p>
                     </div>
@@ -130,7 +131,7 @@ const CartItem = ({ id, size, quantity, onIncrease, onDecrease, onRemove, index 
                                 {discountedPrice.toFixed(2)}
                             </div>
                             {isDiscounted && (
-                                <div className="text-sm text-gray-500 line-through">
+                                <div className="text-[11px] text-center md:text-sm text-gray-500 line-through">
                                     Rs. {product.price.toFixed(2)}
                                 </div>
                             )}
@@ -144,13 +145,14 @@ const CartItem = ({ id, size, quantity, onIncrease, onDecrease, onRemove, index 
 
 
 export default function CartPage() {
-    const dispatch = useDispatch();
-    const navigate = useNavigate();
+    const [promoCode, setPromoCode] = useState("")
+
 
     const cart = useSelector(state => state.cart);
+    const dispatch = useDispatch();
+    const [products, setProducts] = useState([]);
+    const navigate = useNavigate();
     const [userId, setUserId] = useState(null);
-    
-    const [promoCode, setPromoCode] = useState("")
 
     const decodeToken = useCallback((token) => {
         if (!token) return null;
@@ -168,6 +170,22 @@ export default function CartPage() {
         const id = decodeToken(token);
         setUserId(id);
     }, [decodeToken]);
+
+     useEffect(() => {
+        const fetchProducts = async () => {
+            try {
+                const productResponses = await Promise.all(
+                    cart.map(item => axios.get(`${import.meta.env.VITE_REACT_APP_API_BASE_URL}/fetchproducts/products/${item.id}`))
+                );
+                setProducts(productResponses.map(response => response.data));
+            } catch (error) {
+                console.error('Error fetching products:', error);
+            }
+        };
+
+        fetchProducts();
+    }, [cart]);
+
 
     const handleRemoveFromCart = (id, size) => {
         dispatch(removeFromCart({ id, size }));
@@ -196,7 +214,7 @@ export default function CartPage() {
 
     const calculateTotalBill = () => {
         return cart.reduce((total, item) => {
-            const product = cart.find(p => p._id === item.id);
+            const product = products.find(p => p._id === item.id);
             if (product) {
                 const discountedPrice = product.sale
                     ? (product.price - (product.price * product.sale) / 100)
@@ -209,7 +227,7 @@ export default function CartPage() {
 
     const calculateActualTotalBill = () => {
         return cart.reduce((total, item) => {
-            const product = cart.find(p => p._id === item.id);
+            const product = products.find(p => p._id === item.id);
             if (product) {
                 return total + (product.price * item.quantity);
             }

@@ -7,8 +7,8 @@ import { IoLockClosedOutline } from "react-icons/io5";
 import { IoMail } from "react-icons/io5";
 
 const Login = () => {
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
+    const [email, setEmail] = useState('bazil1854@gmail.com');
+    const [password, setPassword] = useState('112233');
     const [error, setError] = useState('');
 
     const navigate = useNavigate();
@@ -65,6 +65,8 @@ const Login = () => {
         }
     };
 
+
+    
     return (
         <main className='flex xsx:pt-[150px] pt-[120px] min-h-screen flex-col  items-center justify-center'>
             <form onSubmit={handleSubmit} className="w-[100vw] sm:w-[520px] form ">
