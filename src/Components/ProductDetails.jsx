@@ -100,7 +100,7 @@ export default function ProductDetailPage() {
 
   const copyUrlToClipboard = () => {
     const url = window.location.href;
-    
+
     // Copy to clipboard
     navigator.clipboard.writeText(url)
       .then(() => {
@@ -130,39 +130,39 @@ export default function ProductDetailPage() {
     window.scrollTo(0, 0);
   }, []);
 
- useEffect(() => {
-  const fetchProduct = async () => {
-    try {
-      const response = await axios.get(
-        `${import.meta.env.VITE_REACT_APP_API_BASE_URL}/fetchproducts/products/${id}`
-      );
-      const productData = response.data;
+  useEffect(() => {
+    const fetchProduct = async () => {
+      try {
+        const response = await axios.get(
+          `${import.meta.env.VITE_REACT_APP_API_BASE_URL}/fetchproducts/products/${id}`
+        );
+        const productData = response.data;
 
-      const mainImage = productData.image;
-      let modifiedOtherImages = productData.otherImages || [];
-      modifiedOtherImages = modifiedOtherImages.filter(img => img !== mainImage);
+        const mainImage = productData.image;
+        let modifiedOtherImages = productData.otherImages || [];
+        modifiedOtherImages = modifiedOtherImages.filter(img => img !== mainImage);
 
-      // Push main image at index 0
-      modifiedOtherImages.unshift(mainImage);
+        // Push main image at index 0
+        modifiedOtherImages.unshift(mainImage);
 
-      // Log the updated array
-      //console.log('Updated otherImages with main image first:', modifiedOtherImages);
+        // Log the updated array
+        //console.log('Updated otherImages with main image first:', modifiedOtherImages);
 
-      setProduct({
-        ...productData,
-        otherImages: modifiedOtherImages,
-      });
+        setProduct({
+          ...productData,
+          otherImages: modifiedOtherImages,
+        });
 
-      if (productData.size?.length > 0) {
-        setSelectedSize(productData.size[0]);
+        if (productData.size?.length > 0) {
+          setSelectedSize(productData.size[0]);
+        }
+      } catch (error) {
+        console.error('Error fetching product:', error);
       }
-    } catch (error) {
-      console.error('Error fetching product:', error);
-    }
-  };
+    };
 
-  fetchProduct();
-}, [id]);
+    fetchProduct();
+  }, [id]);
 
 
   const handleAddToCart = () => {
@@ -191,7 +191,7 @@ export default function ProductDetailPage() {
 
   const handleSizeClick = (size) => {
     setSelectedSize(size);
-    
+
   };
 
   if (!product) return <div className='h-screen w-screen pt-[-96px]'> <MainLoader /></div>;
@@ -238,7 +238,7 @@ export default function ProductDetailPage() {
             Products
           </Link>
           <span>/</span>
-          <span className="text-gray-900">{product.name}</span>
+          <span className="text-red-700 font-[600]">{product.name}</span>
         </div>
       </section>
 
@@ -280,7 +280,7 @@ export default function ProductDetailPage() {
                   }`}
               >
                 <img
-              src={`${import.meta.env.VITE_REACT_APP_API_BASE_URL}/uploads/${image}` || "/placeholder.svg"}
+                  src={`${import.meta.env.VITE_REACT_APP_API_BASE_URL}/uploads/${image}` || "/placeholder.svg"}
                   alt={`${product.name} ${index + 1}`}
                   width={80}
                   height={80}
@@ -366,24 +366,24 @@ export default function ProductDetailPage() {
               <Label className="text-base font-medium mb-3 block">Quantity</Label>
               <div className="flex items-center space-x-3">
                 <button
-                onClick={handleDecreaseQuantity}
+                  onClick={handleDecreaseQuantity}
                   className="w-10 h-10 rounded-full border border-gray-300 flex items-center justify-center hover:bg-gray-50 transition-colors"
                 >
                   <FiMinus className="w-4 h-4" />
-                </button> 
+                </button>
 
-                  <motion.span
-                                key={key}
-                                initial={{ opacity: 0, y: isIncreasing ? 12 : -12 }}
-                                animate={{ opacity: 1, y: 0 }}
-                                exit={{ opacity: 0, y: isIncreasing ? -12 : 12 }}
-                                transition={{ type: "spring", stiffness: 300, duration: 1.2 }}
-                                className="text-lg font-medium w-8 text-center"
-                              >
-                                {quantity}
-                              </motion.span>
+                <motion.span
+                  key={key}
+                  initial={{ opacity: 0, y: isIncreasing ? 12 : -12 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: isIncreasing ? -12 : 12 }}
+                  transition={{ type: "spring", stiffness: 300, duration: 1.2 }}
+                  className="text-lg font-medium w-8 text-center"
+                >
+                  {quantity}
+                </motion.span>
                 <button
-                onClick={handleIncreaseQuantity}
+                  onClick={handleIncreaseQuantity}
                   className="w-10 h-10 rounded-full border border-gray-300 flex items-center justify-center hover:bg-gray-50 transition-colors"
                 >
                   <FiPlus className="w-4 h-4" />
@@ -412,7 +412,7 @@ export default function ProductDetailPage() {
       {/* Tooltip feedback */}
       <AnimatePresence>
         {isCopied && (
-         <motion.div
+          <motion.div
             initial={{ opacity: 0, x: 20 }}
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: 20 }}

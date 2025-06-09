@@ -117,7 +117,7 @@ export default function SearchModal({ isOpen, onClose }) {
             </div>
 
             {/* Content */}
-            <div className="max-h-96 overflow-y-auto">
+            <div className="max-h-96 overflow-y-auto [scrollbar-width:none] [-ms-overflow-style:none]">
               {searchQuery.length > 0 ? (
                 // Search Results Preview
                 <div className="p-4">

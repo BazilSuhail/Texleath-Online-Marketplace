@@ -195,7 +195,7 @@ const StatusIcon = ({ status }) => {
         case "processing":
             return <FiPackage {...iconProps} className="w-5 h-5 text-yellow-600" />
         default:
-            return <FiClock {...iconProps} className="w-5 h-5 text-gray-600" />
+            return <FiClock {...iconProps} className="w-5 h-5 text-red-500" />
     }
 }
 
@@ -227,15 +227,15 @@ const OrderCard = ({ order, onViewDetails }) => {
             className="bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100 overflow-hidden"
         >
             {/* Header */}
-            <div className="bg-gradient-to-r from-gray-50 to-gray-100 px-6 py-4 border-b border-gray-200">
+            <div className="bg-gradient-to-r from-gray-200 to-gray-100 px-6 py-4 border-[2px] border-gray-200">
                 <div className="flex items-center justify-between">
                     <div className="flex items-center space-x-3">
                         <div className="p-2 bg-white rounded-lg shadow-sm">
                             <StatusIcon status={order.status} />
                         </div>
                         <div>
-                            <h3 className="font-bold text-gray-900 text-lg">{order._id}</h3>
-                            <p className="text-sm text-gray-500 flex items-center">
+                            <h3 className="font-[600] text-gray-900 text-md">{order._id}</h3>
+                            <p className="text-sm font-[600] text-gray-500 flex items-center">
                                 <FiCalendar className="w-4 h-4 mr-1" />
                                 {new Date(order.orderDate).toLocaleDateString("en-US", {
                                     year: "numeric",
@@ -281,12 +281,12 @@ const OrderCard = ({ order, onViewDetails }) => {
                 </div>
 
                 {/* Order Summary */}
-                <div className="bg-gray-50 rounded-xl p-4 mb-4">
+                <div className="bg-gray-50 border-[2px] border-gray-200 rounded-xl p-4 mb-4">
                     <div className="flex items-center justify-between mb-2">
                         <span className="text-gray-600">Total Amount</span>
                         <span className="font-bold text-xl text-gray-900">${order.total.toFixed(2)}</span>
                     </div>
-                    {totalSavings > 0 && (
+                    {totalSavings > 0 ? (
                         <div className="flex items-center justify-between">
                             <span className="text-green-600 text-sm flex items-center">
                                 <FiGift className="w-4 h-4 mr-1" />
@@ -294,16 +294,25 @@ const OrderCard = ({ order, onViewDetails }) => {
                             </span>
                             <span className="font-semibold text-green-600">${totalSavings.toFixed(2)}</span>
                         </div>
+                    ) : (
+                        <div className="flex items-center justify-between mb-1">
+                            <span className="text-gray-500 text-sm flex items-center">
+                                <FiGift className="w-4 h-4 mr-1" />
+                                No savings
+                            </span>
+                            <span className="text-sm text-gray-400">Look out for deals!</span>
+                        </div>
                     )}
+
                 </div>
 
                 {/* Actions */}
-                <div className="flex space-x-3">
+                {/* <div className="flex space-x-3">
                     <Button variant="outline" size="sm" className="flex-1">
                         <FiDownload className="w-4 h-4 mr-2" />
                         Invoice
                     </Button>
-                    {order.status === "delivered" && (
+                    {order.status === "" && (
                         <Button variant="outline" size="sm" className="flex-1">
                             <FiStar className="w-4 h-4 mr-2" />
                             Review
@@ -315,7 +324,7 @@ const OrderCard = ({ order, onViewDetails }) => {
                             Track
                         </Button>
                     )}
-                </div>
+                </div> */}
             </div>
         </motion.div>
     )
@@ -542,21 +551,14 @@ export default function ShowOrders() {
         setIsModalOpen(true)
     }
 
-    const orderStats = {
-        total: mockOrders.length,
-        delivered: mockOrders.filter((o) => o.status === "delivered").length,
-        shipped: mockOrders.filter((o) => o.status === "shipped").length,
-        processing: mockOrders.filter((o) => o.status === "processing").length,
-    }
-
     return (
         <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
 
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
                 {/* Page Header */}
                 <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="mb-8">
-                    <h1 className="text-4xl font-bold text-gray-900 mb-2">My Orders</h1>
-                    <p className="text-gray-600">Track and manage your order history</p>
+                    <h1 className="text-4xl font-bold text-red-900 mb-2">My <span className="text-red-600">Orders</span></h1>
+                    <p className="text-red-700 font-[600]">Track and manage your order history</p>
                 </motion.div>
 
                 {/* Stats Cards */}
@@ -570,7 +572,7 @@ export default function ShowOrders() {
                         <div className="flex items-center justify-between">
                             <div>
                                 <p className="text-sm text-gray-600">Total Orders</p>
-                                <p className="text-2xl font-bold text-gray-900">{orderStats.total}</p>
+                                <p className="text-2xl font-bold text-gray-900">{userorders?.activeOrders?.length + userorders?.completedOrders?.length}</p>
                             </div>
                             <div className="p-3 bg-gray-100 rounded-lg">
                                 <FiPackage className="w-6 h-6 text-gray-600" />
@@ -581,7 +583,7 @@ export default function ShowOrders() {
                         <div className="flex items-center justify-between">
                             <div>
                                 <p className="text-sm text-gray-600">Delivered</p>
-                                <p className="text-2xl font-bold text-green-600">{orderStats.delivered}</p>
+                                <p className="text-2xl font-bold text-green-600">{userorders?.activeOrders?.length}</p>
                             </div>
                             <div className="p-3 bg-green-100 rounded-lg">
                                 <FiCheck className="w-6 h-6 text-green-600" />
@@ -592,7 +594,7 @@ export default function ShowOrders() {
                         <div className="flex items-center justify-between">
                             <div>
                                 <p className="text-sm text-gray-600">Processing</p>
-                                <p className="text-2xl font-bold text-yellow-600">{orderStats.processing}</p>
+                                <p className="text-2xl font-bold text-yellow-600">{userorders?.completedOrders?.length}</p>
                             </div>
                             <div className="p-3 bg-yellow-100 rounded-lg">
                                 <FiClock className="w-6 h-6 text-yellow-600" />
@@ -611,8 +613,8 @@ export default function ShowOrders() {
                     <div className="bg-white rounded-xl p-2 shadow-sm border border-gray-200 inline-flex">
                         {[
                             { key: "all", label: "All Orders" },
-                            { key: "delivered", label: "Delivered" },
-                            { key: "processing", label: "Processing" },
+                            { key: "active", label: "Processing" },
+                            { key: "completed", label: "Delivered" },
                         ].map((filter) => (
                             <button
                                 key={filter.key}
@@ -635,29 +637,65 @@ export default function ShowOrders() {
                     transition={{ delay: 0.3 }}
                     className="grid gap-6 md:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2"
                 >
-                    {userorders?.orders?.length > 0 ? (
-                        userorders.orders.map((order, index) => (
-                            <motion.div key={order._id}
-                                initial={{ opacity: 0, y: 20 }}
-                                animate={{ opacity: 1, y: 0 }}
-                                transition={{ delay: 0.1 * index }}
-                            >
-                                <OrderCard order={order} onViewDetails={handleViewDetails} />
-                            </motion.div>
-                        ))
-                    ) : (
-                        <p className="text-gray-500">No orders found.</p>
-                    )}
-                    {/* {userorders.orders.map((order, index) => (
-                        <motion.div
-                            key={order._id}
-                            initial={{ opacity: 0, y: 20 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{ delay: 0.1 * index }}
-                        >
-                            <OrderCard order={order} onViewDetails={handleViewDetails} />
-                        </motion.div>
-                    ))} */}
+                    {filterStatus === "active" && <>
+                        {userorders?.activeOrders?.length > 0 ? (
+                            userorders.activeOrders.map((order, index) => (
+                                <motion.div key={order._id}
+                                    initial={{ opacity: 0, y: 20 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    transition={{ delay: 0.1 * index }}
+                                >
+                                    <OrderCard order={order} onViewDetails={handleViewDetails} />
+                                </motion.div>
+                            ))
+                        ) : (
+                            <p className="text-gray-500">No orders found.</p>
+                        )} </>
+                    }
+                    {filterStatus === "completed" && <>
+                        {userorders?.completedOrders?.length > 0 ? (
+                            userorders.completedOrders.map((order, index) => (
+                                <motion.div key={order._id}
+                                    initial={{ opacity: 0, y: 20 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    transition={{ delay: 0.1 * index }}
+                                >
+                                    <OrderCard order={order} onViewDetails={handleViewDetails} />
+                                </motion.div>
+                            ))
+                        ) : (
+                            <p className="text-gray-500">No orders found.</p>
+                        )} </>
+                    }
+                    {filterStatus === "all" && <>
+                        {userorders?.activeOrders?.length > 0 ? (
+                            userorders.activeOrders.map((order, index) => (
+                                <motion.div key={order._id}
+                                    initial={{ opacity: 0, y: 20 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    transition={{ delay: 0.1 * index }}
+                                >
+                                    <OrderCard order={order} onViewDetails={handleViewDetails} />
+                                </motion.div>
+                            ))
+                        ) : (
+                            <p className="text-gray-500">No orders found.</p>
+                        )}
+                        {userorders?.completedOrders?.length > 0 ? (
+                            userorders.completedOrders.map((order, index) => (
+                                <motion.div key={order._id}
+                                    initial={{ opacity: 0, y: 20 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    transition={{ delay: 0.1 * index }}
+                                >
+                                    <OrderCard order={order} onViewDetails={handleViewDetails} />
+                                </motion.div>
+                            ))
+                        ) : (
+                            <p className="text-gray-500">No orders found.</p>
+                        )}
+                    </>
+                    }
                 </motion.div>
 
                 {filteredOrders.length === 0 && (
@@ -675,6 +713,7 @@ export default function ShowOrders() {
                         </Button>
                     </motion.div>
                 )}
+
             </div>
 
             {/* Order Details Modal */}

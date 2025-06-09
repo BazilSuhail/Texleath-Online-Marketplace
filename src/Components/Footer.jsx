@@ -14,40 +14,6 @@ import texleathlogo from "../texleathlogo.svg"
 import { FaFacebook, FaInstagram, FaTwitter, FaYoutube, FaTiktok, FaPinterest } from "react-icons/fa"
 import { Link } from "react-router-dom"
 
-// Custom Components
-const Button = ({ children, variant = "primary", size = "md", className = "", ...props }) => {
-  const baseClasses =
-    "inline-flex items-center justify-center font-medium transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none"
-
-  const variants = {
-    primary: "bg-red-600 text-white hover:bg-red-700 focus:ring-red-500 shadow-lg hover:shadow-xl",
-    outline: "border-2 border-red-500 text-red-600 hover:bg-red-50 focus:ring-red-500",
-    ghost: "text-red-600 hover:text-red-700 hover:bg-red-50",
-  }
-
-  const sizes = {
-    sm: "px-4 py-2 text-sm rounded-lg",
-    md: "px-6 py-3 text-sm rounded-xl",
-    lg: "px-8 py-4 text-base rounded-xl",
-  }
-
-  const classes = `${baseClasses} ${variants[variant]} ${sizes[size]} ${className}`
-
-  return (
-    <button className={classes} {...props}>
-      {children}
-    </button>
-  )
-}
-
-const Input = ({ className = "", ...props }) => {
-  return (
-    <input
-      className={`flex h-12 w-full rounded-xl border-2 border-gray-200 bg-white px-4 py-3 text-sm text-gray-900 placeholder:text-gray-400 focus:outline-none focus:ring-0 focus:border-red-500 transition-all duration-300 ${className}`}
-      {...props}
-    />
-  )
-}
 
 const FooterLink = ({ href, children, external = false, className = "" }) => {
   const linkClasses = `text-gray-600 hover:text-red-600 transition-all duration-300 text-sm font-medium group ${className}`
@@ -190,29 +156,36 @@ export default function Footer() {
 
       {/* Newsletter Section */}
       <div className="relative border-t border-gray-200">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-          <div className="max-w-4xl mx-auto text-center">
-            <motion.div
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8  pt-16"> 
+            <motion.div 
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6 }}
+              className="grid grid-cols-1 lg:grid-cols-2"
             >
-              <h2 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-4">
+              <div>
+                <h2 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-4">
                 Stay <span className="text-red-600">Connected</span>
               </h2>
-              <p className="text-gray-600 text-lg mb-8 max-w-2xl mx-auto">
+              <p className="text-gray-600 text-lg mb-8 max-w-2xl mx-auto lg:pr-[85px]">
                 Subscribe to our newsletter for exclusive offers, style tips, and early access to new collections.
               </p>
-              <div className="flex flex-col sm:flex-row gap-4 max-w-md mx-auto">
-                <Input type="email" placeholder="Enter your email address" className="flex-1" />
-                <Button variant="primary" size="md">
+              <p className="text-xs text-gray-500">Join 50,000+ fashion enthusiasts. Unsubscribe anytime.</p>
+              </div>
+              <div className="w-full lg:px-[35px]">
+                <input 
+                type="email" 
+                placeholder="Enter your email address" 
+                   className='flex h-12 w-[280px] ml-auto rounded-xl border-2 border-gray-200 bg-white px-4 py-3 text-sm text-gray-900 placeholder:text-gray-400 focus:outline-none focus:ring-0 focus:border-red-500 transition-all duration-300 '
+   />
+
+                <div className="mt-[15px]"></div>
+                <button className="px- 6 text-[16px] font-[600] py-2 bg-red-600 rounded-[12px] ml-auto w-[280px] justify-center text-white flex items-center">
                   <FiSend className="w-4 h-4 mr-2" />
                   Subscribe
-                </Button>
+                </button>
               </div>
-              <p className="text-xs text-gray-500 mt-4">Join 50,000+ fashion enthusiasts. Unsubscribe anytime.</p>
-            </motion.div>
-          </div>
+            </motion.div> 
         </div>
       </div>
 
@@ -347,7 +320,7 @@ export default function Footer() {
               transition={{ duration: 0.6, delay: 0.2 }}
               className="text-center lg:text-right"
             >
-              <p className="text-gray-600 text-sm">© {currentYear} Elegance. All rights reserved.</p>
+              <p className="text-gray-600 text-sm">© {currentYear} <span className="text-red-700 font-[500]">Texleath</span>. All rights reserved.</p>
               <p className="text-gray-500 text-xs mt-1 flex items-center justify-center lg:justify-end">
                 Made with <FiHeart className="inline w-3 h-3 text-red-500 mx-1" /> for fashion lovers
               </p>

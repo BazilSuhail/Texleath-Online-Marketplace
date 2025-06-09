@@ -117,12 +117,12 @@ const ReviewsList = ({ productId, newReview }) => {
       <AnimatePresence>
         {displayedReviews.map((review, index) => (
           <motion.div
-            key={review._id || index} // Use index as fallback for new reviews
+            key={review._id || index}
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
             transition={{ duration: 0.3, delay: index * 0.05 }}
-            className="border-b border-gray-200 pb-6 last:border-b-0"
+            className="border-[2px] rounded-[15px] border-gray-100 shadow-sm pb-4 bg-gray-50 p-4 last :border-b-0"
           >
             <div className="mb-3">
               <div className='flex w-full items-center justify-between'>
@@ -250,9 +250,9 @@ const ReviewProduct = ({ productId }) => {
       transition={{ duration: 0.6 }}
       className="mt-16 grid lg:grid-cols-5 gap-8"
     >
-      <div className="col-span-2 sticky top-0 border-t  border-gray-200 pt-6">
+      <div className="col-span-2 sticky top-0 border-t  border-gray-200 ">
 
-        <Button variant="outline" className="mb-6">
+        <Button variant="outline" className="mb-3">
           Write a Review
         </Button>
 
