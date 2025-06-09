@@ -16,33 +16,33 @@ import axios from "axios"
 import { addToCart } from "../redux/cartSlice"
 import MainLoader from "./Pages/mainLoader"
 import ReviewProduct from "./ProductReview"
-
+import Button from "../utilities/Button"
 
 // Custom Components
-const Button = ({ children, variant = "primary", size = "md", className = "", ...props }) => {
-  const baseClasses =
-    "inline-flex items-center justify-center font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none"
+// const Button = ({ children, variant = "primary", size = "md", className = "", ...props }) => {
+//   const baseClasses =
+//     "inline-flex items-center justify-center font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none"
 
-  const variants = {
-    primary: "bg-black text-white hover:bg-gray-800 focus:ring-gray-500",
-    outline: "border border-gray-300 bg-white text-gray-700 hover:bg-gray-50 focus:ring-gray-500",
-    secondary: "bg-gray-100 text-gray-900 hover:bg-gray-200 focus:ring-gray-500",
-  }
+//   const variants = {
+//     primary: "bg-black text-white hover:bg-gray-800 focus:ring-gray-500",
+//     outline: "border border-gray-300 bg-white text-gray-700 hover:bg-gray-50 focus:ring-gray-500",
+//     secondary: "bg-gray-100 text-gray-900 hover:bg-gray-200 focus:ring-gray-500",
+//   }
 
-  const sizes = {
-    sm: "px-3 py-2 text-sm rounded-md",
-    md: "px-4 py-2 text-sm rounded-md",
-    lg: "px-6 py-3 text-base rounded-lg",
-  }
+//   const sizes = {
+//     sm: "px-3 py-2 text-sm rounded-md",
+//     md: "px-4 py-2 text-sm rounded-md",
+//     lg: "px-6 py-3 text-base rounded-lg",
+//   }
 
-  const classes = `${baseClasses} ${variants[variant]} ${sizes[size]} ${className}`
+//   const classes = `${baseClasses} ${variants[variant]} ${sizes[size]} ${className}`
 
-  return (
-    <button className={classes} {...props}>
-      {children}
-    </button>
-  )
-}
+//   return (
+//     <button className={classes} {...props}>
+//       {children}
+//     </button>
+//   )
+// }
 
 const Badge = ({ children, variant = "default", className = "" }) => {
   const variants = {
@@ -254,7 +254,7 @@ export default function ProductDetailPage() {
             <img
               src={`${import.meta.env.VITE_REACT_APP_API_BASE_URL}/uploads/${product.otherImages[selectedImage]}` || "/placeholder.svg"}
               alt={product.name}
-              className="w-full h-[550px] sm:h-full sm:object-fit"
+              className="w-full h-[550px] border-[2px] border-gray-200 rounded-[12px] sm:h-full sm:object-fit"
             />
             <button
               onClick={() => setSelectedImage(selectedImage > 0 ? selectedImage - 1 : product.otherImages.length - 1)}
@@ -319,7 +319,7 @@ export default function ProductDetailPage() {
             </div>
 
             {/* Price */}
-            <div className="flex items-center space-x-3 mb-6">
+            <div className="flex items-center space-x-3 mb-4">
               <span className="text-3xl font-bold text-gray-900">${product.price}</span>
               {product.price > discountedPrice && (
                 <span className="text-xl text-gray-500 line-through">Rs. {discountedPrice}</span>

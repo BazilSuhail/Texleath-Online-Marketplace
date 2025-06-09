@@ -77,9 +77,9 @@ useEffect(() => {
   ]
 
   const navItems = [ 
-    { name: "About", href: "/about" },
     { name: "Catalog", href: "/productlist/All" },
     { name: "Categories", href: "#", hasDropdown: true }, 
+    { name: "About", href: "/about" },
   ]
 
   const handleAddToCart = () => {
@@ -91,12 +91,11 @@ useEffect(() => {
       initial={{ y: -100 }}
       animate={{ y: 0 }}
       transition={{ duration: 0.6, ease: "easeOut" }}
-      className="bg-white shadow-lg border-b border-gray-100 sticky top-0 z-50"
+      className="bg-white shadow-sm border-b border-gray-100 sticky top-0 z-50"
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16 md:h-20">
-          {/* Logo */}
-          <div className="flex">
+          {/* Logo */} 
           <motion.div whileHover={{ scale: 1.05 }} className="flex-shrink-0">
           
             <NavLink to="/" className=" h-[55px] pt-[5px] lg:flex hidden items-center justify-center w-full pb-[5px] overflow-hidden">
@@ -108,7 +107,7 @@ useEffect(() => {
           </motion.div>
 
           {/* Navigation Links - Hidden on smaller screens */}
-          <div className="hidden md:flex items-center ml-[25px] space-x-4">
+          <div className="hidden md:flex items-center ml-[25px] space-x-6">
             {navItems.map((item, index) => (
               <div
                 key={item.name}
@@ -139,7 +138,7 @@ useEffect(() => {
                         animate={{ opacity: 1, y: 0 }}
                         exit={{ opacity: 0, y: 10 }}
                         transition={{ duration: 0.2 }}
-                        className="absolute left-0 mt-2 w-[350px] rounded-lg bg-white shadow-xl border border-gray-100 z-[999]"
+                        className="absolute left-[-125px] mt-5 w-[350px] rounded-lg bg-white shadow-md border-[2px] border-gray-200 z-[999]"
                       >
                         <div className="p-3">
                           <h3 className="text-[12px] font-semibold text-gray-500 uppercase tracking-wider mb-3 px-3">
@@ -182,11 +181,11 @@ useEffect(() => {
               </div>
             ))}
           </div>
-          </div>
+     
 
         <div className="flex">
           {/* Search Button */}
-          <motion.div
+          {/* <motion.div
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ delay: 0.4 }}
@@ -200,11 +199,23 @@ useEffect(() => {
               <AiOutlineSearch className="w-5 h-5 text-gray-400 mr-2" />
               <span className="text-gray-500">Search products ...</span>
             </motion.button>
-          </motion.div>
+          </motion.div> */}
 
           {/* Right Side Icons */}
           <div className="flex items-center space-x-4">
 
+ <motion.button
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ delay: 0.4 }}
+            className="hidden md:flex"
+              onClick={() => setIsSearchModalOpen(true)}
+              whileHover={{ scale:  0.99}}
+          >
+            
+              <AiOutlineSearch className="w-6 h-6 text-gray-600 hover:text-red-600" />
+ 
+          </motion.button> 
             {/* User Account */}
            <Link to="/profile">
             <motion.button

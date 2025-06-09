@@ -3,33 +3,34 @@ import { motion } from "framer-motion"
 import { Link } from "react-router-dom"
 import { FiSearch, FiFilter, FiGrid, FiList, FiStar, FiShoppingBag, FiMenu, FiX } from "react-icons/fi"
 import axios from "axios"
-
+import Button from "../utilities/Button"
+import Badge from "../utilities/Badge"
 
 // Custom Components
-const Button = ({ children, variant = "primary", size = "md", className = "", ...props }) => {
-  const baseClasses =
-    "inline-flex items-center justify-center font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none"
+// const Button = ({ children, variant = "primary", size = "md", className = "", ...props }) => {
+//   const baseClasses =
+//     "inline-flex items-center justify-center font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none"
 
-  const variants = {
-    primary: "bg-black text-white hover:bg-gray-800 focus:ring-gray-500",
-    outline: "border border-gray-300 bg-white text-gray-700 hover:bg-gray-50 focus:ring-gray-500",
-    secondary: "bg-gray-100 text-gray-900 hover:bg-gray-200 focus:ring-gray-500",
-  }
+//   const variants = {
+//     primary: "bg-black text-white hover:bg-gray-800 focus:ring-gray-500",
+//     outline: "border border-gray-300 bg-white text-gray-700 hover:bg-gray-50 focus:ring-gray-500",
+//     secondary: "bg-gray-100 text-gray-900 hover:bg-gray-200 focus:ring-gray-500",
+//   }
 
-  const sizes = {
-    sm: "px-3 py-2 text-sm rounded-md",
-    md: "px-4 py-2 text-sm rounded-md",
-    lg: "px-6 py-3 text-base rounded-lg",
-  }
+//   const sizes = {
+//     sm: "px-3 py-2 text-sm rounded-md",
+//     md: "px-4 py-2 text-sm rounded-md",
+//     lg: "px-6 py-3 text-base rounded-lg",
+//   }
 
-  const classes = `${baseClasses} ${variants[variant]} ${sizes[size]} ${className}`
+//   const classes = `${baseClasses} ${variants[variant]} ${sizes[size]} ${className}`
 
-  return (
-    <button className={classes} {...props}>
-      {children}
-    </button>
-  )
-}
+//   return (
+//     <button className={classes} {...props}>
+//       {children}
+//     </button>
+//   )
+// }
 
 const Input = ({ className = "", ...props }) => {
   return (
@@ -40,21 +41,21 @@ const Input = ({ className = "", ...props }) => {
   )
 }
 
-const Badge = ({ children, variant = "default", className = "" }) => {
-  const variants = {
-    default: "bg-black text-white",
-    secondary: "bg-gray-100 text-gray-900",
-    destructive: "bg-red-500 text-white",
-  }
+// const Badge = ({ children, variant = "default", className = "" }) => {
+//   const variants = {
+//     default: "bg-black text-white",
+//     secondary: "bg-gray-100 text-gray-900",
+//     destructive: "bg-red-500 text-white",
+//   }
 
-  return (
-    <span
-      className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${variants[variant]} ${className}`}
-    >
-      {children}
-    </span>
-  )
-}
+//   return (
+//     <span
+//       className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${variants[variant]} ${className}`}
+//     >
+//       {children}
+//     </span>
+//   )
+// }
 
 const Select = ({ children, value, onValueChange, className = "" }) => {
   return (
@@ -213,11 +214,11 @@ export default function ProductsList() {
   }
 
   return (
-    <div className="min-h-screen bg-white">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <div className="min-h-screen bg-gray-50">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-5 pb-12">
         {/* Page Header */}
         <div className="mb-8">
-          <h1 className="text-3xl font-bold text-gray-900 mb-4">All Products</h1>
+          <h1 className="text-[22px] lg:text-[30px] font-bold text-gray-900">All <span className="text-red-700">Products</span></h1>
           <p className="text-gray-600">Discover our complete collection of premium fashion and lifestyle products.</p>
         </div>
 
@@ -242,14 +243,14 @@ export default function ProductsList() {
             </Select>
             <div className="flex items-center gap-2">
               <Button
-                variant={viewMode === "grid" ? "primary" : "outline"}
+                variant={viewMode === "grid" ? "red" : "outline"}
                 size="sm"
                 onClick={() => setViewMode("grid")}
               >
                 <FiGrid className="w-4 h-4" />
               </Button>
               <Button
-                variant={viewMode === "list" ? "primary" : "outline"}
+                variant={viewMode === "list" ? "red" : "outline"}
                 size="sm"
                 onClick={() => setViewMode("list")}
               >
@@ -266,7 +267,7 @@ export default function ProductsList() {
         <div className="flex gap-8">
           {/* Filters Sidebar */}
           <div className={`${isFilterOpen ? "block" : "hidden"} lg:block w-full lg:w-64 space-y-6`}>
-            <div className="bg-gray-50 p-6 rounded-lg">
+            <div className="bg-white border-[2px] border-gray-100 shadow-sm rounded-[14px] p-6 ">
               <h3 className="font-semibold text-gray-900 mb-4">Categories</h3>
               <div className="space-y-3">
                 {categories.map((category) => (
@@ -302,7 +303,7 @@ export default function ProductsList() {
               </div>
             </div>
 
-            <div className="bg-gray-50 p-6 rounded-lg">
+            <div className="bg-white border-[2px] border-gray-100 shadow-sm rounded-[14px] p-6">
               <h3 className="font-semibold text-gray-900 mb-4">Price Range</h3>
               <div className="space-y-4">
                 <Slider value={priceRange} onValueChange={setPriceRange} max={500} step={10} className="w-full" />
@@ -339,7 +340,7 @@ export default function ProductsList() {
                           <img
                             src={`${import.meta.env.VITE_REACT_APP_API_BASE_URL}/uploads/${product.image}` || "/placeholder.svg"}
                             alt={product.name}
-                            className="w-full h-64 object-cover group-hover:scale-105 transition-transform duration-300"
+                            className="w-full h-64 object-cover  group-hover:scale-105 transition-transform duration-300"
                           />
                           {product.originalPrice > product.price && (
                             <Badge className="absolute top-3 left-3 bg-red-500 hover:bg-red-600">Sale</Badge>
@@ -382,15 +383,15 @@ export default function ProductsList() {
                     transition={{ duration: 0.4, delay: index * 0.1 }}
                     className="bg-white rounded-lg shadow-sm hover:shadow-lg transition-shadow border border-gray-100 p-4"
                   >
-                    <Link to={`/product/${product.id}`}>
+                    <Link to={`/products/${product._id}`}>
                       <div className="flex gap-4">
                         <img
                           src={`${import.meta.env.VITE_REACT_APP_API_BASE_URL}/uploads/${product.image}` || "/placeholder.svg"}
                           alt={product.name}
-                          className="w-[120px] rounded-lg object-cover"
+                          className="w-[120px] border-[2px] border-gray-200 rounded-[14px] rounded-lg object-cover"
                         />
                         <div className="flex-1">
-                          <div className="flex items-center mb-2">
+                          <div className="flex items-center my-2">
                             <div className="flex items-center">
                               {[...Array(5)].map((_, i) => (
                                 <FiStar

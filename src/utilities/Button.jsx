@@ -7,8 +7,11 @@ export default function Button ({ children, variant = "primary", size = "md", cl
 
     const variants = {
         primary: "bg-black text-white hover:bg-gray-800 focus:ring-gray-500",
+        red: "bg-red-800 text-white hover:bg-red-800 focus:ring-gray-500",
+        green: "bg-green-800 text-white hover:bg-green-800 focus:ring-gray-500",
+        blue: "bg-blue-600 text-white hover:bg-blue-800 focus:ring-gray-500",
         outline: "border border-gray-300 bg-white text-gray-700 hover:bg-gray-50 focus:ring-gray-500",
-        secondary: "bg-gray-100 text-gray-900 hover:bg-gray-200 focus:ring-gray-500",
+        secondary: "bg-gray-100 text-gray-900 hover:bg-gray-200 focus:ring-gray-500", 
     }
 
     const sizes = {

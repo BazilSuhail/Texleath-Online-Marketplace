@@ -3,44 +3,45 @@ import { motion } from "framer-motion"
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { removeFromCart, clearCart, updateQuantity } from '../redux/cartSlice'
-import { FiTrash2, FiPlus, FiMinus, FiShoppingBag, FiMenu, FiX, FiArrowRight } from "react-icons/fi"
+import { FiTrash2, FiPlus, FiMinus, FiShoppingBag, FiArrowRight } from "react-icons/fi"
 import { Link } from "react-router-dom"
 import axios from "axios"
+import Button from "../utilities/Button"
 
 
 // Custom Components
-const Button = ({ children, variant = "primary", size = "md", className = "", asChild, ...props }) => {
-    const baseClasses =
-        "inline-flex items-center justify-center font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none"
+// const Button = ({ children, variant = "primary", size = "md", className = "", asChild, ...props }) => {
+//     const baseClasses =
+//         "inline-flex items-center justify-center font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none"
 
-    const variants = {
-        primary: "bg-black text-white hover:bg-gray-800 focus:ring-gray-500",
-        outline: "border border-gray-300 bg-white text-gray-700 hover:bg-gray-50 focus:ring-gray-500",
-        secondary: "bg-gray-100 text-gray-900 hover:bg-gray-200 focus:ring-gray-500",
-    }
+//     const variants = {
+//         primary: "bg-black text-white hover:bg-gray-800 focus:ring-gray-500",
+//         outline: "border border-gray-300 bg-white text-gray-700 hover:bg-gray-50 focus:ring-gray-500",
+//         secondary: "bg-gray-100 text-gray-900 hover:bg-gray-200 focus:ring-gray-500",
+//     }
 
-    const sizes = {
-        sm: "px-3 py-2 text-sm rounded-md",
-        md: "px-4 py-2 text-sm rounded-md",
-        lg: "px-6 py-3 text-base rounded-lg",
-    }
+//     const sizes = {
+//         sm: "px-3 py-2 text-sm rounded-md",
+//         md: "px-4 py-2 text-sm rounded-md",
+//         lg: "px-6 py-3 text-base rounded-lg",
+//     }
 
-    const classes = `${baseClasses} ${variants[variant]} ${sizes[size]} ${className}`
+//     const classes = `${baseClasses} ${variants[variant]} ${sizes[size]} ${className}`
 
-    if (asChild && children?.type === Link) {
-        return (
-            <Link {...children.props} className={classes}>
-                {children.props.children}
-            </Link>
-        )
-    }
+//     if (asChild && children?.type === Link) {
+//         return (
+//             <Link {...children.props} className={classes}>
+//                 {children.props.children}
+//             </Link>
+//         )
+//     }
 
-    return (
-        <button className={classes} {...props}>
-            {children}
-        </button>
-    )
-}
+//     return (
+//         <button className={classes} {...props}>
+//             {children}
+//         </button>
+//     )
+// }
 
 const Input = ({ className = "", ...props }) => {
     return (
@@ -399,10 +400,10 @@ export default function CartPage() {
                         </div>
 
                         <div className="mb-6">
-                            <label className="block text-sm font-medium text-gray-700 mb-2">Promo Code</label>
-                            <div className="flex gap-2">
-                                <Input value={promoCode} onChange={(e) => setPromoCode(e.target.value)} placeholder="Enter code" />
-                                <Button variant="outline">Apply</Button>
+                            <label className="block text-sm font-medium text-gray-700 mb-2">Cart Options</label>
+                            <div className="flex gap-2"> 
+                                <Button onClick={handleSaveCart}  variant="green">Save Cart</Button>
+                                <Button onClick={handleClearCart} variant="blue">Clear Cart</Button>
                             </div>
                         </div>
 
