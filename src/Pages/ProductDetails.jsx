@@ -14,8 +14,8 @@ import { Link, useNavigate, useParams } from "react-router-dom"
 import { useDispatch } from "react-redux"
 import axios from "axios"
 import { addToCart } from "../redux/cartSlice"
-import MainLoader from "./Pages/mainLoader"
-import ReviewProduct from "./ProductReview"
+import MainLoader from "./mainLoader"
+import ReviewProduct from "../Components/ProductReview"
 import Button from "../utilities/Button"
 
 // Custom Components

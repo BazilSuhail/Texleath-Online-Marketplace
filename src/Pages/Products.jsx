@@ -103,7 +103,7 @@ const Slider = ({ value, onValueChange, max, step, className = "" }) => {
   )
 }
 
-export default function ProductsList() {
+export default function Products() {
 
   const [products, setProducts] = useState([]);
   const [categories, setCategories] = useState([]);

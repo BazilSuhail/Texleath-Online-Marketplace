@@ -5,7 +5,7 @@ import { FaUsers } from 'react-icons/fa';
 import { IoMdPeople } from 'react-icons/io';
 import { GiCheckMark, GiFactory, GiPencilBrush } from 'react-icons/gi';
 
-import AboutPage from "../../assets/home.webp"
+import AboutPage from "../assets/home.webp"
 
 const About = () => {
 

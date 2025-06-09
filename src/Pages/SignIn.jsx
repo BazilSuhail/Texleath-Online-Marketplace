@@ -2,11 +2,11 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { setCart } from '../../redux/cartSlice';
+import { setCart } from '../redux/cartSlice';
 import { IoLockClosedOutline } from "react-icons/io5";
 import { IoMail } from "react-icons/io5";
 
-const Login = () => {
+const SignIn = () => {
     const [email, setEmail] = useState('bazil1854@gmail.com');
     const [password, setPassword] = useState('112233');
     const [error, setError] = useState('');
@@ -47,7 +47,7 @@ const Login = () => {
         e.preventDefault();
         try {
             const response = await axios.post(`${import.meta.env.VITE_REACT_APP_API_BASE_URL}/auth/login`, { email, password });
-            console.log('Login response:', response);
+            console.log('SignIn response:', response);
             if (response.data.token) {
                 localStorage.setItem('token', response.data.token);
  
@@ -58,10 +58,10 @@ const Login = () => {
                 navigate('/profile');
                 window.location.reload();
             } else {
-                setError('Login failed: No token received');
+                setError('SignIn failed: No token received');
             }
         } catch (error) {
-            setError(error.response?.data?.message || 'Login failed');
+            setError(error.response?.data?.message || 'SignIn failed');
         }
     };
 
@@ -111,4 +111,4 @@ const Login = () => {
     );
 };
 
-export default Login;
+export default SignIn;

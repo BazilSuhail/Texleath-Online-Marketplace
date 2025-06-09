@@ -148,7 +148,7 @@ const CartItem = ({ id, size, quantity, index }) => {
 };
 
 
-const OrderList = () => {
+const Checkout = () => {
     const cart = useSelector(state => state.cart);
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -472,4 +472,4 @@ const OrderList = () => {
 };
 
 
-export default OrderList;
+export default Checkout;

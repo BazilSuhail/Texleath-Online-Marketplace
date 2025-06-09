@@ -145,8 +145,8 @@ const CartItem = ({ id, size, quantity, onIncrease, onDecrease, onRemove, index 
 };
 
 
-export default function CartPage() {
-    const [promoCode, setPromoCode] = useState("")
+export default function Cart() {
+    //const [promoCode, setPromoCode] = useState("")
 
 
     const cart = useSelector(state => state.cart);
@@ -210,7 +210,7 @@ export default function CartPage() {
     };
 
     const navigateToOrderList = () => {
-        navigate("/place-order")
+        navigate("/checkout")
     };
 
     const calculateTotalBill = () => {
@@ -407,7 +407,7 @@ export default function CartPage() {
                             </div>
                         </div>
 
-                        <Link to="/place-order">
+                        <Link to="/checkout">
                             <Button className="w-full bg-black hover:bg-gray-800 text-white mb-4" size="lg">
                                 Proceed to Checkout
                             </Button>

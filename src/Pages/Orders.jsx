@@ -330,7 +330,7 @@ const OrderCard = ({ order, onViewDetails }) => {
     )
 }
 
-const OrderDetailsModal = ({ order, isOpen, onClose }) => {
+const Orders = ({ order, isOpen, onClose }) => {
     if (!order) return null
 
     const totalItems = order.items.reduce((sum, item) => sum + item.quantity, 0)

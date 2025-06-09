@@ -12,7 +12,7 @@ import { BiSolidCustomize } from "react-icons/bi";
 
 import { FaRegHandshake } from 'react-icons/fa';
 
-import MainLoader from './Pages/mainLoader';  
+import MainLoader from './mainLoader';  
 
 import fitness from "../Assets/fitness.webp"
 import gym from "../Assets/gym.webp"
@@ -62,7 +62,7 @@ const reviews = [
   },
 ];
 
-const HomePage = () => {
+const Home = () => {
 
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -450,4 +450,4 @@ const HomePage = () => {
   );
 }
 
-export default HomePage;
+export default Home;

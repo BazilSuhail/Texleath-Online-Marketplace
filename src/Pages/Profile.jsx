@@ -19,12 +19,12 @@ import {
 } from "react-icons/fi"
 import { Link, useNavigate } from "react-router-dom"
 import { useDispatch } from "react-redux"
-import { clearCart } from "../../redux/cartSlice"
+import { clearCart } from "../redux/cartSlice"
 import MainLoader from "../Pages/mainLoader"
 import axios from "axios"
-import Button from "../../utilities/Button"
-import Card from "../../utilities/Card"
-import ProfileInput from "../../utilities/ProfileInput"
+import Button from "../utilities/Button"
+import Card from "../utilities/Card"
+import ProfileInput from "../utilities/ProfileInput"
 
 // Mock user data
 const mockUser = {

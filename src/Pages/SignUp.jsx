@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { IoLockClosedOutline } from "react-icons/io5";
 import { IoMail } from "react-icons/io5";
 
-const Register = () => {
+const SignUp = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
@@ -94,4 +94,4 @@ const Register = () => {
     );
 };
 
-export default Register;
+export default SignUp;
