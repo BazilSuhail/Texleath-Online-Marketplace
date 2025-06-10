@@ -394,7 +394,7 @@ export default function ProductDetailPage() {
 
             {/* Action Buttons */}
             <div className="flex gap-4">
-              <Button onClick={handleAddToCart} className="flex w-[280px] bg-black hover:bg-gray-800 text-white" size="lg">
+              <Button onClick={handleAddToCart} className="flex w-[280px] bg-gradient-to-r from-red-900 to-red-800 hover:bg-gray-800 text-white" size="lg">
                 <FiShoppingBag className="w-5 h-5 mr-2" />
                 Add to Cart
               </Button>

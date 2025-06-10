@@ -26,7 +26,7 @@ const SignUp = () => {
             await axios.post(`${import.meta.env.VITE_REACT_APP_API_BASE_URL}/auth/register`, { email, password });
             setSuccess('Registration successful! Please log in.');
             setError('');
-            setTimeout(() => navigate('/login'), 1000);
+            setTimeout(() => navigate('/signin'), 1000);
         } catch (error) {
             setError(error.response?.data?.message || 'Registration failed');
             setSuccess('');
@@ -34,7 +34,7 @@ const SignUp = () => {
     };
 
     return (
-        <main className='flex  xsx:pt-[150px] pt-[120px] min-h-screen flex-col  items-center justify-center'>
+        <main className='flex min-h-[90vh] flex-col  items-center justify-center'>
             <form onSubmit={handleSubmit} className="w-[100vw] sm:w-[520px] form ">
                 <div className='text-red-800 text-[35px] text-center font-bold'>Create an Account</div>
                 <div className='text-red-800 text-[15px] text-center font-medium'>Create an account for faster checkout</div>
@@ -86,8 +86,8 @@ const SignUp = () => {
 
                 <button className="button-submit  text-[22px]" type="submit">Sign Up</button>
                 <p className="p mt-[-5px] text-[18px]">
-                    Already have an account?
-                    <span className="span text-red-700 underline" onClick={() => { navigate("/login") }}>Sign In</span>
+                   <span className='text-red-700'>Already have an account?</span>
+                    <span className="span text-red-700 underline" onClick={() => { navigate("/signin") }}>Sign In</span>
                 </p>
             </form>
         </main>

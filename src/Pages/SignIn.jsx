@@ -68,7 +68,7 @@ const SignIn = () => {
 
     
     return (
-        <main className='flex xsx:pt-[150px] pt-[120px] min-h-screen flex-col  items-center justify-center'>
+        <main className='flex min-h-[90vh] flex-col  items-center justify-center'>
             <form onSubmit={handleSubmit} className="w-[100vw] sm:w-[520px] form ">
                 <div className='text-red-800 text-[35px] text-center font-bold'>Welcome Back</div>
                 <div className='text-red-800 text-[15px] text-center font-medium'>Please enter Email and Password</div>
@@ -102,9 +102,9 @@ const SignIn = () => {
                     <label className='ml-[5px]'>Remember me </label>
                 </div>
                 <button className="button-submit  text-[22px]" type="submit">Sign In</button>
-                <p className="p mt-[-5px] text-[18px]">
-                    Don't have an account?
-                    <span className="span text-red-700 underline" onClick={() => { navigate("/register") }}>Sign Up</span>
+                <p className="p mt-[-5px] text-red-700 text-[18px]">
+                    <span className='text-red-700'>Don't have an account?</span>
+                    <span className="span text-red-700 underline" onClick={() => { navigate("/signup") }}>Sign Up</span>
                 </p>
             </form>
         </main>

@@ -1,27 +1,58 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { motion } from 'framer-motion';
 
-import { FiTruck, FiShoppingBag } from 'react-icons/fi';
+import { FiTruck, FiStar, FiHeadphones, FiRefreshCw, FiShield } from 'react-icons/fi';
 import { AiOutlineFileText } from 'react-icons/ai';
 import { BiCheckCircle } from 'react-icons/bi';
 import { TbCreditCardRefund } from "react-icons/tb";
 import { FaShippingFast, FaStar } from "react-icons/fa";
 import { FaArrowRightLong, FaPeoplePulling } from "react-icons/fa6";
-import { BiSolidCustomize } from "react-icons/bi";
 
 import { FaRegHandshake } from 'react-icons/fa';
 
-import MainLoader from './mainLoader';  
+import MainLoader from './mainLoader'
 
-import fitness from "../Assets/fitness.webp"
-import gym from "../Assets/gym.webp"
-import sports from "../Assets/sports.webp"
-import safety from "../Assets/safety.webp"
-import active from "../Assets/active.webp"
-import gloves from "../Assets/gloves.webp"
+import { Section1,Section2 } from '../Components/HomePage';
 
-import HomePagePhoto from "../assets/home.webp"
+const features = [
+    {
+      icon: FiShield,
+      title: "Secure Shopping",
+      description: "Your data is protected with industry-standard encryption",
+    },
+    {
+      icon: FiTruck,
+      title: "Free Shipping",
+      description: "Free delivery on orders over $100 worldwide",
+    },
+    {
+      icon: FiRefreshCw,
+      title: "Easy Returns",
+      description: "30-day hassle-free return policy",
+    },
+    {
+      icon: FiHeadphones,
+      title: "24/7 Support",
+      description: "Round-the-clock customer service",
+    },
+  ]
+
+const FeatureCard = ({ icon: Icon, title, description }) => {
+  return (
+    <motion.div
+      whileHover={{ y: -4 }}
+      className="group p-6 bg-white rounded-2xl border border-gray-200 hover:border-red-200 hover:shadow-lg transition-all duration-300"
+    >
+      <div className="w-12 h-12 bg-red-50 rounded-xl flex items-center justify-center mb-4 group-hover:bg-red-100 transition-colors">
+        <Icon className="w-6 h-6 text-red-600" />
+      </div>
+      <h4 className="font-semibold text-gray-900 mb-2">{title}</h4>
+      <p className="text-gray-600 text-sm leading-relaxed">{description}</p>
+    </motion.div>
+  )
+}
 
 const reviews = [
   {
@@ -106,82 +137,11 @@ const Home = () => {
 
   return (
     <main className="font-sans bg-gray-50 min-h-screen text-gray-800">
-      <section className="relative xsx:pt-[150px] pt-[120px] bg-gradient-to-r w-full from-red-950 via-custom-red to-red-950 overflow-hidden h-[calc(100vh+140px)]">
-        <div className="absolute xsx:pt-[150px] pt-[120px] inset-0 overflow-hidden">
-          <img
-            src={HomePagePhoto}
-            alt="Connection error ..."
-            className="object-cover w-full h-full"
-          />
-        </div>
 
-        <div className='bg-gradient-to-r absolute z-30 opacity-55 from-red-950 via-custom-red to-red-950 h-full w-full'></div>
+      <Section1 />
+      <Section2 />
+      {/* <Section2 /> */}
 
-        <div className='absolute z-40 xsx:scale-[1] md:scale-[0.8] scale-[0.92] flex flex-col justify-center mt-[-150px] items-center h-full w-full'>
-          <h2 className='text-[17px] sm:text-[20px] md:mb-0 mb-[45px] md:text-[24px] font-bold'>
-            <span className='text-red-100 font-[600] mr-[7px]'>Welcome to,</span>
-            <span className="text-red-700 mr-[7px]">TEXLEATH</span>
-            <span className="text-white">INDUSTRIES</span>
-          </h2>
-          <div className='text-[50px] md:text-[75px] text-center font-[700] text-white'>
-            <p className='flex md:flex-row flex-col'><span className='md:mt-0 mt-[-35px]'>Where Fashion</span><span className='md:mt-0 mt-[-10px] md:ml-[18px]'>Meets</span></p>
-            <p className='mt-[-15px] md:mt-[-24px]'>Craftsmanship</p>
-          </div>
-          
-        <div className='text-white flex border-t-[2px] pt-[4px] border-white w-[120px] items-center justify-center mt-[45px] text-[18px] z-50'>
-          <span className='mr-[8px]'>Shop</span>
-          <FaArrowRightLong />
-        </div>
-        </div>
-      </section>
-
-      <section className='lg:mt-[45px] mt-[25px]'>
-        <h1 className='text-2xl mb-[20px] md:text-[35px]  text-center font-bold text-red-900'>Popular Categories</h1>
-        <div className='md:w-[90%]  xl:w-[50%] mx-auto grid grid-cols-3'>
-          <div>
-            <div className='w-[90px] md:w-[160px] mx-auto h-[90px] md:h-[160px] mt-5 md:mt-10 '>
-              <img src={sports} alt="" className='w-full  rounded-full h-full' />
-            </div>
-            <div className='text-red-800 font-bold md:mt-[10px] mt-[8px] text-center text-[14px] md:text-[20px]'>Sports Wear</div>
-          </div>
-
-          <div>
-            <div className='w-[90px] md:w-[160px] mx-auto h-[90px] md:h-[160px] mt-5 md:mt-10 '>
-              <img src={active} alt="" className='w-full  rounded-full h-full' />
-            </div>
-            <div className='text-red-800 font-bold md:mt-[10px] mt-[8px] text-center text-[14px] md:text-[20px]'>Active Wear</div>
-          </div>
-
-          <div>
-            <div className='w-[90px] md:w-[160px] mx-auto h-[90px] md:h-[160px] mt-5 md:mt-10 '>
-              <img src={gym} alt="" className='w-full  rounded-full h-full' />
-            </div>
-            <div className='text-red-800 font-bold md:mt-[10px] mt-[8px] text-center text-[14px] md:text-[20px]'>Gym Wear</div>
-          </div>
-
-          <div>
-            <div className='w-[90px] md:w-[160px] mx-auto h-[90px] md:h-[160px] mt-5 md:mt-10 '>
-              <img src={gloves} alt="" className='w-full  rounded-full h-full' />
-            </div>
-            <div className='text-red-800 font-bold md:mt-[10px] mt-[8px] text-center text-[14px] md:text-[20px]'>Gloves</div>
-          </div>
-
-          <div>
-            <div className='w-[90px] md:w-[160px] mx-auto h-[90px] md:h-[160px] mt-5 md:mt-10 '>
-              <img src={fitness} alt="" className='w-full  rounded-full h-full' />
-            </div>
-            <div className='text-red-800 font-bold md:mt-[10px] mt-[8px] text-center text-[14px] md:text-[20px]'>Fitness Wear</div>
-          </div>
-
-          <div>
-            <div className='w-[90px] md:w-[160px] mx-auto h-[90px] md:h-[160px] mt-5 md:mt-10 '>
-              <img src={safety} alt="" className='w-full  rounded-full h-full' />
-            </div>
-            <div className='text-red-800 font-bold md:mt-[10px] mt-[8px] text-center text-[14px] md:text-[20px]'>Safety Wear</div>
-          </div>
-
-        </div>
-      </section>
 
       <div className='h-[4px] w-[95%] mx-auto my-[45px] rounded-lg bg-red-700'></div>
 
@@ -211,87 +171,115 @@ const Home = () => {
       {
         loading ?
           <MainLoader /> :
-          <section className='mb-[45px]'>
-            <h1 className='text-2xl my-[50px] md:text-[35px] text-center font-bold text-red-900'>Recent Updated Catalog</h1>
-            <div className="mx-auto my-[45px] grid grid-cols-2 overflow-hidden lg:grid-cols-3 xl:grid-cols-4">
-              {products.map((product) => {
-                const discountedPrice = product.sale
-                  ? (product.price - (product.price * product.sale) / 100).toFixed(2)
-                  : product.price.toFixed(2);
+          <section className="py-16 lg:py-24 bg-gray-50">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6 }}
+                className="text-center mb-12"
+              >
+                <h2 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-4">Featured Products</h2>
+                <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+                  Handpicked items that represent the best of our collection.
+                </p>
+              </motion.div>
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+                {products.map((product, index) => {
+                  const discountedPrice = product.sale
+                    ? (product.price - (product.price * product.sale) / 100).toFixed(2)
+                    : product.price.toFixed(2);
 
-                return (
-                  <div
-                    key={product._id}
-                    onClick={() => navigate(`/products/${product._id}`)}
-                    className="block p-[10px] overflow-x-hidden sm:p-[5px] cursor-pointer"
-                  >
-                    <img
-                      loading="lazy"
-                      src={`${import.meta.env.VITE_REACT_APP_API_BASE_URL}/uploads/${product.image}`}
-                      alt={product.name}
-                      className="object-cover mx-auto h-[200px] w-[180px] hover:scale-105 transition duration-700 md:h-[400px] md:w-[340px] lg:w-[300px] lg:h-[335px] sm:h-[320px] sm:w-[280px] mb-4"
-                    />
-                    <div className="mx-auto w-[180px] md:w-[340px] lg:w-[300px] sm:w-[280px]">
-                      <h1 className='text-xl md:text-[25px] lg:text-[25px] mb-[6px] text-red-900 font-medium'>
-                        {product.name.length > 22 ? `${product.name.substring(0, 22)}...` : product.name}
-                      </h1>
-
-                      {product.sale && (
-                        <span className="text-red-500 bg-red-200 font-medium rounded-xl text-[12px] px-[12px] line-through">
-                          Rs.{product.price.toFixed(2)}
-                        </span>
-                      )}
-                      <span className="text-[20px] lg:text-[22px] ml-[6px] mb-[3px] font-medium">
-                        <span className="text-[20px] font-normal"> Rs.</span>{parseInt(discountedPrice)}
-                      </span>
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
-            <div className='w-full flex'>
-              <button onClick={() => navigate(`/productlist/All`)} className="mx-auto shop-now relative overflow-hidden px-8 py-4 border-2 border-white text-white text-lg font-bold rounded-[35px] bg-red-500 shadow-md hover:bg-red-800 hover:text-white hover:shadow-lg active:scale-90 transition-transform duration-300">
-                Shop now
-              </button>
+                  return (
+                    <motion.div
+                      key={product.id}
+                      initial={{ opacity: 0, y: 20 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.6, delay: index * 0.1 }}
+                      whileHover={{ y: -5 }}
+                      className="group cursor-pointer"
+                    >
+                      <Link to={`/product/${product.id}`}>
+                        <div className="bg-white rounded-lg shadow-sm hover:shadow-lg transition-shadow overflow-hidden">
+                          <div className="relative">
+                            <img
+                              src={`${import.meta.env.VITE_REACT_APP_API_BASE_URL}/uploads/${product.image}`}
+                              alt={product.name}
+                              width={300}
+                              height={400}
+                              className="w-full h-64 object-cover group-hover:scale-105 transition-transform duration-300"
+                            />
+                            {product.originalPrice > product.price && (
+                              <Badge className="absolute top-3 left-3 bg-red-500 hover:bg-red-600">Sale</Badge>
+                            )}
+                          </div>
+                          <div className="p-6">
+                            <div className="flex items-center mb-2">
+                              <div className="flex items-center">
+                                {[...Array(5)].map((_, i) => (
+                                  <FiStar
+                                    key={i}
+                                    className={`w-4 h-4 ${i < Math.floor(product.rating) ? "text-yellow-400 fill-current" : "text-gray-300"
+                                      }`}
+                                  />
+                                ))}
+                              </div>
+                              <span className="text-sm text-gray-500 ml-2">({product.reviews})</span>
+                            </div>
+                            <h3 className="font-semibold text-gray-900 mb-2">{product.name}</h3>
+                            <div className="flex items-center space-x-2">
+                              <span className="text-lg font-bold text-gray-900">${product.price}</span>
+                              {product.originalPrice > product.price && (
+                                <span className="text-sm text-gray-500 line-through">${product.originalPrice}</span>
+                              )}
+                            </div>
+                          </div>
+                        </div>
+                      </Link>
+                    </motion.div>
+                  );
+                })}
+              </div>
+              <div className='w-full flex'>
+                <button onClick={() => navigate(`/productlist/All`)} className="mx-auto shop-now relative overflow-hidden px-8 py-4 border-2 border-white text-white text-lg font-bold rounded-[35px] bg-red-500 shadow-md hover:bg-red-800 hover:text-white hover:shadow-lg active:scale-90 transition-transform duration-300">
+                  Shop now
+                </button>
+              </div>
             </div>
           </section>
       }
 
-
-      <section className="pb-16 flex flex-col items-center bg-red-950">
-        <h2 className="text-4xl text-ceter mt-[25px] font-bold mb-8 text-red-50">
-          Our Services
-        </h2>
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 place-items-center">
-          <div className="h-[135px] w-[125px] flex flex-col justify-center items-center">
-            <div className='bg-white rounded-full h-[85px] w-[85px] sm:h-[80px] sm:w-[80px] flex items-center justify-center'>
-              <FiShoppingBag className="text-red-600 text-[38px] sm:text-[45px] my-auto" />
-            </div>
-            <h3 className="text-2xl text-red-200 font-bold mt-[10px]">Sales</h3>
-          </div>
-
-          <div className="h-[135px] w-[125px] flex flex-col justify-center items-center">
-            <div className='bg-white rounded-full h-[85px] w-[85px] sm:h-[80px] sm:w-[80px] flex items-center justify-center'>
-              <AiOutlineFileText className="text-red-600 text-[38px] sm:text-[45px] my-auto" />
-            </div>
-            <h3 className="text-2xl text-red-200 font-bold mt-[10px]">Style</h3>
-          </div>
-
-          <div className="h-[135px] w-[125px] flex flex-col justify-center items-center">
-            <div className='bg-white rounded-full h-[85px] w-[85px] sm:h-[80px] sm:w-[80px] flex items-center justify-center'>
-              <BiSolidCustomize className="text-red-600 text-[38px] sm:text-[45px] my-auto" />
-            </div>
-            <h3 className="text-2xl text-red-200 font-bold mt-[10px]">Craft</h3>
-          </div>
-
-          <div className="h-[135px] w-[125px] flex flex-col justify-center items-center">
-            <div className='bg-white rounded-full h-[85px] w-[85px] sm:h-[80px] sm:w-[80px] flex items-center justify-center'>
-              <FiTruck className="text-red-600 text-[38px] sm:text-[45px] my-auto" />
-            </div>
-            <h3 className="text-2xl text-red-200 font-bold mt-[10px]">Export</h3>
+   {/* Features Section */}
+      <div className="relative">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-16 pb-12">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            className="text-center mb-12"
+          >
+            <h2 className="text-3xl font-bold text-gray-900 mb-4">
+              Why Choose <span className="text-red-600">Elegance</span>?
+            </h2>
+            <p className="text-gray-600 max-w-2xl mx-auto">
+              Experience premium quality, exceptional service, and unmatched style with every purchase.
+            </p>
+          </motion.div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {features.map((feature, index) => (
+              <motion.div
+                key={feature.title}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: index * 0.1 }}
+              >
+                <FeatureCard {...feature} />
+              </motion.div>
+            ))}
           </div>
         </div>
-      </section>
+      </div>
+ 
 
       {/* refund wgera */}
       <section className="py-16 bg-gray-100 px-6 lg:px-[100px]">
@@ -360,7 +348,7 @@ const Home = () => {
       </section>
 
 
-      <div className='h-[4px] w-[95%] mx-auto my-[45px] rounded-lg bg-red-700'></div>
+      <div className='h-[4px] max-w-7xl mx-auto my-[45px] rounded-lg bg-red-100'></div>
 
       <section className='md:w-[90%] xl:w-[55%] w-[95%]  mb-[45px] mx-auto mt-[35px]'>
         <div className='flex w-full justify-center mb-[35px] items-center mx-auto'>
@@ -381,7 +369,7 @@ const Home = () => {
                 name='email'
                 value={formData.email}
                 onChange={handleChange}
-                className='w-full px-4 bg-red-100 py-2 border border-red-800 rounded-md text-sm md:text-base'
+                className='w-full px-4 bg-red-50 py-2 border border-red-100 rounded-md text-sm md:text-base'
                 required
               />
             </div>
@@ -392,7 +380,7 @@ const Home = () => {
                 name='message'
                 value={formData.message}
                 onChange={handleChange}
-                className='w-full bg-red-100  px-4 py-2 border border-red-900 rounded-md text-sm md:text-base'
+                className='w-full bg-white  px-4 py-2 border border-red-100 rounded-md text-sm md:text-base'
                 rows='4'
                 required
               ></textarea>

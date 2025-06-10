@@ -195,7 +195,7 @@ const CartModal = ({ isOpen, onClose }) => {
                   onClick={() => {
                     onClose();
                   }}
-                  className="w-full flex items-center disabled:bg-gray-400 justify-center gap-2 px-4 py-2 bg-black text-white rounded-lg hover:bg-gray-800 transition-colors"
+                  className="w-full flex items-center disabled:bg-gray-400 justify-center gap-2 px-4 py-2 bg-gradient-to-r from-red-900 via-red-700 to-red-900 text-white rounded-lg hover:bg-gray-800 transition-colors"
                   disabled={cart.length === 0}
                 >
                   <FiShoppingCart className="w-5 h-5" />

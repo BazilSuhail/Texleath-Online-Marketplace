@@ -7,6 +7,7 @@ import { FiTrash2, FiPlus, FiMinus, FiShoppingBag, FiArrowRight } from "react-ic
 import { Link } from "react-router-dom"
 import axios from "axios"
 import Button from "../utilities/Button"
+import { FaSave, FaTrashAlt } from "react-icons/fa"
 
 
 // Custom Components
@@ -146,9 +147,6 @@ const CartItem = ({ id, size, quantity, onIncrease, onDecrease, onRemove, index 
 
 
 export default function Cart() {
-    //const [promoCode, setPromoCode] = useState("")
-
-
     const cart = useSelector(state => state.cart);
     const dispatch = useDispatch();
     const [products, setProducts] = useState([]);
@@ -172,7 +170,7 @@ export default function Cart() {
         setUserId(id);
     }, [decodeToken]);
 
-     useEffect(() => {
+    useEffect(() => {
         const fetchProducts = async () => {
             try {
                 const productResponses = await Promise.all(
@@ -399,16 +397,35 @@ export default function Cart() {
                             <p className="text-sm text-blue-800">Add Rs. {(Number(calculateTotalBill()) + Number(100)).toFixed(2)} more to get free shipping!</p>
                         </div>
 
-                        <div className="mb-6">
-                            <label className="block text-sm font-medium text-gray-700 mb-2">Cart Options</label>
-                            <div className="flex gap-2"> 
-                                <Button onClick={handleSaveCart}  variant="green">Save Cart</Button>
-                                <Button onClick={handleClearCart} variant="blue">Clear Cart</Button>
+                        <div className="mb-5 h-[68px] overflow-hidden">
+                            <label className="block text-sm font-medium text-gray-700 mb-3">Cart Options</label>
+                            <div className="flex gap-2">
+                                <button
+                                    onClick={handleSaveCart}
+                                    className="group flex items-center justify-center py-[6px] px-[12px] rounded-[8px] text-green-50 font-[600] text-[13px] bg-green-700 hover:bg-green-800 transition-all overflow-hidden"
+                                >
+                                    <FaSave className="text-green-50 text-[15px] group-hover:mr-2 mb-[1px] transition-all" />
+                                    <span className="hidden group-hover:inline whitespace-nowrap mb-[1px] transition-all">
+                                        Save Cart
+                                    </span>
+                                </button>
+
+                                 <button
+                                    onClick={handleClearCart}
+                                    className="group flex items-center justify-center py-[6px] px-[12px] rounded-[8px] text-red-50 font-[600] text-[13px] bg-red-700 hover:bg-red-800 transition-all overflow-hidden"
+                                >
+                                    <FaTrashAlt className="text-grredeen-50 text-[15px] group-hover:mr-2 transition-all" />
+                                    <span className="hidden group-hover:inline whitespace-nowrap mb-[1px] transition-all">
+                                        Clear Cart
+                                    </span>
+                                </button>
+                                {/* <button onClick={handleClearCart} className="flex items-center py-[6px] px-[12px] rounded-[8px] text-white text-[13px] bg-red-700" variant="blue">
+                                    <FaTrashAlt className="mr-2 text-white" /> Clear Cart
+                                </button> */}
                             </div>
                         </div>
-
                         <Link to="/checkout">
-                            <Button className="w-full bg-black hover:bg-gray-800 text-white mb-4" size="lg">
+                            <Button className="w-full bg-red-900 hover:bg-red-800 fo text-white mb-4" size="lg">
                                 Proceed to Checkout
                             </Button>
                         </Link>

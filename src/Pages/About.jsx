@@ -1,260 +1,485 @@
-import { motion } from 'framer-motion';
-import { FaRegStar, FaRegHandshake, FaUserTie } from 'react-icons/fa';
+import { useState } from "react"
+import { motion, useInView } from "framer-motion" 
+import { useRef } from "react"
+import {
+  FiShoppingBag,
+  FiMenu,
+  FiX,
+  FiUsers,
+  FiTruck,
+  FiSettings,
+  FiHeart,
+  FiShield,
+  FiAward,
+  FiTarget,
+  FiZap,
+  FiGlobe,
+  FiTrendingUp,
+  FiArrowRight,
+  FiPlay,
+} from "react-icons/fi"
+import { Link } from "react-router-dom"
 
-import { FaUsers } from 'react-icons/fa';
-import { IoMdPeople } from 'react-icons/io';
-import { GiCheckMark, GiFactory, GiPencilBrush } from 'react-icons/gi';
+// Custom Components
+const Button = ({ children, variant = "primary", size = "md", className = "", ...props }) => {
+  const baseClasses =
+    "inline-flex items-center justify-center font-medium transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none"
 
-import AboutPage from "../assets/home.webp"
+  const variants = {
+    primary: "bg-red-600 text-white hover:bg-red-700 focus:ring-red-500 shadow-lg hover:shadow-xl",
+    outline: "border-2 border-red-500 text-red-600 hover:bg-red-50 focus:ring-red-500",
+    secondary: "bg-gray-100 text-gray-900 hover:bg-gray-200 focus:ring-gray-500",
+    ghost: "text-gray-600 hover:text-gray-900 hover:bg-gray-100",
+  }
 
-const About = () => {
+  const sizes = {
+    sm: "px-4 py-2 text-sm rounded-lg",
+    md: "px-6 py-3 text-sm rounded-xl",
+    lg: "px-8 py-4 text-base rounded-xl",
+  }
 
-    const sectionVariants = {
-    hidden: { opacity: 0, y: 20 },
-    visible: { opacity: 1, y: 0, transition: { duration: 0.6 } },
-  };
-
-  const cardVariants = {
-    hidden: { opacity: 0, scale: 0.9 },
-    visible: { opacity: 1, scale: 1, transition: { duration: 0.5 } },
-  };
+  const classes = `${baseClasses} ${variants[variant]} ${sizes[size]} ${className}`
 
   return (
-    <div className="about-us  xsx:pt-[150px] pt-[120px]  bg-gray-50 pb-10 sm:px-6 lg:px-0">
-      <div className="container mx-auto">
-        <motion.section
-          variants={sectionVariants}
-          initial="hidden"
-          animate="visible"
-          className="pb-16 lg:px-4"
-        >
-          <div className="container mx-auto px-6">
-            <div className="flex flex-col md:flex-row items-center justify-center gap-8">
-              <div className="md:w-1/2">
+    <button className={classes} {...props}>
+      {children}
+    </button>
+  )
+}
+
+const Badge = ({ children, variant = "default", className = "" }) => {
+  const variants = {
+    default: "bg-gray-100 text-gray-800",
+    success: "bg-green-100 text-green-800",
+    warning: "bg-yellow-100 text-yellow-800",
+    info: "bg-blue-100 text-blue-800",
+    danger: "bg-red-100 text-red-800",
+  }
+
+  return (
+    <span
+      className={`inline-flex items-center px-3 py-1 rounded-full text-xs font-medium ${variants[variant]} ${className}`}
+    >
+      {children}
+    </span>
+  )
+}
+
+const AnimatedSection = ({ children, className = "" }) => {
+  const ref = useRef(null)
+  const isInView = useInView(ref, { once: true, margin: "-100px" })
+
+  return (
+    <motion.div
+      ref={ref}
+      initial={{ opacity: 0, y: 60 }}
+      animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 60 }}
+      transition={{ duration: 0.8, ease: "easeOut" }}
+      className={className}
+    >
+      {children}
+    </motion.div>
+  )
+}
+
+const ServiceCard = ({ icon: Icon, title, description, delay = 0 }) => {
+  const ref = useRef(null)
+  const isInView = useInView(ref, { once: true })
+
+  return (
+    <motion.div
+      ref={ref}
+      initial={{ opacity: 0, y: 30, scale: 0.9 }}
+      animate={isInView ? { opacity: 1, y: 0, scale: 1 } : { opacity: 0, y: 30, scale: 0.9 }}
+      transition={{ duration: 0.6, delay, ease: "easeOut" }}
+      whileHover={{ y: -8, scale: 1.02 }}
+      className="group bg-white rounded-2xl p-8 shadow-sm hover:shadow-xl transition-all duration-300 border border-gray-100"
+    >
+      <div className="w-16 h-16 bg-gradient-to-br from-red-500 to-red-600 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
+        <Icon className="w-8 h-8 text-white" />
+      </div>
+      <h3 className="text-xl font-bold text-gray-900 mb-3">{title}</h3>
+      <p className="text-gray-600 leading-relaxed">{description}</p>
+    </motion.div>
+  )
+}
+
+const TeamMember = ({ name, role, description, image, delay = 0 }) => {
+  const ref = useRef(null)
+  const isInView = useInView(ref, { once: true })
+
+  return (
+    <motion.div
+      ref={ref}
+      initial={{ opacity: 0, y: 30 }}
+      animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
+      transition={{ duration: 0.6, delay, ease: "easeOut" }}
+      whileHover={{ y: -5 }}
+      className="group bg-white rounded-2xl p-8 shadow-sm hover:shadow-xl transition-all duration-300 text-center"
+    >
+      <div className="relative w-24 h-24 mx-auto mb-6">
+        <img
+          src={image || "/placeholder.svg?height=96&width=96"}
+          alt={name}
+          fill
+          className="rounded-full object-cover border-4 border-white shadow-lg group-hover:scale-105 transition-transform duration-300"
+        />
+      </div>
+      <h3 className="text-xl font-bold text-gray-900 mb-2">{name}</h3>
+      <p className="text-red-600 font-medium mb-3">{role}</p>
+      <p className="text-gray-600 text-sm leading-relaxed">{description}</p>
+    </motion.div>
+  )
+}
+
+const ValueCard = ({ icon: Icon, title, description, delay = 0 }) => {
+  const ref = useRef(null)
+  const isInView = useInView(ref, { once: true })
+
+  return (
+    <motion.div
+      ref={ref}
+      initial={{ opacity: 0, scale: 0.8 }}
+      animate={isInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.8 }}
+      transition={{ duration: 0.6, delay, ease: "easeOut" }}
+      whileHover={{ scale: 1.05 }}
+      className="group text-center"
+    >
+      <div className="w-20 h-20 bg-white rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-lg group-hover:shadow-xl transition-all duration-300">
+        <Icon className="w-10 h-10 text-red-600" />
+      </div>
+      <h3 className="text-xl font-bold text-white mb-3">{title}</h3>
+      <p className="text-red-100 leading-relaxed">{description}</p>
+    </motion.div>
+  )
+}
+
+export default function AboutPage() {
+  const [isMenuOpen, setIsMenuOpen] = useState(false)
+
+  const services = [
+    {
+      icon: FiSettings,
+      title: "Manufacturing",
+      description:
+        "State-of-the-art manufacturing processes delivering products that exceed expectations in quality and design.",
+    },
+    {
+      icon: FiShoppingBag,
+      title: "Sales",
+      description:
+        "Premium retail experience prioritizing customer needs and delivering exceptional service worldwide.",
+    },
+    {
+      icon: FiGlobe,
+      title: "Export",
+      description: "Global export services maintaining honesty and transparency in all international dealings.",
+    },
+    {
+      icon: FiZap,
+      title: "Customization",
+      description: "Utilizing cutting-edge technology to ensure high production standards and personalized solutions.",
+    },
+    {
+      icon: FiTrendingUp,
+      title: "Design",
+      description: "Crafting unique designs that reflect texleath, style, and contemporary fashion trends.",
+    },
+    {
+      icon: FiUsers,
+      title: "Customer Support",
+      description: "24/7 exceptional support ensuring complete customer satisfaction and seamless experience.",
+    },
+  ]
+
+  const team = [
+    {
+      name: "Sarah Johnson",
+      role: "CEO & Founder",
+      description: "Visionary leader guiding Texleath with passion for innovation and excellence in fashion industry.",
+      image: "/placeholder.svg?height=150&width=150",
+    },
+    {
+      name: "Michael Chen",
+      role: "Head of Design",
+      description: "Creative director ensuring each product reflects our commitment to style, quality, and innovation.",
+      image: "/placeholder.svg?height=150&width=150",
+    },
+    {
+      name: "Emily Rodriguez",
+      role: "Chief Marketing Officer",
+      description: "Strategic marketing leader building the Texleath brand and connecting with customers globally.",
+      image: "/placeholder.svg?height=150&width=150",
+    },
+  ]
+
+  const values = [
+    {
+      icon: FiAward,
+      title: "Excellence",
+      description: "Pursuing the highest standards in everything we do, from design to customer service.",
+    },
+    {
+      icon: FiHeart,
+      title: "Passion",
+      description: "Driven by genuine love for fashion and commitment to creating beautiful products.",
+    },
+    {
+      icon: FiShield,
+      title: "Integrity",
+      description: "Maintaining honesty, transparency, and ethical practices in all our business dealings.",
+    },
+    {
+      icon: FiTarget,
+      title: "Innovation",
+      description: "Continuously evolving and embracing new technologies to stay ahead of trends.",
+    },
+  ]
+
+  const stats = [
+    { number: "50K+", label: "Happy Customers" },
+    { number: "200K+", label: "Products Sold" },
+    { number: "25+", label: "Countries Served" },
+    { number: "8+", label: "Years Experience" },
+  ]
+
+  return (
+    <div className="min-h-screen bg-white">
+        {/* Hero Section */}
+      <section className="relative overflow-hidden bg-gradient-to-b from-gray-50 to-white py-20 lg:py-32">
+        <div className="absolute inset-0 overflow-hidden">
+          <div className="absolute -top-24 -right-24 w-96 h-96 bg-red-100 rounded-full opacity-20"></div>
+          <div className="absolute top-1/2 -left-24 w-48 h-48 bg-red-200 rounded-full opacity-30"></div>
+        </div>
+
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
+          <div className="grid lg:grid-cols-2 gap-16 items-center">
+            <motion.div
+              initial={{ opacity: 0, x: -50 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8, ease: "easeOut" }}
+            >
+              <h1 className="text-5xl lg:text-7xl font-bold text-gray-900 leading-tight mb-8">
+                About
+                <span className="block text-red-600">Texleath</span>
+              </h1>
+              <p className="text-xl text-gray-600 leading-relaxed mb-8">
+                We are a leading name in the world of premium fashion. Our dedication to quality and innovation sets us
+                apart in clothing sales, manufacturing, and global export services.
+              </p>
+              <p className="text-lg text-gray-600 leading-relaxed mb-10">
+                Founded on principles of quality and customer satisfaction, we deliver products that exceed expectations
+                through expert craftsmanship and timeless style.
+              </p>
+              <div className="flex flex-col sm:flex-row gap-4">
+                <Button size="lg">
+                  <FiArrowRight className="mr-2" />
+                  Our Story
+                </Button>
+                <Button variant="outline" size="lg">
+                  <FiPlay className="mr-2" />
+                  Watch Video
+                </Button>
+              </div>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, x: 50 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
+              className="relative"
+            >
+              <div className="relative z-10">
                 <img
-                  src={AboutPage}
-                  alt="Texleath Industries"
-                  className="w-full h-auto object-cover rounded-lg shadow-lg"
+                  src="/placeholder.svg?height=600&width=500"
+                  alt="About Texleath"
+                  width={500}
+                  height={600}
+                  className="rounded-3xl shadow-2xl"
                 />
               </div>
-              <div className="md:w-1/2 md:p-8 ">
-                <h2 className="text-4xl font-bold mb-6 text-red-600">
-                  About Us
-                </h2>
-                <p className="text-lg mb-6">
-                  Texleath Industries is a leading name in the world of premium clothing. Our dedication to quality and innovation sets us apart. From high-end clothing sales to state-of-the-art manufacturing processes, and a seamless export service, we are committed to excellence at every step.
-                </p>
-                <p className="text-lg">
-                  Founded on the principles of quality and customer satisfaction, we pride ourselves on delivering products that exceed expectations. Our team of experts ensures that every garment meets the highest standards of craftsmanship and style.
-                </p>
-              </div>
+              <div className="absolute -bottom-6 -right-6 w-full h-full bg-gradient-to-br from-red-500 to-red-600 rounded-3xl -z-10"></div>
+            </motion.div>
+          </div>
+        </div>
+      </section>
+
+      {/* Stats Section */}
+      <AnimatedSection className="py-20 bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-8">
+            {stats.map((stat, index) => (
+              <motion.div
+                key={stat.label}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: index * 0.1 }}
+                className="text-center"
+              >
+                <div className="text-4xl lg:text-5xl font-bold text-red-600 mb-2">{stat.number}</div>
+                <div className="text-gray-600 font-medium">{stat.label}</div>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </AnimatedSection>
+
+      {/* Services Section */}
+      <AnimatedSection className="py-20 lg:py-32 bg-gray-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-16">
+            <motion.h2
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6 }}
+              className="text-4xl lg:text-5xl font-bold text-gray-900 mb-6"
+            >
+              What We <span className="text-red-600">Offer</span>
+            </motion.h2>
+            <motion.p
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.1 }}
+              className="text-xl text-gray-600 max-w-3xl mx-auto"
+            >
+              From manufacturing to global export, we provide comprehensive solutions that exceed expectations in every
+              aspect of the fashion industry.
+            </motion.p>
+          </div>
+
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {services.map((service, index) => (
+              <ServiceCard key={service.title} {...service} delay={index * 0.1} />
+            ))}
+          </div>
+        </div>
+      </AnimatedSection>
+
+      {/* Free Delivery Section */}
+      <AnimatedSection className="py-20 relative overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-r from-red-600 via-red-500 to-red-600"></div>
+        <div className="absolute inset-0 bg-black/10"></div>
+
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
+          <div className="text-center">
+            <motion.div
+              initial={{ opacity: 0, scale: 0.8 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.8 }}
+              className="inline-flex items-center justify-center w-24 h-24 bg-white/20 rounded-full mb-8"
+            >
+              <FiTruck className="w-12 h-12 text-white" />
+            </motion.div>
+            <motion.h2
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.1 }}
+              className="text-5xl lg:text-7xl font-bold text-white mb-4"
+            >
+              FREE DELIVERY
+            </motion.h2>
+            <motion.p
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+              className="text-2xl lg:text-3xl text-red-100 font-medium"
+            >
+              ON <span className="text-white font-bold">$100</span> OR ABOVE
+            </motion.p>
+          </div>
+        </div>
+      </AnimatedSection>
+
+      {/* Team Section */}
+      <AnimatedSection className="py-20 lg:py-32 bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-16">
+            <motion.h2
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6 }}
+              className="text-4xl lg:text-5xl font-bold text-gray-900 mb-6"
+            >
+              Meet Our <span className="text-red-600">Team</span>
+            </motion.h2>
+            <motion.p
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.1 }}
+              className="text-xl text-gray-600 max-w-3xl mx-auto"
+            >
+              Our team of dedicated professionals brings wealth of experience and passion for excellence to make our
+              vision a reality.
+            </motion.p>
+          </div>
+
+          <div className="grid md:grid-cols-3 gap-8">
+            {team.map((member, index) => (
+              <TeamMember key={member.name} {...member} delay={index * 0.1} />
+            ))}
+          </div>
+        </div>
+      </AnimatedSection>
+
+      {/* Values Section */}
+      <AnimatedSection className="py-20 lg:py-32 relative overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900"></div>
+        <div className="absolute inset-0 opacity-10">
+          <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-r from-red-500/20 to-transparent"></div>
+        </div>
+
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
+          <div className="text-center mb-16">
+            <motion.h2
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6 }}
+              className="text-4xl lg:text-5xl font-bold text-white mb-6"
+            >
+              Our <span className="text-red-400">Values</span>
+            </motion.h2>
+            <motion.p
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.1 }}
+              className="text-xl text-gray-300 max-w-3xl mx-auto"
+            >
+              These core values are the cornerstone of our business, guiding our actions and defining our commitment to
+              excellence.
+            </motion.p>
+          </div>
+
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+            {values.map((value, index) => (
+              <ValueCard key={value.title} {...value} delay={index * 0.1} />
+            ))}
+          </div>
+        </div>
+      </AnimatedSection>
+
+      {/* CTA Section */}
+      <AnimatedSection className="py-20 bg-gray-50">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}>
+            <h2 className="text-4xl lg:text-5xl font-bold text-gray-900 mb-6">
+              Ready to Experience <span className="text-red-600">Texleath</span>?
+            </h2>
+            <p className="text-xl text-gray-600 mb-10 max-w-2xl mx-auto">
+              Discover our latest collections and experience the difference that quality, style, and exceptional service
+              can make.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <Button size="lg">
+                <FiShoppingBag className="mr-2" />
+                Shop Now
+              </Button>
+              <Button variant="outline" size="lg">
+                Contact Us
+              </Button>
             </div>
-          </div>
-        </motion.section >
-
-        {/* Our Vision Section */}
-        <motion.section
-          className="bg-red-50 px-5 lg:px-20 py-12"
-          variants={sectionVariants}
-          initial="hidden"
-          animate="visible"
-        >
-          <h2 className="text-2xl md:text-4xl font-bold mb-4 text-red-900 text-center">
-            What We Offer
-          </h2>
-          <div className="flex flex-wrap justify-center gap-8 mt-6">
-            {/* Existing Cards */}
-            <motion.div
-              className="card bg-white p-6 rounded-lg shadow-md flex items-center"
-              variants={cardVariants}
-              initial="hidden"
-              animate="visible"
-            >
-              <FaRegStar className="text-red-500 text-5xl mr-4" />
-              <div>
-                <h3 className="text-xl font-semibold">Manufacturing</h3>
-                <p className="text-gray-600">Delivering products that exceed expectations in quality and design.</p>
-              </div>
-            </motion.div>
-            <motion.div
-              className="card bg-white p-6 rounded-lg shadow-md flex items-center"
-              variants={cardVariants}
-              initial="hidden"
-              animate="visible"
-            >
-              <IoMdPeople className="text-red-500 text-5xl mr-4" />
-              <div>
-                <h3 className="text-xl font-semibold">Sales</h3>
-                <p className="text-gray-600">Prioritizing our customers’ needs and delivering exceptional service.</p>
-              </div>
-            </motion.div>
-            <motion.div
-              className="card bg-white p-6 rounded-lg shadow-md flex items-center"
-              variants={cardVariants}
-              initial="hidden"
-              animate="visible"
-            >
-              <GiCheckMark className="text-red-500 text-5xl mr-4" />
-              <div>
-                <h3 className="text-xl font-semibold">Export</h3>
-                <p className="text-gray-600">Maintaining honesty and transparency in all our dealings.</p>
-              </div>
-            </motion.div>
-            {/* Additional Cards */}
-            <motion.div
-              className="card bg-white p-6 rounded-lg shadow-md flex items-center"
-              variants={cardVariants}
-              initial="hidden"
-              animate="visible"
-            >
-              <GiFactory className="text-red-500 text-5xl mr-4" />
-              <div>
-                <h3 className="text-xl font-semibold">Customization</h3>
-                <p className="text-gray-600">Utilizing state-of-the-art technology to ensure high production standards.</p>
-              </div>
-            </motion.div>
-            <motion.div
-              className="card bg-white p-6 rounded-lg shadow-md flex items-center"
-              variants={cardVariants}
-              initial="hidden"
-              animate="visible"
-            >
-              <GiPencilBrush className="text-red-500 text-5xl mr-4" />
-              <div>
-                <h3 className="text-xl font-semibold">Design</h3>
-                <p className="text-gray-600">Crafting unique designs that reflect elegance and style.</p>
-              </div>
-            </motion.div>
-            <motion.div
-              className="card bg-white p-6 rounded-lg shadow-md flex items-center"
-              variants={cardVariants}
-              initial="hidden"
-              animate="visible"
-            >
-              <FaUsers className="text-red-500 text-5xl mr-4" />
-              <div>
-                <h3 className="text-xl font-semibold">Customer Support</h3>
-                <p className="text-gray-600">Providing exceptional support to ensure customer satisfaction.</p>
-              </div>
-            </motion.div>
-          </div>
-        </motion.section>
-
-        <section className='md:w-[90%] w-[95%] mt-[35px] xl:w-[80%] mx-auto flex  bg-gradient-to-t from-red-400 via-red-100 to-red-400 rounded-md py-[40px] sm:py-[85px] xsx:py-[105px]' >
-          <div className='w-[40%] mt-[-28px] lg:mt-[-15px] xl:mt-[5px] sm:ml-[45px] ml-[35px] mr-[-45px] scale-75 sm:scale-125 xsx:scale-150'>
-            <div className="cycle-loader"></div>
-          </div>
-          <div className='w-[60%] flex flex-col justify-center'>
-            <p className='text-[30px] sm:text-[45px] xsx:text-[55px] xl:text-[68px] text-white font-extrabold text-center'>FREE DELIVERY</p>
-            <p className='text-[17px] sm:text-[32px] xsx:text-[40px] xl:text-[50px] text-red-200 font-medium text-center'>ON <span className='text-red-500'>PKR 10,000</span> OR ABOVE</p>
-          </div>
-        </section>
-
-        {/* Meet the Team Section */}
-        <motion.section
-          className="meet-the-team py-12"
-          variants={sectionVariants}
-          initial="hidden"
-          animate="visible"
-        >
-          <h2 className="text-3xl font-semibold mb-6 text-gray-800">Meet the Team</h2>
-          <p className="text-lg text-gray-700 mb-4">
-            Our team of dedicated professionals brings a wealth of experience and a passion for excellence to Texleath Industries. Get to know the people behind the brand who make our vision a reality.
-          </p>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-            <motion.div
-              className="team-member bg-white p-6 rounded-lg shadow-md"
-              variants={cardVariants}
-              initial="hidden"
-              animate="visible"
-            >
-              <img src="https://via.placeholder.com/150" alt="Team Member" className="w-32 h-32 rounded-full mb-4 mx-auto" />
-              <h3 className="text-xl font-semibold text-center">Jane Doe</h3>
-              <p className="text-gray-600 text-center">CEO & Founder</p>
-              <p className="text-gray-600 text-center mt-2">Jane is the visionary behind Texleath Industries, guiding the company with her passion for innovation and excellence.</p>
-            </motion.div>
-            <motion.div
-              className="team-member bg-white p-6 rounded-lg shadow-md"
-              variants={cardVariants}
-              initial="hidden"
-              animate="visible"
-            >
-              <img src="https://via.placeholder.com/150" alt="Team Member" className="w-32 h-32 rounded-full mb-4 mx-auto" />
-              <h3 className="text-xl font-semibold text-center">John Smith</h3>
-              <p className="text-gray-600 text-center">Head of Design</p>
-              <p className="text-gray-600 text-center mt-2">John leads our design team, ensuring that each product reflects our commitment to style and quality.</p>
-            </motion.div>
-            <motion.div
-              className="team-member bg-white p-6 rounded-lg shadow-md"
-              variants={cardVariants}
-              initial="hidden"
-              animate="visible"
-            >
-              <img src="https://via.placeholder.com/150" alt="Team Member" className="w-32 h-32 rounded-full mb-4 mx-auto" />
-              <h3 className="text-xl font-semibold text-center">Emily Davis</h3>
-              <p className="text-gray-600 text-center">Chief Marketing Officer</p>
-              <p className="text-gray-600 text-center mt-2">Emily drives our marketing efforts, building the Texleath brand and connecting with our customers.</p>
-            </motion.div>
-          </div>
-        </motion.section>
-        {/* Our Values Section */}
-        <motion.section
-          className="our-values px-3 lg:px-20 bg-gradient-to-br from-red-900 to-custom-red py-12"
-          variants={sectionVariants}
-          initial="hidden"
-          animate="visible"
-        >
-          <h2 className="text-2xl md:text-4xl font-bold mb-4 text-red-50 text-center">Our Values</h2>
-          <p className="text-lg text-red-300 font-serif text-center mb-4">
-            At Texleath Industries, our values are the cornerstone of our business. They guide our actions, shape our culture, and define our commitment to excellence.
-          </p>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            <motion.div
-              className="value-card bg-red-50 p-6 rounded-lg shadow-md"
-              variants={cardVariants}
-              initial="hidden"
-              animate="visible"
-            >
-              <FaRegHandshake className="text-red-500 text-3xl mb-4" />
-              <h3 className="text-xl font-semibold mb-2">Collaboration</h3>
-              <p className="text-red-600">Working together to achieve common goals and drive success.</p>
-            </motion.div>
-            <motion.div
-              className="value-card bg-red-50 p-6 rounded-lg shadow-md"
-              variants={cardVariants}
-              initial="hidden"
-              animate="visible"
-            >
-              <FaUserTie className="text-red-500 text-3xl mb-4" />
-              <h3 className="text-xl font-semibold mb-2">Professionalism</h3>
-              <p className="text-gray-600">Maintaining the highest standards of conduct in every aspect of our business.</p>
-            </motion.div>
-            <motion.div
-              className="value-card bg-red-50 p-6 rounded-lg shadow-md"
-              variants={cardVariants}
-              initial="hidden"
-              animate="visible"
-            >
-              <FaRegStar className="text-red-500 text-3xl mb-4" />
-              <h3 className="text-xl font-semibold mb-2">Quality</h3>
-              <p className="text-gray-600">Ensuring our products meet the highest standards of excellence and craftsmanship.</p>
-            </motion.div>
-            <motion.div
-              className="value-card bg-red-50 p-6 rounded-lg shadow-md"
-              variants={cardVariants}
-              initial="hidden"
-              animate="visible"
-            >
-              <IoMdPeople className="text-red-500 text-3xl mb-4" />
-              <h3 className="text-xl font-semibold mb-2">Respect</h3>
-              <p className="text-gray-600">Valuing and honoring the individuality and contributions of each person.</p>
-            </motion.div>
-          </div>
-        </motion.section>
-
-      </div>
+          </motion.div>
+        </div>
+      </AnimatedSection>
     </div>
-  );
-};
-
-export default About;
+  )
+}

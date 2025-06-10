@@ -164,10 +164,10 @@ export default function ProfilePage() {
           });
         }
         else {
-          navigate('/login');
+          navigate('/signin');
         }
       } catch (error) {
-          navigate('/login');
+          navigate('/signin');
           // setError('Failed to fetch profile');
       }
     }
@@ -230,7 +230,7 @@ export default function ProfilePage() {
     localStorage.removeItem('token');
     dispatch(clearCart());
     window.location.reload();
-    navigate('/login');
+    navigate('/signin');
   };
 
 
