@@ -323,7 +323,7 @@ export default function Navbar() {
 
       <header>
         <div className="relative text-white lg:hidden">
-          <div className="flex z-[999] items-center h-[70px] justify-between bg-white border-b-[2px] border-gray-200 shadow-sm px-4 py-2 relative">
+          <div className="flex items-center h-[70px] justify-between bg-white border-b-[2px] border-gray-200 shadow-sm px-4 py-2 relative">
             <div className="flex items-center">
               <motion.div
                 initial={{ opacity: 1 }}
@@ -346,10 +346,48 @@ export default function Navbar() {
             </div>
             <div className="flex">
               {isLoggedIn &&
-                <>
-                  <NavLink to="/cart"><MdShoppingCart className="text-white hover:scale-110 hover:text-red-500 mt-[5px] text-[28px]" /></NavLink>
-                  <p className=" text-md w-[23px] h-[23px] bg-white text-red-700 rounded-full text-center font-extrabold mr-[5px]">{cartLength}</p>
-                </>
+                 <motion.button
+                      onClick={openCartModal}
+                      whileHover={{ scale: 1.05 }}
+                      whileTap={{ scale: 0.95 }}
+                      initial={{ opacity: 0, x: 20 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ delay: 0.7 }}
+                      className="relative bg-gradient-to-r from-red-700 via-red-900 to-red-700 text-white p-2 mr-3 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 group"
+                    >
+                      <motion.div whileHover={{ rotate: [0, -10, 10, 0] }} transition={{ duration: 0.5 }}>
+                        <AiOutlineShoppingCart className="w-5 h-5" />
+                      </motion.div>
+
+                      {/* Cart Count Badge */}
+                      <AnimatePresence>
+                        {cartLength > 0 && (
+                          <motion.div
+                            initial={{ scale: 0, opacity: 0 }}
+                            animate={{ scale: 1, opacity: 1 }}
+                            exit={{ scale: 0, opacity: 0 }}
+                            key={cartLength}
+                            className="absolute -top-2 -right-2 bg-red-500 text-white text-xs font-bold rounded-full w-6 h-6 flex items-center justify-center"
+                          >
+                            <motion.span
+                              initial={{ scale: 1.5 }}
+                              animate={{ scale: 1 }}
+                              transition={{ type: "spring", stiffness: 500, damping: 25 }}
+                            >
+                              {cartLength}
+                            </motion.span>
+                          </motion.div>
+                        )}
+                      </AnimatePresence>
+
+                      {/* Hover Effect Ring */}
+                      <motion.div
+                        className="absolute inset-0 rounded-full border-2 border-white opacity-0 group-hover:opacity-30"
+                        initial={{ scale: 0.8 }}
+                        whileHover={{ scale: 1.2, opacity: 0.3 }}
+                        transition={{ duration: 0.3 }}
+                      />
+                    </motion.button>
               }
               <motion.div
                 key={isMenuOpen ? 'close' : 'menu'}
@@ -377,30 +415,26 @@ export default function Navbar() {
                 animate={{ scaleX: 1, height: "50vh", transition: { duration: 0.5 } }}
                 exit={{ scaleX: 0, height: 0, transition: { duration: 0.3, delay: 0.1 } }}
                 style={{ transformOrigin: "right" }}
-                className="top-[25px] left-[15px] right-[15px] fixed z-[999] mt-[65px] pb[45px] inset-0 bg-white border-[2px] border-gray-200 shadow-md flex rounded-[10px] flex-col h-screen px-4 py-3"
+                className="top-[25px] left-[15px] right-[15px] fixed z-[999] mt-[65px] overflow-hidden pb[45px] inset-0 bg-white border-[2px] border-gray-200 shadow-md flex rounded-[10px] flex-col h-screen px-4 py-3"
               >
                 <div className='my-[10px]'></div>
                 {/* Menu items */}
                 <motion.div
                   initial={{ x: -100, opacity: 0 }}
-                  animate={{ x: 0, opacity: 1, transition: { duration: 0.5, delay: 0.3 } }}
+                  animate={{ x: 0, opacity: 1, transition: { duration: 0.5, delay: 0.5 } }}
                   exit={{ x: -100, opacity: 0, transition: { duration: 0.2 } }}
-                  className="flex flex-col mt"
+                  className="flex flex-col"
                 >
-                  <NavLink to="/" onClick={handleMenuToggle} className="text-red-700 mb-[12px] text-md text-xl  mr-[15px]"> Home</NavLink>
-                  <NavLink to="/productlist/All" onClick={handleMenuToggle} className="text-white  mb-[12px] text-md text-lg mr-[15px]"> Catalog</NavLink>
-
-                  <div className="h-[2px] w-[85%] bg-red-50 mt-[-5px]"></div>
-
-                  
-                  <div className="h-[2px] w-[85%] bg-red-50  my-[8px]"></div>
-
+                  <NavLink to="/" onClick={handleMenuToggle} className="text-red-700 mb-[12px] text-[18px] font-[600] mr-[15px]"> Home</NavLink>
+                  <NavLink to="/anout" onClick={handleMenuToggle} className="text-red-700 mb-[12px] text-[18px] font-[600] mr-[15px]"> About</NavLink>
+                  <NavLink to="/productlist/All" onClick={handleMenuToggle} className="text-red-700 mb-[12px] text-[18px] font-[600] mr-[15px]"> Catalog</NavLink>
+                  <NavLink to="/" onClick={handleMenuToggle} className="text-red-700 mb-[12px] text-[18px] font-[600] mr-[15px]"> Categories</NavLink>
                   {isLoggedIn ? (
                     <div className="flex">
                       <NavLink onClick={handleMenuToggle} to="/profile" className="flex items-center mt-[7px]"><IoPersonCircleOutline className="text-red-100 hover:text-red-600 text-[45px]" /><span className="font-medium underline ml-[2px] text-xl text-white">My Profile</span></NavLink>
                     </div>
                   ) : (
-                    <NavLink to="/signin" onClick={handleMenuToggle} className="text-white mt-[15px] text-md w-[130px] text-center py-[3px] hover:bg-red-950 bg-red-900 border border-white px-[8px] rounded-lg mr-[15px]">
+                    <NavLink to="/signin" onClick={handleMenuToggle} className="text-white mt-[15px] text-[14px] w-[130px] text-center py-[4px] hover:bg-red-700 bg-red-800 border border-white px-[8px] rounded-lg mr-[15px]">
                       Start Shopping
                     </NavLink>
                   )}
@@ -419,6 +453,9 @@ export default function Navbar() {
           </AnimatePresence>
         </div>
 
+        {/* Search Modal */}
+        <SearchModal isOpen={isSearchModalOpen} onClose={() => setIsSearchModalOpen(false)} />
+        <CartModal isOpen={isCartOpen} onClose={closeCartModal} />
       </header>
 
     </nav>

@@ -128,15 +128,15 @@ export default function Footer() {
               </p>
               <p className="text-xs text-gray-500">Join 50,000+ fashion enthusiasts. Unsubscribe anytime.</p>
               </div>
-              <div className="w-full lg:px-[35px]">
+
+              <div className="w-full sm:mt-0 mt-[15px] flex gap-x-2 sm:flex-col lg:px-[35px]">
                 <input 
                 type="email" 
                 placeholder="Enter your email address" 
-                   className='flex h-12 w-[280px] ml-auto rounded-xl border-2 border-gray-200 bg-white px-4 py-3 text-sm text-gray-900 placeholder:text-gray-400 focus:outline-none focus:ring-0 focus:border-red-500 transition-all duration-300 '
-   />
-
+                   className='flex h-12 w-full sm:w-[280px] ml-auto rounded-xl border-2 border-gray-200 bg-white px-4 py-3 text-sm text-gray-900 placeholder:text-gray-400 focus:outline-none focus:ring-0 focus:border-red-500 transition-all duration-300 '
+                 />
                 <div className="mt-[15px]"></div>
-                <button className="px- 6 text-[16px] font-[600] py-2 bg-red-600 rounded-[12px] ml-auto w-[280px] justify-center text-white flex items-center">
+                <button className="px- 6 text-[16px] font-[600] py-2 bg-red-600 rounded-[12px] ml-auto w-full sm:w-[280px] justify-center text-white flex items-center">
                   <FiSend className="w-4 h-4 mr-2" />
                   Subscribe
                 </button>
@@ -184,7 +184,8 @@ export default function Footer() {
               </motion.div>
             </div>
 
-            {/* Quick Links */}
+           <div className="col-span-3 pl-4 mdLpl-0 grid grid-cols-3">
+             {/* Quick Links */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -231,6 +232,7 @@ export default function Footer() {
                 ))}
               </ul>
             </motion.div>
+           </div>
           </div>
         </div>
       </div>

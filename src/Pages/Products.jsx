@@ -273,7 +273,7 @@ export default function Products() {
     lg:block lg:static lg:w-64
     space-y-6
   `}
-  >
+          >
             <div className="bg-white border-[2px] border-gray-100 shadow-sm rounded-[14px] p-6 ">
               <h3 className="font-semibold text-gray-900 mb-4">Categories</h3>
               <div className="space-y-3">
@@ -347,7 +347,7 @@ export default function Products() {
                           <img
                             src={`${import.meta.env.VITE_REACT_APP_API_BASE_URL}/uploads/${product.image}` || "/placeholder.svg"}
                             alt={product.name}
-                            className="w-full h-64 object-cover  group-hover:scale-105 transition-transform duration-300"
+                            className="w-full object-cover  group-hover:scale-105 transition-transform duration-300"
                           />
                           {product.originalPrice > product.price && (
                             <Badge className="absolute top-3 left-3 bg-red-500 hover:bg-red-600">Sale</Badge>
@@ -370,9 +370,15 @@ export default function Products() {
                           <p className="text-sm text-gray-500 mb-2">{product.category}</p>
                           <div className="flex items-center space-x-2">
                             <span className="text-lg font-bold text-gray-900">${product.price}</span>
-                            {product.originalPrice > product.price && (
-                              <span className="text-sm text-gray-500 line-through">${product.originalPrice}</span>
-                            )}
+                            {(product.sale
+                              ? (product.price - (product.price * product.sale) / 100).toFixed(2)
+                              : product.price.toFixed(2)) > product.price
+                              && (
+                                <span className="text-sm text-gray-500 line-through">$
+                                  {product.sale
+                                    ? (product.price - (product.price * product.sale) / 100).toFixed(2)
+                                    : product.price.toFixed(2)}</span>
+                              )}
                           </div>
                         </div>
                       </div>

@@ -141,12 +141,12 @@ const Home = () => {
 
       <Section1 />
  
-      <section className='mb-24 mt-32'>
+      <section className='mb-24 mt-40'>
         <h3 className='text-[16px] text-center heading-font text-red-700 font-sans font-[600]'>POWERED BY</h3>
         {/* Decorative line */}
         <div className="mx-auto mt-2 h-1 w-16 bg-red-700" />
 
-        <div className='md:max-w-6xl mx-auto mt-[15px]'>
+        <div className='md:max-w-4xl mx-auto mt-[15px]'>
           <div className="slider " style={{ '--width': '120px', '--height': '100px', '--quantity': 5 }}>
             <div className="list ">
               <div className="stack" style={{ '--position': 1 }}><div className='w-[110px]'><img src="/logos/nike.png" alt="Nike Logo" className='' /></div></div>
@@ -239,7 +239,7 @@ const Home = () => {
                       key={product.id}
                       initial={{ opacity: 0, y: 20 }}
                       whileInView={{ opacity: 1, y: 0 }}
-                      transition={{ duration: 0.6, delay: index * 0.1 }}
+                      transition={{ duration: 0.2, delay: index * 0.1 }}
                       whileHover={{ y: -5 }}
                       className="group cursor-pointer"
                     >
@@ -248,10 +248,8 @@ const Home = () => {
                           <div className="relative">
                             <img
                               src={`${import.meta.env.VITE_REACT_APP_API_BASE_URL}/uploads/${product.image}`}
-                              alt={product.name}
-                              width={300}
-                              height={400}
-                              className="w-full h-64 object-cover group-hover:scale-105 transition-transform duration-300"
+                              alt={product.name} 
+                              className="w-full  object-cover group-hover:scale-105 transition-transform duration-300"
                             />
                             {product.originalPrice > product.price && (
                               <Badge className="absolute top-3 left-3 bg-red-500 hover:bg-red-600">Sale</Badge>
@@ -273,8 +271,8 @@ const Home = () => {
                             <h3 className="font-semibold text-gray-900 mb-2">{product.name}</h3>
                             <div className="flex items-center space-x-2">
                               <span className="text-lg font-bold text-gray-900">${product.price}</span>
-                              {product.originalPrice > product.price && (
-                                <span className="text-sm text-gray-500 line-through">${product.originalPrice}</span>
+                              {discountedPrice > product.price && (
+                                <span className="text-sm text-gray-500 line-through">${discountedPrice}</span>
                               )}
                             </div>
                           </div>
@@ -353,12 +351,12 @@ const Home = () => {
           <h2 className="text-2xl md:text-4xl font-bold mb-8 text-red-600 text-center">
             What Our Clients Say
           </h2>
-
+{/* 
           <div className='flex w-full h-2 sm:h-4 mx-auto justify-center mb-[25px] items-center'>
             <div className='w-2 sm:w-4 h-[100%] mr-[5px] rounded-full bg-red-300'></div>
             <div className='h-[3px] w-[89%] mx-auto bg-red-300 '></div>
             <div className='w-2 sm:w-4 h-[100%]  ml-[5px] rounded-full bg-red-300'></div>
-          </div>
+          </div> */}
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
             {reviews.map((review, index) => (

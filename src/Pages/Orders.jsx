@@ -213,10 +213,7 @@ const StatusBadge = ({ status }) => {
 }
 
 const OrderCard = ({ order, onViewDetails }) => {
-    //const totalItems = order.items.reduce((sum, item) => sum + item.quantity, 0)
-    //const totalSavings = order.items.reduce((sum, item) => sum + (item.originalPrice - item.price) * item.quantity, 0)
-    console.log("as", order)
-    const totalSavings = order.items.reduce((total, item) => {
+     const totalSavings = order.items.reduce((total, item) => {
         return total + ((item.price * item.quantity) - (item.discountedPrice * item.quantity));
     }, 0);
     return (
@@ -330,7 +327,7 @@ const OrderCard = ({ order, onViewDetails }) => {
     )
 }
 
-const Orders = ({ order, isOpen, onClose }) => {
+const OrderDetailsModal = ({ order, isOpen, onClose }) => {
     if (!order) return null
 
     const totalItems = order.items.reduce((sum, item) => sum + item.quantity, 0)
@@ -495,7 +492,7 @@ const Orders = ({ order, isOpen, onClose }) => {
     )
 }
 
-export default function ShowOrders() {
+export default function Orders() {
     const [userorders, setUserOrders] = useState([]);
     const [userId, setUserId] = useState(null);
 
@@ -526,7 +523,7 @@ export default function ShowOrders() {
 
             try {
                 const response = await axios.get(`${import.meta.env.VITE_REACT_APP_API_BASE_URL}/place-order/orders/${userId}`);
-                console.log(response.data); // Debug log
+                //console.log(response.data); // Debug log
                 setUserOrders(response.data);
             }
             catch (error) {

@@ -387,7 +387,7 @@ const Checkout = () => {
                     </div>
 
                     {/* Order Summary */}
- <div className="gap-6 col-span-2">
+ <div className="gap-6 lg:col-span-2">
                 {/* Personal Details */}
                 <div className="space-y-6">
                   <div>
