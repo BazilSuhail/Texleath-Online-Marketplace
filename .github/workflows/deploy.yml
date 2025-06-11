@@ -3,7 +3,7 @@ name: Deploy to Netlify
 on:
   push:
     branches:
-      - main  # or your default branch
+      - production  # or your default branch
 
 jobs:
   build-and-deploy:
