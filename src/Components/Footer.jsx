@@ -9,9 +9,8 @@ import {
   FiRefreshCw,
   FiHeadphones,
   FiSend,
-} from "react-icons/fi"
-import texleathlogo from "../texleathlogo.svg"
-import { FaFacebook, FaInstagram, FaTwitter, FaYoutube, FaTiktok, FaPinterest } from "react-icons/fa"
+} from "react-icons/fi" 
+import { FaFacebook, FaInstagram, FaTwitter, FaYoutube } from "react-icons/fa"
 import { Link } from "react-router-dom"
 
 
@@ -111,7 +110,7 @@ export default function Footer() {
 
    
       {/* Newsletter Section */}
-      <div className="relative border-t border-gray-200">
+      <div className="relative bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8  pt-16"> 
             <motion.div 
               initial={{ opacity: 0, y: 20 }}
@@ -146,7 +145,7 @@ export default function Footer() {
       </div>
 
       {/* Main Footer Content */}
-      <div className="relative border-t border-gray-200 bg-white">
+      <div className="relative bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
           <div className="grid grid-cols-1 lg:grid-cols-5 gap-12">
             {/* Brand Section */}
@@ -158,7 +157,7 @@ export default function Footer() {
                 className="space-y-6"
               >
                 <Link to="/" className="flex items-center ">
-                    <img src={texleathlogo} alt="Poor Connection" className="w-[55px] h-[55px]" />
+                    <img src={"/logo.png"} alt="Poor Connection" className="w-[55px] h-[55px]" />
                                  
                   <span className="text-2xl font-bold ml-[8px] text-red-700 text-gray-900">Texleath</span>
                   <span className="text-2xl font-bold ml-[8px] text-red-400 text-gray-900">Industries</span>
@@ -250,12 +249,10 @@ export default function Footer() {
             >
               <span className="text-gray-600 text-sm font-medium">Follow Us:</span>
               <div className="flex space-x-3">
+                <SocialIcon to="https://twitter.com" icon={FaTwitter} label="Twitter" />
+                <SocialIcon to="https://youtube.com" icon={FaYoutube} label="YouTube" /> 
                 <SocialIcon to="https://facebook.com" icon={FaFacebook} label="Facebook" />
                 <SocialIcon to="https://instagram.com" icon={FaInstagram} label="Instagram" />
-                <SocialIcon to="https://twitter.com" icon={FaTwitter} label="Twitter" />
-                <SocialIcon to="https://youtube.com" icon={FaYoutube} label="YouTube" />
-                <SocialIcon to="https://tiktok.com" icon={FaTiktok} label="TikTok" />
-                <SocialIcon to="https://pinterest.com" icon={FaPinterest} label="Pinterest" />
               </div>
             </motion.div>
 

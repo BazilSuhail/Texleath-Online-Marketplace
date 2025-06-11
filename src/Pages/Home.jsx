@@ -12,10 +12,10 @@ import { FaPeoplePulling } from "react-icons/fa6";
 import { FaRegHandshake } from 'react-icons/fa';
 
 import MainLoader from './mainLoader.jsx'
- 
-import  Section1 from '../Components/HomePage/Section1.jsx' 
-import  Section2 from '../Components/HomePage/Section2.jsx' 
-import  Section3 from '../Components/HomePage/Section3.jsx'
+
+import Section1 from '../Components/HomePage/Section1.jsx'
+import Section2 from '../Components/HomePage/Section2.jsx'
+import Section3 from '../Components/HomePage/Section3.jsx'
 
 const features = [
   {
@@ -54,45 +54,6 @@ const FeatureCard = ({ icon: Icon, title, description }) => {
     </motion.div>
   )
 }
-
-const reviews = [
-  {
-    name: "Jane Doe",
-    review: "DiObral Industries has been an incredible partner. Their commitment to quality is evident in every product we receive. Highly recommended!",
-    email: "jane.doe@example.com",
-    rating: 5,
-  },
-  {
-    name: "John Smith",
-    review: "The attention to detail and customer service at DiObral Industries is second to none. I’m always impressed with their professionalism.",
-    email: "john.smith@example.com",
-    rating: 4,
-  },
-  {
-    name: "Emily Johnson",
-    review: "Exceptional quality and excellent service. DiObral Industries exceeds expectations every time!",
-    email: "emily.johnson@example.com",
-    rating: 3,
-  },
-  {
-    name: "Michael Brown",
-    review: "I've been consistently impressed with the products from DiObral Industries. Their attention to detail is unmatched.",
-    email: "michael.brown@example.com",
-    rating: 4,
-  },
-  {
-    name: "Sarah Wilson",
-    review: "DiObral Industries provides top-notch products and excellent customer support. I highly recommend them!",
-    email: "sarah.wilson@example.com",
-    rating: 5,
-  },
-  {
-    name: "David Lee",
-    review: "A fantastic company with exceptional quality. I’ve always been satisfied with their products and service.",
-    email: "david.lee@example.com",
-    rating: 5,
-  },
-];
 
 const Home = () => {
 
@@ -140,7 +101,7 @@ const Home = () => {
     <main className="font-sans bg-gray-100 min-h-screen text-gray-800">
 
       <Section1 />
- 
+
       <section className='mb-24 mt-15'>
         <h3 className='text-[16px] text-center heading-font text-red-700 font-sans font-[600]'>POWERED BY</h3>
         {/* Decorative line */}
@@ -159,15 +120,9 @@ const Home = () => {
         </div>
       </section>
 
-
       <Section2 />
-      <Section3 />
-      {/* <Section2 /> */}
 
-
-      <div className='h-[4px] w-[95%] mx-auto my-[45px] rounded-lg bg-red-700'></div>
-
-      <section className='md:w-[90%] w-[95%] mt-[35px] xl:w-[80%] mx-auto flex  bg-gradient-to-tr from-red-800 via-red-950 to-red-800 rounded-md py-[40px] sm:py-[85px] xsx:py-[105px]' >
+      <section className='max-w-7xl mt-[35px] mx-auto flex  bg-gradient-to-tr from-red-800 via-red-950 to-red-800 rounded-md py-[40px] sm:py-[85px] xsx:py-[105px]' >
         <div className='w-[40%] mt-[-28px] lg:mt-[-15px] xl:mt-[5px] sm:ml-[45px] ml-[35px] mr-[-45px] scale-75 sm:scale-125 xsx:scale-150'>
           <div className="cycle-loader"></div>
         </div>
@@ -192,10 +147,10 @@ const Home = () => {
       <section className='md:max-w-7xl mx-auto mt-[15px]'>
         <div className="slider " style={{ '--width': '410px', '--height': '150px', '--quantity': 4 }}>
           <div className="list ">
-            <div className="stack" style={{ '--position': 1 }}><div className='w-[380px] font-[700] text-[55px]'>New Arrivals</div></div> 
-            <div className="stack" style={{ '--position': 2 }}><div className='w-[380px] font-[700] text-[55px]'>New Arrivals</div></div> 
-            <div className="stack" style={{ '--position': 3 }}><div className='w-[380px] font-[700] text-[55px]'>New Arrivals</div></div> 
-            <div className="stack" style={{ '--position': 4 }}><div className='w-[380px] font-[700] text-[55px]'>New Arrivals</div></div> 
+            <div className="stack" style={{ '--position': 1 }}><div className='w-[380px] font-[700] text-[55px]'>New Arrivals</div></div>
+            <div className="stack" style={{ '--position': 2 }}><div className='w-[380px] font-[700] text-[55px]'>New Arrivals</div></div>
+            <div className="stack" style={{ '--position': 3 }}><div className='w-[380px] font-[700] text-[55px]'>New Arrivals</div></div>
+            <div className="stack" style={{ '--position': 4 }}><div className='w-[380px] font-[700] text-[55px]'>New Arrivals</div></div>
           </div>
         </div>
       </section>
@@ -216,7 +171,7 @@ const Home = () => {
       {
         loading ?
           <MainLoader /> :
-          <section className="py-16 lg:py-24 bg-gray-50">
+          <section className="py-16 lg:py-24">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
@@ -244,12 +199,12 @@ const Home = () => {
                       whileHover={{ y: -5 }}
                       className="group cursor-pointer"
                     >
-                      <Link to={`/product/${product.id}`}>
+                      <Link to={`/products/${product._id}`}>
                         <div className="bg-white rounded-lg shadow-sm hover:shadow-lg transition-shadow overflow-hidden">
                           <div className="relative">
                             <img
                               src={`${import.meta.env.VITE_REACT_APP_API_BASE_URL}/uploads/${product.image}`}
-                              alt={product.name} 
+                              alt={product.name}
                               className="w-full  object-cover group-hover:scale-105 transition-transform duration-300"
                             />
                             {product.originalPrice > product.price && (
@@ -325,7 +280,7 @@ const Home = () => {
 
 
       {/* refund wgera */}
-      <section className="py-16 bg-gray-100 px-6 lg:px-[100px]">
+      <section className="py-16 px-6 lg:px-[100px]">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           <div className="bg-white p-6 rounded-lg shadow-lg">
             <TbCreditCardRefund className="text-red-600 text-[105px] mb-4 mx-auto" />
@@ -347,48 +302,13 @@ const Home = () => {
 
 
       {/* Testimonials Section */}
-      <section className='md:w-[90%] xl:w-[85%] w-[95%] mb-[45px] mx-auto mt-[35px]'>
-        <div className="container mx-auto px-6">
-          <h2 className="text-2xl md:text-4xl font-bold mb-8 text-red-600 text-center">
-            What Our Clients Say
-          </h2>
-{/* 
-          <div className='flex w-full h-2 sm:h-4 mx-auto justify-center mb-[25px] items-center'>
-            <div className='w-2 sm:w-4 h-[100%] mr-[5px] rounded-full bg-red-300'></div>
-            <div className='h-[3px] w-[89%] mx-auto bg-red-300 '></div>
-            <div className='w-2 sm:w-4 h-[100%]  ml-[5px] rounded-full bg-red-300'></div>
-          </div> */}
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-            {reviews.map((review, index) => (
-              <div key={index} className="bg-white p-6 rounded-lg shadow-lg">
-
-                <div className='flex items-center'>
-                  <BiCheckCircle className="text-red-300 mr-[15px] text-[45px]" />
-                  <div className='flex flex-col'>
-                    <p className="font-bold">{review.name}</p>
-                    <p className="text-sm text-gray-600">{review.email}</p>
-                  </div>
-                </div>
-
-                <div className="flex mt-2">
-                  <p className='mr-[12px] text-red-300 text-sm font-medium underline'>Rating:</p>
-                  {Array.from({ length: 5 }, (_, i) => (
-                    <FaStar
-                      key={i}
-                      size={18}
-                      className={i < review.rating ? 'text-yellow-500' : 'text-gray-300'}
-                    />
-                  ))}
-                </div>
-
-                <p className="text-md text-red-950 font-serif  my-4">{review.review}</p>
-
-              </div>
-            ))}
-          </div>
-        </div>
+      <section>
+        <h2 className="text-2xl md:text-4xl font-bold mb-8 text-red-600 text-center">
+          What Our Clients Say
+        </h2>
+        <Section3 />
       </section>
+
 
 
       <div className='h-[4px] max-w-7xl mx-auto my-[45px] rounded-lg bg-red-100'></div>

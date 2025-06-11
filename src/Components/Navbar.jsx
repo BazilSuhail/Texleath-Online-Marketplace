@@ -16,7 +16,7 @@ import {
 } from 'react-icons/md';
 import { useEffect, useState } from "react"
 import SearchModal from "./SearchModal"
-import diObrallogo from "/logo.png"
+import diObrallogo from "/vite.svg"
 import { Link, NavLink } from "react-router-dom"
 import { useSelector } from "react-redux"
 import { selectCartLength } from "../redux/cartSlice"
@@ -129,7 +129,7 @@ export default function Navbar() {
             <motion.div whileHover={{ scale: 1.05 }} className="flex-shrink-0">
 
               <NavLink to="/" className=" h-[55px] pt-[5px] lg:flex hidden items-center justify-center w-full pb-[5px] overflow-hidden">
-                <img src={diObrallogo} alt="Poor Connection" className="w-[35px] h-[35px]" />
+                <img src="/vite.svg" alt="Connection error .... :/" className="w-[35px] h-[35px]" />
                 <div className="flex flex-col">
                   <div className="text-red-700 ml-[4px] text-[20px] font-bold">DiObral</div>
                 </div>
@@ -229,8 +229,8 @@ export default function Navbar() {
                   <AiOutlineSearch className="w-6 h-6 text-gray-600 hover:text-red-600" />
 
                 </motion.button>
-                {/* User Account */}
 
+                {/* User Account */}
                 {isLoggedIn ? (
                   <Link to="/profile">
                     <motion.button
@@ -325,19 +325,18 @@ export default function Navbar() {
               <motion.div
                 initial={{ opacity: 1 }}
                 animate={{ opacity: isMenuOpen ? 0 : 1 }}
-                transition={{ duration: 0.2 }} // Adjust duration as needed
+                transition={{ duration: 0.2 }}
               >
-                <img src={diObrallogo} alt="TL" className="md:w-[32px] w-[35px] h-[35px] md:h-[32px]" />
+                <img src="/vite.svg" alt="Connection error .... :/" className="md:w-[32px] w-[35px] h-[35px] md:h-[32px]" />
               </motion.div>
               <motion.div
                 className="text-[28px] font-bold"
                 initial={{ x: 40 }}
                 animate={{ x: isMenuOpen ? -40 : 0 }}
-                transition={{ duration: 0.5 }} // Adjust duration as needed
+                transition={{ duration: 0.5 }}
               >
                 <div className="flex">
-                  <div className="text-red-700 ml-[6px] md:text-[25px] text-[21px] font-bold">Diobral</div>
-                  {/* <div className="text-red-100 ml-[5px] md:text-[25px] text-[18px] font-bold">INDUSTRIES</div> */}
+                  <div className="text-red-700 ml-[6px] md:text-[25px] text-[21px] font-bold">Diobral</div> 
                 </div>
               </motion.div>
             </div>

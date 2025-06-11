@@ -1,11 +1,5 @@
-import { useState, useEffect } from "react"
-import { FaArrowLeft, FaArrowRight, FaStar } from 'react-icons/fa';
-import { motion, AnimatePresence } from "framer-motion"
-
-import { FiShoppingBag, FiHeart, FiEye } from 'react-icons/fi';
+import { motion } from "framer-motion"
 import { Link } from "react-router-dom";
-import { BiCheckCircle } from "react-icons/bi";
-
 
 function Section1() {
     return (
@@ -20,7 +14,7 @@ function Section1() {
             </h1>
 
             {/* Artist tags */}
-            <div className="relative w-full max-w-5xl mt-8 mb-12">
+            <div className="relative w-full max-w-5xl mt-16 mb-8">
                 <div className="absolute left-[18%] -rotate-[6deg] top-[-2rem] bg-red-700 text-white px-3 py-1 rounded-full text-sm font-semibold shadow-md">
                     @coplin
                 </div>
@@ -35,7 +29,7 @@ function Section1() {
                         animate={{ opacity: 1, scale: 1, y: 0 }}
                         transition={{ delay: 0.1 }}
                         whileHover={{ scale: 1.1, rotate: -10 }}
-                        className="w-32 h-40 md:w-40 md:h-52 rounded-xl bg-red-500 shadow-lg transform translate-y-6 rotate-[-15deg] flex items-center justify-center text-white font-bold cursor-pointer"
+                        className="w-32 h-40 md:w-50 md:h-52 rounded-xl bg-red-500 shadow-lg transform translate-y-6 rotate-[-15deg] flex items-center justify-center text-white font-bold cursor-pointer"
                     >
                         Art 1
                     </motion.div>
@@ -45,7 +39,7 @@ function Section1() {
                         animate={{ opacity: 1, scale: 1, y: 0 }}
                         transition={{ delay: 0.2 }}
                         whileHover={{ scale: 1.1, rotate: -5 }}
-                        className="w-32 h-40 md:w-40 md:h-52 rounded-xl bg-blue-200 shadow-lg transform translate-y-5 rotate-[-6deg] flex items-center justify-center text-white font-bold cursor-pointer"
+                        className="w-32 h-40 md:w-50 md:h-52 rounded-xl bg-blue-200 shadow-lg transform translate-y-5 rotate-[-6deg] flex items-center justify-center text-white font-bold cursor-pointer"
                     >
                         Art 2
                     </motion.div>
@@ -55,7 +49,7 @@ function Section1() {
                         animate={{ opacity: 1, scale: 1, y: 0 }}
                         transition={{ delay: 0.3 }}
                         whileHover={{ scale: 1.1, rotate: -2 }}
-                        className="w-32 h-40 md:w-40 md:h-52 rounded-xl bg-yellow-400 shadow-lg transform -translate-y-4 rotate-[-2deg] flex items-center justify-center text-white font-bold cursor-pointer"
+                        className="w-32 h-40 md:w-50 md:h-52 rounded-xl bg-yellow-400 shadow-lg transform -translate-y-4 rotate-[-2deg] flex items-center justify-center text-white font-bold cursor-pointer"
                     >
                         Art 3
                     </motion.div>
@@ -65,7 +59,7 @@ function Section1() {
                         animate={{ opacity: 1, scale: 1, y: 0 }}
                         transition={{ delay: 0.4 }}
                         whileHover={{ scale: 1.1 }}
-                        className="w-32 z-10 h-40 md:w-40 md:h-52 rounded-xl bg-pink-300 shadow-lg transform -translate-y-8 rotate-[0deg] flex items-center justify-center text-white font-bold cursor-pointer"
+                        className="w-32 z-10 h-40 md:w-55 md:h-52 rounded-xl bg-pink-300 shadow-lg transform -translate-y-8 rotate-[0deg] flex items-center justify-center text-white font-bold cursor-pointer"
                     >
                         Art 4
                     </motion.div>
@@ -75,7 +69,7 @@ function Section1() {
                         animate={{ opacity: 1, scale: 1, y: 0 }}
                         transition={{ delay: 0.5 }}
                         whileHover={{ scale: 1.1, rotate: 2 }}
-                        className="w-32 h-40 md:w-40 md:h-52 rounded-xl bg-orange-700 shadow-lg transform -translate-y-4 rotate-[2deg] flex items-center justify-center text-white font-bold cursor-pointer"
+                        className="w-32 h-40 md:w-50 md:h-52 rounded-xl bg-orange-700 shadow-lg transform -translate-y-4 rotate-[2deg] flex items-center justify-center text-white font-bold cursor-pointer"
                     >
                         Art 5
                     </motion.div>
@@ -85,7 +79,7 @@ function Section1() {
                         animate={{ opacity: 1, scale: 1, y: 0 }}
                         transition={{ delay: 0.6 }}
                         whileHover={{ scale: 1.1, rotate: 5 }}
-                        className="w-32 h-40 md:w-40 md:h-52 rounded-xl bg-red-400 shadow-lg transform translate-y-5 rotate-[6deg] flex items-center justify-center text-white font-bold cursor-pointer"
+                        className="w-32 h-40 md:w-50 md:h-52 rounded-xl bg-red-400 shadow-lg transform translate-y-5 rotate-[6deg] flex items-center justify-center text-white font-bold cursor-pointer"
                     >
                         Art 6
                     </motion.div>
@@ -95,7 +89,7 @@ function Section1() {
                         animate={{ opacity: 1, scale: 1, y: 0 }}
                         transition={{ delay: 0.7 }}
                         whileHover={{ scale: 1.1, rotate: 8 }}
-                        className="w-32 h-40 md:w-40 md:h-52 rounded-xl bg-green-700 shadow-lg transform translate-y-6 rotate-[12deg] flex items-center justify-center text-white font-bold cursor-pointer"
+                        className="w-32 h-40 md:w-50 md:h-52 rounded-xl bg-green-700 shadow-lg transform translate-y-6 rotate-[12deg] flex items-center justify-center text-white font-bold cursor-pointer"
                     >
                         Art 7
                     </motion.div>

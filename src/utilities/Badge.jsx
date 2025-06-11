@@ -3,7 +3,8 @@ export default function Badge({ children, variant = "default", className = "" })
     const variants = {
         default: "bg-black text-white",
         secondary: "bg-gray-100 text-gray-900",
-        destructive: "bg-red-500 text-white",
+        destructive: "bg-red-500 text-white", 
+        pending: "bg-yellow-100 text-yellow-900 pb-1",
     }
 
     return (

@@ -7,15 +7,10 @@ import {
   FiMapPin,
   FiEdit3,
   FiSave,
-  FiX,
-  FiCamera,
-  FiShoppingBag,
-  FiMenu,
-  FiHeart,
+  FiX, 
   FiSettings,
   FiLogOut,
-  FiPackage,
-  FiCreditCard,
+  FiPackage, 
 } from "react-icons/fi"
 import { Link, useNavigate } from "react-router-dom"
 import { useDispatch } from "react-redux"
@@ -73,24 +68,7 @@ export default function ProfilePage() {
 
   const [isEditing, setIsEditing] = useState(false)
   const [error, setError] = useState('')
-  // const [formData, setFormData] = useState({
-  //   name: mockUser.name,
-  //   email: mockUser.email,
-  //   contact: mockUser.contact,
-  //   street: mockUser.address.street,
-  //   city: mockUser.address.city,
-  //   state: mockUser.address.state, 
-  //   country: mockUser.address.country,
-  // })
-  // const [formData, setFormData] = useState({
-  //   fullName: '',
-  //   email: '',
-  //   contact: '',
-  //   street: '',
-  //   city: '',
-  //   state: '',
-  //   country: ''
-  // });
+  
   const [formData, setFormData] = useState({
     email: '',
     fullName: '',
@@ -158,9 +136,7 @@ export default function ProfilePage() {
   };
 
 
-  const handleSave = async () => {
-    // Here you would typically save to your backend
-    //console.log("Saving user data:", formData)
+  const handleSave = async () => { 
     try {
       const token = localStorage.getItem('token');
       await axios.put(`${import.meta.env.VITE_REACT_APP_API_BASE_URL}/auth/profile`, formData, {
@@ -171,8 +147,7 @@ export default function ProfilePage() {
     catch (error) {
       setError('Failed to update profile');
     }
-
-    //setIsEditing(false)
+ 
   }
 
   const handleCancel = () => {
@@ -198,7 +173,7 @@ export default function ProfilePage() {
   if (!user) return <div className='h-screen w-screen pt-[-96px]'> <MainLoader /></div>;
 
   return (
-    <div className="min-h-screen bg-gray-50 border-t-[2px] border-gray-200">
+    <div className="min-h-screen bg-gray-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 pb-12 relative">
         {/* Page Header */}
         <motion.div
@@ -225,20 +200,9 @@ export default function ProfilePage() {
             className="lg:col-span-1"
           >
             <Card className="p-6">
-              <div className="text-center mb-6">
-                {/* <div className="relative w-24 h-24 mx-auto mb-4">
-                  <img
-                    src={mockUser.avatar || "/placeholder.svg"}
-                    alt="Profile"
-                    fill
-                    className="rounded-full object-cover border-4 border-white shadow-lg"
-                  />
-                  <button className="absolute bottom-0 right-0 w-8 h-8 bg-red-600 rounded-full flex items-center justify-center text-white hover:bg-red-700 transition-colors">
-                    <FiCamera className="w-4 h-4" />
-                  </button>
-                </div> */}
-                <h2 className="text-xl font-bold text-gray-900">{mockUser.name}</h2>
-                <p className="text-gray-600">Member since {mockUser.joinDate}</p>
+              <div className="text-center mb-6"> 
+                <h2 className="text-xl font-bold text-gray-900">{formData.fullName}</h2>
+                <p className="text-gray-600">Member since 2024</p>
               </div>
 
               <section className="">
@@ -257,17 +221,18 @@ export default function ProfilePage() {
                   Order History
                 </Link>
 
-                <Link
-                  to="/settings"
-                  className="flex items-center px-4 py-3 text-gray-600 hover:text-gray-900 hover:bg-gray-50 rounded-lg transition-colors"
+                <p
+                  className="flex items-center px-4 py-3  text-gray-400 rounded-lg transition-colors"
                 >
-                  <FiSettings className="mr-3" />
+                  <FiSettings className="mr-3 mt-[2px] text-gray-400" />
                   Settings
-                </Link>
+                </p>
+
                 <button onClick={handleLogout} className="flex items-center w-full px-4 py-3 text-gray-600 hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors">
                   <FiLogOut className="mr-3" />
                   Sign Out
                 </button>
+
               </section>
             </Card>
 
@@ -277,11 +242,11 @@ export default function ProfilePage() {
               <div className="space-y-4">
                 <div className="flex justify-between items-center">
                   <span className="text-gray-600">Total Orders</span>
-                  <span className="font-bold text-gray-900">{mockUser.totalOrders}</span>
+                  <span className="font-bold text-gray-900">15</span>
                 </div>
                 <div className="flex justify-between items-center">
                   <span className="text-gray-600">Total Spent</span>
-                  <span className="font-bold text-green-600">${mockUser.totalSpent.toFixed(2)}</span>
+                  <span className="font-bold text-green-600"><span className="text-[11px]">Rs.</span> 145,250</span>
                 </div>
                 <div className="flex justify-between items-center">
                   <span className="text-gray-600">Member Status</span>
@@ -404,20 +369,21 @@ export default function ProfilePage() {
                 <motion.div
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
-                  className="mt-8 pt-8 border-t border-gray-200"
+                  className="mt-5 pt-4 border-t-[3px] border-gray-200"
                 >
-                  <h3 className="text-lg font-semibold text-gray-900 mb-6">Quick Contact Info</h3>
-                  <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-                    <div className="flex items-center space-x-3 p-4 bg-gray-50 rounded-xl">
+                  <h3 className="text-lg font-semibold text-gray-900 mb-3">Quick Contact Info</h3>
+                  
+                  <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <div className="flex items-center space-x-3 p-4 bg-gray-50 rounded-xl shadow-sm">
                       <div className="w-10 h-10 bg-red-100 rounded-lg flex items-center justify-center">
                         <FiMail className="w-5 h-5 text-red-600" />
-                      </div>
+                      </div> 
                       <div>
                         <p className="text-sm text-gray-500">Email</p>
-                        <p className="font-medium text-gray-900 truncate">{formData.email}</p>
+                        <p className="font-medium text-[14px] text-gray-900 truncate">{formData.email}</p>
                       </div>
                     </div>
-                    <div className="flex items-center space-x-3 p-4 bg-gray-50 rounded-xl">
+                    <div className="flex items-center space-x-3 p-4 bg-gray-50 rounded-xl shadow-sm">
                       <div className="w-10 h-10 bg-red-100 rounded-lg flex items-center justify-center">
                         <FiPhone className="w-5 h-5 text-red-600" />
                       </div>
@@ -426,14 +392,14 @@ export default function ProfilePage() {
                         <p className="font-medium text-gray-900">{formData.contact}</p>
                       </div>
                     </div>
-                    <div className="flex items-center space-x-3 p-4 bg-gray-50 rounded-xl md:col-span-2">
+                    <div className="flex items-center space-x-3 p-4 bg-gray-50 rounded-xl shadow-sm ">
                       <div className="w-10 h-10 bg-red-100 rounded-lg flex items-center justify-center">
                         <FiMapPin className="w-5 h-5 text-red-600" />
                       </div>
                       <div>
                         <p className="text-sm text-gray-500">Address</p>
-                        <p className="font-medium text-gray-900">
-                          {formData.city}, {formData.state} {formData.zipCode}
+                        <p className="font-medium text-[14px] text-gray-900">
+                          {formData.address.street}, {formData.address.city}
                         </p>
                       </div>
                     </div>

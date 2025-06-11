@@ -34,7 +34,7 @@ const SignUp = () => {
     };
 
     return (
-        <main className='flex min-h-[90vh] flex-col  items-center justify-center'>
+        <main className='flex min-h-[90vh] flex-col items-center justify-center'>
             <form onSubmit={handleSubmit} className="w-[100vw] sm:w-[520px] form ">
                 <div className='text-red-800 text-[35px] text-center font-bold'>Create an Account</div>
                 <div className='text-red-800 text-[15px] text-center font-medium'>Create an account for faster checkout</div>

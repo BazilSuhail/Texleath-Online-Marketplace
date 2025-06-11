@@ -6,31 +6,6 @@ import axios from "axios"
 import Button from "../utilities/Button.jsx"
 import Badge from "../utilities/Badge.jsx"
 
-// Custom Components
-// const Button = ({ children, variant = "primary", size = "md", className = "", ...props }) => {
-//   const baseClasses =
-//     "inline-flex items-center justify-center font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none"
-
-//   const variants = {
-//     primary: "bg-black text-white hover:bg-gray-800 focus:ring-gray-500",
-//     outline: "border border-gray-300 bg-white text-gray-700 hover:bg-gray-50 focus:ring-gray-500",
-//     secondary: "bg-gray-100 text-gray-900 hover:bg-gray-200 focus:ring-gray-500",
-//   }
-
-//   const sizes = {
-//     sm: "px-3 py-2 text-sm rounded-md",
-//     md: "px-4 py-2 text-sm rounded-md",
-//     lg: "px-6 py-3 text-base rounded-lg",
-//   }
-
-//   const classes = `${baseClasses} ${variants[variant]} ${sizes[size]} ${className}`
-
-//   return (
-//     <button className={classes} {...props}>
-//       {children}
-//     </button>
-//   )
-// }
 
 const Input = ({ className = "", ...props }) => {
   return (
@@ -41,21 +16,6 @@ const Input = ({ className = "", ...props }) => {
   )
 }
 
-// const Badge = ({ children, variant = "default", className = "" }) => {
-//   const variants = {
-//     default: "bg-black text-white",
-//     secondary: "bg-gray-100 text-gray-900",
-//     destructive: "bg-red-500 text-white",
-//   }
-
-//   return (
-//     <span
-//       className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${variants[variant]} ${className}`}
-//     >
-//       {children}
-//     </span>
-//   )
-// }
 
 const Select = ({ children, value, onValueChange, className = "" }) => {
   return (

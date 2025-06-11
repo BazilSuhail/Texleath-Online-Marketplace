@@ -1,188 +1,39 @@
 import { useState, useEffect, useCallback } from "react"
 import { motion, AnimatePresence } from "framer-motion"
-import noOrder_svg from "../Assets/cart.webp"
 import {
-    FiShoppingBag,
-    FiMenu,
     FiX,
     FiCheck,
     FiClock,
     FiTruck,
     FiPackage,
     FiCreditCard,
-    FiMapPin,
-    FiPhone,
     FiCalendar,
     FiGift,
     FiArrowRight,
-    FiDownload,
     FiEye,
-    FiStar,
 } from "react-icons/fi"
 import { Link } from "react-router-dom"
 import axios from "axios"
+import Button from "../utilities/Button"
+import Badge from "../utilities/Badge"
+ 
+// const Badge = ({ children, variant = "default", className = "" }) => {
+//     const variants = {
+//         default: "bg-gray-100 text-gray-800",
+//         success: "bg-green-100 text-green-800",
+//         warning: "bg-yellow-100 text-yellow-800",
+//         info: "bg-blue-100 text-blue-800",
+//         danger: "bg-red-100 text-red-800",
+//     }
 
-// Mock order data
-const mockOrders = [
-    {
-        id: "ORD-2024-001",
-        date: "2024-01-15",
-        status: "delivered",
-        total: 299.97,
-        items: [
-            {
-                id: 1,
-                name: "Premium Cotton T-Shirt",
-                price: 29.99,
-                originalPrice: 39.99,
-                quantity: 2,
-                size: "M",
-                color: "Black",
-                image: "/placeholder.svg?height=400&width=300",
-            },
-            {
-                id: 2,
-                name: "Denim Jacket Classic",
-                price: 89.99,
-                originalPrice: 119.99,
-                quantity: 1,
-                size: "L",
-                color: "Blue",
-                image: "/placeholder.svg?height=400&width=300",
-            },
-        ],
-        shipping: {
-            address: "123 Main Street, Apt 4B",
-            city: "New York",
-            state: "NY",
-            zipCode: "10001",
-            country: "United States",
-        },
-        tracking: "TRK123456789",
-        estimatedDelivery: "2024-01-18",
-    },
-    {
-        id: "ORD-2024-002",
-        date: "2024-01-20",
-        status: "processing",
-        total: 179.98,
-        items: [
-            {
-                id: 3,
-                name: "Wireless Earbuds Pro",
-                price: 149.99,
-                originalPrice: 199.99,
-                quantity: 1,
-                size: "One Size",
-                color: "Black",
-                image: "/placeholder.svg?height=400&width=300",
-            },
-            {
-                id: 4,
-                name: "Leather Sneakers",
-                price: 79.99,
-                originalPrice: 99.99,
-                quantity: 1,
-                size: "10",
-                color: "White",
-                image: "/placeholder.svg?height=400&width=300",
-            },
-        ],
-        shipping: {
-            address: "456 Oak Avenue",
-            city: "Los Angeles",
-            state: "CA",
-            zipCode: "90210",
-            country: "United States",
-        },
-        tracking: "TRK987654321",
-        estimatedDelivery: "2024-01-25",
-    },
-    {
-        id: "ORD-2024-003",
-        date: "2024-01-22",
-        status: "shipped",
-        total: 359.97,
-        items: [
-            {
-                id: 5,
-                name: "Designer Watch",
-                price: 299.99,
-                originalPrice: 399.99,
-                quantity: 1,
-                size: "One Size",
-                color: "Silver",
-                image: "/placeholder.svg?height=400&width=300",
-            },
-            {
-                id: 6,
-                name: "Casual Hoodie",
-                price: 59.99,
-                originalPrice: 79.99,
-                quantity: 1,
-                size: "L",
-                color: "Gray",
-                image: "/placeholder.svg?height=400&width=300",
-            },
-        ],
-        shipping: {
-            address: "789 Pine Street",
-            city: "Chicago",
-            state: "IL",
-            zipCode: "60601",
-            country: "United States",
-        },
-        tracking: "TRK456789123",
-        estimatedDelivery: "2024-01-26",
-    },
-]
-
-// Custom Components
-const Button = ({ children, variant = "primary", size = "md", className = "", ...props }) => {
-    const baseClasses =
-        "inline-flex items-center justify-center font-medium transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none"
-
-    const variants = {
-        primary: "bg-black text-white hover:bg-gray-800 focus:ring-gray-500 shadow-lg hover:shadow-xl",
-        outline:
-            "border-2 border-gray-300 bg-white text-gray-700 hover:bg-gray-50 focus:ring-gray-500 hover:border-gray-400",
-        secondary: "bg-gray-100 text-gray-900 hover:bg-gray-200 focus:ring-gray-500",
-        success: "bg-green-600 text-white hover:bg-green-700 focus:ring-green-500 shadow-lg hover:shadow-xl",
-        ghost: "text-gray-600 hover:text-gray-900 hover:bg-gray-100",
-    }
-
-    const sizes = {
-        sm: "px-3 py-2 text-sm rounded-lg",
-        md: "px-4 py-2 text-sm rounded-lg",
-        lg: "px-6 py-3 text-base rounded-xl",
-    }
-
-    const classes = `${baseClasses} ${variants[variant]} ${sizes[size]} ${className}`
-
-    return (
-        <button className={classes} {...props}>
-            {children}
-        </button>
-    )
-}
-
-const Badge = ({ children, variant = "default", className = "" }) => {
-    const variants = {
-        default: "bg-gray-100 text-gray-800",
-        success: "bg-green-100 text-green-800",
-        warning: "bg-yellow-100 text-yellow-800",
-        info: "bg-blue-100 text-blue-800",
-        danger: "bg-red-100 text-red-800",
-    }
-
-    return (
-        <span
-            className={`inline-flex items-center px-3 py-1 rounded-full text-xs font-medium ${variants[variant]} ${className}`}
-        >
-            {children}
-        </span>
-    )
-}
+//     return (
+//         <span
+//             className={`inline-flex items-center px-3 py-1 rounded-full text-xs font-medium ${variants[variant]} ${className}`}
+//         >
+//             {children}
+//         </span>
+//     )
+// }
 
 const StatusIcon = ({ status }) => {
     const iconProps = { className: "w-5 h-5" }
@@ -199,21 +50,9 @@ const StatusIcon = ({ status }) => {
     }
 }
 
-const StatusBadge = ({ status }) => {
-    const statusConfig = {
-        delivered: { variant: "success", label: "Delivered" },
-        shipped: { variant: "info", label: "Shipped" },
-        processing: { variant: "warning", label: "Processing" },
-        pending: { variant: "default", label: "Pending" },
-    }
-
-    const config = statusConfig[status] || statusConfig.pending
-
-    return <Badge variant={config.variant}>{config.label}</Badge>
-}
 
 const OrderCard = ({ order, onViewDetails }) => {
-     const totalSavings = order.items.reduce((total, item) => {
+    const totalSavings = order.items.reduce((total, item) => {
         return total + ((item.price * item.quantity) - (item.discountedPrice * item.quantity));
     }, 0);
     return (
@@ -241,8 +80,7 @@ const OrderCard = ({ order, onViewDetails }) => {
                                 })}
                             </p>
                         </div>
-                    </div>
-                    {/* <StatusBadge status={order.status} /> */}
+                    </div> 
                 </div>
             </div>
 
@@ -300,28 +138,7 @@ const OrderCard = ({ order, onViewDetails }) => {
                             <span className="text-sm text-gray-400">Look out for deals!</span>
                         </div>
                     )}
-
                 </div>
-
-                {/* Actions */}
-                {/* <div className="flex space-x-3">
-                    <Button variant="outline" size="sm" className="flex-1">
-                        <FiDownload className="w-4 h-4 mr-2" />
-                        Invoice
-                    </Button>
-                    {order.status === "" && (
-                        <Button variant="outline" size="sm" className="flex-1">
-                            <FiStar className="w-4 h-4 mr-2" />
-                            Review
-                        </Button>
-                    )}
-                    {(order.status === "shipped" || order.status === "processing") && (
-                        <Button variant="primary" size="sm" className="flex-1">
-                            <FiTruck className="w-4 h-4 mr-2" />
-                            Track
-                        </Button>
-                    )}
-                </div> */}
             </div>
         </motion.div>
     )
@@ -361,7 +178,9 @@ const OrderDetailsModal = ({ order, isOpen, onClose }) => {
                                     Ordered on {new Date(order.orderDate).toLocaleDateString()}
                                 </h3>
                                 <div className="flex items-center space-x-3">
-                                    <StatusBadge status={order.status} />
+                                    {/* <StatusBadge status={order.status} />
+                                     */}
+                                     <Badge variant={"pending"}>Pending</Badge>
                                     <button
                                         onClick={onClose}
                                         className="p-2 hover:bg-white hover:bg-white/30 rounded-lg transition-colors"
@@ -415,37 +234,6 @@ const OrderDetailsModal = ({ order, isOpen, onClose }) => {
                                 </div>
 
                                 <div className="grid md:grid-cols- 2 gap-8">
-                                    {/* Shipping Information */}
-                                    {/* <div>
-                                        <h3 className="text-xl font-bold text-gray-900 mb-4 flex items-center">
-                                            <FiMapPin className="w-5 h-5 mr-2" />
-                                            Shipping Address
-                                        </h3>
-                                        <div className="bg-gray-50 rounded-xl p-4 border border-gray-200">
-                                            <div className="space-y-2 text-gray-700">
-                                                <p className="font-medium">{order.shipping.address}</p>
-                                                <p>
-                                                    {order.shipping.city}, {order.shipping.state} {order.shipping.zipCode}
-                                                </p>
-                                                <p>{order.shipping.country}</p>
-                                            </div>
-                                            {order.tracking && (
-                                                <div className="mt-4 pt-4 border-t border-gray-200">
-                                                    <div className="flex items-center justify-between">
-                                                        <span className="text-sm text-gray-600">Tracking Number</span>
-                                                        <span className="font-medium text-gray-900">{order.tracking}</span>
-                                                    </div>
-                                                    <div className="flex items-center justify-between mt-2">
-                                                        <span className="text-sm text-gray-600">Estimated Delivery</span>
-                                                        <span className="font-medium text-gray-900">
-                                                            {new Date(order.estimatedDelivery).toLocaleDateString()}
-                                                        </span>
-                                                    </div>
-                                                </div>
-                                            )}
-                                        </div>
-                                    </div> */}
-
                                     {/* Order Summary */}
                                     <div>
                                         <h3 className="text-xl font-bold text-gray-900 mb-4 flex items-center">
@@ -495,14 +283,9 @@ const OrderDetailsModal = ({ order, isOpen, onClose }) => {
 export default function Orders() {
     const [userorders, setUserOrders] = useState([]);
     const [userId, setUserId] = useState(null);
-
-
-    //=====
     const [selectedOrder, setSelectedOrder] = useState(null)
     const [isModalOpen, setIsModalOpen] = useState(false)
     const [filterStatus, setFilterStatus] = useState("all")
-    //=====
-
 
     const decodeToken = useCallback((token) => {
         if (!token) return null;
@@ -534,22 +317,13 @@ export default function Orders() {
         fetchOrders();
     }, [userId]);
 
-
-    // ==============
-
-
-    const filteredOrders = mockOrders.filter((order) => {
-        if (filterStatus === "all") return true
-        return order.status === filterStatus
-    })
-
     const handleViewDetails = (order) => {
         setSelectedOrder(order)
         setIsModalOpen(true)
     }
 
     return (
-        <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
+        <div className="min-h-screen bg-gradient-to-b bg-gray-50 to-gray-100">
 
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
                 {/* Page Header */}
@@ -695,7 +469,7 @@ export default function Orders() {
                     }
                 </motion.div>
 
-                {filteredOrders.length === 0 && (
+                {(userorders?.completedOrders?.length === 0 || userorders?.activeOrders?.length === 0) && (
                     <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="text-center py-16">
                         <div className="w-24 h-24 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
                             <FiPackage className="w-12 h-12 text-gray-400" />

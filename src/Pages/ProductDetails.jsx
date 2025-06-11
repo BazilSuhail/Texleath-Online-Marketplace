@@ -188,45 +188,18 @@ export default function ProductDetailPage() {
     setisIncreasing(false);
     setKey(prevKey => prevKey + 1);
   };
-
-  const handleSizeClick = (size) => {
-    setSelectedSize(size);
-
-  };
+ 
 
   if (!product) return <div className='h-screen w-screen pt-[-96px]'> <MainLoader /></div>;
 
   const discountedPrice = product.sale
     ? (product.price - (product.price * product.sale) / 100).toFixed(2)
     : product.price.toFixed(2);
-
-  // ===============================
-
-  // const [selectedImage, setSelectedImage] = useState(0)
-  // const [selectedColor, setSelectedColor] = useState(product.colors[0])
-  // const [selectedSize, setSelectedSize] = useState("")
-  // const [quantity, setQuantity] = useState(1)
-  // const [isMenuOpen, setIsMenuOpen] = useState(false)
-  // const [newReview, setNewReview] = useState({ rating: 5, comment: "", name: "" })
-  // const [showReviewForm, setShowReviewForm] = useState(false)
-
-  // const handleAddToCart = () => {
-  //   if (!selectedSize) {
-  //     alert("Please select a size")
-  //     return
-  //   }
-  //   alert("Added to cart!")
-  // }
-
-  const handleSubmitReview = (e) => {
-    e.preventDefault()
-    console.log("New review:", newReview)
-    setShowReviewForm(false)
-    setNewReview({ rating: 5, comment: "", name: "" })
-  }
+ 
+ 
 
   return (
-    <main className="min-h-screen bg-white max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+    <main className="min-h-screen max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
       {/* Breadcrumb */}
       <section className="mb-4">
         <div className="flex items-center space-x-2 text-sm text-gray-500">
