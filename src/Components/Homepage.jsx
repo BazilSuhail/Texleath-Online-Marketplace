@@ -1,9 +1,10 @@
 import { useState, useEffect } from "react"
-import { FaArrowLeft, FaArrowRight } from 'react-icons/fa';
+import { FaArrowLeft, FaArrowRight, FaStar } from 'react-icons/fa';
 import { motion, AnimatePresence } from "framer-motion"
 
 import { FiShoppingBag, FiHeart, FiEye } from 'react-icons/fi';
 import { Link } from "react-router-dom";
+import { BiCheckCircle } from "react-icons/bi";
 
 
 function Section1() {
@@ -107,13 +108,13 @@ function Section1() {
 
       {/* Buttons */}
       <div className="flex gap-4">
-     <Link to="/productlist/All">
-        <motion.button
-          whileHover={{ scale: 1.05, boxShadow: "0 0 15px rgba(0,0,0,0.3)" }}
-          className="bg-red-700 text-white px-6 py-2 rounded-full font-medium"
-        >
-         Shop Now
-        </motion.button>
+        <Link to="/productlist/All">
+          <motion.button
+            whileHover={{ scale: 1.05, boxShadow: "0 0 15px rgba(0,0,0,0.3)" }}
+            className="bg-red-700 text-white px-6 py-2 rounded-full font-medium"
+          >
+            Shop Now
+          </motion.button>
         </Link>
         <button className="text-black underline font-medium">Read more</button>
       </div>
@@ -121,7 +122,7 @@ function Section1() {
   );
 }
 
- 
+
 
 const Slide1 = () => {
   return (
@@ -292,7 +293,7 @@ const Section2 = () => {
       price: "$199.99",
       rowSpan: "md:row-span-2",
       colSpan: "md:col-span-2",
-      bgColor: "bg-gray-500"
+      bgColor: "bg-gray-400"
     },
     {
       title: "Simplicity Blouse",
@@ -320,11 +321,11 @@ const Section2 = () => {
 
   return (
     <div className="max-w-7xl mx-auto px-4 py-8">
-      <div className="grid grid-cols-1 md:grid-cols-4 md:grid-rows-2 gap-4">
+      <div className="grid min-h-[200px] place-content-center md:min-h-[600px] grid-cols-1 md:grid-cols-4 bg-red-500 md:grid-rows-2 gap-4">
         {fashionItems.map((item, index) => (
           <div
             key={index}
-            className={`relative ${item.rowSpan} ${item.colSpan} ${item.bgColor} rounded-lg overflow-hidden min-h-[200px] md:min-h-[300px] flex items-center justify-center p-6`}
+            className={`relative  ${item.rowSpan} ${item.colSpan} ${item.bgColor} rounded-lg overflow-hidden flex items-center h-full justify-center p-6`}
           >
             {!item.isHeader && (
               <>
@@ -360,4 +361,144 @@ const Section2 = () => {
 };
 
 
-export { Section1, Section2 };
+
+const Section3 = () => {
+  const reviews = [
+    {
+      name: "Jane Doe",
+      review: "DiObral Industries has been an incredible partner. Their commitment to quality is evident in every product we receive. Highly recommended!",
+      email: "jane.doe@example.com",
+      rating: 5,
+    },
+    {
+      name: "John Smith",
+      review: "The attention to detail and customer service at DiObral Industries is second to none. I’m always impressed with their professionalism.",
+      email: "john.smith@example.com",
+      rating: 4,
+    },
+    {
+      name: "Emily Johnson",
+      review: "Exceptional quality and excellent service. DiObral Industries exceeds expectations every time!",
+      email: "emily.johnson@example.com",
+      rating: 3,
+    },
+    {
+      name: "Michael Brown",
+      review: "I've been consistently impressed with the products from DiObral Industries. Their attention to detail is unmatched.",
+      email: "michael.brown@example.com",
+      rating: 4,
+    },
+    {
+      name: "Sarah Wilson",
+      review: "DiObral Industries provides top-notch products and excellent customer support. I highly recommend them!",
+      email: "sarah.wilson@example.com",
+      rating: 5,
+    },
+    {
+      name: "David Lee",
+      review: "A fantastic company with exceptional quality. I have always been satisfied with their products and service.",
+      email: "david.lee@example.com",
+      rating: 5,
+    },
+    {
+      name: "David Lee",
+      review: "A fantastic company with exceptional quality. I have always been satisfied with their products and service.",
+      email: "david.lee@example.com",
+      rating: 5,
+    },
+     {
+      name: "David Lee",
+      review: "A fantastic company with exceptional quality. I have always been satisfied with their products and service.",
+      email: "david.lee@example.com",
+      rating: 5,
+    },
+     {
+      name: "David Lee",
+      review: "A fantastic company with exceptional quality. I have always been satisfied with their products and service.",
+      email: "david.lee@example.com",
+      rating: 5,
+    },
+  ];
+
+  return (
+    <div className="max-w-7xl mx-auto px-4 py-8">
+      <div className="flex items-center space-x-4">
+        <section className='md:max-w-6xl mx-auto mt-[15px]'>
+          <div className="slider bg-red-5 0 0 " style={{ '--width': '380px', '--height': '220px', '--quantity': 9 }}>
+            <div className="list ">
+              {reviews.map((review, index) => (
+                <div key={index} className="stack" style={{ '--position': index + 1 }}>
+                  <div className="bg-white p-4 rounded-[18px] shadow-lg">
+
+                    <div className='flex items-center'>
+                      <BiCheckCircle className="text-red-300 mr-[15px] text-[45px]" />
+                      <div className='flex flex-col'>
+                        <p className="font-bold">{review.name}</p>
+                        <p className="text-sm text-gray-600">{review.email}</p>
+                      </div>
+                    </div>
+
+                    <div className="flex mt-2">
+                      {/* <p className='mr-[12px] text-gray-700 text-sm font-[600] underline'>Rating:</p> */}
+                      {Array.from({ length: 5 }, (_, i) => (
+                        <FaStar
+                          key={i}
+                          size={18}
+                          className={i < review.rating ? 'text-yellow-500' : 'text-gray-300'}
+                        />
+                      ))}
+                    </div>
+
+                    <p className="text-md text-gray-600   my-4">{review.review}</p>
+
+                  </div>
+                </div>
+              ))}
+            </div>
+
+          </div>
+        </section>
+      </div>
+      <div className="flex items-center scale-x-[-1]">
+        <section className='md:max-w-6xl mx-auto mt-[15px]'>
+          <div className="slider bg-red- 500 " style={{ '--width': '380px', '--height': '220px', '--quantity': 9 }}>
+            <div className="list ">
+              {reviews.map((review, index) => (
+                <div key={index} className="stack scale-x-[-1]" style={{ '--position': index + 1 }}>
+                  <div className="bg-white p-4 rounded-[18px] shadow-lg">
+
+                    <div className='flex items-center'>
+                      <BiCheckCircle className="text-red-300 mr-[15px] text-[45px]" />
+                      <div className='flex flex-col'>
+                        <p className="font-bold">{review.name}</p>
+                        <p className="text-sm text-gray-600">{review.email}</p>
+                      </div>
+                    </div>
+
+                    <div className="flex mt-2">
+                      {/* <p className='mr-[12px] text-gray-700 text-sm font-[600] underline'>Rating:</p> */}
+                      {Array.from({ length: 5 }, (_, i) => (
+                        <FaStar
+                          key={i}
+                          size={18}
+                          className={i < review.rating ? 'text-yellow-500' : 'text-gray-300'}
+                        />
+                      ))}
+                    </div>
+
+                    <p className="text-md text-gray-600   my-4">{review.review}</p>
+
+                  </div>
+                </div>
+              ))}
+            </div>
+
+          </div>
+        </section>
+      </div>
+    </div>
+  );
+};
+
+
+export { Section1, Section2, Section3 };

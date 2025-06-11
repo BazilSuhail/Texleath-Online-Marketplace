@@ -1,20 +1,21 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 
 import { FiTruck, FiStar, FiHeadphones, FiRefreshCw, FiShield } from 'react-icons/fi';
-import { AiOutlineFileText } from 'react-icons/ai';
 import { BiCheckCircle } from 'react-icons/bi';
 import { TbCreditCardRefund } from "react-icons/tb";
 import { FaShippingFast, FaStar } from "react-icons/fa";
-import { FaArrowRightLong, FaPeoplePulling } from "react-icons/fa6";
+import { FaPeoplePulling } from "react-icons/fa6";
 
 import { FaRegHandshake } from 'react-icons/fa';
 
 import MainLoader from './mainLoader.jsx'
-
-import { Section1, Section2 } from '../Components/homepage.jsx'; 
+ 
+import  Section1 from '../Components/HomePage/Section1.jsx' 
+import  Section2 from '../Components/HomePage/Section2.jsx' 
+import  Section3 from '../Components/HomePage/Section3.jsx'
 
 const features = [
   {
@@ -160,6 +161,7 @@ const Home = () => {
 
 
       <Section2 />
+      <Section3 />
       {/* <Section2 /> */}
 
 
