@@ -1,4 +1,3 @@
-
 export default function ProfileInput ({ label, error, className = "", ...props }) {
   return (
     <div className="space-y-1">

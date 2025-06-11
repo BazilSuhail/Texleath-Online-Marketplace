@@ -1,4 +1,3 @@
-
 export default function ({ className = "", ...props }) {
     return (
         <input

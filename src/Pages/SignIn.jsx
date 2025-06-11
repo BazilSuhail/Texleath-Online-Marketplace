@@ -50,10 +50,10 @@ const SignIn = () => {
             console.log('SignIn response:', response);
             if (response.data.token) {
                 localStorage.setItem('token', response.data.token);
- 
+
                 const decodedToken = parseJwt(response.data.token);
-                const userId = decodedToken?.id;  
-                
+                const userId = decodedToken?.id;
+
                 await fetchUserCart(userId);
                 navigate('/profile');
                 window.location.reload();
@@ -66,46 +66,79 @@ const SignIn = () => {
     };
 
 
-    
+
     return (
-        <main className='flex min-h-[90vh] flex-col  items-center justify-center'>
-            <form onSubmit={handleSubmit} className="w-[100vw] sm:w-[520px] form ">
-                <div className='text-red-800 text-[35px] text-center font-bold'>Welcome Back</div>
-                <div className='text-red-800 text-[15px] text-center font-medium'>Please enter Email and Password</div>
-                <div className='h-[3px] bg-red-200 w-[90%] mx-auto mb-[15px]'></div>
-                {error && <div className='text-red-500 p-[5px] border-2 border-red-600 rounded-md'>Error: {error}</div>}
-                <div className="flex-column">
-                    <label>Email </label>
-                </div>
-                <div className="inputForm">
-                    <IoMail className='text-red-800' size={23} />
-                    <input type="email"
-                        className="input" required
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
-                        placeholder="Enter your Email" />
+        <main className='flex min-h-[90vh] items-center justify-center bg-gray-50'>
+            <form onSubmit={handleSubmit} className="w-full max-w-sm md:max-w-lg px-8 sm:px-12 py-8 space-y-6 bg-white border-[2px] border-gray-100 rounded-xl shadow-md">
+                <div className="space-y-2 text-center">
+                    <h1 className='text-3xl font-bold text-red-600'>Welcome Back</h1>
+                    <p className='text-gray-600'>Please enter your email and password</p>
+                    <div className='h-1 bg-red-100 w-3/4 mx-auto'></div>
                 </div>
 
-                <div className="flex-column">
-                    <label>Password </label>
-                </div>
-                <div className="inputForm">
-                    <IoLockClosedOutline className='text-red-800' size={23} />
-                    <input type="password" className="input" required
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}
-                        placeholder="Enter your Password" />
-                </div>
+                {error && (
+                    <div className='p-2 text-red-600 bg-red-50 border border-red-200 rounded-md'>
+                        Error: {error}
+                    </div>
+                )}
 
-                <div>
-                    <input type="checkbox" />
-                    <label className='ml-[5px]'>Remember me </label>
+                <div className="space-y-6">
+                    <div className="space-y-2">
+                        <label className='text-sm font-medium text-gray-700'>Email</label>
+                        <div className="flex items-center px-3 mt-2 py-2 border-[2px] rounded-lg border-gray-300 focus-within:ring-2 focus-within:ring-red-500 focus-within:border-red-500">
+                            <IoMail className='text-red-700' size={20} />
+                            <input
+                                type="email"
+                                className="w-full ml-2 outline-none"
+                                required
+                                value={email}
+                                onChange={(e) => setEmail(e.target.value)}
+                                placeholder="Enter your email"
+                            />
+                        </div>
+                    </div>
+
+                    <div className="space-y-2">
+                        <label className='text-sm font-medium text-gray-700'>Password</label>
+                        <div className="flex items-center px-3 mt-2 py-2 border-[2px] rounded-lg border-gray-300 focus-within:ring-2 focus-within:ring-red-500 focus-within:border-red-500">
+                            <IoLockClosedOutline className='text-red-600' size={20} />
+                            <input
+                                type="password"
+                                className="w-full ml-2 outline-none"
+                                required
+                                value={password}
+                                onChange={(e) => setPassword(e.target.value)}
+                                placeholder="Enter your password"
+                            />
+                        </div>
+                    </div>
+
+                    <div className="flex items-center">
+                        <input
+                            type="checkbox"
+                            className="w-4 h-4 text-red-600 border-gray-300 rounded focus:ring-red-500"
+                        />
+                        <label className='ml-2 text-sm text-gray-600'>Remember me</label>
+                    </div>
+
+                    <button
+                        className="w-full px-4 py-2 text-lg font-medium text-white bg-red-700 rounded-lg hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2"
+                        type="submit"
+                    >
+                        Sign In
+                    </button>
+
+                    <p className="text-center text-gray-600">
+                        Don't have an account?{' '}
+                        <button
+                            type="button"
+                            onClick={() => navigate("/signup")}
+                            className="font-medium text-red-600 hover:text-red-700 hover:underline"
+                        >
+                            Sign Up
+                        </button>
+                    </p>
                 </div>
-                <button className="button-submit  text-[22px]" type="submit">Sign In</button>
-                <p className="p mt-[-5px] text-red-700 text-[18px]">
-                    <span className='text-red-700'>Don't have an account?</span>
-                    <span className="span text-red-700 underline" onClick={() => { navigate("/signup") }}>Sign Up</span>
-                </p>
             </form>
         </main>
     );
