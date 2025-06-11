@@ -14,30 +14,31 @@ import { FaRegHandshake } from 'react-icons/fa';
 
 import MainLoader from './mainLoader'
 
-import { Section1,Section2 } from '../Components/HomePage';
+import { Section1, Section2 } from '../Components/HomePage';
+import { SiNextdotjs } from 'react-icons/si';
 
 const features = [
-    {
-      icon: FiShield,
-      title: "Secure Shopping",
-      description: "Your data is protected with industry-standard encryption",
-    },
-    {
-      icon: FiTruck,
-      title: "Free Shipping",
-      description: "Free delivery on orders over $100 worldwide",
-    },
-    {
-      icon: FiRefreshCw,
-      title: "Easy Returns",
-      description: "30-day hassle-free return policy",
-    },
-    {
-      icon: FiHeadphones,
-      title: "24/7 Support",
-      description: "Round-the-clock customer service",
-    },
-  ]
+  {
+    icon: FiShield,
+    title: "Secure Shopping",
+    description: "Your data is protected with industry-standard encryption",
+  },
+  {
+    icon: FiTruck,
+    title: "Free Shipping",
+    description: "Free delivery on orders over $100 worldwide",
+  },
+  {
+    icon: FiRefreshCw,
+    title: "Easy Returns",
+    description: "30-day hassle-free return policy",
+  },
+  {
+    icon: FiHeadphones,
+    title: "24/7 Support",
+    description: "Round-the-clock customer service",
+  },
+]
 
 const FeatureCard = ({ icon: Icon, title, description }) => {
   return (
@@ -139,6 +140,26 @@ const Home = () => {
     <main className="font-sans bg-gray-50 min-h-screen text-gray-800">
 
       <Section1 />
+ 
+      <section className='mb-24 mt-32'>
+        <h3 className='text-[16px] text-center heading-font text-red-700 font-sans font-[600]'>POWERED BY</h3>
+        {/* Decorative line */}
+        <div className="mx-auto mt-2 h-1 w-16 bg-red-700" />
+
+        <div className='md:max-w-6xl mx-auto mt-[15px]'>
+          <div className="slider " style={{ '--width': '120px', '--height': '100px', '--quantity': 5 }}>
+            <div className="list ">
+              <div className="stack" style={{ '--position': 1 }}><div className='w-[110px]'><img src="/logos/nike.png" alt="Nike Logo" className='' /></div></div>
+              <div className="stack" style={{ '--position': 2 }}><div className='w-[110px]'><img src="/logos/adidas.png" alt="Nike Logo" className='' /></div></div>
+              <div className="stack" style={{ '--position': 3 }}><div className='w-[110px]'><img src="/logos/levi.png" alt="Nike Logo" className='mt-[38px]' /></div></div>
+              <div className="stack" style={{ '--position': 4 }}><div className='w-[110px]'><img src="/logos/ck.png" alt="Nike Logo" className='mix-blend-overlay scale-[0.75]' /></div></div>
+              <div className="stack" style={{ '--position': 5 }}><div className='w-[110px]'><img src="/logos/boss.png" alt="Nike Logo" className='mix-blend-darken mt-[38px]' /></div></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+
       <Section2 />
       {/* <Section2 /> */}
 
@@ -155,7 +176,7 @@ const Home = () => {
         </div>
       </section>
 
-      <section className='w-[100%] mt-[85px] '>
+      {/* <section className='w-[100%] mt-[85px] '>
         <div className="slider" style={{ '--width': '680px', '--height': '132px', '--quantity': 4 }}>
           <div className="list">
             <div className="techtoday" style={{ '--position': 1 }}><div className='text-black text-center font-extra-black text-[45px] md:text-[60px]'>NEW ARRIVALS</div></div>
@@ -165,6 +186,29 @@ const Home = () => {
           </div>
         </div>
       </section>
+       */}
+
+      <section className='md:max-w-7xl mx-auto mt-[15px]'>
+        <div className="slider " style={{ '--width': '410px', '--height': '150px', '--quantity': 4 }}>
+          <div className="list ">
+            <div className="stack" style={{ '--position': 1 }}><div className='w-[380px] font-[700] text-[55px]'>New Arrivals</div></div> 
+            <div className="stack" style={{ '--position': 2 }}><div className='w-[380px] font-[700] text-[55px]'>New Arrivals</div></div> 
+            <div className="stack" style={{ '--position': 3 }}><div className='w-[380px] font-[700] text-[55px]'>New Arrivals</div></div> 
+            <div className="stack" style={{ '--position': 4 }}><div className='w-[380px] font-[700] text-[55px]'>New Arrivals</div></div> 
+          </div>
+        </div>
+      </section>
+
+      {/* <section className='md:max-w-7xl mx-auto mt-[15px]'>
+  <div className="slider " style={{ '--width': '410px', '--height': '150px', '--quantity': 4 }}>
+    <div className="list ">
+      <div className="stack" style={{ '--position': 1 }}><div className='w-[380px] font-[800] text-[55px]'>New Arrivals</div></div>
+      <div className="stack" style={{ '--position': 2 }}><div className='w-[380px] font-[800] text-[55px] text-white text-stroke text-stroke-gray-500'>New Arrivals</div></div>  
+      <div className="stack" style={{ '--position': 3 }}><div className='w-[380px] font-[800] text-[55px]'>New Arrivals</div></div>
+      <div className="stack" style={{ '--position': 4 }}><div className='w-[380px] font-[800] text-[55px] text-white text-stroke'>New Arrivals</div></div>  
+    </div>
+  </div>
+</section> */}
 
       <div className='h-[3px] w-screen mx-auto bg-red-200 mt-[-15px]'></div>
 
@@ -249,7 +293,7 @@ const Home = () => {
           </section>
       }
 
-   {/* Features Section */}
+      {/* Features Section */}
       <div className="relative">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-16 pb-12">
           <motion.div
@@ -279,7 +323,7 @@ const Home = () => {
           </div>
         </div>
       </div>
- 
+
 
       {/* refund wgera */}
       <section className="py-16 bg-gray-100 px-6 lg:px-[100px]">

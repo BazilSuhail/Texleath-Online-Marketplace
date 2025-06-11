@@ -254,7 +254,7 @@ export default function ProductDetailPage() {
             <img
               src={`${import.meta.env.VITE_REACT_APP_API_BASE_URL}/uploads/${product.otherImages[selectedImage]}` || "/placeholder.svg"}
               alt={product.name}
-              className="w-full h-[550px] border-[2px] border-gray-200 rounded-[12px] sm:h-full sm:object-fit"
+              className="w-full h-full border-[2px] border-gray-200 rounded-[12px] object-cover"
             />
             <button
               onClick={() => setSelectedImage(selectedImage > 0 ? selectedImage - 1 : product.otherImages.length - 1)}

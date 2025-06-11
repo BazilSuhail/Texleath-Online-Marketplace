@@ -266,7 +266,14 @@ export default function Products() {
 
         <div className="flex gap-8">
           {/* Filters Sidebar */}
-          <div className={`${isFilterOpen ? "block" : "hidden"} lg:block w-full lg:w-64 space-y-6`}>
+          <div
+            className={`
+    ${isFilterOpen ? "absolute  left-0 z-50 w-full bg-white shadow-lg" : ""}
+    ${isFilterOpen ? "block" : "hidden"}
+    lg:block lg:static lg:w-64
+    space-y-6
+  `}
+  >
             <div className="bg-white border-[2px] border-gray-100 shadow-sm rounded-[14px] p-6 ">
               <h3 className="font-semibold text-gray-900 mb-4">Categories</h3>
               <div className="space-y-3">
