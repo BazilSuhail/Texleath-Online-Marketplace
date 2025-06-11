@@ -58,31 +58,31 @@ const FeatureCard = ({ icon: Icon, title, description }) => {
 const reviews = [
   {
     name: "Jane Doe",
-    review: "Texleath Industries has been an incredible partner. Their commitment to quality is evident in every product we receive. Highly recommended!",
+    review: "DiObral Industries has been an incredible partner. Their commitment to quality is evident in every product we receive. Highly recommended!",
     email: "jane.doe@example.com",
     rating: 5,
   },
   {
     name: "John Smith",
-    review: "The attention to detail and customer service at Texleath Industries is second to none. I’m always impressed with their professionalism.",
+    review: "The attention to detail and customer service at DiObral Industries is second to none. I’m always impressed with their professionalism.",
     email: "john.smith@example.com",
     rating: 4,
   },
   {
     name: "Emily Johnson",
-    review: "Exceptional quality and excellent service. Texleath Industries exceeds expectations every time!",
+    review: "Exceptional quality and excellent service. DiObral Industries exceeds expectations every time!",
     email: "emily.johnson@example.com",
     rating: 3,
   },
   {
     name: "Michael Brown",
-    review: "I've been consistently impressed with the products from Texleath Industries. Their attention to detail is unmatched.",
+    review: "I've been consistently impressed with the products from DiObral Industries. Their attention to detail is unmatched.",
     email: "michael.brown@example.com",
     rating: 4,
   },
   {
     name: "Sarah Wilson",
-    review: "Texleath Industries provides top-notch products and excellent customer support. I highly recommend them!",
+    review: "DiObral Industries provides top-notch products and excellent customer support. I highly recommend them!",
     email: "sarah.wilson@example.com",
     rating: 5,
   },
@@ -137,11 +137,11 @@ const Home = () => {
 
 
   return (
-    <main className="font-sans bg-gray-50 min-h-screen text-gray-800">
+    <main className="font-sans bg-gray-100 min-h-screen text-gray-800">
 
       <Section1 />
  
-      <section className='mb-24 mt-40'>
+      <section className='mb-24 mt-15'>
         <h3 className='text-[16px] text-center heading-font text-red-700 font-sans font-[600]'>POWERED BY</h3>
         {/* Decorative line */}
         <div className="mx-auto mt-2 h-1 w-16 bg-red-700" />
@@ -439,7 +439,7 @@ const Home = () => {
       
       <section id="home" className="text-red-700 flex items-center justify-center text-center relative">
         <div>
-          <h1 className="text-[65px] font-extrabold mb-4">Welcome to Texleath Industries</h1>
+          <h1 className="text-[65px] font-extrabold mb-4">Welcome to DiObral Industries</h1>
           <p className="text-xl mb-8">Crafting Excellence in Clothing Sales, Manufacturing, and Exporting.</p>
           <button className="bg-red-500 text-white px-6 py-3 rounded-full hover:bg-red-600">Discover More</button>
         </div>
@@ -454,7 +454,7 @@ const Home = () => {
             <div className="md:w-1/2">
               <img
                 src="https://via.placeholder.com/600x400"
-                alt="Texleath Industries"
+                alt="DiObral Industries"
                 className="w-full h-auto object-cover rounded-lg shadow-lg"
               />
             </div> 
@@ -463,7 +463,7 @@ const Home = () => {
                 About Us
               </h2>
               <p className="text-lg mb-6">
-                Texleath Industries is a leading name in the world of premium clothing. Our dedication to quality and innovation sets us apart. From high-end clothing sales to state-of-the-art manufacturing processes, and a seamless export service, we are committed to excellence at every step.
+                DiObral Industries is a leading name in the world of premium clothing. Our dedication to quality and innovation sets us apart. From high-end clothing sales to state-of-the-art manufacturing processes, and a seamless export service, we are committed to excellence at every step.
               </p>
               <p className="text-lg">
                 Founded on the principles of quality and customer satisfaction, we pride ourselves on delivering products that exceed expectations. Our team of experts ensures that every garment meets the highest standards of craftsmanship and style.

@@ -19,11 +19,12 @@ import {
 } from 'react-icons/md';
 import { useEffect, useState } from "react"
 import SearchModal from "./SearchModal"
-import texleathlogo from "../texleathlogo.svg"
+import diObrallogo from "/logo.png"
 import { Link, NavLink } from "react-router-dom"
 import { useSelector } from "react-redux"
 import { selectCartLength } from "../redux/cartSlice"
 import CartModal from "./CartModal";
+import { BiLogInCircle } from "react-icons/bi";
 
 export default function Navbar() {
   const cartLength = useSelector(selectCartLength);
@@ -123,7 +124,7 @@ export default function Navbar() {
         initial={{ y: -100 }}
         animate={{ y: 0 }}
         transition={{ duration: 0.6, ease: "easeOut" }}
-        className="md:block hidden bg-white shadow-sm border-b border-gray-100 sticky top-0 z-50"
+        className="md:block hidden bg-gray-100 shadow-s m border- b border-gray-50 sticky top-0 z-50"
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16 md:h-20">
@@ -131,15 +132,15 @@ export default function Navbar() {
             <motion.div whileHover={{ scale: 1.05 }} className="flex-shrink-0">
 
               <NavLink to="/" className=" h-[55px] pt-[5px] lg:flex hidden items-center justify-center w-full pb-[5px] overflow-hidden">
-                <img src={texleathlogo} alt="Poor Connection" className="w-[45px] h-[45px]" />
+                <img src={diObrallogo} alt="Poor Connection" className="w-[35px] h-[35px]" />
                 <div className="flex flex-col">
-                  <div className="text-red-700 ml-[4px] text-[20px] font-bold">Texleath</div>
+                  <div className="text-red-700 ml-[4px] text-[20px] font-bold">DiObral</div>
                 </div>
               </NavLink>
             </motion.div>
 
             {/* Navigation Links - Hidden on smaller screens */}
-            <div className="hidden md:flex items-center ml-[25px] space-x-6">
+            <div className="flex xl:ml-[-25px] bg-white px-5 py-3 rounded-[18px] border-t-[2px] border-gray-200 shadow-lg items-center space-x-6">
               {navItems.map((item, index) => (
                 <div
                   key={item.name}
@@ -215,7 +216,7 @@ export default function Navbar() {
             </div>
 
 
-            <div className="flex">
+            <div className={`flex bg-white px-5 ${isLoggedIn ? 'py-1' : 'py-2'} rounded-[18px] border-t-[2px] border-gray-200 shadow-lg`}>
               {/* Right Side Icons */}
               <div className="flex items-center space-x-4">
 
@@ -254,9 +255,9 @@ export default function Navbar() {
                       initial={{ opacity: 0, x: 20 }}
                       animate={{ opacity: 1, x: 0 }}
                       transition={{ delay: 0.6 }}
-                      className="hidden md:flex p-2 text-gray-600 hover:text-red-600 transition-colors duration-200"
+                      className="hidden md:flex text-gray-600 hover:text-red-600 transition-colors duration-200"
                     >
-                      <IoLogInOutline className="w-6 h-6" />
+                      <BiLogInCircle className="w-6 h-6" />
                     </motion.button>
 
                   </Link>
@@ -265,7 +266,6 @@ export default function Navbar() {
                 {/* Unique Cart Button */}
                 {isLoggedIn && (
                   <>
-
                     <motion.button
                       onClick={openCartModal}
                       whileHover={{ scale: 1.05 }}
@@ -273,10 +273,10 @@ export default function Navbar() {
                       initial={{ opacity: 0, x: 20 }}
                       animate={{ opacity: 1, x: 0 }}
                       transition={{ delay: 0.7 }}
-                      className="relative bg-gradient-to-r from-red-700 via-red-900 to-red-700 text-white p-3 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 group"
+                      className="relative bg-gradient-to-r from-red-700 via-red-900 to-red-700 text-white p-2 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 group"
                     >
                       <motion.div whileHover={{ rotate: [0, -10, 10, 0] }} transition={{ duration: 0.5 }}>
-                        <AiOutlineShoppingCart className="w-6 h-6" />
+                        <AiOutlineShoppingCart className="w-5 h-5" />
                       </motion.div>
 
                       {/* Cart Count Badge */}
@@ -330,7 +330,7 @@ export default function Navbar() {
                 animate={{ opacity: isMenuOpen ? 0 : 1 }}
                 transition={{ duration: 0.2 }} // Adjust duration as needed
               >
-                <img src={texleathlogo} alt="TL" className="md:w-[45px] w-[40px] h-[40px] md:h-[45px]" />
+                <img src={diObrallogo} alt="TL" className="md:w-[32px] w-[35px] h-[35px] md:h-[32px]" />
               </motion.div>
               <motion.div
                 className="text-[28px] font-bold"
@@ -339,7 +339,7 @@ export default function Navbar() {
                 transition={{ duration: 0.5 }} // Adjust duration as needed
               >
                 <div className="flex">
-                  <div className="text-red-700 ml-[4px] md:text-[25px] text-[21px] font-bold">TEXLEATH</div>
+                  <div className="text-red-700 ml-[6px] md:text-[25px] text-[21px] font-bold">Diobral</div>
                   {/* <div className="text-red-100 ml-[5px] md:text-[25px] text-[18px] font-bold">INDUSTRIES</div> */}
                 </div>
               </motion.div>

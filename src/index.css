@@ -5,13 +5,23 @@
   scroll-behavior: smooth;
 }
 
+body{
+  background-color: #f3f4f6;
+}
+
 ::-webkit-scrollbar { 
   width: 7px; 
   height: 12px; 
 }
+
 #root{
   overflow-x: hidden;
 }
+
+.title-poppins {
+  font-family: poppins, Arial, ; 
+}
+
 ::-webkit-scrollbar-track {
   background: #ffe6e6; 
 }

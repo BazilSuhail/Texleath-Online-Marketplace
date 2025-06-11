@@ -1,5 +1,5 @@
-### Textleath (E-commerce Mobile Application)
-Texleath, an e-commerce platform developed for high-quality clothing sales. This platform's web application offers a sleek and elegant design, reflecting the premium nature of our products. With a focus on user experience, our site provides a seamless and engaging shopping experience, complemented by advanced features and interactive elements.
+### DiObral (E-commerce Web Application)
+DiObral, an e-commerce platform developed for high-quality clothing sales. This platform's web application offers a sleek and elegant design, reflecting the premium nature of our products. With a focus on user experience, our site provides a seamless and engaging shopping experience, complemented by advanced features and interactive elements.
 
 
 [![Open Source Love svg1](https://badges.frapsoft.com/os/v1/open-source.svg?v=103)](#)
@@ -9,9 +9,9 @@ Texleath, an e-commerce platform developed for high-quality clothing sales. This
 
 ## Project Description:
 
-**Texleath** is a full-featured e-commerce web application designed for the sale of premium clothing and wearable products. Built using the **MERN stack (MongoDB, Express.js, React.js, Node.js)**, the platform offers a seamless, scalable, and visually refined shopping experience for both retail customers and business stakeholders.
+**DiObral** is a full-featured e-commerce web application designed for the sale of premium clothing and wearable products. Built using the **MERN stack (MongoDB, Express.js, React.js, Node.js)**, the platform offers a seamless, scalable, and visually refined shopping experience for both retail customers and business stakeholders.
 
-With an elegant and responsive interface, Texleath is optimized for user engagement and conversion. It integrates essential e-commerce functionalities, including a dynamic product catalog, cart and checkout system, user account management, and customer reviews.
+With an elegant and responsive interface, DiObral is optimized for user engagement and conversion. It integrates essential e-commerce functionalities, including a dynamic product catalog, cart and checkout system, user account management, and customer reviews.
 
 ---
 
@@ -29,8 +29,8 @@ With an elegant and responsive interface, Texleath is optimized for user engagem
 
 
  ---
-- Check out the latest demo of Project [Texleath](https://texleath.netlify.app/). 
-- Find the Server's Repository of this Project Here [Texleath-Backend-Server](https://github.com/BazilSuhail/Texleath-Backend-Server). 
+- Check out the latest demo of Project [DiObral](https://texleath.netlify.app/). 
+- Find the Server's Repository of this Project Here [DiObral-Backend-Server](https://github.com/BazilSuhail/DiObral-Backend-Server). 
 
 ---
 
@@ -38,11 +38,11 @@ With an elegant and responsive interface, Texleath is optimized for user engagem
 ### Run Locally
 Clone the project using the following command:
 ```bash
-   git clone https://github.com/BazilSuhail/Texleath-Online-Marketplace.git
+   git clone https://github.com/BazilSuhail/DiObral-Online-Marketplace.git
 ```
 Go to the project directory
 ```bash
-   cd Texleath-Online-Marketplace
+   cd DiObral-Online-Marketplace
 ```
 Then **Run** this command in your terminal to install all required dependancies:
 ```bash

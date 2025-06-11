@@ -3,125 +3,141 @@ import { FaArrowLeft, FaArrowRight } from 'react-icons/fa';
 import { motion, AnimatePresence } from "framer-motion"
 
 import { FiShoppingBag, FiHeart, FiEye } from 'react-icons/fi';
-import { Link } from "react-router-dom";
-
 
 function Section1() {
+  const colors = [
+    { name: "green", bg: "bg-green-500", img: "/2.png", component: <Slide1 /> },
+    { name: "red", bg: "bg-red-500", img: "/3.png", component: <Slide2 /> },
+    { name: "yellow", bg: "bg-yellow-500", img: "/2.png", component: <Slide3 /> },
+  ]
+
+  const [currentIndex, setCurrentIndex] = useState(0)
+  const [direction, setDirection] = useState(0)
+  const [isAnimating, setIsAnimating] = useState(false)
+
+  const goRight = () => {
+    if (isAnimating) return
+    setIsAnimating(true)
+    setDirection(-1)
+    setCurrentIndex((prevIndex) => (prevIndex + 1) % colors.length)
+  }
+
+  const goLeft = () => {
+    if (isAnimating) return
+    setIsAnimating(true)
+    setDirection(1)
+    setCurrentIndex((prevIndex) => (prevIndex - 1 + colors.length) % colors.length)
+  }
+
+  // Reset animation flag when animation completes
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsAnimating(false)
+    }, 500) // Match this with your animation duration
+    return () => clearTimeout(timer)
+  }, [currentIndex])
+
+  const slideVariants = {
+    enter: (direction) => ({
+      x: direction > 0 ? "100vw" : "-100vw",
+      opacity: 1,
+    }),
+    center: {
+      x: 0,
+      opacity: 1,
+    },
+    exit: (direction) => ({
+      x: direction < 0 ? "100vw" : "-100vw",
+      opacity: 1,
+      zIndex: 0,
+    }),
+  }
+
+  const transition = {
+    type: "spring",
+    stiffness: 300,
+    damping: 30,
+  }
+
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 50 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.8 }}
-      className="min-h-screen flex flex-col items-center justify-center text-center px-4"
-    >
-      <h1 className="text-4xl md:text-6xl mb-12 mt-[-50px] font-[700] text-red-800 title-poppins">
-        A place to Everyone's  <br /> <span className="text-red-800"><span className="text-red-600">Collection</span> and  <span className="text-red-600">Style.</span></span>
-      </h1>
+    <div className="relative h-[calc(100vh-70px)] lg:h-[calc(100vh-80px)] w-screen overflow-hidden bg-black">
+      {/* Background color layer to prevent white flashing */}
+      <div className={`absolute inset-0 bg-gray-50`} />
 
-      {/* Artist tags */}
-      <div className="relative w-full max-w-5xl mt-8 mb-12">
-        <div className="absolute left-[18%] -rotate-[6deg] top-[-2rem] bg-red-700 text-white px-3 py-1 rounded-full text-sm font-semibold shadow-md">
-          @coplin
-        </div>
-        <div className="absolute right-[18%] rotate-[6deg] top-[-2rem] bg-red-200 text-red-700 px-3 py-1  rounded-full text-sm font-semibold shadow-md">
-          @andrea
-        </div>
-
-        {/* Artworks */}
-        <div className="flex justify-center space-x-[-30px]">
-          <motion.div
-            initial={{ opacity: 0, scale: 0.8, y: 30 }}
-            animate={{ opacity: 1, scale: 1, y: 0 }}
-            transition={{ delay: 0.1 }}
-            whileHover={{ scale: 1.1, rotate: -10 }}
-            className="w-32 h-40 md:w-40 md:h-52 rounded-xl bg-red-500 shadow-lg transform translate-y-6 rotate-[-15deg] flex items-center justify-center text-white font-bold cursor-pointer"
-          >
-            Art 1
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, scale: 0.8, y: 30 }}
-            animate={{ opacity: 1, scale: 1, y: 0 }}
-            transition={{ delay: 0.2 }}
-            whileHover={{ scale: 1.1, rotate: -5 }}
-            className="w-32 h-40 md:w-40 md:h-52 rounded-xl bg-blue-200 shadow-lg transform translate-y-5 rotate-[-6deg] flex items-center justify-center text-white font-bold cursor-pointer"
-          >
-            Art 2
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, scale: 0.8, y: 30 }}
-            animate={{ opacity: 1, scale: 1, y: 0 }}
-            transition={{ delay: 0.3 }}
-            whileHover={{ scale: 1.1, rotate: -2 }}
-            className="w-32 h-40 md:w-40 md:h-52 rounded-xl bg-yellow-400 shadow-lg transform -translate-y-4 rotate-[-2deg] flex items-center justify-center text-white font-bold cursor-pointer"
-          >
-            Art 3
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, scale: 0.8, y: 30 }}
-            animate={{ opacity: 1, scale: 1, y: 0 }}
-            transition={{ delay: 0.4 }}
-            whileHover={{ scale: 1.1 }}
-            className="w-32 z-50 h-40 md:w-40 md:h-52 rounded-xl bg-pink-300 shadow-lg transform -translate-y-8 rotate-[0deg] flex items-center justify-center text-white font-bold cursor-pointer"
-          >
-            Art 4
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, scale: 0.8, y: 30 }}
-            animate={{ opacity: 1, scale: 1, y: 0 }}
-            transition={{ delay: 0.5 }}
-            whileHover={{ scale: 1.1, rotate: 2 }}
-            className="w-32 h-40 md:w-40 md:h-52 rounded-xl bg-orange-700 shadow-lg transform -translate-y-4 rotate-[2deg] flex items-center justify-center text-white font-bold cursor-pointer"
-          >
-            Art 5
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, scale: 0.8, y: 30 }}
-            animate={{ opacity: 1, scale: 1, y: 0 }}
-            transition={{ delay: 0.6 }}
-            whileHover={{ scale: 1.1, rotate: 5 }}
-            className="w-32 h-40 md:w-40 md:h-52 rounded-xl bg-red-400 shadow-lg transform translate-y-5 rotate-[6deg] flex items-center justify-center text-white font-bold cursor-pointer"
-          >
-            Art 6
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, scale: 0.8, y: 30 }}
-            animate={{ opacity: 1, scale: 1, y: 0 }}
-            transition={{ delay: 0.7 }}
-            whileHover={{ scale: 1.1, rotate: 8 }}
-            className="w-32 h-40 md:w-40 md:h-52 rounded-xl bg-green-700 shadow-lg transform translate-y-6 rotate-[12deg] flex items-center justify-center text-white font-bold cursor-pointer"
-          >
-            Art 7
-          </motion.div>
-        </div>
-      </div>
-
-      <p className="text-gray-600 mb-6">
-        Artists can display their masterpieces, and buyers can discover and
-      </p>
-
-      {/* Buttons */}
-      <div className="flex gap-4">
-     <Link to="/productlist/All">
-        <motion.button
-          whileHover={{ scale: 1.05, boxShadow: "0 0 15px rgba(0,0,0,0.3)" }}
-          className="bg-red-700 text-white px-6 py-2 rounded-full font-medium"
+      {/* Sliding container */}
+      <AnimatePresence initial={false} mode="popLayout" custom={direction}>
+        <motion.div
+          key={currentIndex}
+          custom={direction}
+          variants={slideVariants}
+          initial="enter"
+          animate="center"
+          exit="exit"
+          transition={transition}
+          className={`absolute inset-0 w-screen h-full bg-white $ {colors[currentIndex].bg} flex items-center justify-center`}
         >
-         Shop Now
-        </motion.button>
-        </Link>
-        <button className="text-black underline font-medium">Read more</button>
-      </div>
-    </motion.div>
-  );
-}
+          <motion.h2
+            className="w-full h-full font-bold text-white capitalize bg-gray-50"
+            initial={{ opacity: 0, x: direction !== 1 ? -350 : 350 }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: direction === 1 ? -350 : 350 }}
+           transition={{ 
+    duration: 1.2,
+    ease: [0.16, 0.77, 0.47, 0.97], // Slow start (ease-in), fast finish (ease-out)
 
- 
+  }}
+          >
+            {/* {colors[currentIndex].name}
+            
+
+            <img src={colors[currentIndex].img} alt="" /> */}
+            {colors[currentIndex].component}
+          </motion.h2>
+        </motion.div>
+      </AnimatePresence>
+
+      {/* Navigation buttons */}
+      <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 flex gap-4 z-10">
+        <motion.button
+          onClick={goLeft}
+          className="bg-white/20 backdrop-blur-sm hover:bg-white/30 transition-all duration-200 rounded-full p-4 shadow-lg"
+          aria-label="Previous color"
+          whileHover={{ scale: 1.1 }}
+          whileTap={{ scale: 0.95 }}
+          disabled={isAnimating}
+        >
+          <FaArrowLeft className="w-6 h-6 text-white" />
+        </motion.button>
+
+        <motion.button
+          onClick={goRight}
+          className="bg-white/20 backdrop-blur-sm hover:bg-white/30 transition-all duration-200 rounded-full p-4 shadow-lg"
+          aria-label="Next color"
+          whileHover={{ scale: 1.1 }}
+          whileTap={{ scale: 0.95 }}
+          disabled={isAnimating}
+        >
+          <FaArrowRight className="w-6 h-6 text-white" />
+        </motion.button>
+      </div>
+
+      {/* Current position indicator */}
+      <div className="absolute top-8 left-1/2 transform -translate-x-1/2 flex gap-2 z-10">
+        {colors.map((_, index) => (
+          <motion.div
+            key={index}
+            className={`w-3 h-3 rounded-full transition-all duration-300 ${index === currentIndex ? "bg-white shadow-lg" : "bg-white/40"
+              }`}
+            animate={{
+              scale: index === currentIndex ? 1.2 : 1,
+            }}
+            transition={{ duration: 0.8 }}
+          />
+        ))}
+      </div>
+    </div>
+  )
+}
 
 const Slide1 = () => {
   return (

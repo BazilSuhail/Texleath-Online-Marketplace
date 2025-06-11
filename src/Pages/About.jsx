@@ -196,7 +196,7 @@ export default function AboutPage() {
     {
       name: "Sarah Johnson",
       role: "CEO & Founder",
-      description: "Visionary leader guiding Texleath with passion for innovation and excellence in fashion industry.",
+      description: "Visionary leader guiding DiObral with passion for innovation and excellence in fashion industry.",
       image: "/placeholder.svg?height=150&width=150",
     },
     {
@@ -208,7 +208,7 @@ export default function AboutPage() {
     {
       name: "Emily Rodriguez",
       role: "Chief Marketing Officer",
-      description: "Strategic marketing leader building the Texleath brand and connecting with customers globally.",
+      description: "Strategic marketing leader building the DiObral brand and connecting with customers globally.",
       image: "/placeholder.svg?height=150&width=150",
     },
   ]
@@ -261,7 +261,7 @@ export default function AboutPage() {
             >
               <h1 className="text-5xl lg:text-7xl font-bold text-gray-900 leading-tight mb-8">
                 About
-                <span className="block text-red-600">Texleath</span>
+                <span className="block text-red-600">DiObral</span>
               </h1>
               <p className="text-xl text-gray-600 leading-relaxed mb-8">
                 We are a leading name in the world of premium fashion. Our dedication to quality and innovation sets us
@@ -292,7 +292,7 @@ export default function AboutPage() {
               <div className="relative z-10">
                 <img
                   src="/placeholder.svg?height=600&width=500"
-                  alt="About Texleath"
+                  alt="About DiObral"
                   width={500}
                   height={600}
                   className="rounded-3xl shadow-2xl"
@@ -462,7 +462,7 @@ export default function AboutPage() {
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}>
             <h2 className="text-4xl lg:text-5xl font-bold text-gray-900 mb-6">
-              Ready to Experience <span className="text-red-600">Texleath</span>?
+              Ready to Experience <span className="text-red-600">DiObral</span>?
             </h2>
             <p className="text-xl text-gray-600 mb-10 max-w-2xl mx-auto">
               Discover our latest collections and experience the difference that quality, style, and exceptional service
