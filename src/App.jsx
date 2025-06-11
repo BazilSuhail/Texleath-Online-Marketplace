@@ -1,16 +1,16 @@
-import { BrowserRouter as Router, Routes, Route, } from "react-router-dom";
-import Home from "./Pages/home";
-import About from "./Pages/About";
-import Products from "./Pages/Products";
-import ProductDetails from "./Pages/ProductDetails";
-import Cart from "./Pages/Cart";
-import Checkout from "./Pages/Checkout"; 
-import Orders from "./Pages/Orders";
-import SignIn from "./Pages/SignIn";
-import SignUp from "./Pages/SignUp";
-import Profile from "./Pages/Profile";
-import Navbar from "./Components/Navbar";
-import Footer from "./Components/Footer";
+import { BrowserRouter as Router, Routes, Route, } from "react-router-dom"
+import Home from "./Pages/Home.jsx";
+import About from "./Pages/About.jsx";
+import Products from "./Pages/Products.jsx";
+import ProductDetails from "./Pages/ProductDetails.jsx";
+import Cart from "./Pages/Cart.jsx";
+import Checkout from "./Pages/Checkout.jsx"; 
+import Orders from "./Pages/Orders.jsx";
+import SignIn from "./Pages/SignIn.jsx";
+import SignUp from "./Pages/SignUp.jsx";
+import Profile from "./Pages/Profile.jsx";
+import Navbar from "./Components/Navbar.jsx";
+import Footer from "./Components/Footer.jsx";
 
 
 const App = () => {

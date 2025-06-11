@@ -20,11 +20,11 @@ import {
 import { Link, useNavigate } from "react-router-dom"
 import { useDispatch } from "react-redux"
 import { clearCart } from "../redux/cartSlice"
-import MainLoader from "../Pages/mainLoader"
+import MainLoader from "../Pages/mainLoader.jsx"
 import axios from "axios"
-import Button from "../utilities/Button"
-import Card from "../utilities/Card"
-import ProfileInput from "../utilities/ProfileInput"
+import Button from "../utilities/Button.jsx"
+import Card from "../utilities/Card.jsx"
+import ProfileInput from "../utilities/ProfileInput.jsx"
 
 // Mock user data
 const mockUser = {
@@ -45,46 +45,6 @@ const mockUser = {
   totalSpent: 1249.99,
 }
 
-// Custom Components
-// const Button = ({ children, variant = "primary", size = "md", className = "", ...props }) => {
-//   const baseClasses =
-//     "inline-flex items-center justify-center font-medium transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none"
-
-//   const variants = {
-//     primary: "bg-red-600 text-white hover:bg-red-700 focus:ring-red-500 shadow-lg hover:shadow-xl",
-//     outline: "border-2 border-red-500 text-red-600 hover:bg-red-50 focus:ring-red-500",
-//     secondary: "bg-gray-100 text-gray-900 hover:bg-gray-200 focus:ring-gray-500",
-//     ghost: "text-gray-600 hover:text-gray-900 hover:bg-gray-100",
-//   }
-
-//   const sizes = {
-//     sm: "px-3 py-2 text-sm rounded-lg",
-//     md: "px-4 py-3 text-sm rounded-lg",
-//     lg: "px-6 py-4 text-base rounded-xl",
-//   }
-
-//   const classes = `${baseClasses} ${variants[variant]} ${sizes[size]} ${className}`
-
-//   return (
-//     <button className={classes} {...props}>
-//       {children}
-//     </button>
-//   )
-// }
-
-// const ProfileInput = ({ label, error, className = "", ...props }) => {
-//   return (
-//     <div className="space-y-1">
-//       {label && <label className="block text-sm font-medium text-gray-700">{label}</label>}
-//       <input
-//         className={`flex h-12 w-full rounded-lg border-2 ${error ? "border-red-300 focus:border-red-500" : "border-gray-300 focus:border-red-500"
-//           } bg-white px-4 py-3 text-sm placeholder:text-gray-500 focus:outline-none focus:ring-0 transition-colors ${className}`}
-//         {...props}
-//       />
-//       {error && <p className="text-sm text-red-600">{error}</p>}
-//     </div>
-//   )
-// }
 
 const Badge = ({ children, variant = "default", className = "" }) => {
   const variants = {
@@ -238,7 +198,7 @@ export default function ProfilePage() {
   if (!user) return <div className='h-screen w-screen pt-[-96px]'> <MainLoader /></div>;
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white">
+    <div className="min-h-screen bg-gray-50 border-t-[2px] border-gray-200">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 pb-12 relative">
         {/* Page Header */}
         <motion.div

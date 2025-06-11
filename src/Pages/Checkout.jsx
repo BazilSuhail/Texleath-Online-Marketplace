@@ -6,10 +6,9 @@ import { Link, useNavigate } from 'react-router-dom';
 import { clearCart } from '../redux/cartSlice';
 import { FaDollarSign, FaGift, FaTruck, FaTimes } from 'react-icons/fa';
 import { FiCheck, FiFileText, FiMapPin, FiUser } from 'react-icons/fi';
-import cart_svg from "../Assets/noOrder.webp";
-import Input from '../utilities/Input';
-import Button from '../utilities/Button';
-import ProfileInput from '../utilities/ProfileInput';
+import cart_svg from "../Assets/noOrder.webp"; 
+import Button from '../utilities/Button.jsx';
+import ProfileInput from '../utilities/ProfileInput.jsx';
 
 const Modal = ({ isOpen, onClose, onConfirm }) => {
     if (!isOpen) return null;

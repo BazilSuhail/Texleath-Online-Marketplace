@@ -3,8 +3,8 @@ import { motion } from "framer-motion"
 import { Link } from "react-router-dom"
 import { FiSearch, FiFilter, FiGrid, FiList, FiStar, FiShoppingBag, FiMenu, FiX } from "react-icons/fi"
 import axios from "axios"
-import Button from "../utilities/Button"
-import Badge from "../utilities/Badge"
+import Button from "../utilities/Button.jsx"
+import Badge from "../utilities/Badge.jsx"
 
 // Custom Components
 // const Button = ({ children, variant = "primary", size = "md", className = "", ...props }) => {

@@ -14,9 +14,9 @@ import { Link, useNavigate, useParams } from "react-router-dom"
 import { useDispatch } from "react-redux"
 import axios from "axios"
 import { addToCart } from "../redux/cartSlice"
-import MainLoader from "./mainLoader"
-import ReviewProduct from "../Components/ProductReview"
-import Button from "../utilities/Button"
+import MainLoader from "./mainLoader.jsx"
+import ReviewProduct from "../Components/ProductReview.jsx"
+import Button from "../utilities/Button.jsx"
 
 // Custom Components
 // const Button = ({ children, variant = "primary", size = "md", className = "", ...props }) => {

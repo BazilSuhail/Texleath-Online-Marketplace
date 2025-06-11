@@ -64,7 +64,7 @@ function Section1() {
             animate={{ opacity: 1, scale: 1, y: 0 }}
             transition={{ delay: 0.4 }}
             whileHover={{ scale: 1.1 }}
-            className="w-32 z-50 h-40 md:w-40 md:h-52 rounded-xl bg-pink-300 shadow-lg transform -translate-y-8 rotate-[0deg] flex items-center justify-center text-white font-bold cursor-pointer"
+            className="w-32 z-10 h-40 md:w-40 md:h-52 rounded-xl bg-pink-300 shadow-lg transform -translate-y-8 rotate-[0deg] flex items-center justify-center text-white font-bold cursor-pointer"
           >
             Art 4
           </motion.div>

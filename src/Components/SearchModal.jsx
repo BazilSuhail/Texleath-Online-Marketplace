@@ -81,7 +81,7 @@ export default function SearchModal({ isOpen, onClose }) {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={onClose}
-            className="absolute inset-0 bg-black/60 backdrop-blur-[2px]"
+            className="absolute inset-0 bg-black/30 backdrop-blur-[1px]"
           />
 
           {/* Modal Content */}

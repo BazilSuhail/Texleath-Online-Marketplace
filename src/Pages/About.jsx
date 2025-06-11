@@ -2,9 +2,7 @@ import { useState } from "react"
 import { motion, useInView } from "framer-motion" 
 import { useRef } from "react"
 import {
-  FiShoppingBag,
-  FiMenu,
-  FiX,
+  FiShoppingBag, 
   FiUsers,
   FiTruck,
   FiSettings,
@@ -17,8 +15,7 @@ import {
   FiTrendingUp,
   FiArrowRight,
   FiPlay,
-} from "react-icons/fi"
-import { Link } from "react-router-dom"
+} from "react-icons/fi" 
 
 // Custom Components
 const Button = ({ children, variant = "primary", size = "md", className = "", ...props }) => {

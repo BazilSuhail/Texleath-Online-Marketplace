@@ -6,7 +6,7 @@ import { removeFromCart, clearCart, updateQuantity } from '../redux/cartSlice'
 import { FiTrash2, FiPlus, FiMinus, FiShoppingBag, FiArrowRight } from "react-icons/fi"
 import { Link } from "react-router-dom"
 import axios from "axios"
-import Button from "../utilities/Button"
+import Button from "../utilities/Button.jsx"
 import { FaSave, FaTrashAlt } from "react-icons/fa"
 
 

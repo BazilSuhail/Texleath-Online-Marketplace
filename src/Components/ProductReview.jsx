@@ -5,7 +5,7 @@ import { motion, AnimatePresence } from "framer-motion"
 import axios from 'axios';
 import { FaStar } from 'react-icons/fa';
 import comments_svg from "../Assets/noComments.webp";
-import MainLoader from '../Pages/mainLoader';
+import MainLoader from '../Pages/mainLoader.jsx';
 import { FiStar } from 'react-icons/fi';
 
 // Custom Components

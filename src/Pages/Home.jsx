@@ -12,9 +12,9 @@ import { FaArrowRightLong, FaPeoplePulling } from "react-icons/fa6";
 
 import { FaRegHandshake } from 'react-icons/fa';
 
-import MainLoader from './mainLoader'
+import MainLoader from './mainLoader.jsx'
 
-import { Section1, Section2 } from '../Components/homepage'; 
+import { Section1, Section2 } from '../Components/homepage.jsx'; 
 
 const features = [
   {

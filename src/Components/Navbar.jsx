@@ -2,12 +2,9 @@ import { motion, AnimatePresence } from "framer-motion"
 import {
   AiOutlineSearch,
   AiOutlineUser,
-  AiOutlineShoppingCart,
-  AiOutlineHeart,
-  AiOutlineMenu
+  AiOutlineShoppingCart, 
 } from "react-icons/ai"
-
-import { MdShoppingCart } from "react-icons/md";
+ 
 import { IoClose, IoLogInOutline, IoMenu, IoPersonCircleOutline } from "react-icons/io5";
 
 import {
@@ -124,7 +121,7 @@ export default function Navbar() {
         initial={{ y: -100 }}
         animate={{ y: 0 }}
         transition={{ duration: 0.6, ease: "easeOut" }}
-        className="md:block hidden bg-gray-100 shadow-s m border- b border-gray-50 sticky top-0 z-50"
+        className="md:block hidden bg-gray-100 shadow-s m border- b border-gray-50 sticky top-0 z-30"
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16 md:h-20">
