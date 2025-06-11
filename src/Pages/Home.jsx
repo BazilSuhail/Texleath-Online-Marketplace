@@ -14,8 +14,7 @@ import { FaRegHandshake } from 'react-icons/fa';
 
 import MainLoader from './mainLoader'
 
-import { Section1, Section2 } from '../Components/HomePage';
-import { SiNextdotjs } from 'react-icons/si';
+import { Section1, Section2 } from '../Components/homepage'; 
 
 const features = [
   {
