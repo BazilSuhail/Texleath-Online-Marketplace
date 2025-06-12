@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from "framer-motion"
 import axios from 'axios';
 import { FaStar } from 'react-icons/fa'; 
-import MainLoader from '../Pages/mainLoader.jsx';
+import MainLoader from '../Components/Loaders/mainLoader.jsx';
 import { FiStar } from 'react-icons/fi';
 import Button from '../utilities/Button.jsx';
 

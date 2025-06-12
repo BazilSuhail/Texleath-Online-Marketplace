@@ -5,6 +5,7 @@ import { FiSearch, FiFilter, FiGrid, FiList, FiStar, FiShoppingBag, FiMenu, FiX 
 import axios from "axios"
 import Button from "../utilities/Button.jsx"
 import Badge from "../utilities/Badge.jsx"
+import ProductsSkeleton from "../Components/Loaders/ProductsSkeleton.jsx"
 
 
 const Input = ({ className = "", ...props }) => {
@@ -173,6 +174,10 @@ export default function Products() {
     }
   }
 
+  // if (!loadingProducts) {
+  //   return <ProductsSkeleton />
+  // }
+
   return (
     <div className="min-h-screen bg-gray-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-5 pb-12">
@@ -224,195 +229,199 @@ export default function Products() {
           </div>
         </div>
 
-        <div className="flex gap-8">
-          {/* Filters Sidebar */}
-          <div
-            className={`
-    ${isFilterOpen ? "absolute  left-0 z-50 w-full bg-white shadow-lg" : ""}
-    ${isFilterOpen ? "block" : "hidden"}
-    lg:block lg:static lg:w-64
-    space-y-6
-  `}
-          >
-            <div className="bg-white border-[2px] border-gray-100 shadow-sm rounded-[14px] p-6 ">
-              <h3 className="font-semibold text-gray-900 mb-4">Categories</h3>
-              <div className="space-y-3">
-                {categories.map((category) => (
-                  <div key={category.name}>
-                    <div className="flex items-center space-x-2">
-                      <Checkbox
-                        id={category.name}
-                        checked={selectedCategories.includes(category.name)}
-                        onCheckedChange={(checked) => handleCategoryChange(category.name, checked)}
-                      />
-                      <Label htmlFor={category.name} className="text-sm font-medium">
-                        {category.name}
-                      </Label>
-                    </div>
-                    {selectedCategories.includes(category.name) && (
-                      <div className="ml-6 mt-2 space-y-2">
-                        {category.subcategories.map((sub) => (
-                          <div key={sub} className="flex items-center space-x-2">
-                            <Checkbox
-                              id={sub}
-                              checked={selectedSubcategories.includes(sub)}
-                              onCheckedChange={(checked) => handleSubcategoryChange(sub, checked)}
-                            />
-                            <Label htmlFor={sub} className="text-sm text-gray-600">
-                              {sub}
-                            </Label>
-                          </div>
-                        ))}
-                      </div>
-                    )}
-                  </div>
-                ))}
-              </div>
-            </div>
 
-            <div className="bg-white border-[2px] border-gray-100 shadow-sm rounded-[14px] p-6">
-              <h3 className="font-semibold text-gray-900 mb-4">Price Range</h3>
-              <div className="space-y-4">
-                <Slider value={priceRange} onValueChange={setPriceRange} max={500} step={10} className="w-full" />
-                <div className="flex items-center justify-between text-sm text-gray-600">
-                  <span>${priceRange[0]}</span>
-                  <span>${priceRange[1]}</span>
+        {/* Fetch Catrgoeis and Products Sidebar */}
+        {loadingProducts ? <ProductsSkeleton /> :
+          <div className="flex gap-8">
+            {/* Filters Sidebar */}
+            <div
+              className={`
+              ${isFilterOpen ? "absolute  left-0 z-50 w-full bg-white shadow-lg" : ""}
+              ${isFilterOpen ? "block" : "hidden"}
+              lg:block lg:static lg:w-64
+              space-y-6
+            `}
+            >
+              <div className="bg-white border-[2px] border-gray-100 shadow-sm rounded-[14px] p-6 ">
+                <h3 className="font-semibold text-gray-900 mb-4">Categories</h3>
+                <div className="space-y-3">
+                  {categories.map((category) => (
+                    <div key={category.name}>
+                      <div className="flex items-center space-x-2">
+                        <Checkbox
+                          id={category.name}
+                          checked={selectedCategories.includes(category.name)}
+                          onCheckedChange={(checked) => handleCategoryChange(category.name, checked)}
+                        />
+                        <Label htmlFor={category.name} className="text-sm font-medium">
+                          {category.name}
+                        </Label>
+                      </div>
+                      {selectedCategories.includes(category.name) && (
+                        <div className="ml-6 mt-2 space-y-2">
+                          {category.subcategories.map((sub) => (
+                            <div key={sub} className="flex items-center space-x-2">
+                              <Checkbox
+                                id={sub}
+                                checked={selectedSubcategories.includes(sub)}
+                                onCheckedChange={(checked) => handleSubcategoryChange(sub, checked)}
+                              />
+                              <Label htmlFor={sub} className="text-sm text-gray-600">
+                                {sub}
+                              </Label>
+                            </div>
+                          ))}
+                        </div>
+                      )}
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              <div className="bg-white border-[2px] border-gray-100 shadow-sm rounded-[14px] p-6">
+                <h3 className="font-semibold text-gray-900 mb-4">Price Range</h3>
+                <div className="space-y-4">
+                  <Slider value={priceRange} onValueChange={setPriceRange} max={500} step={10} className="w-full" />
+                  <div className="flex items-center justify-between text-sm text-gray-600">
+                    <span>${priceRange[0]}</span>
+                    <span>${priceRange[1]}</span>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
 
-          {/* Products Grid */}
-          <div className="flex-1">
-            <div className="mb-4 flex items-center justify-between">
-              <p className="text-gray-600">
-                Showing {filteredProducts.length} of {products.length} products
-              </p>
-            </div>
+            {/* Products Grid */}
+            <div className="flex-1">
+              <div className="mb-4 flex items-center justify-between">
+                <p className="text-gray-600">
+                  Showing {filteredProducts.length} of {products.length} products
+                </p>
+              </div>
 
-            {viewMode === "grid" ? (
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                {filteredProducts.map((product, index) => (
-                  <motion.div
-                    key={product._id}
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.4, delay: index * 0.1 }}
-                    whileHover={{ y: -5 }}
-                    className="group cursor-pointer"
-                  >
-                    <Link to={`/products/${product._id}`}>
-                      <div className="bg-white rounded-lg shadow-sm hover:shadow-lg transition-shadow overflow-hidden border border-gray-100">
-                        <div className="relative">
+              {viewMode === "grid" ? (
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                  {filteredProducts.map((product, index) => (
+                    <motion.div
+                      key={product._id}
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.4, delay: index * 0.1 }}
+                      whileHover={{ y: -5 }}
+                      className="group cursor-pointer"
+                    >
+                      <Link to={`/products/${product._id}`}>
+                        <div className="bg-white rounded-lg shadow-sm hover:shadow-lg transition-shadow overflow-hidden border border-gray-100">
+                          <div className="relative">
+                            <img
+                              src={`${import.meta.env.VITE_REACT_APP_API_BASE_URL}/uploads/${product.image}` || "/placeholder.svg"}
+                              alt={product.name}
+                              className="w-full object-cover  group-hover:scale-105 transition-transform duration-300"
+                            />
+                            {product.originalPrice > product.price && (
+                              <Badge className="absolute top-3 left-3 bg-red-500 hover:bg-red-600">Sale</Badge>
+                            )}
+                          </div>
+                          <div className="p-4">
+                            <div className="flex items-center mb-2">
+                              <div className="flex items-center">
+                                {[...Array(5)].map((_, i) => (
+                                  <FiStar
+                                    key={i}
+                                    className={`w-4 h-4 ${i < Math.floor(product.rating) ? "text-yellow-400 fill-current" : "text-gray-300"
+                                      }`}
+                                  />
+                                ))}
+                              </div>
+                              <span className="text-sm text-gray-500 ml-2">({product.reviews})</span>
+                            </div>
+                            <h3 className="font-semibold text-gray-900 mb-2">{product.name}</h3>
+                            <p className="text-sm text-gray-500 mb-2">{product.category}</p>
+                            <div className="flex items-center space-x-2">
+                              <span className="text-lg font-bold text-gray-900">${product.price}</span>
+                              {(product.sale
+                                ? (product.price - (product.price * product.sale) / 100).toFixed(2)
+                                : product.price.toFixed(2)) > product.price
+                                && (
+                                  <span className="text-sm text-gray-500 line-through">$
+                                    {product.sale
+                                      ? (product.price - (product.price * product.sale) / 100).toFixed(2)
+                                      : product.price.toFixed(2)}</span>
+                                )}
+                            </div>
+                          </div>
+                        </div>
+                      </Link>
+                    </motion.div>
+                  ))}
+                </div>
+              ) : (
+                <div className="space-y-4">
+                  {filteredProducts.map((product, index) => (
+                    <motion.div
+                      key={product._id}
+                      initial={{ opacity: 0, x: -20 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ duration: 0.4, delay: index * 0.1 }}
+                      className="bg-white rounded-lg shadow-sm hover:shadow-lg transition-shadow border border-gray-100 p-4"
+                    >
+                      <Link to={`/products/${product._id}`}>
+                        <div className="flex gap-4">
                           <img
                             src={`${import.meta.env.VITE_REACT_APP_API_BASE_URL}/uploads/${product.image}` || "/placeholder.svg"}
                             alt={product.name}
-                            className="w-full object-cover  group-hover:scale-105 transition-transform duration-300"
+                            className="w-[120px] border-[2px] border-gray-200 rounded-[14px] object-cover"
                           />
-                          {product.originalPrice > product.price && (
-                            <Badge className="absolute top-3 left-3 bg-red-500 hover:bg-red-600">Sale</Badge>
-                          )}
-                        </div>
-                        <div className="p-4">
-                          <div className="flex items-center mb-2">
-                            <div className="flex items-center">
-                              {[...Array(5)].map((_, i) => (
-                                <FiStar
-                                  key={i}
-                                  className={`w-4 h-4 ${i < Math.floor(product.rating) ? "text-yellow-400 fill-current" : "text-gray-300"
-                                    }`}
-                                />
-                              ))}
+                          <div className="flex-1">
+                            <div className="flex items-center my-2">
+                              <div className="flex items-center">
+                                {[...Array(5)].map((_, i) => (
+                                  <FiStar
+                                    key={i}
+                                    className={`w-4 h-4 ${i < Math.floor(product.rating) ? "text-yellow-400 fill-current" : "text-gray-300"
+                                      }`}
+                                  />
+                                ))}
+                              </div>
+                              <span className="text-sm text-gray-500 ml-2">({product.reviews})</span>
                             </div>
-                            <span className="text-sm text-gray-500 ml-2">({product.reviews})</span>
-                          </div>
-                          <h3 className="font-semibold text-gray-900 mb-2">{product.name}</h3>
-                          <p className="text-sm text-gray-500 mb-2">{product.category}</p>
-                          <div className="flex items-center space-x-2">
-                            <span className="text-lg font-bold text-gray-900">${product.price}</span>
-                            {(product.sale
-                              ? (product.price - (product.price * product.sale) / 100).toFixed(2)
-                              : product.price.toFixed(2)) > product.price
-                              && (
-                                <span className="text-sm text-gray-500 line-through">$
-                                  {product.sale
-                                    ? (product.price - (product.price * product.sale) / 100).toFixed(2)
-                                    : product.price.toFixed(2)}</span>
+                            <h3 className="font-semibold text-gray-900 mb-1">{product.name}</h3>
+                            <p className="text-sm text-gray-500 mb-2">
+                              {product.category} • {product.subcategory}
+                            </p>
+                            <div className="flex items-center space-x-2">
+                              <span className="text-lg font-bold text-gray-900">${product.price}</span>
+                              {product.originalPrice > product.price && (
+                                <span className="text-sm text-gray-500 line-through">${product.originalPrice}</span>
                               )}
-                          </div>
-                        </div>
-                      </div>
-                    </Link>
-                  </motion.div>
-                ))}
-              </div>
-            ) : (
-              <div className="space-y-4">
-                {filteredProducts.map((product, index) => (
-                  <motion.div
-                    key={product._id}
-                    initial={{ opacity: 0, x: -20 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ duration: 0.4, delay: index * 0.1 }}
-                    className="bg-white rounded-lg shadow-sm hover:shadow-lg transition-shadow border border-gray-100 p-4"
-                  >
-                    <Link to={`/products/${product._id}`}>
-                      <div className="flex gap-4">
-                        <img
-                          src={`${import.meta.env.VITE_REACT_APP_API_BASE_URL}/uploads/${product.image}` || "/placeholder.svg"}
-                          alt={product.name}
-                          className="w-[120px] border-[2px] border-gray-200 rounded-[14px] rounded-lg object-cover"
-                        />
-                        <div className="flex-1">
-                          <div className="flex items-center my-2">
-                            <div className="flex items-center">
-                              {[...Array(5)].map((_, i) => (
-                                <FiStar
-                                  key={i}
-                                  className={`w-4 h-4 ${i < Math.floor(product.rating) ? "text-yellow-400 fill-current" : "text-gray-300"
-                                    }`}
-                                />
-                              ))}
                             </div>
-                            <span className="text-sm text-gray-500 ml-2">({product.reviews})</span>
-                          </div>
-                          <h3 className="font-semibold text-gray-900 mb-1">{product.name}</h3>
-                          <p className="text-sm text-gray-500 mb-2">
-                            {product.category} • {product.subcategory}
-                          </p>
-                          <div className="flex items-center space-x-2">
-                            <span className="text-lg font-bold text-gray-900">${product.price}</span>
-                            {product.originalPrice > product.price && (
-                              <span className="text-sm text-gray-500 line-through">${product.originalPrice}</span>
-                            )}
                           </div>
                         </div>
-                      </div>
-                    </Link>
-                  </motion.div>
-                ))}
-              </div>
-            )}
+                      </Link>
+                    </motion.div>
+                  ))}
+                </div>
+              )}
 
-            {filteredProducts.length === 0 && (
-              <div className="text-center py-12">
-                <p className="text-gray-500 text-lg">No products found matching your criteria.</p>
-                <Button
-                  variant="outline"
-                  onClick={() => {
-                    setSearchTerm("")
-                    setSelectedCategories([])
-                    setSelectedSubcategories([])
-                    setPriceRange([0, 500])
-                  }}
-                  className="mt-4"
-                >
-                  Clear Filters
-                </Button>
-              </div>
-            )}
+              {filteredProducts.length === 0 && (
+                <div className="text-center py-12">
+                  <p className="text-gray-500 text-lg">No products found matching your criteria.</p>
+                  <Button
+                    variant="outline"
+                    onClick={() => {
+                      setSearchTerm("")
+                      setSelectedCategories([])
+                      setSelectedSubcategories([])
+                      setPriceRange([0, 500])
+                    }}
+                    className="mt-4"
+                  >
+                    Clear Filters
+                  </Button>
+                </div>
+              )}
+            </div>
           </div>
-        </div>
+        }
       </div>
     </div>
   )

@@ -3,66 +3,67 @@ import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
 import { motion, useInView } from 'framer-motion';
 
-import {  FiStar, FiHeadphones, FiRefreshCw } from 'react-icons/fi'; 
+import { FiStar, FiHeadphones, FiRefreshCw } from 'react-icons/fi';
 import { TbCreditCardRefund } from "react-icons/tb";
 import { FaShippingFast } from "react-icons/fa";
 import { FaPeoplePulling } from "react-icons/fa6";
 
 
 import {
-  FiShoppingBag, 
+  FiShoppingBag,
   FiUsers,
   FiTruck,
-  FiSettings, 
-  FiShield, 
+  FiSettings,
+  FiShield,
   FiZap,
   FiGlobe,
-  FiTrendingUp, 
-} from "react-icons/fi" 
+  FiTrendingUp,
+} from "react-icons/fi"
 
 import { FaRegHandshake } from 'react-icons/fa';
 
-import MainLoader from './mainLoader.jsx'
+import MainLoader from '../Components/Loaders/mainLoader.jsx'
 
 import Section1 from '../Components/HomePage/Section1.jsx'
 import Section2 from '../Components/HomePage/Section2.jsx'
 import Section3 from '../Components/HomePage/Section3.jsx'
 import ScrollWordReveal from '../Components/HomePage/ScrollToReveal.jsx';
+import ContactSection from '../Components/HomePage/ContactSection.jsx';
 
-  const services = [
-    {
-      icon: FiSettings,
-      title: "Manufacturing",
-      description:
-        "State-of-the-art manufacturing processes delivering products that exceed expectations in quality and design.",
-    },
-    {
-      icon: FiShoppingBag,
-      title: "Sales",
-      description:
-        "Premium retail experience prioritizing customer needs and delivering exceptional service worldwide.",
-    },
-    {
-      icon: FiGlobe,
-      title: "Export",
-      description: "Global export services maintaining honesty and transparency in all international dealings.",
-    },
-    {
-      icon: FiZap,
-      title: "Customization",
-      description: "Utilizing cutting-edge technology to ensure high production standards and personalized solutions.",
-    },
-    {
-      icon: FiTrendingUp,
-      title: "Design",
-      description: "Crafting unique designs that reflect texleath, style, and contemporary fashion trends.",
-    },
-    {
-      icon: FiUsers,
-      title: "Customer Support",
-      description: "24/7 exceptional support ensuring complete customer satisfaction and seamless experience.",
-    },
-  ]
+const services = [
+  {
+    icon: FiSettings,
+    title: "Manufacturing",
+    description:
+      "State-of-the-art manufacturing processes delivering products that exceed expectations in quality and design.",
+  },
+  {
+    icon: FiShoppingBag,
+    title: "Sales",
+    description:
+      "Premium retail experience prioritizing customer needs and delivering exceptional service worldwide.",
+  },
+  {
+    icon: FiGlobe,
+    title: "Export",
+    description: "Global export services maintaining honesty and transparency in all international dealings.",
+  },
+  {
+    icon: FiZap,
+    title: "Customization",
+    description: "Utilizing cutting-edge technology to ensure high production standards and personalized solutions.",
+  },
+  {
+    icon: FiTrendingUp,
+    title: "Design",
+    description: "Crafting unique designs that reflect texleath, style, and contemporary fashion trends.",
+  },
+  {
+    icon: FiUsers,
+    title: "Customer Support",
+    description: "24/7 exceptional support ensuring complete customer satisfaction and seamless experience.",
+  },
+]
 
 const features = [
   {
@@ -258,9 +259,13 @@ const Home = () => {
           {/* Animated foreground layer */}
           <div className="relative flex justify-center ">
             <section className='flex  w-[80%] bg-white/50 shadow-lg backdrop-blur-[3px] rounded-md py-[40px] sm:py-[85px] xsx:py-[105px]' >
-              <div className='w-[40%] mt-[-28px] lg:mt-[-15px] xl:mt-[5px] sm:ml-[45px] ml-[35px] mr-[-45px] scale-75 sm:scale-125 xsx:scale-150'>
-                <div className="cycle-loader"></div>
+              <div className='w-[35%] flex justify-center scale-[] mx-auto bg-red -100'>
+                <div className='scale-[1.7] lg:mt-[45px]'>
+                  <MainLoader />
+                </div>
               </div>
+
+
               <div className='w-[60%] flex flex-col justify-center'>
                 <p className='text-[30px] sm:text-[45px] xsx:text-[55px] xl:text-[68px] text-red-700 font-extrabold text-center'>FREE DELIVERY</p>
                 <p className='text-[17px] sm:text-[32px] xsx:text-[40px] xl:text-[50px] text-red-400 font-medium text-center'>ON <span className='text-red-700'>PKR 10,000</span> OR ABOVE</p>
@@ -270,114 +275,138 @@ const Home = () => {
         </div>
       </div>
 
-      {loading ?
-        <MainLoader /> :
-        <section className="py-16 lg:pb-24">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6 }}
-              className="text-center mb-12"
-            >
-              <h2 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-4">Featured <span className='text-red-600'>Products</span></h2>
-              <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-                Handpicked items that represent the best of our collection.
-              </p>
-            </motion.div>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-              {products.map((product, index) => {
-                const discountedPrice = product.sale
-                  ? (product.price - (product.price * product.sale) / 100).toFixed(2)
-                  : product.price.toFixed(2);
+      {/* Featred Products */}
+      <section className="py-16 lg:pb-24">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            className="text-center mb-12"
+          >
+            <h2 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-4">Featured <span className='text-red-600'>Products</span></h2>
+            <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+              Handpicked items that represent the best of our collection.
+            </p>
+          </motion.div>
 
-                return (
-                  <motion.div
-                    key={product.id}
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.2, delay: index * 0.1 }}
-                    whileHover={{ y: -5 }}
-                    className="group cursor-pointer"
-                  >
-                    <Link to={`/products/${product._id}`}>
-                      <div className="bg-white rounded-lg shadow-sm hover:shadow-lg transition-shadow overflow-hidden">
-                        <div className="relative">
-                          <img
-                            src={`${import.meta.env.VITE_REACT_APP_API_BASE_URL}/uploads/${product.image}`}
-                            alt={product.name}
-                            className="w-full  object-cover group-hover:scale-105 transition-transform duration-300"
-                          />
-                          {product.originalPrice > product.price && (
-                            <Badge className="absolute top-3 left-3 bg-red-500 hover:bg-red-600">Sale</Badge>
-                          )}
-                        </div>
-                        <div className="p-6">
-                          <div className="flex items-center mb-2">
-                            <div className="flex items-center">
-                              {[...Array(5)].map((_, i) => (
-                                <FiStar
-                                  key={i}
-                                  className={`w-4 h-4 ${i < Math.floor(product.rating) ? "text-yellow-400 fill-current" : "text-gray-300"
-                                    }`}
-                                />
-                              ))}
-                            </div>
-                            <span className="text-sm text-gray-500 ml-2">({product.reviews})</span>
-                          </div>
-                          <h3 className="font-semibold text-gray-900 mb-2">{product.name}</h3>
-                          <div className="flex items-center space-x-2">
-                            <span className="text-lg font-bold text-gray-900">${product.price}</span>
-                            {discountedPrice > product.price && (
-                              <span className="text-sm text-gray-500 line-through">${discountedPrice}</span>
+          {loading ?
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+              {Array.from({ length: 8 }).map((_, index) => (
+                <motion.div
+                  key={index}
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ duration: 0.4, delay: index * 0.1 }}
+                  className="bg-white rounded-lg shadow-sm animate-pulse"
+                >
+                  <div className="h-74 bg-gray-200 rounded-md mb-4"></div> 
+                  <div className="h-4 mx-4 bg-gray-300 rounded w-2/4 mb-2"></div>
+                  <div className="h-4 mx-4 bg-gray-300 rounded w-3/4 mb-2"></div>
+                  <div className="flex mx-2 items-center mb-2 space-x-1">
+                    <div className="w-10 h-4 bg-gray-300 rounded ml-2 mb-4" />
+                  </div>
+                </motion.div>
+              ))}
+
+            </div>
+            :
+            <>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+                {products.map((product, index) => {
+                  const discountedPrice = product.sale
+                    ? (product.price - (product.price * product.sale) / 100).toFixed(2)
+                    : product.price.toFixed(2);
+
+                  return (
+                    <motion.div
+                      key={product.id}
+                      initial={{ scale: 0.9 }}
+                      whileInView={{ scale: 1 }}
+                      transition={{ duration: 0.2, delay: index * 0.1 }}
+                      whileHover={{ y: -5 }}
+                      className="group cursor-pointer"
+                    >
+                      <Link to={`/products/${product._id}`}>
+                        <div className="bg-white rounded-lg shadow-sm hover:shadow-lg transition-shadow overflow-hidden">
+                          <div className="relative">
+                            <img
+                              src={`${import.meta.env.VITE_REACT_APP_API_BASE_URL}/uploads/${product.image}`}
+                              alt={product.name}
+                              className="w-full object-cover group-hover:scale-105 transition-transform duration-300"
+                            />
+                            {product.originalPrice > product.price && (
+                              <Badge className="absolute top-3 left-3 bg-red-500 hover:bg-red-600">Sale</Badge>
                             )}
                           </div>
+                          <div className="p-6">
+                            <div className="flex items-center mb-2">
+                              <div className="flex items-center">
+                                {[...Array(5)].map((_, i) => (
+                                  <FiStar
+                                    key={i}
+                                    className={`w-4 h-4 ${i < Math.floor(product.rating) ? "text-yellow-400 fill-current" : "text-gray-300"
+                                      }`}
+                                  />
+                                ))}
+                              </div>
+                              <span className="text-sm text-gray-500 ml-2">({product.reviews})</span>
+                            </div>
+                            <h3 className="font-semibold text-gray-900 mb-2">{product.name}</h3>
+                            <div className="flex items-center space-x-2">
+                              <span className="text-lg font-bold text-gray-900">${product.price}</span>
+                              {discountedPrice > product.price && (
+                                <span className="text-sm text-gray-500 line-through">${discountedPrice}</span>
+                              )}
+                            </div>
+                          </div>
                         </div>
-                      </div>
-                    </Link>
-                  </motion.div>
-                );
-              })}
-            </div>
-            <div className='w-full flex'>
-              <button onClick={() => navigate(`/productlist/All`)} className="mx-auto mt-[55px] shop-now relative overflow-hidden px-8 py-2 border-2 border-white text-white text-lg font-bold rounded-[35px] bg-red-700 shadow-md hover:bg-red-800 hover:text-white hover:shadow-lg active:scale-90 transition-transform duration-300">
-                Shop now
-              </button>
-            </div>
-          </div>
-        </section>
-      }
-
-            {/* Services Section */}
-            <AnimatedSection className="pb-20 lg:pb-32">
-              <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div className="text-center mb-16">
-                  <motion.h2
-                    initial={{ opacity: 0, y: 30 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.6 }}
-                    className="text-4xl lg:text-5xl font-bold text-gray-900 mb-6"
-                  >
-                    What We <span className="text-red-600">Offer</span>
-                  </motion.h2>
-                  <motion.p
-                    initial={{ opacity: 0, y: 30 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.6, delay: 0.1 }}
-                    className="text-xl text-gray-600 max-w-3xl mx-auto"
-                  >
-                    From manufacturing to global export, we provide comprehensive solutions that exceed expectations in every
-                    aspect of the fashion industry.
-                  </motion.p>
-                </div>
-      
-                <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                  {services.map((service, index) => (
-                    <ServiceCard key={service.title} {...service} delay={index * 0.1} />
-                  ))}
-                </div>
+                      </Link>
+                    </motion.div>
+                  );
+                })}
               </div>
-            </AnimatedSection>
+              <div className='w-full flex'>
+                <button onClick={() => navigate(`/productlist/All`)} className="mx-auto mt-[55px] shop-now relative overflow-hidden px-8 py-2 border-2 border-white text-white text-lg font-bold rounded-[35px] bg-red-700 shadow-md hover:bg-red-800 hover:text-white hover:shadow-lg active:scale-90 transition-transform duration-300">
+                  Shop now
+                </button>
+              </div>
+            </>
+          }
+        </div>
+      </section>
+
+      {/* Services Section */}
+      <AnimatedSection className="pb-20 lg:pb-32">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-16">
+            <motion.h2
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6 }}
+              className="text-4xl lg:text-5xl font-bold text-gray-900 mb-6"
+            >
+              What We <span className="text-red-600">Offer</span>
+            </motion.h2>
+            <motion.p
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.1 }}
+              className="text-xl text-gray-600 max-w-3xl mx-auto"
+            >
+              From manufacturing to global export, we provide comprehensive solutions that exceed expectations in every
+              aspect of the fashion industry.
+            </motion.p>
+          </div>
+
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {services.map((service, index) => (
+              <ServiceCard key={service.title} {...service} delay={index * 0.1} />
+            ))}
+          </div>
+        </div>
+      </AnimatedSection>
 
       {/* Features Section */}
       {/* <div className="relative">
@@ -442,90 +471,7 @@ const Home = () => {
       </section>
 
 
-
-      <div className='h-[4px] max-w-7xl mx-auto my-[45px] rounded-lg bg-red-100'></div>
-
-      <section className='md:w-[90%] xl:w-[55%] w-[95%]  mb-[45px] mx-auto mt-[35px]'>
-        <div className='flex w-full justify-center mb-[35px] items-center mx-auto'>
-          <FaRegHandshake className='text-[45px] md:text-[75px] text-red-900 mr-3' />
-          <h2 className="text-2xl md:text-4xl font-bold mb-1 text-red-800 text-center"> Lets Get in Touch</h2>
-        </div>
-
-        <div className=' p-6 md:p-8 rounded-lg shadow-custom-card'>
-          <h2 className='text-xl md:text-2xl font-semibold text-red-800 mb-4 flex items-center'>
-            Contact Form
-          </h2>
-          <form onSubmit={handleSubmit}>
-            <div className='mb-4'>
-              <label htmlFor='email' className='block text-gray-700 mb-2'>Email</label>
-              <input
-                type='email'
-                id='email'
-                name='email'
-                value={formData.email}
-                onChange={handleChange}
-                className='w-full px-4 bg-red-50 py-2 border border-red-100 rounded-md text-sm md:text-base'
-                required
-              />
-            </div>
-            <div className='mb-4'>
-              <label htmlFor='message' className='block text-gray-700 mb-2'>Message</label>
-              <textarea
-                id='message'
-                name='message'
-                value={formData.message}
-                onChange={handleChange}
-                className='w-full bg-white  px-4 py-2 border border-red-100 rounded-md text-sm md:text-base'
-                rows='4'
-                required
-              ></textarea>
-            </div>
-            <button type='submit' className='bg-red-800 text-white px-4 py-2 rounded-md font-semibold text-sm md:text-base hover:bg-red-700 transition'>
-              Send Message
-            </button>
-          </form>
-          {status && <p className='mt-4 text-green-600 text-sm md:text-base'>{status}</p>}
-        </div>
-      </section>
-
-      {/* Hero Section
-      
-      <section id="home" className="text-red-700 flex items-center justify-center text-center relative">
-        <div>
-          <h1 className="text-[65px] font-extrabold mb-4">Welcome to DiObral Industries</h1>
-          <p className="text-xl mb-8">Crafting Excellence in Clothing Sales, Manufacturing, and Exporting.</p>
-          <button className="bg-red-500 text-white px-6 py-3 rounded-full hover:bg-red-600">Discover More</button>
-        </div>
-      </section>
-      */}
-
-
-      {/* About Us Section 
-      <section id="about" className="py-16 bg-gray-50">
-        <div className="container mx-auto px-6">
-          <div className="flex flex-col md:flex-row items-center justify-center gap-8"> 
-            <div className="md:w-1/2">
-              <img
-                src="https://via.placeholder.com/600x400"
-                alt="DiObral Industries"
-                className="w-full h-auto object-cover rounded-lg shadow-lg"
-              />
-            </div> 
-            <div className="md:w-1/2 p-8 ">
-              <h2 className="text-4xl font-bold mb-6 text-red-600">
-                About Us
-              </h2>
-              <p className="text-lg mb-6">
-                DiObral Industries is a leading name in the world of premium clothing. Our dedication to quality and innovation sets us apart. From high-end clothing sales to state-of-the-art manufacturing processes, and a seamless export service, we are committed to excellence at every step.
-              </p>
-              <p className="text-lg">
-                Founded on the principles of quality and customer satisfaction, we pride ourselves on delivering products that exceed expectations. Our team of experts ensures that every garment meets the highest standards of craftsmanship and style.
-              </p>
-            </div>
-          </div>
-        </div>
-      </section >
-      */}
+      <ContactSection />
 
 
 

@@ -15,7 +15,7 @@ import {
 import { Link, useNavigate } from "react-router-dom"
 import { useDispatch } from "react-redux"
 import { clearCart } from "../redux/cartSlice"
-import MainLoader from "../Pages/mainLoader.jsx"
+import MainLoader from "../Components/Loaders/mainLoader.jsx"
 import axios from "axios"
 import Button from "../utilities/Button.jsx"
 import Card from "../utilities/Card.jsx"

@@ -2,7 +2,7 @@ import React from 'react';
 
 const MainLoader = () => {
   return (
-    <div className="h-screen w-screen overflow-hidden flex-col flex justify-center items-center">
+    <div>
       <div className="customLoader">
         <div className="truckWrapper">
           <div className="truckBody">
@@ -126,8 +126,7 @@ const MainLoader = () => {
             ></path>
           </svg>
         </div>
-      </div>
-      <p className='font-[500] lg:text-[19px] text-[15px]  mt-[10px] text-red-800 '>Loading ...</p>
+      </div> 
     </div>
   );
 };

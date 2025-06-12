@@ -183,7 +183,7 @@ const OrderDetailsModal = ({ order, isOpen, onClose }) => {
                                      <Badge variant={"pending"}>Pending</Badge>
                                     <button
                                         onClick={onClose}
-                                        className="p-2 hover:bg-white hover:bg-white/30 rounded-lg transition-colors"
+                                        className="p-2 hover:bg-white rounded-lg transition-colors"
                                     >
                                         <FiX className="w-6 h-6" />
                                     </button>
