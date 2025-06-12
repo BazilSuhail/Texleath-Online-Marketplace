@@ -2,9 +2,9 @@ import { motion, AnimatePresence } from "framer-motion"
 import {
   AiOutlineSearch,
   AiOutlineUser,
-  AiOutlineShoppingCart, 
+  AiOutlineShoppingCart,
 } from "react-icons/ai"
- 
+
 import { IoClose, IoLogInOutline, IoMenu, IoPersonCircleOutline } from "react-icons/io5";
 
 import {
@@ -22,53 +22,19 @@ import { useSelector } from "react-redux"
 import { selectCartLength } from "../redux/cartSlice"
 import CartModal from "./CartModal";
 import { BiLogInCircle } from "react-icons/bi";
+import { FiGrid, FiHome, FiInfo, FiList, FiSearch } from "react-icons/fi";
 
 export default function Navbar() {
   const cartLength = useSelector(selectCartLength);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-
   const [isCartOpen, setIsCartOpen] = useState(false);
-  const openCartModal = () => setIsCartOpen(true);
-  const closeCartModal = () => setIsCartOpen(false);
-
   const [hoveredCategory, setHoveredCategory] = useState(false)
   const [isSearchModalOpen, setIsSearchModalOpen] = useState(false)
 
-  // ==========
-  const [openIndex, setOpenIndex] = useState(null);
+  const openCartModal = () => setIsCartOpen(true);
+  const closeCartModal = () => setIsCartOpen(false);
 
-
-
-  const handleToggle = (index) => {
-    setOpenIndex(openIndex === index ? null : index);
-  };
-
-  const handleMenuToggle = () => {
-    setIsMenuOpen(!isMenuOpen);
-  };
-
-  // =======
-
-  // useEffect(() => {
-  //     const fetchProfile = async () => {
-  //         try {
-  //             const token = localStorage.getItem('token');
-  //             if (token) {
-  //                 const response = await axios.get(`${import.meta.env.VITE_REACT_APP_API_BASE_URL}/auth/profile`, {
-  //                     headers: { 'Authorization': `Bearer ${token}` }
-  //                 });
-  //                 setIsLoggedIn(response.status === 200);
-  //             } else {
-  //                 setIsLoggedIn(false);
-  //             }
-  //         } catch (error) {
-  //             setIsLoggedIn(false);
-  //         }
-  //     };
-
-  //     fetchProfile();
-  // }, []);
   useEffect(() => {
     const checkToken = () => {
       const token = localStorage.getItem('token');
@@ -78,11 +44,11 @@ export default function Navbar() {
       }
 
       try {
-        const payloadBase64 = token.split('.')[1]; // Get the payload part of the token
-        const payloadJSON = atob(payloadBase64); // Decode from base64
+        const payloadBase64 = token.split('.')[1];
+        const payloadJSON = atob(payloadBase64);
         const payload = JSON.parse(payloadJSON);
 
-        const currentTime = Date.now() / 1000; // Current time in seconds
+        const currentTime = Date.now() / 1000;
         if (payload.exp && payload.exp > currentTime) {
           setIsLoggedIn(true);
         } else {
@@ -97,15 +63,22 @@ export default function Navbar() {
     checkToken();
   }, []);
 
+  const handleMenuToggle = () => {
+    setIsMenuOpen(!isMenuOpen);
+  };
 
+  const handleSearchBar = () => {
+    setIsMenuOpen(!isMenuOpen);
+    setIsSearchModalOpen(true)
+  };
 
   const categories = [
-    { name: "Fitness Wear", href: "#", icon: MdFitnessCenter },
-    { name: "Sports Wear", href: "#", icon: MdSports },
-    { name: "Gym Wear", href: "#", icon: MdDirectionsRun },
-    { name: "Gloves", href: "#", icon: MdSafetyDivider },
-    { name: "Safety Wear", href: "#", icon: MdSafetyDivider },
-    { name: "Active Wear", href: "#", icon: MdAccessibility }
+    { name: "Fitness Wear", href: "/productlist/Fitness Wear", icon: MdFitnessCenter },
+    { name: "Sports Wear", href: "/productlist/Fitness Wear", icon: MdSports },
+    { name: "Gym Wear", href: "/productlist/Gym Wear", icon: MdDirectionsRun },
+    { name: "Gloves", href: "/productlist/Fitness Wear", icon: MdSafetyDivider },
+    { name: "Safety Wear", href: "/productlist/Safety Wear", icon: MdSafetyDivider },
+    { name: "Active Wear", href: "/productlist/Active Wear", icon: MdAccessibility }
   ]
 
   const navItems = [
@@ -185,7 +158,7 @@ export default function Navbar() {
                                       backgroundColor: "rgba(59, 130, 246, 0.1)",
                                       scale: 1.02,
                                     }}
-                                    className="flex items-center px-3 py-2 text-sm text-gray-700 rounded-md hover:text-red-600 transition-colors duration-150"
+                                    className="flex items-center px-3 py-2 hover:bg-red-100 text-sm text-gray-700 rounded-md hover:text-red-600 transition-colors duration-150"
                                   >
                                     <IconComponent className="mr-2 p-[6px] text-[32px] text-red-700 bg-red-50 rounded-[6px]" />
                                     <span className="font-[600]">{category.name}</span>
@@ -216,12 +189,11 @@ export default function Navbar() {
             <div className={`flex bg-white px-5 ${isLoggedIn ? 'py-1' : 'py-2'} rounded-[18px] border-t-[2px] border-gray-200 shadow-lg`}>
               {/* Right Side Icons */}
               <div className="flex items-center space-x-4">
-
                 <motion.button
                   initial={{ opacity: 0, scale: 0.8 }}
                   animate={{ opacity: 1, scale: 1 }}
                   transition={{ delay: 0.4 }}
-                  className="hidden md:flex"
+                  className="flex"
                   onClick={() => setIsSearchModalOpen(true)}
                   whileHover={{ scale: 0.99 }}
                 >
@@ -336,54 +308,54 @@ export default function Navbar() {
                 transition={{ duration: 0.5 }}
               >
                 <div className="flex">
-                  <div className="text-red-700 ml-[6px] md:text-[25px] text-[21px] font-bold">Diobral</div> 
+                  <div className="text-red-700 ml-[6px] md:text-[25px] text-[21px] font-bold">Diobral</div>
                 </div>
               </motion.div>
             </div>
             <div className="flex">
               {isLoggedIn &&
-                 <motion.button
-                      onClick={openCartModal}
-                      whileHover={{ scale: 1.05 }}
-                      whileTap={{ scale: 0.95 }}
-                      initial={{ opacity: 0, x: 20 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      transition={{ delay: 0.7 }}
-                      className="relative bg-gradient-to-r from-red-700 via-red-900 to-red-700 text-white p-2 mr-3 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 group"
-                    >
-                      <motion.div whileHover={{ rotate: [0, -10, 10, 0] }} transition={{ duration: 0.5 }}>
-                        <AiOutlineShoppingCart className="w-5 h-5" />
-                      </motion.div>
+                <motion.button
+                  onClick={openCartModal}
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  initial={{ opacity: 0, x: 20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: 0.7 }}
+                  className="relative bg-gradient-to-r from-red-700 via-red-900 to-red-700 text-white p-2 mr-3 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 group"
+                >
+                  <motion.div whileHover={{ rotate: [0, -10, 10, 0] }} transition={{ duration: 0.5 }}>
+                    <AiOutlineShoppingCart className="w-5 h-5" />
+                  </motion.div>
 
-                      {/* Cart Count Badge */}
-                      <AnimatePresence>
-                        {cartLength > 0 && (
-                          <motion.div
-                            initial={{ scale: 0, opacity: 0 }}
-                            animate={{ scale: 1, opacity: 1 }}
-                            exit={{ scale: 0, opacity: 0 }}
-                            key={cartLength}
-                            className="absolute -top-2 -right-2 bg-red-500 text-white text-xs font-bold rounded-full w-6 h-6 flex items-center justify-center"
-                          >
-                            <motion.span
-                              initial={{ scale: 1.5 }}
-                              animate={{ scale: 1 }}
-                              transition={{ type: "spring", stiffness: 500, damping: 25 }}
-                            >
-                              {cartLength}
-                            </motion.span>
-                          </motion.div>
-                        )}
-                      </AnimatePresence>
-
-                      {/* Hover Effect Ring */}
+                  {/* Cart Count Badge */}
+                  <AnimatePresence>
+                    {cartLength > 0 && (
                       <motion.div
-                        className="absolute inset-0 rounded-full border-2 border-white opacity-0 group-hover:opacity-30"
-                        initial={{ scale: 0.8 }}
-                        whileHover={{ scale: 1.2, opacity: 0.3 }}
-                        transition={{ duration: 0.3 }}
-                      />
-                    </motion.button>
+                        initial={{ scale: 0, opacity: 0 }}
+                        animate={{ scale: 1, opacity: 1 }}
+                        exit={{ scale: 0, opacity: 0 }}
+                        key={cartLength}
+                        className="absolute -top-2 -right-2 bg-red-500 text-white text-xs font-bold rounded-full w-6 h-6 flex items-center justify-center"
+                      >
+                        <motion.span
+                          initial={{ scale: 1.5 }}
+                          animate={{ scale: 1 }}
+                          transition={{ type: "spring", stiffness: 500, damping: 25 }}
+                        >
+                          {cartLength}
+                        </motion.span>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+
+                  {/* Hover Effect Ring */}
+                  <motion.div
+                    className="absolute inset-0 rounded-full border-2 border-white opacity-0 group-hover:opacity-30"
+                    initial={{ scale: 0.8 }}
+                    whileHover={{ scale: 1.2, opacity: 0.3 }}
+                    transition={{ duration: 0.3 }}
+                  />
+                </motion.button>
               }
               <motion.div
                 key={isMenuOpen ? 'close' : 'menu'}
@@ -408,10 +380,10 @@ export default function Navbar() {
             {isMenuOpen && (
               <motion.div
                 initial={{ scaleX: 0, height: 0 }}
-                animate={{ scaleX: 1, height: "50vh", transition: { duration: 0.5 } }}
+                animate={{ scaleX: 1, height: "390px", transition: { duration: 0.5 } }}
                 exit={{ scaleX: 0, height: 0, transition: { duration: 0.3, delay: 0.1 } }}
                 style={{ transformOrigin: "right" }}
-                className="top-[25px] left-[15px] right-[15px] fixed z-[999] mt-[65px] overflow-hidden pb[45px] inset-0 bg-white border-[2px] border-gray-200 shadow-md flex rounded-[10px] flex-col h-screen px-4 py-3"
+                className="top-[25px] left-[15px] right-[15px] fixed z-[999] mt-[65px] overflow-hidden pb[45px] inset-0 bg-white border-[2px] border-gray-200 shadow-2xl flex rounded-[10px] flex-col h-screen px-4 py-3"
               >
                 <div className='my-[10px]'></div>
                 {/* Menu items */}
@@ -421,29 +393,107 @@ export default function Navbar() {
                   exit={{ x: -100, opacity: 0, transition: { duration: 0.2 } }}
                   className="flex flex-col"
                 >
-                  <NavLink to="/" onClick={handleMenuToggle} className="text-red-700 mb-[12px] text-[18px] font-[600] mr-[15px]"> Home</NavLink>
-                  <NavLink to="/anout" onClick={handleMenuToggle} className="text-red-700 mb-[12px] text-[18px] font-[600] mr-[15px]"> About</NavLink>
-                  <NavLink to="/productlist/All" onClick={handleMenuToggle} className="text-red-700 mb-[12px] text-[18px] font-[600] mr-[15px]"> Catalog</NavLink>
-                  <NavLink to="/" onClick={handleMenuToggle} className="text-red-700 mb-[12px] text-[18px] font-[600] mr-[15px]"> Categories</NavLink>
-                  {isLoggedIn ? (
-                    <div className="flex">
-                      <NavLink onClick={handleMenuToggle} to="/profile" className="flex items-center mt-[7px]"><IoPersonCircleOutline className="text-red-100 hover:text-red-600 text-[45px]" /><span className="font-medium underline ml-[2px] text-xl text-white">My Profile</span></NavLink>
+                  {/* Search Bar */}
+                  <button
+                    onClick={handleSearchBar}
+                    className="w-full flex px-4 py-2 rounded-[15px] border-[2px] border-gray-100 shadow-sm">
+                    <AiOutlineSearch className="text-[24px] text-gray-400" />
+                    <p className="text-gray-400 pl-[12px]">Search Products ....</p>
+                  </button>
+
+                  {/* Navigation Links with Icons */}
+                  <div className="flex flex-col mt-5 space-y-4">
+                    <div className="flex justify-between items-center space-x-2 px-2">
+                      <NavLink
+                        to="/"
+                        onClick={handleMenuToggle}
+                        className="flex items-center text-red-700 text-[15px] font-[600] hover:text-red-800"
+                      >
+                        <FiHome className="mr-2" />
+                        Home
+                      </NavLink>
+
+                      <NavLink
+                        to="/about"
+                        onClick={handleMenuToggle}
+                        className="flex items-center text-red-700 text-[15px] font-[600] hover:text-red-800"
+                      >
+                        <FiInfo className="mr-2" />
+                        About
+                      </NavLink>
+
+                      <NavLink
+                        to="/productlist/All"
+                        onClick={handleMenuToggle}
+                        className="flex items-center text-red-700 text-[15px] font-[600] hover:text-red-800"
+                      >
+                        <FiList className="mr-2" />
+                        Catalog
+                      </NavLink>
                     </div>
-                  ) : (
-                    <NavLink to="/signin" onClick={handleMenuToggle} className="text-white mt-[15px] text-[14px] w-[130px] text-center py-[4px] hover:bg-red-700 bg-red-800 border border-white px-[8px] rounded-lg mr-[15px]">
-                      Start Shopping
-                    </NavLink>
-                  )}
 
-                  {/*                           
-                                <NavLink to="/signin" className="text-white text-md text- mr-[15px]">Login</NavLink>
-                                <NavLink to="/register" className="text-white text-md text-lg mr-[15px]">Register</NavLink>
-                                <NavLink to="/profile" className="text-white text-md text-lg mr-[15px]">Profile</NavLink> 
-                                */}
+                    <div className="pt-5 border-t-[2px] border-gray-200">
+                      <h3 className="text-[10px] font-semibold text-gray-500 uppercase tracking-wider mb-3 px-3">
+                        Browse Categories
+                      </h3>
+                      <div className="grid grid-cols-2 gap-1">
+                        {categories.map((category) => {
+                          const IconComponent = category.icon
+                          return (
+                            <NavLink key={category.name} to={category.href} >
+                              <motion.button
+                                whileHover={{
+                                  backgroundColor: "rgba(59, 130, 246, 0.1)",
+                                  scale: 1.02,
+                                }}
+                                onClick={handleMenuToggle}
+                                className="flex items-center px-3 py-2 text-sm text-gray-700 rounded-md hover:text-red-600 transition-colors duration-150"
+                              >
+                                <IconComponent className="mr-2 p-[6px] text-[28px] text-red-700 bg-red-50 rounded-[6px]" />
+                                <span className="font-[600]">{category.name}</span>
+                              </motion.button>
+                            </NavLink>
+                          )
+                        })}
+                      </div>
 
+                      <div className="mt-4 flex justify-between items-center">
+                        <NavLink to="/productlist/All">
+                          <motion.button
+                            onClick={handleMenuToggle}
+                            whileHover={{ x: 5 }}
+                            className="block px-3 py-2 text-[12px] underline underline-offset-2 font-medium text-red-600 hover:text-red-700"
+                          >
+                            View All Categories →
+                          </motion.button>
+                        </NavLink>
+
+                        {isLoggedIn ? (
+                          <div className="flex items-center">
+                            <NavLink
+                              onClick={handleMenuToggle}
+                              to="/profile"
+                              className="flex items-center bg-red-50 rounded-[12px] py-[4px] px-3"
+                            >
+                              <IoPersonCircleOutline className="text-red-700 text-[20px] mt-[1px] mr-[6px]" />
+                              <span className="font-medium text-[13px] text-red-700">My Profile</span>
+                            </NavLink>
+                          </div>
+                        ) : (
+                          <NavLink
+                            to="/signin"
+                            onClick={handleMenuToggle}
+                            className="text-white text-[11px] font-[600] text-center py-[4px] bg-red-700 border border-white px-[12px] rounded-lg"
+                          >
+                            Start Shopping
+                          </NavLink>
+                        )}
+
+                      </div>
+                    </div>
+
+                  </div>
                 </motion.div>
-
-
               </motion.div>
             )}
           </AnimatePresence>
@@ -457,3 +507,43 @@ export default function Navbar() {
     </nav>
   )
 }
+
+/*
+
+
+                  <div className="p-3">
+                    <h3 className="text-[12px] font-semibold text-gray-500 uppercase tracking-wider mb-3 px-3">
+                      Browse Categories
+                    </h3>
+                    <div className="grid grid-cols-2 gap-1">
+                      {categories.map((category) => {
+                        const IconComponent = category.icon
+                        return (
+                          <motion.div
+                            key={category.name}
+                            href={category.href}
+                            whileHover={{
+                              backgroundColor: "rgba(59, 130, 246, 0.1)",
+                              scale: 1.02,
+                            }}
+                            className="flex items-center px-3 py-2 text-sm text-gray-700 rounded-md hover:text-red-600 transition-colors duration-150"
+                          >
+                            <IconComponent className="mr-2 p-[6px] text-[32px] text-red-700 bg-red-50 rounded-[6px]" />
+                            <span className="font-[600]">{category.name}</span>
+                          </motion.div>
+                        )
+                      })}
+                    </div>
+                    <div className="mt-3 border-t border-gray-100">
+                      <NavLink to="/productlist/All">
+                        <motion.div
+                          whileHover={{ x: 5 }}
+                          className="block px-3 py-2 text-[12px] underline underline-offset-2 font-medium text-red-600 hover:text-red-700"
+                        >
+                          View All Categories →
+                        </motion.div>
+                      </NavLink>
+                    </div>
+                  </div> 
+
+*/

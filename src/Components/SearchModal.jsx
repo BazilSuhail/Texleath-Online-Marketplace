@@ -103,7 +103,7 @@ export default function SearchModal({ isOpen, onClose }) {
                   onChange={(e) => setSearchQuery(e.target.value)}
                   onKeyPress={handleKeyPress}
                   placeholder="Search for products, brands, categories..."
-                  className="w-full pl-12 pr-4 py-3 text-lg border-0 focus:outline-none focus:ring-0 bg-gray-50 rounded-xl"
+                  className="w-full pl-12 pr-4 py-3 text-sm md:text-lg border-0 focus:outline-none focus:ring-0 bg-gray-50 rounded-xl"
                 />
               </div>
               <motion.button
@@ -140,7 +140,7 @@ export default function SearchModal({ isOpen, onClose }) {
                     <div>
                       <div className="flex items-center mb-3">
                         <AiOutlineClockCircle className="w-4 h-4 text-gray-400 mr-2" />
-                        <h3 className="text-sm font-medium text-gray-500 uppercase tracking-wider">Recent Searches</h3>
+                        <h3 className="text-[14px] md:text-[16px] font-medium text-gray-500 uppercase tracking-wider">Recent Searches</h3>
                       </div>
                       <div className="space-y-1">
                         {recentSearches.map((search, index) => (
@@ -151,7 +151,7 @@ export default function SearchModal({ isOpen, onClose }) {
                             className="w-full flex items-center p-2 text-left rounded-lg hover:bg-gray-50 transition-all"
                           >
                             <AiOutlineClockCircle className="w-4 h-4 text-gray-300 mr-3" />
-                            <span className="text-gray-700">{search}</span>
+                            <span className="text-gray-700 text-[14px] md:text-[16px]">{search}</span>
                           </motion.button>
                         ))}
                       </div>
@@ -162,7 +162,7 @@ export default function SearchModal({ isOpen, onClose }) {
                   <div>
                     <div className="flex items-center mb-3">
                       <BiTrendingUp className="w-4 h-4 text-gray-400 mr-2" />
-                      <h3 className="text-sm font-medium text-gray-500 uppercase tracking-wider">Trending Now</h3>
+                      <h3 className="text-[14px] md:text-[16px] font-medium text-gray-500 uppercase tracking-wider">Trending Now</h3>
                     </div>
                     <div className="space-y-1">
                       {trendingSearches.map((search, index) => (
@@ -173,7 +173,7 @@ export default function SearchModal({ isOpen, onClose }) {
                           className="w-full flex items-center p-2 text-left rounded-lg hover:bg-gray-50 transition-all"
                         >
                           <BiTrendingUp className="w-4 h-4 text-red-400 mr-3" />
-                          <span className="text-gray-700">{search}</span>
+                          <span className="text-gray-700 text-[14px] md:text-[16px]">{search}</span>
                         </motion.button>
                       ))}
                     </div>
@@ -183,7 +183,7 @@ export default function SearchModal({ isOpen, onClose }) {
             </div>
 
             {/* Footer */}
-            <div className="p-4 bg-gray-50 border-t border-gray-100">
+            <div className="md:block hidden p-4 bg-gray-50 border-t border-gray-100">
               <div className="flex items-center justify-between text-xs text-gray-500">
                 <span>Press Enter to search</span>
                 <span>ESC to close</span>

@@ -1,6 +1,6 @@
 import { useState, useMemo, useEffect } from "react"
 import { motion } from "framer-motion"
-import { Link } from "react-router-dom"
+import { Link, useParams } from "react-router-dom"
 import { FiSearch, FiFilter, FiGrid, FiList, FiStar, FiShoppingBag, FiMenu, FiX } from "react-icons/fi"
 import axios from "axios"
 import Button from "../utilities/Button.jsx"
@@ -65,6 +65,9 @@ const Slider = ({ value, onValueChange, max, step, className = "" }) => {
 }
 
 export default function Products() {
+  const { urlCategory } = useParams(); 
+  const decodedCategory = decodeURIComponent(urlCategory);
+  console.log(decodedCategory); // "Fitness Wear"
 
   const [products, setProducts] = useState([]);
   const [categories, setCategories] = useState([]);
@@ -108,6 +111,7 @@ export default function Products() {
 
         //console.log(productsRes.data); // This is your final result format
         setCategories(structuredCategories)
+        setSelectedCategories(decodedCategory)
 
       } catch (error) {
         console.error('Error fetching data:', error);
