@@ -6,13 +6,13 @@ import { useNavigate } from "react-router-dom"
 
 export default function SearchModal({ isOpen, onClose }) {
   const [searchQuery, setSearchQuery] = useState("")
-  const [recentSearches] = useState(["iPhone 15", "Nike Air Max", "MacBook Pro", "Samsung TV"])
+  const [recentSearches] = useState(["Men's PowerFlex Suits","Adidas Track Suits", "Xtreme Hoodies Air Max", "Nike Shorts"])
   const [trendingSearches] = useState([
-    "Black Friday Deals",
-    "Winter Jackets",
-    "Gaming Laptops",
-    "Wireless Headphones",
-    "Smart Watches",
+    "Men's PowerFlex Tree",
+    "Adidas Elite Shorts",
+    "Endura Pants",
+    "FLexCore Hoodie",
+    "Xtreme Shirt",
   ])
 
   const searchInputRef = useRef(null)

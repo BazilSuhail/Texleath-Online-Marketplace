@@ -94,24 +94,23 @@ Open [http://localhost:5173](http://localhost:5173) to view it in your browser.
 
 #### Shopping Cart System
 - Interactive shopping cart accessible across the site.
-- Real-time quantity adjustments with automatic subtotal calculations.
+- Real-time quantity adjustments with automatic subtotal calculations via Redux.
 - Cart persistence using local storage and optional server sync for logged-in users.
 
 #### Checkout Workflow
 - Multi-step, secure checkout interface:
-  - Shipping address entry.
+  - Shipping address and contact from profile automatically.
   - Order summary and confirmation.
-- Backend order creation and storage without third-party payment gateway integration.
+- Backend order creation and storage **without third-party payment gateway integration**.
 
 #### User Authentication
 - Secure registration and login system using JWT and bcrypt.
 - Encrypted credential storage with hashed passwords.
-- Session persistence via HTTP-only cookies or local storage.
+- Session persistence via local storage.
 
 #### Purchase History
 - Authenticated users can view past orders.
-- Order status updates (e.g., pending, shipped, delivered) shown per order.
-- Ability to reorder from past purchases.
+- Order status updates (e.g., pending, shipped, delivered) shown per order. 
 
 #### Adaptive Interface
 - Fully responsive layout using mobile-first design principles.
@@ -123,11 +122,11 @@ Open [http://localhost:5173](http://localhost:5173) to view it in your browser.
 ## Implementation of Functionalities
 
 #### Data Infrastructure
-- Supabase used as the backend database platform for user accounts and product inventory.
-- Structured tables for products, users, orders, and reviews.
+- MongoDb Atlas used as the backend database platform for user accounts and product inventory.
+- Structured collections and documents for products, users, orders, and reviews.
 
 #### Authentication Framework
-- Supabase Auth for initial prototyping; transitioned to custom JWT-based auth.
+- JWT-based authfor initial prototyping.
 - Middleware-based route protection for authenticated endpoints.
 - Token expiration and refresh logic implemented.
 
@@ -140,23 +139,19 @@ Open [http://localhost:5173](http://localhost:5173) to view it in your browser.
   - Page transitions.
   - Button interactions.
   - Modal dialogs.
+  - Skeleton Loaders.
 
 #### State Management
-- React Query used for data fetching, caching, and background updates.
+- Axios used for data fetching, caching, and background updates.
 - Optimistic updates for user actions (e.g., adding to cart, submitting reviews).
 
 #### Search Algorithm
-- Keyword-based search with fuzzy matching on product titles and descriptions.
-- Backend search indexing for performance.
+- Keyword-based search with fuzzy matching on product titles and descriptions. 
 - Debounced frontend search input for user experience optimization.
-
-#### User Engagement Tools
-- Bookmark/favorites system with persistent storage tied to user account.
-- Ability to save products across sessions and devices.
 
 #### Cart Management Engine
 - Hybrid cart system:
-  - Local storage for unauthenticated users.
+  - Local storage for authenticated users also.
   - API-synced cart for logged-in users.
 - Real-time subtotal and tax calculations on frontend.
 
