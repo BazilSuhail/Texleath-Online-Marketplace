@@ -257,7 +257,7 @@ export default function ProfilePage() {
                       <FiX className="mr-2" />
                       Cancel
                     </Button>
-                    <Button variant="primary" onClick={handleSave}>
+                    <Button variant="red" onClick={handleSave}>
                       <FiSave className="mr-2" />
                       Save Changes
                     </Button>

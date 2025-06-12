@@ -5,6 +5,8 @@ import { removeFromCart, updateQuantity } from '../redux/cartSlice';
 import { FiMinus, FiPlus, FiTrash2, FiShoppingCart } from 'react-icons/fi';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+import { MdOutlineRemoveShoppingCart } from 'react-icons/md';
+import { BsCartDash } from 'react-icons/bs';
 
 const panelVariants = {
   hidden: { width: 0 },
@@ -163,8 +165,9 @@ const CartModal = ({ isOpen, onClose }) => {
                 </div>
 
                 {cart.length === 0 ? (
-                  <div className="text-center py-8 text-gray-500">
-                    Your cart is empty
+                  <div className="flex flex-col pt-40 items-center">
+                    <BsCartDash className='mx-auto w-40 h-40 text-gray-300' />
+                    <span className='text-gray-400 text-[14px] mt-5 font-[600]'>Your cart is empty</span>
                   </div>
                 ) : (
                   cart.map((item, index) => (
@@ -191,16 +194,16 @@ const CartModal = ({ isOpen, onClose }) => {
                 exit="exit"
                 className="px-6 py-3 bg-white border-t border-gray-200">
                 <Link to="/cart">
-                <button
-                  onClick={() => {
-                    onClose();
-                  }}
-                  className="w-full flex items-center disabled:bg-gray-400 justify-center gap-2 px-4 py-2 bg-gradient-to-r from-red-900 via-red-700 to-red-900 text-white rounded-lg hover:bg-gray-800 transition-colors"
-                  disabled={cart.length === 0}
-                >
-                  <FiShoppingCart className="w-5 h-5" />
-                  <span>Go to Cart</span>
-                </button>
+                  <button
+                    onClick={() => {
+                      onClose();
+                    }}
+                    className={`w-full flex items-center bg-gradient-to-r ${cart.length === 0 ? ' from-red-300 via-red-300 to-red-300' : ' from-red-900 via-red-700 to-red-900'} disabled:bg-gray-400 justify-center gap-2 px-4 py-2  text-white rounded-lg hover:bg-gray-800 transition-colors`}
+                    disabled={cart.length === 0}
+                  >
+                    <FiShoppingCart className="w-5 h-5" />
+                    <span>Go to Cart</span>
+                  </button>
                 </Link>
               </motion.div>
 

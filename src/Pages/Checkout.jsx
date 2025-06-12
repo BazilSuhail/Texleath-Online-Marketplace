@@ -189,7 +189,7 @@ const Checkout = () => {
             dispatch(clearCart());
 
             await axios.post(`${import.meta.env.VITE_REACT_APP_API_BASE_URL}/cartState/cart/save`, { userId, items: [] });
-            navigate('/profile');
+            navigate('/orders-tracking');
         } catch (error) {
             console.error('Error confirming order:', error);
             alert('Failed to confirm order.');

@@ -16,6 +16,7 @@ import { Link } from "react-router-dom"
 import axios from "axios"
 import Button from "../utilities/Button"
 import Badge from "../utilities/Badge"
+import OrdersSkeleton from "../Components/Loaders/OrdersSkeleton"
  
 // const Badge = ({ children, variant = "default", className = "" }) => {
 //     const variants = {
@@ -281,11 +282,13 @@ const OrderDetailsModal = ({ order, isOpen, onClose }) => {
 }
 
 export default function Orders() {
-    const [userorders, setUserOrders] = useState([]);
-    const [userId, setUserId] = useState(null);
+    const [userorders, setUserOrders] = useState([])
+    const [userId, setUserId] = useState(null)
     const [selectedOrder, setSelectedOrder] = useState(null)
     const [isModalOpen, setIsModalOpen] = useState(false)
     const [filterStatus, setFilterStatus] = useState("all")
+    const [loading, setLoading] = useState(true)
+
 
     const decodeToken = useCallback((token) => {
         if (!token) return null;
@@ -306,8 +309,8 @@ export default function Orders() {
 
             try {
                 const response = await axios.get(`${import.meta.env.VITE_REACT_APP_API_BASE_URL}/place-order/orders/${userId}`);
-                //console.log(response.data); // Debug log
                 setUserOrders(response.data);
+                setLoading(false)
             }
             catch (error) {
                 console.error('Error fetching orders:', error);
@@ -320,6 +323,10 @@ export default function Orders() {
     const handleViewDetails = (order) => {
         setSelectedOrder(order)
         setIsModalOpen(true)
+    }
+
+    if(loading){
+        return <OrdersSkeleton/>
     }
 
     return (
