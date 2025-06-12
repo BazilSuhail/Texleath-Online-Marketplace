@@ -13,12 +13,15 @@ function Section1() {
                 A place to Everyone's  <br /> <span className="text-red-800"><span className="text-red-600">Collection</span> and  <span className="text-red-600">Style.</span></span>
             </h1>
 
-              <h1 className="md:hidden block text-5xl mb-12 mt-[-50px] font-[700] text-red-800 title-poppins">
-                A place to  <br /> Everyone's  <br /> <span className="text-red-800"><span className="text-red-600">Collection</span>   <br />  and  <span className="text-red-600">Style.</span></span>
-            </h1>
+            <div className="md:hidden block text-[38px] space-y-[-12px] mb-8 mt-[-90px] font-[700] text-red-800 title-poppins">
+  <p className="mb-[-12px]">A place to</p>
+  <p><span className="text-red-600">Everyone's</span> Style</p>
+  <p className="mt-0.5">and <span className="text-red-600">Collection.</span></p>
+</div>
+
 
             {/* Artist tags */}
-            <div className="relative w-full max-w-5xl mt-12 mb-24 md:mb-2">
+            <div className="relative w-full max-w-5xl mt-12 mb-20 md:mb-2">
                 <div className="absolute md:left-[18%] left-[7%] md:-rotate-[6deg] -rotate-[12deg] top-[-2rem] bg-red-700 text-white px-3 py-1 rounded-full text-[10px] md:text-sm font-semibold shadow-md">
                     @coplin
                 </div>

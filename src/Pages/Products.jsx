@@ -65,9 +65,9 @@ const Slider = ({ value, onValueChange, max, step, className = "" }) => {
 }
 
 export default function Products() {
-  const { urlCategory } = useParams(); 
-  const decodedCategory = decodeURIComponent(urlCategory);
-  console.log(decodedCategory); // "Fitness Wear"
+  const { urlCategory } = useParams();
+  //const decodedCategory = decodeURIComponent(urlCategory);
+  //console.log(decodedCategory);
 
   const [products, setProducts] = useState([]);
   const [categories, setCategories] = useState([]);
@@ -111,8 +111,6 @@ export default function Products() {
 
         //console.log(productsRes.data); // This is your final result format
         setCategories(structuredCategories)
-        setSelectedCategories(decodedCategory)
-
       } catch (error) {
         console.error('Error fetching data:', error);
       }
@@ -123,8 +121,10 @@ export default function Products() {
     window.scrollTo(0, 0);
   }, []);
 
-
-
+  // Fetch products, categories, and subcategories once on mount
+  useEffect(() => {
+    setSelectedCategories(decodeURIComponent(urlCategory))
+  }, [urlCategory]);
 
   const filteredProducts = useMemo(() => {
     let filtered = products.filter((product) => {

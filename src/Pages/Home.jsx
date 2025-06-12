@@ -231,7 +231,7 @@ const Home = () => {
           {/* Gray background layer (static) */}
           <div className="absolute inset-0 w-screen flex flex-wrap text-gray-400 opacity-40 pointer-events-none select-none">
 
-            <div className="slider mt-[55px] ml-[-150px] " style={{ '--width': '410px', '--height': '150px', '--quantity': 7 }}>
+            <div className="slider mt-[-25px] md:mt-[55px] sm:ml-[-150px] " style={{ '--width': '410px', '--height': '150px', '--quantity': 7 }}>
               <div className="list ">
                 <div className="stack" style={{ '--position': 1 }}><div className='w-[380px] font-[700] text-[55px]'>New Arrivals</div></div>
                 <div className="stack" style={{ '--position': 2 }}><div className='w-[380px] font-[700] text-[55px]'>New Arrivals</div></div>
@@ -243,7 +243,7 @@ const Home = () => {
               </div>
             </div>
 
-            <div className="slider ml-[-150px] scale-x-[-1]" style={{ '--width': '410px', '--height': '150px', '--quantity': 7 }}>
+            <div className="slider sm:ml-[-150px] scale-x-[-1]" style={{ '--width': '410px', '--height': '150px', '--quantity': 7 }}>
               <div className="list ">
                 <div className="stack" style={{ '--position': 1 }}><div className='w-[380px] font-[700] scale-x-[-1] text-[55px]'>New Arrivals</div></div>
                 <div className="stack" style={{ '--position': 2 }}><div className='w-[380px] font-[700] scale-x-[-1] text-[55px]'>New Arrivals</div></div>
@@ -258,17 +258,17 @@ const Home = () => {
 
           {/* Animated foreground layer */}
           <div className="relative flex justify-center ">
-            <section className='flex  w-[80%] bg-white/50 shadow-lg backdrop-blur-[3px] rounded-md py-[40px] sm:py-[85px] xsx:py-[105px]' >
+            <section className='flex w-[95%] sm:w-[80%] bg-white/50 shadow-lg backdrop-blur-[3px] rounded-md py-[40px] sm:py-[85px] xsx:py-[105px]' >
               <div className='w-[35%] flex justify-center scale-[] mx-auto bg-red -100'>
-                <div className='scale-[1.7] lg:mt-[45px]'>
+                <div className='scale-[0.75] xl:mb-0 mb-3 sm:scale-[1.1] md:scale-[1.3] lg:scale-[1.7] ml-8 sm:ml-12 md:ml-20 lg:ml-24 xl:ml-0  lg:mt-[45px]'>
                   <MainLoader />
                 </div>
               </div>
 
 
               <div className='w-[60%] flex flex-col justify-center'>
-                <p className='text-[30px] sm:text-[45px] xsx:text-[55px] xl:text-[68px] text-red-700 font-extrabold text-center'>FREE DELIVERY</p>
-                <p className='text-[17px] sm:text-[32px] xsx:text-[40px] xl:text-[50px] text-red-400 font-medium text-center'>ON <span className='text-red-700'>PKR 10,000</span> OR ABOVE</p>
+                <p className='text-[22px] sm:text-[32px] md:text-[45px] lg:text-[55px] xl:text-[68px] text-red-700 font-extrabold text-center'>FREE DELIVERY</p>
+                <p className='text-[14px] sm:text-[20px] md:text-[28px] lg::text-[48px] xl:text-[45px] text-red-400 font-medium text-center'>ON <span className='text-red-700'>PKR 10,000</span> OR ABOVE</p>
               </div>
             </section>
           </div>

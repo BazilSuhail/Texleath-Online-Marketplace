@@ -5,7 +5,7 @@ import {
   AiOutlineShoppingCart,
 } from "react-icons/ai"
 
-import { IoClose, IoLogInOutline, IoMenu, IoPersonCircleOutline } from "react-icons/io5";
+import { IoClose, IoMenu, IoPersonCircleOutline } from "react-icons/io5";
 
 import {
   MdSports,
@@ -14,15 +14,14 @@ import {
   MdSafetyDivider,
   MdAccessibility
 } from 'react-icons/md';
+import { BiLogInCircle } from "react-icons/bi";
+import { FiHome, FiInfo, FiList } from "react-icons/fi";
 import { useEffect, useState } from "react"
-import SearchModal from "./SearchModal"
-import diObrallogo from "/vite.svg"
+import SearchModal from "./SearchModal" 
 import { Link, NavLink } from "react-router-dom"
 import { useSelector } from "react-redux"
 import { selectCartLength } from "../redux/cartSlice"
 import CartModal from "./CartModal";
-import { BiLogInCircle } from "react-icons/bi";
-import { FiGrid, FiHome, FiInfo, FiList, FiSearch } from "react-icons/fi";
 
 export default function Navbar() {
   const cartLength = useSelector(selectCartLength);
@@ -74,9 +73,9 @@ export default function Navbar() {
 
   const categories = [
     { name: "Fitness Wear", href: "/productlist/Fitness Wear", icon: MdFitnessCenter },
-    { name: "Sports Wear", href: "/productlist/Fitness Wear", icon: MdSports },
+    { name: "Sports Wear", href: "/productlist/Sports Wear", icon: MdSports },
     { name: "Gym Wear", href: "/productlist/Gym Wear", icon: MdDirectionsRun },
-    { name: "Gloves", href: "/productlist/Fitness Wear", icon: MdSafetyDivider },
+    { name: "Gloves", href: "/productlist/Gloves", icon: MdSafetyDivider },
     { name: "Safety Wear", href: "/productlist/Safety Wear", icon: MdSafetyDivider },
     { name: "Active Wear", href: "/productlist/Active Wear", icon: MdAccessibility }
   ]
@@ -151,18 +150,21 @@ export default function Navbar() {
                               {categories.map((category) => {
                                 const IconComponent = category.icon
                                 return (
-                                  <motion.div
+                                  <NavLink
                                     key={category.name}
-                                    href={category.href}
-                                    whileHover={{
-                                      backgroundColor: "rgba(59, 130, 246, 0.1)",
-                                      scale: 1.02,
-                                    }}
-                                    className="flex items-center px-3 py-2 hover:bg-red-100 text-sm text-gray-700 rounded-md hover:text-red-600 transition-colors duration-150"
+                                    to={category.href}
                                   >
-                                    <IconComponent className="mr-2 p-[6px] text-[32px] text-red-700 bg-red-50 rounded-[6px]" />
-                                    <span className="font-[600]">{category.name}</span>
-                                  </motion.div>
+                                    <motion.div
+                                      whileHover={{
+                                        backgroundColor: "rgba(59, 130, 246, 0.1)",
+                                        scale: 1.02,
+                                      }}
+                                      className="flex items-center px-3 py-2 hover:bg-red-100 text-sm text-gray-700 rounded-md hover:text-red-600 transition-colors duration-150"
+                                    >
+                                      <IconComponent className="mr-2 p-[6px] text-[32px] text-red-700 bg-red-50 rounded-[6px]" />
+                                      <span className="font-[600]">{category.name}</span>
+                                    </motion.div>
+                                  </NavLink>
                                 )
                               })}
                             </div>
