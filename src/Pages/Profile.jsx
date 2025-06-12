@@ -20,26 +20,7 @@ import axios from "axios"
 import Button from "../utilities/Button.jsx"
 import Card from "../utilities/Card.jsx"
 import ProfileInput from "../utilities/ProfileInput.jsx"
-
-// Mock user data
-const mockUser = {
-  id: 1,
-  name: "John Doe",
-  email: "john.doe@example.com",
-  contact: "+1 (555) 123-4567",
-  address: {
-    street: "123 Fashion Street, Apt 4B",
-    city: "New York",
-    state: "NY",
-    zipCode: "10001",
-    country: "United States",
-  },
-  avatar: "/placeholder.svg?height=120&width=120",
-  joinDate: "January 2023",
-  totalOrders: 12,
-  totalSpent: 1249.99,
-}
-
+import ProfileSkeleton from "../Components/Loaders/ProfileSkeleton.jsx"
 
 const Badge = ({ children, variant = "default", className = "" }) => {
   const variants = {
@@ -59,14 +40,13 @@ const Badge = ({ children, variant = "default", className = "" }) => {
   )
 }
 
-
-
 export default function ProfilePage() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [user, setUser] = useState(null);
 
   const [isEditing, setIsEditing] = useState(false)
+  const [loading, setLoading] = useState(true)
   const [error, setError] = useState('')
   
   const [formData, setFormData] = useState({
@@ -100,13 +80,13 @@ export default function ProfilePage() {
             address: response.data.address || { city: '', street: '', country: '' },
             contact: response.data.contact || ''
           });
+          setLoading(false)
         }
         else {
           navigate('/signin');
         }
       } catch (error) {
-          navigate('/signin');
-          // setError('Failed to fetch profile');
+          navigate('/signin'); 
       }
     }
 
@@ -170,7 +150,7 @@ export default function ProfilePage() {
 
 
   if (error) return <p className="text-red-500 mx-[25px] bg-red-100 py-[4px] px-[15px] rounded-lg">{error}</p>;
-  if (!user) return <div className='h-screen w-screen pt-[-96px]'> <MainLoader /></div>;
+  if (loading) return <div className='h-screen w-screen pt-[-96px]'> <ProfileSkeleton /></div>;
 
   return (
     <div className="min-h-screen bg-gray-50">

@@ -17,6 +17,7 @@ import { addToCart } from "../redux/cartSlice"
 import MainLoader from "../Components/Loaders/mainLoader.jsx"
 import ReviewProduct from "../Components/ProductReview.jsx"
 import Button from "../utilities/Button.jsx"
+import ProductDetailSkeleton from "../Components/Loaders/ProductDetailSkeleton.jsx"
 
 const Badge = ({ children, variant = "default", className = "" }) => {
   const variants = {
@@ -39,7 +40,7 @@ const Select = ({ children, value, onValueChange, placeholder, className = "" })
     <select
       value={value}
       onChange={(e) => onValueChange(e.target.value)}
-      className={`flex w-full h-10 w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-gray-500 focus:border-transparent ${className}`}
+      className={`flex h-10 w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-gray-500 focus:border-transparent ${className}`}
     >
       <option value="" disabled>
         {placeholder}
@@ -64,6 +65,7 @@ export default function ProductDetailPage() {
   const [product, setProduct] = useState(null);
   const [key, setKey] = useState(0);
   const [selectedImage, setSelectedImage] = useState(0)
+  const [loading, setLoading] = useState(true)
 
   const [isIncreasing, setisIncreasing] = useState(true);
   const [quantity, setQuantity] = useState(1);
@@ -130,6 +132,7 @@ export default function ProductDetailPage() {
         if (productData.size?.length > 0) {
           setSelectedSize(productData.size[0]);
         }
+        setLoading(false)
       } catch (error) {
         console.error('Error fetching product:', error);
       }
@@ -164,7 +167,7 @@ export default function ProductDetailPage() {
   };
  
 
-  if (!product) return <div className='h-screen w-screen pt-[-96px]'> <MainLoader /></div>;
+  if (loading) return <div className='h-screen w-screen pt-[-96px]'> <ProductDetailSkeleton /></div>;
 
   const discountedPrice = product.sale
     ? (product.price - (product.price * product.sale) / 100).toFixed(2)
