@@ -9,16 +9,20 @@ function Section1() {
             transition={{ duration: 0.8 }}
             className="min-h-screen flex flex-col items-center justify-center text-center px-4"
         >
-            <h1 className="text-4xl md:text-6xl mb-12 mt-[-50px] font-[700] text-red-800 title-poppins">
+            <h1 className="md:block hidden text-4xl md:text-6xl mb-12 mt-[-50px] font-[700] text-red-800 title-poppins">
                 A place to Everyone's  <br /> <span className="text-red-800"><span className="text-red-600">Collection</span> and  <span className="text-red-600">Style.</span></span>
             </h1>
 
+              <h1 className="md:hidden block text-5xl mb-12 mt-[-50px] font-[700] text-red-800 title-poppins">
+                A place to  <br /> Everyone's  <br /> <span className="text-red-800"><span className="text-red-600">Collection</span>   <br />  and  <span className="text-red-600">Style.</span></span>
+            </h1>
+
             {/* Artist tags */}
-            <div className="relative w-full max-w-5xl mt-16 mb-8">
-                <div className="absolute left-[18%] -rotate-[6deg] top-[-2rem] bg-red-700 text-white px-3 py-1 rounded-full text-sm font-semibold shadow-md">
+            <div className="relative w-full max-w-5xl mt-12 mb-24 md:mb-2">
+                <div className="absolute md:left-[18%] left-[7%] md:-rotate-[6deg] -rotate-[12deg] top-[-2rem] bg-red-700 text-white px-3 py-1 rounded-full text-[10px] md:text-sm font-semibold shadow-md">
                     @coplin
                 </div>
-                <div className="absolute right-[18%] rotate-[6deg] top-[-2rem] bg-red-200 text-red-700 px-3 py-1  rounded-full text-sm font-semibold shadow-md">
+                <div className="absolute md:right-[18%] right-[7%] md:rotate-[6deg] rotate-[12deg] top-[-2rem] bg-red-200 text-red-700 px-3 py-1  rounded-full text-[10px] md:text-sm font-semibold shadow-md">
                     @andrea
                 </div>
 
@@ -29,9 +33,9 @@ function Section1() {
                         animate={{ opacity: 1, scale: 1, y: 0 }}
                         transition={{ delay: 0.1 }}
                         whileHover={{ scale: 1.1, rotate: -10 }}
-                        className="w-32 h-40 md:w-50 md:h-52 rounded-xl bg-red-500 shadow-lg transform translate-y-6 rotate-[-15deg] flex items-center justify-center text-white font-bold cursor-pointer"
+                        className="aspect-[3/4] w-32 md:w-50 md:h-52 rounded-xl border-[2px] border-gray-300  shadow-2xl transform translate-y-6 rotate-[-15deg] flex items-center justify-center text-white font-bold cursor-pointer"
                     >
-                        Art 1
+                        <img src="/categories/1.webp" alt="" className="w-full h-full object-cover rounded-xl" />
                     </motion.div>
 
                     <motion.div
@@ -39,9 +43,9 @@ function Section1() {
                         animate={{ opacity: 1, scale: 1, y: 0 }}
                         transition={{ delay: 0.2 }}
                         whileHover={{ scale: 1.1, rotate: -5 }}
-                        className="w-32 h-40 md:w-50 md:h-52 rounded-xl bg-blue-200 shadow-lg transform translate-y-5 rotate-[-6deg] flex items-center justify-center text-white font-bold cursor-pointer"
+                        className="aspect-[3/4] w-32 md:w-50 md:h-52 rounded-xl border-[2px] border-gray-300   shadow-2xl transform translate-y-5 rotate-[-6deg] flex items-center justify-center text-white font-bold cursor-pointer"
                     >
-                        Art 2
+                        <img src="/categories/2.webp" alt="" className="w-full h-full object-cover rounded-xl" />
                     </motion.div>
 
                     <motion.div
@@ -49,9 +53,9 @@ function Section1() {
                         animate={{ opacity: 1, scale: 1, y: 0 }}
                         transition={{ delay: 0.3 }}
                         whileHover={{ scale: 1.1, rotate: -2 }}
-                        className="w-32 h-40 md:w-50 md:h-52 rounded-xl bg-yellow-400 shadow-lg transform -translate-y-4 rotate-[-2deg] flex items-center justify-center text-white font-bold cursor-pointer"
+                        className="aspect-[3/4] w-32 md:w-50 md:h-52 rounded-xl border-[2px] border-gray-300  shadow-2xl transform -translate-y-4 rotate-[-2deg] flex items-center justify-center text-white font-bold cursor-pointer"
                     >
-                        Art 3
+                        <img src="/categories/4.webp" alt="" className="w-full h-full object-cover rounded-xl" />
                     </motion.div>
 
                     <motion.div
@@ -59,9 +63,9 @@ function Section1() {
                         animate={{ opacity: 1, scale: 1, y: 0 }}
                         transition={{ delay: 0.4 }}
                         whileHover={{ scale: 1.1 }}
-                        className="w-32 z-10 h-40 md:w-55 md:h-52 rounded-xl bg-pink-300 shadow-lg transform -translate-y-8 rotate-[0deg] flex items-center justify-center text-white font-bold cursor-pointer"
+                        className="aspect-[3/4] w-32 z-10 md:w-62 md:h-65 rounded-xl border-[2px] border-gray-300 shadow-2xl transform  md:-translate-y-12 -translate-y-6 rotate-[0deg] flex items-center justify-center text-white font-bold cursor-pointer"
                     >
-                        Art 4
+                        <img src="/categories/3.webp" alt="" className="w-full h-full object-cover rounded-xl" />
                     </motion.div>
 
                     <motion.div
@@ -69,9 +73,9 @@ function Section1() {
                         animate={{ opacity: 1, scale: 1, y: 0 }}
                         transition={{ delay: 0.5 }}
                         whileHover={{ scale: 1.1, rotate: 2 }}
-                        className="w-32 h-40 md:w-50 md:h-52 rounded-xl bg-orange-700 shadow-lg transform -translate-y-4 rotate-[2deg] flex items-center justify-center text-white font-bold cursor-pointer"
+                        className="aspect-[3/4] w-32 md:w-50 md:h-52 rounded-xl border-[2px] border-gray-300   shadow-2xl transform -translate-y-4 rotate-[2deg] flex items-center justify-center text-white font-bold cursor-pointer"
                     >
-                        Art 5
+                        <img src="/categories/5.webp" alt="" className="w-full h-full object-cover rounded-xl" />
                     </motion.div>
 
                     <motion.div
@@ -79,9 +83,9 @@ function Section1() {
                         animate={{ opacity: 1, scale: 1, y: 0 }}
                         transition={{ delay: 0.6 }}
                         whileHover={{ scale: 1.1, rotate: 5 }}
-                        className="w-32 h-40 md:w-50 md:h-52 rounded-xl bg-red-400 shadow-lg transform translate-y-5 rotate-[6deg] flex items-center justify-center text-white font-bold cursor-pointer"
+                        className="aspect-[3/4] w-32 md:w-50 md:h-52 rounded-xl border-[2px] border-gray-300  0 shadow-2xl transform translate-y-5 rotate-[6deg] flex items-center justify-center text-white font-bold cursor-pointer"
                     >
-                        Art 6
+                        <img src="/categories/6.webp" alt="" className="w-full h-full object-cover rounded-xl" />
                     </motion.div>
 
                     <motion.div
@@ -89,14 +93,14 @@ function Section1() {
                         animate={{ opacity: 1, scale: 1, y: 0 }}
                         transition={{ delay: 0.7 }}
                         whileHover={{ scale: 1.1, rotate: 8 }}
-                        className="w-32 h-40 md:w-50 md:h-52 rounded-xl bg-green-700 shadow-lg transform translate-y-6 rotate-[12deg] flex items-center justify-center text-white font-bold cursor-pointer"
+                        className="aspect-[3/4] w-32 md:w-50 md:h-52 rounded-xl border-[2px] border-gray-300   shadow-2xl transform translate-y-6 rotate-[12deg] flex items-center justify-center text-white font-bold cursor-pointer"
                     >
-                        Art 7
+                        <img src="/categories/7.webp" alt="" className="w-full h-full object-cover rounded-xl" />
                     </motion.div>
                 </div>
             </div>
 
-            <p className="text-gray-600 mb-6">
+            <p className="text-gray-600 md:w-full w-[80%] mb-6">
                 Artists can display their masterpieces, and buyers can discover and
             </p>
 
@@ -105,7 +109,7 @@ function Section1() {
                 <Link to="/productlist/All">
                     <motion.button
                         whileHover={{ scale: 1.05, boxShadow: "0 0 15px rgba(0,0,0,0.3)" }}
-                        className="bg-red-700 text-white px-6 py-2 rounded-full font-medium"
+                        className="bg-red-700 text-white px-6 py-[4px] text-[14px] md:text-[15px] md:py-2 rounded-full font-medium"
                     >
                         Shop Now
                     </motion.button>
