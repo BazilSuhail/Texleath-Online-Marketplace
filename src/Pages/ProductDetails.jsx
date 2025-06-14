@@ -9,15 +9,17 @@ import {
   FiChevronRight,
   FiPlus,
   FiMinus,
+  FiLock,
+  FiLogIn,
 } from "react-icons/fi"
 import { Link, useNavigate, useParams } from "react-router-dom"
 import { useDispatch } from "react-redux"
 import axios from "axios"
 import { addToCart } from "../redux/cartSlice"
-import MainLoader from "../Components/Loaders/mainLoader.jsx"
 import ReviewProduct from "../Components/ProductReview.jsx"
 import Button from "../utilities/Button.jsx"
 import ProductDetailSkeleton from "../Components/Loaders/ProductDetailSkeleton.jsx"
+import { FaStar } from "react-icons/fa"
 
 const Badge = ({ children, variant = "default", className = "" }) => {
   const variants = {
@@ -65,6 +67,7 @@ export default function ProductDetailPage() {
   const [product, setProduct] = useState(null);
   const [key, setKey] = useState(0);
   const [selectedImage, setSelectedImage] = useState(0)
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [loading, setLoading] = useState(true)
 
   const [isIncreasing, setisIncreasing] = useState(true);
@@ -102,8 +105,34 @@ export default function ProductDetailPage() {
       });
   };
 
+
   useEffect(() => {
     window.scrollTo(0, 0);
+    const checkToken = () => {
+      const token = localStorage.getItem('token');
+      if (!token) {
+        setIsLoggedIn(false);
+        return;
+      }
+
+      try {
+        const payloadBase64 = token.split('.')[1];
+        const payloadJSON = atob(payloadBase64);
+        const payload = JSON.parse(payloadJSON);
+
+        const currentTime = Date.now() / 1000;
+        if (payload.exp && payload.exp > currentTime) {
+          setIsLoggedIn(true);
+        } else {
+          setIsLoggedIn(false);
+        }
+      } catch (error) {
+        console.error('Failed to decode token:', error);
+        setIsLoggedIn(false);
+      }
+    };
+
+    checkToken();
   }, []);
 
   useEffect(() => {
@@ -165,15 +194,15 @@ export default function ProductDetailPage() {
     setisIncreasing(false);
     setKey(prevKey => prevKey + 1);
   };
- 
+
 
   if (loading) return <div className='h-screen w-screen pt-[-96px]'> <ProductDetailSkeleton /></div>;
 
   const discountedPrice = product.sale
     ? (product.price - (product.price * product.sale) / 100).toFixed(2)
     : product.price.toFixed(2);
- 
- 
+
+
 
   return (
     <main className="min-h-screen max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
@@ -344,10 +373,36 @@ export default function ProductDetailPage() {
 
             {/* Action Buttons */}
             <div className="flex gap-4">
-              <Button onClick={handleAddToCart} className="flex w-[280px] bg-gradient-to-r from-red-900 to-red-800 hover:bg-gray-800 text-white" size="lg">
+              {/* <Button onClick={handleAddToCart} className="flex w-[280px] bg-gradient-to-r from-red-900 to-red-800 hover:bg-gray-800 text-white" size="lg">
                 <FiShoppingBag className="w-5 h-5 mr-2" />
                 Add to Cart
-              </Button>
+              </Button> */}
+              {isLoggedIn ? (
+  <Button 
+    onClick={handleAddToCart} 
+    className="flex w-[280px] bg-gradient-to-r from-red-900 to-red-800 hover:from-red-800 hover:to-red-700 text-white" 
+    size="lg"
+  >
+    <FiShoppingBag className="w-5 h-5 mr-2" />
+    Add to Cart
+  </Button>
+) : (
+  <div className="relative w-[280px]">
+    <div className="flex w-full bg-red-300 text-white rounded-md cursor-not-allowed">
+      <Button
+        disabled
+        className="flex w-full bg-transparent hover:bg-transparent pointer-events-none"
+        size="lg"
+      >
+        <FiShoppingBag className="w-5 h-5 mr-2 opacity-80" />
+        Add to Cart
+      </Button>
+    </div>
+    <Link to="/signin" className="absolute -bottom-6 underline underline-offset-2 left-0 w-full text-center text-xs text-red-600 font-medium">
+      Please login to add items to cart
+    </Link>
+  </div>
+)}
               <button onClick={copyUrlToClipboard} className="border-[3px] rounded-[7px] border-gray-200 px-[12px] focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none">
                 <FiShare2 className="w-5 h-5" />
               </button>
@@ -357,7 +412,59 @@ export default function ProductDetailPage() {
       </section>
 
       {/* Reviews Section */}
-      <ReviewProduct productId={id} />
+      {isLoggedIn ? (
+        <ReviewProduct productId={id} />
+      ) : (
+        <div className="max-w-7xl mt-[35px] grid grid-cols-2">
+          <div className="">
+            <Button variant="outline" className="mb-3 opacity-50 cursor-not-allowed">
+              Write a Review
+            </Button>
+
+            <div className="bg-gray-50 rounded-lg py-4 px-6 mt-4 mr-5 border-[2px] border-gray-100 opacity-75">
+              <div className="space-y-4">
+                <div>
+                  <p className="text-sm font-medium text-gray-500">Rating</p>
+                  <div className="flex items-center space-x-1 mt-2">
+                    {[...Array(5)].map((_, index) => (
+                      <FaStar
+                        key={index}
+                        size={25}
+                        className="text-gray-300"
+                      />
+                    ))}
+                  </div>
+                </div>
+
+                <div>
+                  <p className="text-sm font-medium text-gray-500">Your Review</p>
+                  <div className="w-full h-32 bg-gray-100 rounded-md border border-gray-200"></div>
+                  <p className="text-xs text-gray-400 mt-1">Login to submit a review</p>
+                </div>
+
+                <div className="flex gap-4">
+                  <div className="px-4 py-2 bg-gray-200 text-gray-400 rounded-md cursor-not-allowed">
+                    Submit Review
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="pt-8 px-4">
+            <FiLock className="text-2xl text-red-600 mb-2" />
+            <h3 className="text-lg font-semibold text-gray-800 mb-1">Login Required</h3>
+            <p className="text-gray-600 mb-4">Please login to view and submit reviews</p>
+            <Link
+              to="/signin"
+              className="inline-flex items-center px-4 py-2 bg-red-600 hover:bg-red-700 text-white font-medium rounded-md transition-colors duration-200"
+            >
+              <FiLogIn className="mr-2" />
+              Login Now
+            </Link>
+          </div>
+        </div>
+      )}
 
       {/* Tooltip feedback */}
       <AnimatePresence>

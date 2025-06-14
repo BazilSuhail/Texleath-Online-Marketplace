@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from "framer-motion"
 import axios from 'axios';
-import { FaStar } from 'react-icons/fa'; 
+import { FaStar } from 'react-icons/fa';
 import MainLoader from '../Components/Loaders/mainLoader.jsx';
-import { FiStar } from 'react-icons/fi';
+import { FiAlertCircle, FiEdit2, FiMessageSquare, FiStar } from 'react-icons/fi';
 import Button from '../utilities/Button.jsx';
 
 
@@ -61,20 +61,27 @@ const ReviewsList = ({ productId, newReview }) => {
   if (loading) return <div className='h-full w-full'><MainLoader /></div>;
 
   if (error) return (
-    <div className='flex justify-center items-center w-full'>
+    <div className='space-y-6 lg:col-span-3 lg:pl-[15px]'>
       <motion.div
         initial={{ opacity: 0, scale: 0.9 }}
         animate={{ opacity: 1, scale: 1 }}
-        className='text-center'
+        className='flex flex-col items-center justify-center text-center p-6'
       >
-        <img
-          src="/noComments.webp"
-          alt='Cart Icon'
-          className='mx-auto mix-blend-multiply lg:scale-[0.75] scale-[0.8] w-[280px] h-[280px]'
-        />
-        <p className='px-[15px] py-[6px] rounded-[8px] mt-[-16px] text-[15px] text-blue-500 font-[600] bg-blue-100 mx-auto text-center'>
-          No reviews made till now. <span className='font-[700] text-blue-800'>Make Review NOW !!</span>
-        </p>
+        <div className='relative mb-6'>
+          <FiMessageSquare className='w-32 h-32 text-gray-300' />
+          <FiAlertCircle className='absolute bottom-0 right-0 w-12 h-12 text-red-400 bg-white rounded-full p-1' />
+        </div>
+
+        <div className='space-y-3'>
+          <h3 className='text-xl font-bold text-red-700'>No Reviews Yet</h3>
+          <p className='text-gray-500'>
+            Be the first to share your thoughts about this product!
+          </p>
+          <div className='px-4 py-2 rounded-lg bg-red-50 inline-flex items-center text-red-600 font-medium'>
+            <FiEdit2 className='mr-2' />
+            <span>Write Your Review Now</span>
+          </div>
+        </div>
       </motion.div>
     </div>
   );
@@ -219,7 +226,7 @@ const ReviewProduct = ({ productId }) => {
       initial={{ opacity: 0, y: 40 }}
       whileInView={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.6 }}
-      className="mt-16 grid lg:grid-cols-5 gap-8"
+      className="mt-16 grid  lg:grid-cols-5 gap-8"
     >
       <div className="col-span-2 sticky top-0 border-t  border-gray-200 ">
 
@@ -270,7 +277,7 @@ const ReviewProduct = ({ productId }) => {
             <div className="flex gap-4">
               <Button
                 type="submit"
-                className="bg-black hover:bg-gray-800"
+                className="bg-red-800 hover:bg-red-600"
                 disabled={isSubmitting}
               >
                 {isSubmitting ? (
@@ -290,24 +297,24 @@ const ReviewProduct = ({ productId }) => {
           <AnimatePresence>
             {success && (
               <motion.div
-               initial={{ opacity: 0, x: 20 }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: 20 }}
-            transition={{ duration: 0.3 }}
-            className="fixed top-4 right-4 z-50 bg-green-700 text-white px-4 py-3 rounded-md shadow-lg flex items-center gap-2"
-         >
+                initial={{ opacity: 0, x: 20 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: 20 }}
+                transition={{ duration: 0.3 }}
+                className="fixed top-4 right-4 z-50 bg-green-700 text-white px-4 py-3 rounded-md shadow-lg flex items-center gap-2"
+              >
                 {success}
               </motion.div>
             )}
 
             {error && (
               <motion.div
-                  initial={{ opacity: 0, x: 20 }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: 20 }}
-            transition={{ duration: 0.3 }}
-            className="fixed top-4 right-4 z-50 bg-red-700 text-white px-4 py-3 rounded-md shadow-lg flex items-center gap-2"
-          >
+                initial={{ opacity: 0, x: 20 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: 20 }}
+                transition={{ duration: 0.3 }}
+                className="fixed top-4 right-4 z-50 bg-red-700 text-white px-4 py-3 rounded-md shadow-lg flex items-center gap-2"
+              >
                 {error}
               </motion.div>
             )}

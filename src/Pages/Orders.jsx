@@ -86,7 +86,7 @@ const OrderCard = ({ order, onViewDetails }) => {
             </div>
 
             {/* Content */}
-            <div className="p-6">
+            <div className="p-3 md:p-6">
                 {/* Items Preview */}
                 <div className="mb-6">
                     <div className="flex items-center justify-between mb-3">
@@ -96,7 +96,7 @@ const OrderCard = ({ order, onViewDetails }) => {
                             View Details
                         </Button>
                     </div>
-                    <div className="flex space-x-3 overflow-x-auto pb-2">
+                    <div className="flex flex-wrap space-y-3 space-x-3 overflow-x-auto pb-2">
                         {order.items.slice(0, 3).map((item) => (
                             <div key={item._id} className="flex-shrink-0">
                                 <img
@@ -117,7 +117,7 @@ const OrderCard = ({ order, onViewDetails }) => {
                 </div>
 
                 {/* Order Summary */}
-                <div className="bg-gray-50 border-[2px] border-gray-200 rounded-xl p-4 mb-4">
+                <div className="bg-gray-50 border-[2px] border-gray-200 rounded-xl sm:px-4 px-3 py-4 mb-4">
                     <div className="flex items-center justify-between mb-2">
                         <span className="text-gray-600">Total Amount</span>
                         <span className="font-bold text-xl text-gray-900">${order.total.toFixed(2)}</span>
@@ -332,7 +332,7 @@ export default function Orders() {
     return (
         <div className="min-h-screen bg-gradient-to-b bg-gray-50 to-gray-100">
 
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+            <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 py-8">
                 {/* Page Header */}
                 <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="mb-8">
                     <h1 className="text-4xl font-bold text-red-900 mb-2">My <span className="text-red-600">Orders</span></h1>
@@ -398,7 +398,7 @@ export default function Orders() {
                                 key={filter.key}
                                 onClick={() => setFilterStatus(filter.key)}
                                 className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${filterStatus === filter.key
-                                    ? "bg-black text-white shadow-md"
+                                    ? "bg-red-800 text-white shadow-md"
                                     : "text-gray-600 hover:text-gray-900 hover:bg-gray-50"
                                     }`}
                             >
@@ -413,7 +413,7 @@ export default function Orders() {
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     transition={{ delay: 0.3 }}
-                    className="grid gap-6 md:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2"
+                    className="grid gap-6 md:grid-cols-2 overflow-hidden"
                 >
                     {filterStatus === "active" && <>
                         {userorders?.activeOrders?.length > 0 ? (

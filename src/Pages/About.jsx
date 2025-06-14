@@ -250,17 +250,17 @@ export default function AboutPage() {
         </div>
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
-          <div className="grid lg:grid-cols-2 gap-16 items-center">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
             <motion.div
               initial={{ opacity: 0, x: -50 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.8, ease: "easeOut" }}
             >
-              <h1 className="text-5xl lg:text-7xl font-bold text-gray-900 leading-tight mb-8">
+              <h1 className="text-4xl sm:text-5xl lg:text-7xl font-bold text-gray-900 leading-tight mb-8">
                 About
                 <span className="block text-red-600">DiObral</span>
               </h1>
-              <p className="text-xl text-gray-600 leading-relaxed mb-8">
+              <p className="text-md sm:text-xl text-gray-600 leading-relaxed mb-8">
                 We are a leading name in the world of premium fashion. Our dedication to quality and innovation sets us
                 apart in clothing sales, manufacturing, and global export services.
               </p>
@@ -268,7 +268,7 @@ export default function AboutPage() {
                 Founded on principles of quality and customer satisfaction, we deliver products that exceed expectations
                 through expert craftsmanship and timeless style.
               </p>
-              <div className="flex flex-col sm:flex-row gap-4">
+              <div className="flex gap-4">
                 <Button size="lg">
                   <FiArrowRight className="mr-2" />
                   Our Story
@@ -288,11 +288,9 @@ export default function AboutPage() {
             >
               <div className="relative z-10">
                 <img
-                  src="/placeholder.svg?height=600&width=500"
-                  alt="About DiObral"
-                  width={500}
-                  height={600}
-                  className="rounded-3xl shadow-2xl"
+                  src="https://i.ytimg.com/vi/p-hCu7Obi4k/hq720.jpg?sqp=-oaymwEhCK4FEIIDSFryq4qpAxMIARUAAAAAGAElAADIQj0AgKJD&rs=AOn4CLBpccFKH9jT-ZQE-BV0r_mwVHbwiQ"
+                  alt="About DiObral" 
+                  className="rounded-3xl shadow-2xl min-h-[480px]"
                 />
               </div>
               <div className="absolute -bottom-6 -right-6 w-full h-full bg-gradient-to-br from-red-500 to-red-600 rounded-3xl -z-10"></div>

@@ -43,7 +43,7 @@ const ScrollWordReveal = ({
               <motion.span
                 key={`motion-${i}`}
                 style={{ opacity, x }}
-                className="inline-block text-center whitespace-pre mr-1 text-black"
+                className="inline-block text-center whitespace-pre mr-1 text-red-700"
               >
                 {word}
               </motion.span>

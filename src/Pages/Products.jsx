@@ -30,25 +30,69 @@ const Select = ({ children, value, onValueChange, className = "" }) => {
   )
 }
 
-const Checkbox = ({ id, checked, onCheckedChange, className = "" }) => {
-  return (
-    <input
-      type="checkbox"
-      id={id}
-      checked={checked}
-      onChange={(e) => onCheckedChange(e.target.checked)}
-      className={`h-4 w-4 text-black focus:ring-gray-500 border-gray-300 rounded ${className}`}
-    />
-  )
-}
+// const Checkbox = ({ id, checked, onCheckedChange, className = "" }) => {
+//   return (
+//     <input
+//       type="checkbox"
+//       id={id}
+//       checked={checked}
+//       onChange={(e) => onCheckedChange(e.target.checked)}
+//       className={`h-4 w-4 text-black focus:ring-gray-500 border-gray-300 rounded ${className}`}
+//     />
+//   )
+// }
 
-const Label = ({ htmlFor, children, className = "" }) => {
+const Checkbox = ({ id, checked, onCheckedChange, className = "", label, labelClassName = "" }) => {
   return (
-    <label htmlFor={htmlFor} className={`text-sm font-medium text-gray-700 ${className}`}>
-      {children}
-    </label>
-  )
-}
+    <div className={`flex items-center ${className}`}>
+      <div className="relative">
+        <input
+          type="checkbox"
+          id={id}
+          checked={checked}
+          onChange={(e) => onCheckedChange(e.target.checked)}
+          className="absolute opacity-0 h-0 w-0"
+        />
+        <div className={`flex items-center justify-center w-4 h-4 border-2 rounded 
+          ${checked ? 'border-red-400 bg-red-400' : 'border-gray-300'} 
+          transition-all duration-200`}>
+          {checked && (
+            <svg className="w-3 h-3 text-white" viewBox="0 0 20 20" fill="currentColor">
+              <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+            </svg>
+          )}
+        </div>
+      </div>
+      {label && (
+        <label htmlFor={id} className={`ml-2 text-sm font-medium text-gray-700 cursor-pointer ${labelClassName}`}>
+          {label}
+        </label>
+      )}
+    </div>
+  );
+};
+
+// const Label = ({ htmlFor, children, className = "" }) => {
+//   return (
+//     <label htmlFor={htmlFor} className={`text-sm font-medium text-gray-700 ${className}`}>
+//       {children}
+//     </label>
+//   )
+// }
+
+// const Slider = ({ value, onValueChange, max, step, className = "" }) => {
+//   return (
+//     <input
+//       type="range"
+//       min="0"
+//       max={max}
+//       step={step}
+//       value={value[0]}
+//       onChange={(e) => onValueChange([Number.parseInt(e.target.value), value[1]])}
+//       className={`w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer ${className}`}
+//     />
+//   )
+// }
 
 const Slider = ({ value, onValueChange, max, step, className = "" }) => {
   return (
@@ -59,10 +103,23 @@ const Slider = ({ value, onValueChange, max, step, className = "" }) => {
       step={step}
       value={value[0]}
       onChange={(e) => onValueChange([Number.parseInt(e.target.value), value[1]])}
-      className={`w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer ${className}`}
+      className={`w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer 
+        [&::-webkit-slider-thumb]:appearance-none
+        [&::-webkit-slider-thumb]:h-2.5
+        [&::-webkit-slider-thumb]:w-2.5
+        [&::-webkit-slider-thumb]:rounded-full
+        [&::-webkit-slider-thumb]:bg-red-700
+        [&::-webkit-slider-thumb]:border-0
+        [&::-webkit-slider-thumb]:transition-all
+        [&::-webkit-slider-thumb]:duration-150
+        hover:[&::-webkit-slider-thumb]:scale-115
+        focus:[&::-webkit-slider-thumb]:scale-115
+        focus:[&::-webkit-slider-thumb]:ring-2
+        focus:[&::-webkit-slider-thumb]:ring-red-300
+        ${className}`}
     />
-  )
-}
+  );
+};
 
 export default function Products() {
   const { urlCategory } = useParams();
@@ -123,7 +180,7 @@ export default function Products() {
 
   // Fetch products, categories, and subcategories once on mount
   useEffect(() => {
-    setSelectedCategories(decodeURIComponent(urlCategory))
+    setSelectedCategories(decodeURIComponent(urlCategory) === "All" ? [] : decodeURIComponent(urlCategory))
   }, [urlCategory]);
 
   const filteredProducts = useMemo(() => {
@@ -252,20 +309,21 @@ export default function Products() {
                   {categories.map((category) => (
                     <div key={category.name}>
                       <div className="flex items-center space-x-2">
+
                         <Checkbox
                           id={category.name}
                           checked={selectedCategories.includes(category.name)}
                           onCheckedChange={(checked) => handleCategoryChange(category.name, checked)}
+                          label={category.name}
+                          className="mb-2"
+                          labelClassName="text-sm font-medium"
                         />
-                        <Label htmlFor={category.name} className="text-sm font-medium">
-                          {category.name}
-                        </Label>
                       </div>
                       {selectedCategories.includes(category.name) && (
                         <div className="ml-6 mt-2 space-y-2">
                           {category.subcategories.map((sub) => (
                             <div key={sub} className="flex items-center space-x-2">
-                              <Checkbox
+                              {/* <Checkbox
                                 id={sub}
                                 checked={selectedSubcategories.includes(sub)}
                                 onCheckedChange={(checked) => handleSubcategoryChange(sub, checked)}
@@ -273,6 +331,15 @@ export default function Products() {
                               <Label htmlFor={sub} className="text-sm text-gray-600">
                                 {sub}
                               </Label>
+                               */}
+                              <Checkbox
+                                id={sub}
+                                checked={selectedSubcategories.includes(sub)}
+                                onCheckedChange={(checked) => handleSubcategoryChange(sub, checked)}
+                                label={sub}
+                                className="mb-2"
+                                labelClassName="text-sm font-medium"
+                              />
                             </div>
                           ))}
                         </div>
@@ -285,7 +352,7 @@ export default function Products() {
               <div className="bg-white border-[2px] border-gray-100 shadow-sm rounded-[14px] p-6">
                 <h3 className="font-semibold text-gray-900 mb-4">Price Range</h3>
                 <div className="space-y-4">
-                  <Slider value={priceRange} onValueChange={setPriceRange} max={500} step={10} className="w-full" />
+                  <Slider value={priceRange} onValueChange={setPriceRange} max={10000} step={10} className="w-full" />
                   <div className="flex items-center justify-between text-sm text-gray-600">
                     <span>${priceRange[0]}</span>
                     <span>${priceRange[1]}</span>
@@ -415,7 +482,7 @@ export default function Products() {
                       setSearchTerm("")
                       setSelectedCategories([])
                       setSelectedSubcategories([])
-                      setPriceRange([0, 500])
+                      setPriceRange([0, 10000])
                     }}
                     className="mt-4"
                   >
