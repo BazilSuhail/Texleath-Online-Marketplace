@@ -98,9 +98,8 @@ export default function Navbar() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16 md:h-20">
             {/* Logo */}
-            <motion.div whileHover={{ scale: 1.05 }} className="flex-shrink-0">
-
-              <NavLink to="/" className=" h-[55px] pt-[5px] lg:flex hidden items-center justify-center w-full pb-[5px] overflow-hidden">
+            <motion.div whileHover={{ scale: 1.05 }}>
+              <NavLink to="/" className=" h-[55px] pt-[5px] flex items-center justify-center w-full pb-[5px] overflow-hidden">
                 <img src="/vite.svg" alt="Connection error .... :/" className="w-[35px] h-[35px]" />
                 <div className="flex flex-col">
                   <div className="text-red-700 ml-[4px] text-[20px] font-bold">DiObral</div>
