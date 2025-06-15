@@ -291,7 +291,7 @@ export default function Navbar() {
       </motion.header>
 
       <header>
-        <div className="relative text-white lg:hidden">
+        <div className="relative text-white md:hidden">
           <div className="flex items-center h-[70px] justify-between bg-white border-b-[2px] border-gray-200 shadow-sm px-4 py-2 relative">
             <NavLink to="/" >
               <div className="flex items-center">
