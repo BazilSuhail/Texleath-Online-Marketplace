@@ -219,19 +219,30 @@ const Checkout = () => {
         }, 0).toFixed(2);
     };
 
-    if (!cart.length) return <div className='bg-gray-50 h-[calc(100vh-220px)] flex justify-center items-center w-screen'>
-        <div className='text-center'>
-            <img
-                src="/noOrder.webp"
-                alt='Cart Icon'
-                className='mx-auto lg:scale-[0.88] w-[280px] h-[280px]'
-            />
-            <p className='px-[15px] py-[6px] rounded-[8px] mt-[8px] text-[20px] text-[#d66868] font-[600] bg-[#ffe8e8] mx-auto text-center '>
-                Your cart is empty
-            </p>
-
-        </div>
-    </div>;
+    if (!cart.length) return (
+        <main className='min-h-screen bg-gray-50'>
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+                {/* Page Header */}
+                <div className="mb-5">
+                    <h1 className="text-[25px] font-bold text-gray-900">Checkout Invoice</h1>
+                    <p className="text-gray-600">Review your items and proceed to checkout</p>
+                </div>
+                {cart.length === 0 && (
+                    <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="text-center py-16">
+                        <FiShoppingBag className="w-16 h-16 text-gray-300 mx-auto mb-4" />
+                        <h2 className="text-2xl font-semibold text-gray-900 mb-2">Your cart is empty</h2>
+                        <p className="text-gray-500 font-[600] max-w-[220px] mx-auto mt-6 mb-8">Looks like you haven't added anything to your cart yet.</p>
+                        <Button variant="red">
+                            <Link to="/productlist/All" className="flex items-center">
+                                Continue Shopping
+                                <FiArrowRight className="ml-2 w-4 h-4" />
+                            </Link>
+                        </Button>
+                    </motion.div>
+                )}
+            </div>
+        </main>
+    );
 
     return (
         <main className='min-h-screen bg-gray-50'>
@@ -243,11 +254,11 @@ const Checkout = () => {
                 </div>
 
                 {cart.length === 0 ? (
-                    <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="text-center pb-16">
+                    <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="text-center py-16">
                         <FiShoppingBag className="w-16 h-16 text-gray-300 mx-auto mb-4" />
                         <h2 className="text-2xl font-semibold text-gray-900 mb-2">Your cart is empty</h2>
-                        <p className="text-gray-600 mb-8">Looks like you haven't added anything to your cart yet.</p>
-                        <Button className="bg-black hover:bg-gray-800">
+                        <p className="text-gray-500 font-[600] max-w-[220px] mx-auto mt-6 mb-8">Looks like you haven't added anything to your cart yet.</p>
+                        <Button variant="red">
                             <Link to="/productlist/All" className="flex items-center">
                                 Continue Shopping
                                 <FiArrowRight className="ml-2 w-4 h-4" />

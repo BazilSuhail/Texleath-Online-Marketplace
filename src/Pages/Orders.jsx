@@ -413,7 +413,7 @@ export default function Orders() {
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     transition={{ delay: 0.3 }}
-                    className="grid gap-6 md:grid-cols-2 overflow-hidden"
+                    className="grid gap-6 grid-cols-1 md:grid-cols-2 md:overflow-hidden"
                 >
                     {filterStatus === "active" && <>
                         {userorders?.activeOrders?.length > 0 ? (
