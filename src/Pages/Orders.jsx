@@ -17,7 +17,7 @@ import axios from "axios"
 import Button from "../utilities/Button"
 import Badge from "../utilities/Badge"
 import OrdersSkeleton from "../Components/Loaders/OrdersSkeleton"
- 
+
 // const Badge = ({ children, variant = "default", className = "" }) => {
 //     const variants = {
 //         default: "bg-gray-100 text-gray-800",
@@ -81,7 +81,7 @@ const OrderCard = ({ order, onViewDetails }) => {
                                 })}
                             </p>
                         </div>
-                    </div> 
+                    </div>
                 </div>
             </div>
 
@@ -181,7 +181,7 @@ const OrderDetailsModal = ({ order, isOpen, onClose }) => {
                                 <div className="flex items-center space-x-3">
                                     {/* <StatusBadge status={order.status} />
                                      */}
-                                     <Badge variant={"pending"}>Pending</Badge>
+                                    <Badge variant={"pending"}>Pending</Badge>
                                     <button
                                         onClick={onClose}
                                         className="p-2 hover:bg-white rounded-lg transition-colors"
@@ -325,8 +325,8 @@ export default function Orders() {
         setIsModalOpen(true)
     }
 
-    if(loading){
-        return <OrdersSkeleton/>
+    if (loading) {
+        return <OrdersSkeleton />
     }
 
     return (
@@ -446,7 +446,7 @@ export default function Orders() {
                         )} </>
                     }
                     {filterStatus === "all" && <>
-                        {userorders?.activeOrders?.length > 0 ? (
+                        {userorders?.activeOrders?.length > 0 && (
                             userorders.activeOrders.map((order, index) => (
                                 <motion.div key={order._id}
                                     initial={{ opacity: 0, y: 20 }}
@@ -456,10 +456,8 @@ export default function Orders() {
                                     <OrderCard order={order} onViewDetails={handleViewDetails} />
                                 </motion.div>
                             ))
-                        ) : (
-                            <p className="text-gray-500">No orders found.</p>
                         )}
-                        {userorders?.completedOrders?.length > 0 ? (
+                        {userorders?.completedOrders?.length > 0 && (
                             userorders.completedOrders.map((order, index) => (
                                 <motion.div key={order._id}
                                     initial={{ opacity: 0, y: 20 }}
@@ -469,22 +467,20 @@ export default function Orders() {
                                     <OrderCard order={order} onViewDetails={handleViewDetails} />
                                 </motion.div>
                             ))
-                        ) : (
-                            <p className="text-gray-500">No orders found.</p>
                         )}
                     </>
                     }
                 </motion.div>
 
-                {(userorders?.completedOrders?.length === 0 || userorders?.activeOrders?.length === 0) && (
+                {(userorders?.completedOrders?.length === 0 && userorders?.activeOrders?.length === 0) && (
                     <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="text-center py-16">
                         <div className="w-24 h-24 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
                             <FiPackage className="w-12 h-12 text-gray-400" />
                         </div>
                         <h3 className="text-xl font-semibold text-gray-900 mb-2">No orders found</h3>
                         <p className="text-gray-600 mb-8">You haven't placed any orders yet.</p>
-                        <Button size="lg">
-                            <Link to="/products" className="flex items-center">
+                        <Button size="lg" variant="red">
+                            <Link to="/productlist/All" className="flex items-center">
                                 Start Shopping
                                 <FiArrowRight className="ml-2 w-5 h-5" />
                             </Link>

@@ -56,6 +56,7 @@ export default function ProfilePage() {
     address: {
       city: '',
       street: '',
+      state: '',
       country: ''
     },
     contact: ''
@@ -77,7 +78,7 @@ export default function ProfilePage() {
             email: response.data.email,
             fullName: response.data.fullName,
             bio: response.data.bio,
-            address: response.data.address || { city: '', street: '', country: '' },
+            address: response.data.address || { city: '', state: '', street: '', country: '' },
             contact: response.data.contact || ''
           });
           setLoading(false)
@@ -244,7 +245,7 @@ export default function ProfilePage() {
             className="lg:col-span-3"
           >
             <Card className="p-8">
-              <div className="flex md:flex-r flex-col gap-y-2 md:items-center justify-between mb-8">
+              <div className="flex md:flex-row flex-col gap-y-2 md:items-center justify-between mb-8">
                 <h2 className="text-2xl font-bold text-gray-900">Personal Information</h2>
                 {!isEditing ? (
                   <Button variant="outline" onClick={() => setIsEditing(true)}>
@@ -320,7 +321,7 @@ export default function ProfilePage() {
                         <ProfileInput
                           label="City"
                           value={formData.address.city}
-                          onChange={(e) => handleInputChange("city", e.target.value)}
+                          onChange={(e) => handleAddressInputChange("city", e.target.value, "address")}
                           disabled={!isEditing}
                           className={!isEditing ? "bg-gray-50" : ""}
                         />
