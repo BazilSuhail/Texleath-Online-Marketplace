@@ -202,7 +202,7 @@ export default function Cart() {
                     <p className="text-gray-600">Review your items and proceed to checkout</p>
                 </div>
 
-                {cart.length !== 0 ? (
+                {cart.length === 0 ? (
                     <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="text-center py-16">
                         <FiShoppingBag className="w-16 h-16 text-gray-300 mx-auto mb-4" />
                         <h2 className="text-2xl font-semibold text-gray-900 mb-2">Your cart is empty</h2>
