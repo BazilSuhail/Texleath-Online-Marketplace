@@ -378,31 +378,31 @@ export default function ProductDetailPage() {
                 Add to Cart
               </Button> */}
               {isLoggedIn ? (
-  <Button 
-    onClick={handleAddToCart} 
-    className="flex w-[280px] bg-gradient-to-r from-red-900 to-red-800 hover:from-red-800 hover:to-red-700 text-white" 
-    size="lg"
-  >
-    <FiShoppingBag className="w-5 h-5 mr-2" />
-    Add to Cart
-  </Button>
-) : (
-  <div className="relative w-[280px]">
-    <div className="flex w-full bg-red-300 text-white rounded-md cursor-not-allowed">
-      <Button
-        disabled
-        className="flex w-full bg-transparent hover:bg-transparent pointer-events-none"
-        size="lg"
-      >
-        <FiShoppingBag className="w-5 h-5 mr-2 opacity-80" />
-        Add to Cart
-      </Button>
-    </div>
-    <Link to="/signin" className="absolute -bottom-6 underline underline-offset-2 left-0 w-full text-center text-xs text-red-600 font-medium">
-      Please login to add items to cart
-    </Link>
-  </div>
-)}
+                <Button
+                  onClick={handleAddToCart}
+                  className="flex w-[280px] bg-gradient-to-r from-red-900 to-red-800 hover:from-red-800 hover:to-red-700 text-white"
+                  size="lg"
+                >
+                  <FiShoppingBag className="w-5 h-5 mr-2" />
+                  Add to Cart
+                </Button>
+              ) : (
+                <div className="relative w-[280px]">
+                  <div className="flex w-full bg-red-300 text-white rounded-md cursor-not-allowed">
+                    <Button
+                      disabled
+                      className="flex w-full bg-transparent hover:bg-transparent pointer-events-none"
+                      size="lg"
+                    >
+                      <FiShoppingBag className="w-5 h-5 mr-2 opacity-80" />
+                      Add to Cart
+                    </Button>
+                  </div>
+                  <Link to="/signin" className="absolute -bottom-6 underline underline-offset-2 left-0 w-full text-center text-xs text-red-600 font-medium">
+                    Please login to add items to cart
+                  </Link>
+                </div>
+              )}
               <button onClick={copyUrlToClipboard} className="border-[3px] rounded-[7px] border-gray-200 px-[12px] focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none">
                 <FiShare2 className="w-5 h-5" />
               </button>
@@ -415,13 +415,13 @@ export default function ProductDetailPage() {
       {isLoggedIn ? (
         <ReviewProduct productId={id} />
       ) : (
-        <div className="max-w-7xl mt-[35px] grid grid-cols-2">
+        <div className="max-w-7xl mt-[35px] grid grid-cols-1 md:grid-cols-2">
           <div className="">
             <Button variant="outline" className="mb-3 opacity-50 cursor-not-allowed">
               Write a Review
             </Button>
 
-            <div className="bg-gray-50 rounded-lg py-4 px-6 mt-4 mr-5 border-[2px] border-gray-100 opacity-75">
+            <div className="bg-gray-50 rounded-lg py-4 px-6 mt-4 md:mr-5 border-[2px] border-gray-100 opacity-75">
               <div className="space-y-4">
                 <div>
                   <p className="text-sm font-medium text-gray-500">Rating</p>

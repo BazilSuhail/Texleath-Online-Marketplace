@@ -17,7 +17,7 @@ import {
 import { BiLogInCircle } from "react-icons/bi";
 import { FiHome, FiInfo, FiList } from "react-icons/fi";
 import { useEffect, useState } from "react"
-import SearchModal from "./SearchModal" 
+import SearchModal from "./SearchModal"
 import { Link, NavLink } from "react-router-dom"
 import { useSelector } from "react-redux"
 import { selectCartLength } from "../redux/cartSlice"
@@ -199,9 +199,7 @@ export default function Navbar() {
                   onClick={() => setIsSearchModalOpen(true)}
                   whileHover={{ scale: 0.99 }}
                 >
-
                   <AiOutlineSearch className="w-6 h-6 text-gray-600 hover:text-red-600" />
-
                 </motion.button>
 
                 {/* User Account */}
@@ -295,25 +293,27 @@ export default function Navbar() {
       <header>
         <div className="relative text-white lg:hidden">
           <div className="flex items-center h-[70px] justify-between bg-white border-b-[2px] border-gray-200 shadow-sm px-4 py-2 relative">
-            <div className="flex items-center">
-              <motion.div
-                initial={{ opacity: 1 }}
-                animate={{ opacity: isMenuOpen ? 0 : 1 }}
-                transition={{ duration: 0.2 }}
-              >
-                <img src="/vite.svg" alt="Connection error .... :/" className="md:w-[32px] w-[35px] h-[35px] md:h-[32px]" />
-              </motion.div>
-              <motion.div
-                className="text-[28px] font-bold"
-                initial={{ x: 40 }}
-                animate={{ x: isMenuOpen ? -40 : 0 }}
-                transition={{ duration: 0.5 }}
-              >
-                <div className="flex">
-                  <div className="text-red-700 ml-[6px] md:text-[25px] text-[21px] font-bold">Diobral</div>
-                </div>
-              </motion.div>
-            </div>
+            <NavLink to="/" >
+              <div className="flex items-center">
+                <motion.div
+                  initial={{ opacity: 1 }}
+                  animate={{ opacity: isMenuOpen ? 0 : 1 }}
+                  transition={{ duration: 0.2 }}
+                >
+                  <img src="/vite.svg" alt="Connection error .... :/" className="md:w-[32px] w-[35px] h-[35px] md:h-[32px]" />
+                </motion.div>
+                <motion.div
+                  className="text-[28px] font-bold"
+                  initial={{ x: 40 }}
+                  animate={{ x: isMenuOpen ? -40 : 0 }}
+                  transition={{ duration: 0.5 }}
+                >
+                  <div className="flex">
+                    <div className="text-red-700 ml-[6px] md:text-[25px] text-[21px] font-bold">Diobral</div>
+                  </div>
+                </motion.div>
+              </div>
+            </NavLink>
             <div className="flex">
               {isLoggedIn &&
                 <motion.button

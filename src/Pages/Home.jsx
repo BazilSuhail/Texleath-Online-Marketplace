@@ -192,12 +192,12 @@ const Home = () => {
 
       <ScrollWordReveal />
 
-      <section className='mb-24 mt-15'>
-        <h3 className='text-[16px] text-center heading-font text-red-700 font-sans font-[600]'>POWERED BY</h3>
+      <section className='mb-24 mt-32 lg:mt-12'>
+        <h3 className='text-[16px] lg:text-[20px] text-center heading-font text-red-700 font-sans font-[600]'>Our Partners</h3>
         {/* Decorative line */}
         <div className="mx-auto mt-2 h-1 w-16 bg-red-700" />
 
-        <div className='md:max-w-4xl mx-auto mt-[15px]'>
+        <div className='md:max-w-4xl mx-auto mt-[15px] lg:mt-16'>
           <div className="slider " style={{ '--width': '120px', '--height': '100px', '--quantity': 5 }}>
             <div className="list ">
               <div className="stack" style={{ '--position': 1 }}><div className='w-[110px]'><img src="/logos/nike.png" alt="Nike Logo" className='' /></div></div>

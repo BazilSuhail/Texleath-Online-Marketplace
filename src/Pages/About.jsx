@@ -1,4 +1,3 @@
-import { useState } from "react"
 import { motion, useInView } from "framer-motion" 
 import { useRef } from "react"
 import {
@@ -17,7 +16,7 @@ import {
   FiPlay,
 } from "react-icons/fi" 
 
-// Custom Components
+// // Custom Components
 const Button = ({ children, variant = "primary", size = "md", className = "", ...props }) => {
   const baseClasses =
     "inline-flex items-center justify-center font-medium transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none"
@@ -41,24 +40,6 @@ const Button = ({ children, variant = "primary", size = "md", className = "", ..
     <button className={classes} {...props}>
       {children}
     </button>
-  )
-}
-
-const Badge = ({ children, variant = "default", className = "" }) => {
-  const variants = {
-    default: "bg-gray-100 text-gray-800",
-    success: "bg-green-100 text-green-800",
-    warning: "bg-yellow-100 text-yellow-800",
-    info: "bg-blue-100 text-blue-800",
-    danger: "bg-red-100 text-red-800",
-  }
-
-  return (
-    <span
-      className={`inline-flex items-center px-3 py-1 rounded-full text-xs font-medium ${variants[variant]} ${className}`}
-    >
-      {children}
-    </span>
   )
 }
 
@@ -151,8 +132,7 @@ const ValueCard = ({ icon: Icon, title, description, delay = 0 }) => {
   )
 }
 
-export default function AboutPage() {
-  const [isMenuOpen, setIsMenuOpen] = useState(false)
+export default function AboutPage() { 
 
   const services = [
     {
@@ -290,7 +270,7 @@ export default function AboutPage() {
                 <img
                   src="https://i.ytimg.com/vi/p-hCu7Obi4k/hq720.jpg?sqp=-oaymwEhCK4FEIIDSFryq4qpAxMIARUAAAAAGAElAADIQj0AgKJD&rs=AOn4CLBpccFKH9jT-ZQE-BV0r_mwVHbwiQ"
                   alt="About DiObral" 
-                  className="rounded-3xl shadow-2xl min-h-[480px]"
+                  className="rounded-3xl shadow-2xl min-h-[260px] md:min-h-[480px]"
                 />
               </div>
               <div className="absolute -bottom-6 -right-6 w-full h-full bg-gradient-to-br from-red-500 to-red-600 rounded-3xl -z-10"></div>
@@ -418,7 +398,7 @@ export default function AboutPage() {
 
       {/* Values Section */}
       <AnimatedSection className="py-20 lg:py-32 relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900"></div>
+        <div className="absolute inset-0 bg-red-950"></div>
         <div className="absolute inset-0 opacity-10">
           <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-r from-red-500/20 to-transparent"></div>
         </div>

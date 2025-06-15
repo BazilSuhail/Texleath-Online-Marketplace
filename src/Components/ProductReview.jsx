@@ -238,7 +238,7 @@ const ReviewProduct = ({ productId }) => {
           initial={{ opacity: 0, height: 0 }}
           animate={{ opacity: 1, height: "auto" }}
           transition={{ duration: 0.3 }}
-          className="bg-gray-50 rounded-lg py-4 px-6 mt-4 mr-5 border-[2px] border-gray-100"
+          className="bg-gray-50 rounded-lg py-4 px-6 mt-4 md:mr-5 border-[2px] border-gray-100"
         >
           <form onSubmit={handleSubmit} className="space-y-4">
             <div>
