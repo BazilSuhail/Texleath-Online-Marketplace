@@ -29,7 +29,7 @@ With an elegant and responsive interface, DiObral is optimized for user engageme
 
 
  ---
-- Check out the latest demo of Project [DiObral](https://texleath.netlify.app/). 
+- Check out the latest demo of Project [DiObral-Web-App](https://diobral.netlify.app/). 
 - Find the Server's Repository of this Project Here [DiObral-Backend-Server](https://github.com/BazilSuhail/DiObral-Server). 
 
 ---
